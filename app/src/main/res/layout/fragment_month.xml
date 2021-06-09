@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     tools:context=".views.statistics.MonthFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="month" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_gradient">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/month_bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            />
+    </LinearLayout>
 
 </FrameLayout>
