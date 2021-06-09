@@ -16,6 +16,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kr.co.gooroomeelite.R
+import java.text.DecimalFormat
 
 class MonthFragment : Fragment() {
 
@@ -155,6 +156,13 @@ class MonthFragment : Fragment() {
                 axisMinimum = 0F
 //                axisMaximum = 9F
                 granularity  = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
+                //y축 제목 커스텀
+                valueFormatter = object : ValueFormatter() {
+                    private val mFormat: DecimalFormat = DecimalFormat("###")
+                    override fun getFormattedValue(value: Float): String {
+                        return mFormat.format(value) + "시"
+                    }
+                }
             }
 
             //차트 오른쪽 축, Y방향 false처리
