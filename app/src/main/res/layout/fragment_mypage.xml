@@ -1,18 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.mypage.MypageFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="mypage"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <variable
+            name = "my"
+            type ="kr.co.gooroomeelite.views.mypage.MypageFragment"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.mypage.MypageFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/skyBlue"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:titleTextColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:fillViewport="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="100dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:background="@drawable/ic_gooroomee_logo" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/nickname"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        app:layout_constraintStart_toEndOf="@+id/cardView7"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/emailaddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/email"
+                        app:layout_constraintStart_toEndOf="@+id/cardView7"
+                        app:layout_constraintTop_toBottomOf="@+id/nickname" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/cardView7">
+
+                        <View
+                            android:id="@+id/view0"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divide2" />
+
+                        <Button
+                            android:id="@+id/btn_profile_account"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:drawableEnd="@drawable/btn_nexticon"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/profile_account"
+                            android:textColor="@color/black"
+                            app:backgroundTint="@null" />
+
+                        <View
+                            android:id="@+id/view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divide2" />
+
+                        <TextView
+                            android:id="@+id/terms"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/service1" />
+
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+                        <Button
+                            android:id="@+id/btn_terms_of_service"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:drawableEnd="@drawable/btn_nexticon"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/service2"
+                            android:textColor="@color/black"
+
+                            app:backgroundTint="@null" />
+
+                        <Button
+                            android:id="@+id/btn_privacy_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:drawableEnd="@drawable/btn_nexticon"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/service3"
+                            android:textColor="@color/black"
+
+                            app:backgroundTint="@null" />
+
+                        <Button
+                            android:id="@+id/btn_open_source"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:drawableEnd="@drawable/btn_nexticon"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/service4"
+                            android:textColor="@color/black"
+
+                            app:backgroundTint="@null" />
+
+
+                        <TextView
+                            android:id="@+id/etc"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/etc" />
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="50dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_weight="1"
+                                android:background="#FFFFFF"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/version"
+                                android:textColor="@color/black"
+                                app:backgroundTint="@null" />
+
+                            <TextView
+                                android:id="@+id/appversion"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:elevation="0dp"
+                                android:gravity="center"
+                                android:text="@{my.version}"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent" />
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_report"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:drawableEnd="@drawable/btn_nexticon"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/report_"
+                            android:textColor="@color/black"
+
+                            app:backgroundTint="@null" />
+
+                        <Button
+                            android:id="@+id/btn_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/logout"
+                            android:textColor="@color/black"
+                            app:backgroundTint="@null" />
+
+                        <Button
+                            android:id="@+id/btn_withdrawal"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/withdrawal"
+                            android:textColor="@color/black"
+                            app:backgroundTint="@null" />
+
+
+                    </LinearLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    </FrameLayout>
+
+</layout>

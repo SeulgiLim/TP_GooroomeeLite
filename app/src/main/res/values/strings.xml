@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">gooroomeelite</string>
+
+    // mypage //
+    <string name="nickname">닉네임</string>
+    <string name="profile_account">프로필 및 계정</string>
+    <string name="service1">약관 및 정책</string>
+    <string name="service2">이용약관</string>
+    <string name="service3">개인정보처리방침</string>
+    <string name="service4">오픈소스 라이센스</string>
+    <string name="etc">기타</string>
+    <string name="version">앱 버전</string>
+    <string name="report_">건의하기</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">탈퇴하기</string>
+
+    <string name="text">"과목을 입력하세요</string>
+
+    <string name="email">silmxmail@naver.com</string>
+    <string name="report">건의사항보내기</string>
 </resources>

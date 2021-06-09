@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
+        <activity android:name=".views.mypage.WithdrawalActivity"></activity>
+        <activity android:name=".views.mypage.OpenSourceActivity" />
+        <activity android:name=".views.mypage.PrivacyPolicyActivity" />
+        <activity android:name=".views.mypage.TermsOfServiceActivity" />
+        <activity android:name=".views.mypage.ProfileAccountActivity" />
         <activity android:name=".views.common.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.common.MainActivity"/>
+        <activity android:name=".views.common.MainActivity" />
     </application>
 
 </manifest>
