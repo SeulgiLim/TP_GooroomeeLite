@@ -1,14 +1,10 @@
 package kr.co.gooroomeelite.views.statistics
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kr.co.gooroomeelite.R
 
@@ -19,20 +15,30 @@ class StatisticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val pageView = inflater.inflate(R.layout.fragment_statistics, container, false)
-        val tabLayout: TabLayout = pageView.findViewById(R.id.tab_layout)
+        val tabs: TabLayout = pageView.findViewById(R.id.tabs)
 
-        tabLayout.addTab(tabLayout.newTab().setText("일간"))
-        tabLayout.addTab(tabLayout.newTab().setText("주간"))
-        tabLayout.addTab(tabLayout.newTab().setText("월간"))
+        val dayFragment = DayFragment()
+        val weekFragment = WeekFragment()
+        val monthFragment = MonthFragment()
 
-        val pagerAdapter = PagerAdapter(parentFragmentManager, 3)
-        val viewPager: ViewPager = pageView.findViewById(R.id.viewPager)
-        viewPager.adapter = pagerAdapter
+        parentFragmentManager.beginTransaction().add(R.id.chart_container, dayFragment).commit()
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-//                viewPager.currentItem = tab!!.position
-                viewPager.setCurrentItem(tab!!.position)
+                val position = tab!!.position
+
+                var selected: Fragment? = null
+                if (position == 0) {
+                    selected = dayFragment
+                } else if (position == 1) {
+                    selected = weekFragment
+                } else if (position == 2) {
+                    selected = monthFragment
+                }
+                if (selected != null) {
+                    parentFragmentManager.beginTransaction().replace(R.id.chart_container, selected)
+                        .commit()
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -42,25 +48,7 @@ class StatisticsFragment : Fragment() {
             }
 
         })
-        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+
         return pageView
-    }
-}
-
-class PagerAdapter(
-    fragmentManager: FragmentManager,
-    val tabCount: Int
-) : FragmentStatePagerAdapter(fragmentManager) {
-    override fun getCount(): Int {
-        return tabCount
-    }
-
-    override fun getItem(position: Int): Fragment {
-        when (position) {
-            0 -> return DayFragment()
-            1 -> return WeekFragment()
-            2 -> return MonthFragment()
-            else -> return DayFragment()
-        }
     }
 }
