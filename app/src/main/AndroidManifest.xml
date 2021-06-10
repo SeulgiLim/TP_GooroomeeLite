@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.gooroomeelite">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.statistics.WeekFragment"></activity>
-        <activity android:name=".views.statistics.DayFragment" />
         <activity android:name=".views.common.SplashActivity">
 
             <!-- <intent-filter> -->
