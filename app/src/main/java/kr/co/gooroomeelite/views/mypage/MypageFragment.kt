@@ -17,9 +17,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.auth.FirebaseAuth
 import kr.co.gooroomeelite.BuildConfig
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentMypageBinding
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
 
 class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
@@ -67,44 +69,23 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             okButton.setOnClickListener {
                 //로그아웃
 
+                if(isLogin()) {
+                    FirebaseAuth.getInstance().signOut()
+                }
 
                 //파이어베이스 로그아웃//
 
 
                 Toast.makeText(owner,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
+//                owner.finish()
             }
             cancelButton.setOnClickListener {
                 Toast.makeText(owner, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
             }
         }
-//        // 회원탈퇴 //
-//        binding.btnWithdrawal.setOnClickListener {
-//            val mWithdrawalView =
-//                LayoutInflater.from(owner).inflate(R.layout.fragment_dialog_withdrawal, null)
-//            val mBuilder =
-//                androidx.appcompat.app.AlertDialog.Builder(owner).setView(mWithdrawalView)
-//            val mAlertDialog = mBuilder.show().apply {
-//                window?.setBackgroundDrawable(null)
-//            }
-//            val okButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_ok)
-//            val cancelButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_no)
-//            okButton.setOnClickListener {
-//                //탈퇴
-//
-//
-//                //파이어베이스 회원탈퇴//
-//
-//
-//                Toast.makeText(owner,"탈퇴되었습니다.",Toast.LENGTH_SHORT).show()
-//                mAlertDialog.dismiss()
-//            }
-//            cancelButton.setOnClickListener {
-//                Toast.makeText(owner, "취소되었습니다.", Toast.LENGTH_SHORT).show()
-//                mAlertDialog.dismiss()
-//            }
-//        }
+
 
         //최신버전 비교하기
 
