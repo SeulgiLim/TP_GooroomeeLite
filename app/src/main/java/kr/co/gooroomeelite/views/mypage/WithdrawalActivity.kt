@@ -9,12 +9,17 @@ package kr.co.gooroomeelite.views.mypage
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityWithdrawalBinding
 
 class WithdrawalActivity : AppCompatActivity() {
     private lateinit var binding : ActivityWithdrawalBinding
+    private lateinit var mAuth : FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -27,17 +32,39 @@ class WithdrawalActivity : AppCompatActivity() {
             this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
             setTitle(R.string.withdrawal)
         }
-        binding.withdrawalNickname.setOnClickListener {
+        binding.checkBox.setOnCheckedChangeListener { _, _ -> checkall() }
+        binding.checkBox2.setOnCheckedChangeListener { _, _ -> checkall() }
+        binding.checkBox3.setOnCheckedChangeListener { _, _ -> checkall() }
 
-            Log.e("TEST","${binding.checkBox.isChecked}")
-            Log.e("TEST","${binding.checkBox2.isChecked}")
-            Log.e("TEST","${binding.checkBox3.isChecked}")
+                    // 회원탈퇴 //
+        binding.checkbefore.setOnClickListener {
+            val mWithdrawalView =
+                LayoutInflater.from(this).inflate(R.layout.fragment_dialog_withdrawal, null)
+            val mBuilder =
+                androidx.appcompat.app.AlertDialog.Builder(this).setView(mWithdrawalView)
+            val mAlertDialog = mBuilder.show().apply {
+                window?.setBackgroundDrawable(null)
+            }
+            val okButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_ok)
+            val cancelButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_no)
+            okButton.setOnClickListener {
+                //탈퇴
 
+                mAuth.currentUser!!.delete()
+
+                //파이어베이스 회원탈퇴//
+
+
+
+                Toast.makeText(this,"탈퇴되었습니다.",Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+//                finish()
+            }
+            cancelButton.setOnClickListener {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+            }
         }
-        binding.checkBox.setOnCheckedChangeListener { buttonView, isChecked -> checkall() }
-        binding.checkBox2.setOnCheckedChangeListener { buttonView, isChecked -> checkall() }
-        binding.checkBox3.setOnCheckedChangeListener { buttonView, isChecked -> checkall() }
-
     }
     private fun checkall (){
         if (binding.checkBox.isChecked and binding.checkBox2.isChecked and binding.checkBox3.isChecked ){
