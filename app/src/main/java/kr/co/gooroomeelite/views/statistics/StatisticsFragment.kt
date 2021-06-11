@@ -110,6 +110,7 @@ class StatisticsFragment : Fragment() {
         Toast.makeText(
             this.requireContext(),
             "카메라/앨범의 권한을 허용해주세요",
+            //"권한을 허용해야 앱을 사용할 수 있습니다"
             Toast.LENGTH_SHORT
         ).show()
     }
