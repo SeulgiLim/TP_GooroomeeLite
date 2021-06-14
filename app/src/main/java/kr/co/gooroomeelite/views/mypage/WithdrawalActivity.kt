@@ -20,6 +20,7 @@ import kr.co.gooroomeelite.databinding.ActivityWithdrawalBinding
 class WithdrawalActivity : AppCompatActivity() {
     private lateinit var binding : ActivityWithdrawalBinding
     private lateinit var mAuth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

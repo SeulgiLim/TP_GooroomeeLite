@@ -8,7 +8,9 @@ package kr.co.gooroomeelite.views.mypage
  */
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,16 +19,30 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kr.co.gooroomeelite.BuildConfig
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentMypageBinding
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
+import java.io.File
 
 class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
     private lateinit var binding : FragmentMypageBinding
+
+    var storage : FirebaseStorage? = null
+
+    var storageRef : StorageReference? = null
+
+    var photoUri : Uri? = null
+
     val version = BuildConfig.VERSION_NAME
+    //Storage에서 받아오는 이미지를 프로필 사진으로.
+    //Storage에서 받아오는 닉네임을 닉네임 스트링으로.
 
     companion object {
         fun newInstance(owner: AppCompatActivity) : Fragment {
@@ -41,9 +57,14 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding = FragmentMypageBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage,container,false)
         binding.my = this
+        getImage(10)
         owner.setSupportActionBar(binding.toolbar2)
-
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getImage(10)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -94,6 +115,8 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding.btnProfileAccount.setOnClickListener {
             val intent01 = Intent(owner,ProfileAccountActivity::class.java)
             startActivity(intent01)
+
+
         }
 
         binding.btnTermsOfService.setOnClickListener {
@@ -115,27 +138,54 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
         }
-        
+
+
 
 
         //건의사항 메일보내기
-        binding.btnReport.setOnClickListener {
-            val sendEmail = Intent(Intent.ACTION_SEND)
-            with(sendEmail) {
-                type = "plain/Text"
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email)))
-                putExtra(
-                    Intent.EXTRA_SUBJECT,
-                    "<" + getString(R.string.app_name) + " " + getString(R.string.report) + ">"
-                )
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    "기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content):\n"
-                )
-                type = "message/rfc822"
-            }
-            startActivity(sendEmail)
+//        binding.btnReport.setOnClickListener {
+//            val sendEmail = Intent(Intent.ACTION_SEND)
+//            with(sendEmail) {
+//                type = "plain/Text"
+//                putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email)))
+//                putExtra(
+//                    Intent.EXTRA_SUBJECT,
+//                    "<" + getString(R.string.app_name) + " " + getString(R.string.report) + ">"
+//                )
+//                putExtra(
+//                    Intent.EXTRA_TEXT,
+//                    "기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content):\n"
+//                )
+//                type = "message/rfc822"
+//            }
+//            startActivity(sendEmail)
+//        }
+    }
+
+    private fun getImage(num:Int){
+        var file : File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/profile_img")
+        if(file?.isDirectory == null){
+            file?.mkdir()
         }
+        else
+        downloadImg(num)
+    }
+    private fun downloadImg(num: Int){
+        var filename = "profile$num.jpg"
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage!!.reference
+        storageRef!!.child("profile_img/$filename").child(filename).downloadUrl.addOnSuccessListener{
+            Glide.with(owner).load(it).into(binding.imageView)
+        }
+            .addOnSuccessListener {
+
+                Toast.makeText(owner,"다운로드 되었습니다.", Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+
+                Toast.makeText(owner,"다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
+            }
     }
 
 }
+
