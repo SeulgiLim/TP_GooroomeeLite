@@ -66,6 +66,7 @@
                     android:gravity="center">
 
                     <ImageButton
+                        android:id="@+id/take_photo"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:gravity="center"
