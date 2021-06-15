@@ -28,7 +28,9 @@ import kr.co.gooroomeelite.R
 import java.util.jar.Manifest
 import android.widget.Toast
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.exifinterface.media.ExifInterface
+import aop.fastcampus.part5.chapter03.util.PathUtil
 import kotlinx.android.synthetic.main.activity_share.*
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import splitties.toast.toast
@@ -37,9 +39,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ShareActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityShareBinding
-    private var root: View? = null
-
     private lateinit var mSurfaceViewHolder: SurfaceHolder
 
     private lateinit var mAccelerometer: Sensor //가속도계
@@ -64,6 +63,11 @@ class ShareActivity : AppCompatActivity() {
     private var mHandler: Handler? = null
 
     var mCameraId = CAMERA_BACK
+
+    //Camera Config
+    private lateinit var binding: ActivityShareBinding
+    private var root: View? = null
+
 
     companion object {
         const val CAMERA_BACK = "0"
@@ -103,6 +107,9 @@ class ShareActivity : AppCompatActivity() {
     }
 
     private lateinit var imageCapture: ImageCapture
+    private var isCapturing: Boolean = false
+
+    private var contentUri: Uri? = null
     //카메라 캡처 기능
     private fun captureCamera() {
         if (!::imageCapture.isInitialized) return
@@ -121,7 +128,7 @@ class ShareActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback { //이미지가 저장하는 시점에 uri를 받아다가 uri를 기반으로 이미지를 다른 갤러리로 볼 수 있도록 업데이트를 해준다.
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
-                    val rotation = binding.viewFinder.display.rotation // 회전 값 설정
+                    val rotation = binding.surfaceView.display.rotation // 회전 값 설정
                     contentUri = savedUri
                     updateSavedImageContent()
                 }
@@ -132,6 +139,24 @@ class ShareActivity : AppCompatActivity() {
                 }
             })
 
+    }
+
+    private fun updateSavedImageContent() {
+        contentUri?.let {
+            isCapturing = try {
+                val file = File(PathUtil.getPath(this, it) ?: throw FileNotFoundException())
+                MediaScannerConnection.scanFile(this, arrayOf(file.path), arrayOf("image/jpeg"), null)
+                Handler(Looper.getMainLooper()).post {
+                    binding.previewImageVIew.loadCenterCrop(url = it.toString(), corner = 4f)
+                }
+                if (isFlashEnabled) flashLight(false)
+                uriList.add(it)
+                false
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+                false
+            }
+        }
     }
 
     private fun initSensor() {
