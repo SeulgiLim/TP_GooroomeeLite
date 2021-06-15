@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -67,44 +68,65 @@ class StatisticsFragment : Fragment() {
         shareButton.setOnClickListener{
             requestPermission()
         }
-
         return pageView
     }
 
     private fun requestPermission(): Boolean{
         var permissions = false
-        Dexter.withContext(this.activity)
-            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .withListener(object : PermissionListener,
-                com.karumi.dexter.listener.single.PermissionListener {
-                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener{
+                override fun onPermissionGranted() {
                     permissions = true      //p0=response(응답)
                     val shareIntent = Intent(context,ShareActivity::class.java)
                     startActivity(shareIntent)
-                }
-
-                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
-                    permissions = false
-                    showError()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: PermissionRequest?,
-                    p1: PermissionToken?
-                ) {
-                    p1!!.continuePermissionRequest()
-                }
-
-                override fun onPermissionGranted() {
+//                    finish()
                 }
 
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+//                    for(i in deniedPermissions!!)
+//                        i.showError()
+                    permissions = false
+//                    showError()
                 }
 
             })
+            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
+            .setPermissions(Manifest.permission.CAMERA)
             .check()
         return permissions
     }
+//        Dexter.withContext(this.activity)
+//            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//            .withListener(object : PermissionListener,
+//                com.karumi.dexter.listener.single.PermissionListener {
+//                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+//                    permissions = true      //p0=response(응답)
+//                    val shareIntent = Intent(context,ShareActivity::class.java)
+//                    startActivity(shareIntent)
+//                }
+//
+//                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+//                    permissions = false
+//                    showError()
+//                }
+//
+//                override fun onPermissionRationaleShouldBeShown(
+//                    p0: PermissionRequest?,
+//                    p1: PermissionToken?
+//                ) {
+//                    p1!!.continuePermissionRequest()
+//                }
+//
+//                override fun onPermissionGranted() {
+//                }
+//
+//                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+//                }
+//
+//            })
+//            .check()
+//        return permissions
+//    }
 
     private fun showError(){
         Toast.makeText(
