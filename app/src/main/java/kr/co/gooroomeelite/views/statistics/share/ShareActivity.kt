@@ -7,6 +7,7 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.camera2.*
 import android.media.ImageReader
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ import android.util.Log
 import android.util.SparseIntArray
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -25,11 +27,19 @@ import androidx.core.app.ActivityCompat
 import kr.co.gooroomeelite.R
 import java.util.jar.Manifest
 import android.widget.Toast
+import androidx.camera.core.ImageCapture
 import androidx.exifinterface.media.ExifInterface
 import kotlinx.android.synthetic.main.activity_share.*
+import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import splitties.toast.toast
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ShareActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityShareBinding
+    private var root: View? = null
+
     private lateinit var mSurfaceViewHolder: SurfaceHolder
 
     private lateinit var mAccelerometer: Sensor //가속도계
@@ -73,20 +83,55 @@ class ShareActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //상태바 숨기기?? 있어도 되고 없어도 된다.
+        //상태바를 안보이도록 한다.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        //화면 켜짐 유지?? 아직까지 왜 있는지 모르겠음....
+        //화면이 켜진 상태를 유지한다.
         window.setFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
         )
-        setContentView(R.layout.activity_share)
+        binding = ActivityShareBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        root = binding.root
+//        setContentView(R.layout.activity_share)
 
         initSensor()
         initView()
+    }
+
+    private lateinit var imageCapture: ImageCapture
+    //카메라 캡처 기능
+    private fun captureCamera() {
+        if (!::imageCapture.isInitialized) return
+        val photoFile = File(//어떤 위치에다가 파일을 쓸지??
+            PathUtil.getOutputDirectory(this),
+            SimpleDateFormat(
+                FILENAME_FORMAT, Locale.KOREA
+            ).format(System.currentTimeMillis()) + ".jpg")
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build() //파일 객체를 지정해서 빌드를 할 것이다.
+
+        if (isFlashEnabled) flashLight(true)
+        imageCapture.takePicture(
+            outputOptions, //파일 위치 지정
+            cameraExecutor, //카메라 촬영 후 저장할 수 있음
+            object : ImageCapture.OnImageSavedCallback { //이미지가 저장하는 시점에 uri를 받아다가 uri를 기반으로 이미지를 다른 갤러리로 볼 수 있도록 업데이트를 해준다.
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
+                    val rotation = binding.viewFinder.display.rotation // 회전 값 설정
+                    contentUri = savedUri
+                    updateSavedImageContent()
+                }
+
+                override fun onError(e: ImageCaptureException) { //에러가 나는 경우에 대응을 해준다.
+                    e.printStackTrace()
+                    isCapturing = false
+                }
+            })
+
     }
 
     private fun initSensor() {
@@ -128,6 +173,7 @@ class ShareActivity : AppCompatActivity() {
         btn_convert.setOnClickListener { switchCamera() }
     }
 
+    //카메라 전환
     private fun switchCamera() {
         when (mCameraId) {
             CAMERA_BACK -> {
