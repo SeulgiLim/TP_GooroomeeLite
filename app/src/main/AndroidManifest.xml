@@ -16,7 +16,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Gooroomeelite">
+        android:theme="@style/Theme.Gooroomeelite"
+        android:name=".views.statistics.share.gooroomeeliteApplication"
+        >
         <activity android:name=".views.statistics.share.StickerActivity"></activity>
         <activity android:name=".views.statistics.share.ShareActivity" />
         <activity android:name=".views.common.SplashActivity">
