@@ -7,40 +7,30 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.hardware.camera2.*
 import android.media.ImageReader
-import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
+import android.os.*
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.SparseIntArray
 import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
-import android.widget.ImageButton
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import kr.co.gooroomeelite.R
-import java.util.jar.Manifest
 import android.widget.Toast
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.*
+import androidx.core.app.ActivityCompat
 import androidx.exifinterface.media.ExifInterface
-import aop.fastcampus.part5.chapter03.util.PathUtil
 import kotlinx.android.synthetic.main.activity_share.*
+import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import splitties.toast.toast
-import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
+
 
 class ShareActivity : AppCompatActivity() {
     private lateinit var mSurfaceViewHolder: SurfaceHolder
-
+//    https://developer.android.com/guide/topics/sensors/sensors_position
     private lateinit var mAccelerometer: Sensor //가속도계
     private lateinit var mMagnetometer: Sensor  //자력계
     private lateinit var mSensorManager: SensorManager //센서관리자
@@ -49,9 +39,9 @@ class ShareActivity : AppCompatActivity() {
     private lateinit var mCameraDevice: CameraDevice //카메라 크기
 
     private lateinit var mPreviewBuilder: CaptureRequest.Builder //프리뷰를 계속해서 보여주기 위한 핸들러이다.
-    private lateinit var mSession: CameraCaptureSession
+    private lateinit var mSession: CameraCaptureSession //카메라에서 이미지 캡처
 
-    private val deviceOrientation: DeviceOrientation by lazy { DeviceOrientation() }
+    private val deviceOrientation: DeviceOrientation by lazy { DeviceOrientation() } //위치 센서
 
 
     //스마트폰 크기 호환성
@@ -68,21 +58,23 @@ class ShareActivity : AppCompatActivity() {
     private lateinit var binding: ActivityShareBinding
     private var root: View? = null
 
-
     companion object {
         const val CAMERA_BACK = "0"
         const val CAMERA_FRONT = "1"
 
+        //카메라 캡처
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private val LENS_FACING: Int = CameraSelector.LENS_FACING_BACK
+
         private val ORIENTATIONS = SparseIntArray()
 
-        init {
+        init {//방향회전
             ORIENTATIONS.append(ExifInterface.ORIENTATION_NORMAL, 0)
             ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_90, 90)
             ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_180, 180)
             ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 270)
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,68 +89,54 @@ class ShareActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
         )
-        binding = ActivityShareBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        root = binding.root
-//        setContentView(R.layout.activity_share)
+//        binding = ActivityShareBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//        root = binding.root
+        setContentView(R.layout.activity_share)
 
         initSensor()
         initView()
-    }
-
-    private lateinit var imageCapture: ImageCapture
-    private var isCapturing: Boolean = false
-
-    private var contentUri: Uri? = null
-    //카메라 캡처 기능
-    private fun captureCamera() {
-        if (!::imageCapture.isInitialized) return
-        val photoFile = File(//어떤 위치에다가 파일을 쓸지??
-            PathUtil.getOutputDirectory(this),
-            SimpleDateFormat(
-                FILENAME_FORMAT, Locale.KOREA
-            ).format(System.currentTimeMillis()) + ".jpg")
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build() //파일 객체를 지정해서 빌드를 할 것이다.
-
-        if (isFlashEnabled) flashLight(true)
-        imageCapture.takePicture(
-            outputOptions, //파일 위치 지정
-            cameraExecutor, //카메라 촬영 후 저장할 수 있음
-            object : ImageCapture.OnImageSavedCallback { //이미지가 저장하는 시점에 uri를 받아다가 uri를 기반으로 이미지를 다른 갤러리로 볼 수 있도록 업데이트를 해준다.
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
-                    val rotation = binding.surfaceView.display.rotation // 회전 값 설정
-                    contentUri = savedUri
-                    updateSavedImageContent()
-                }
-
-                override fun onError(e: ImageCaptureException) { //에러가 나는 경우에 대응을 해준다.
-                    e.printStackTrace()
-                    isCapturing = false
-                }
-            })
-
-    }
-
-    private fun updateSavedImageContent() {
-        contentUri?.let {
-            isCapturing = try {
-                val file = File(PathUtil.getPath(this, it) ?: throw FileNotFoundException())
-                MediaScannerConnection.scanFile(this, arrayOf(file.path), arrayOf("image/jpeg"), null)
-                Handler(Looper.getMainLooper()).post {
-                    binding.previewImageVIew.loadCenterCrop(url = it.toString(), corner = 4f)
-                }
-                if (isFlashEnabled) flashLight(false)
-                uriList.add(it)
-                false
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-                false
-            }
+//        startCamera(binding.surfaceView)
+        take_photo.setOnClickListener{
+            takePicture()
         }
     }
 
+    private var mDeviceRocation : Int = 0
+
+    private fun initView() {
+        //스마트폰 크기 호환성 확인!! 없어도 되는 코드
+        with(DisplayMetrics()) {
+            windowManager.defaultDisplay.getMetrics(this)
+            mHeight = heightPixels //사용 가능한 디스플레이 크기의 절대 높이(픽셀)이다.
+            mWidth = widthPixels //사용 가능한 디스플레이 크기의 절대 너비(픽셀)이다.
+        }
+
+    private fun takePicture(){
+        try {
+        val captureRequestBuilder =
+            mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE) //用来设置拍照请求的request
+
+        captureRequestBuilder.addTarget(mImageReader.surface)
+        captureRequestBuilder.set(
+            CaptureRequest.CONTROL_AF_MODE,
+            CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+        )
+        captureRequestBuilder.set(
+            CaptureRequest.CONTROL_AE_MODE,
+            CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH
+        )
+
+        mDeviceRocation = ORIENTATIONS.get(deviceOrientation.getOrientation());
+        Log.d("@@@", mDeviceRocation.toString())
+            captureRequestBuilder.set(CaptureRequest.JPEG_ORIENTATION, mDeviceRotation);
+            var mCaptureRequest : CaptureRequest  = captureRequestBuilder.build()
+            mSession.capture(mCaptureRequest, mSessionCaptureCallback, mHandler);
+        } catch (e:CameraAccessException){
+            e.printStackTrace()
+        }
+    }
+    //same
     private fun initSensor() {
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) //가속도계
@@ -166,15 +144,9 @@ class ShareActivity : AppCompatActivity() {
 
     }
 
-    private fun initView() {
-        //스마트폰 크기 호환성 확인!! 없어도 되는 코드
-        with(DisplayMetrics()) {
-            windowManager.defaultDisplay.getMetrics(this)
-            mHeight = heightPixels
-            mWidth = widthPixels
-        }
 
-//        var surfaceView :SurfaceView = findViewById(R.id.surfaceView)
+
+//        var surfaceView : PreviewView = findViewById(R.id.surfaceView)
         mSurfaceViewHolder = surfaceView.holder
         mSurfaceViewHolder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -222,12 +194,14 @@ class ShareActivity : AppCompatActivity() {
         openCamera()
     }
 
+
     private fun openCamera() {
         try {
             val mCameraManager = this.getSystemService(Context.CAMERA_SERVICE) as CameraManager
             val characteristics = mCameraManager.getCameraCharacteristics(mCameraId)
             //카메가에서 지원하는 크기 목록(이 값을 이용하여 사진 촬영 시 사진 크기를 지정할 수 있다.)
             //https://kkangsnote.tistory.com/48
+            //SCALER_STREAM_CONFIGURATION_MAP 객체에는 카레라의 각종 지원 정보가 담겨있다.
             val map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
 
             val largestPreviewSize = map!!.getOutputSizes(ImageFormat.JPEG)[0]
@@ -239,7 +213,7 @@ class ShareActivity : AppCompatActivity() {
                 ImageFormat.JPEG,
                 7
             )
-            //해당권한의 기능사용 시 checkSelfPermission을 사용하여 사용자가 권한을 승인해야만 API의 사용이 사용
+            //해당권한의 기능 사용 시 checkSelfPermission을 사용하여 사용자가 권한을 승인해야만 API의 사용이 사용
             if (ActivityCompat.checkSelfPermission(
                     this,
                     android.Manifest.permission.CAMERA
@@ -313,7 +287,7 @@ class ShareActivity : AppCompatActivity() {
             Toast.makeText(this@ShareActivity, "카메라 구성 실패", Toast.LENGTH_SHORT).show()
         }
     }
-
+    //same
     override fun onResume() {
         super.onResume()
 
@@ -324,13 +298,14 @@ class ShareActivity : AppCompatActivity() {
             deviceOrientation.eventListener, mMagnetometer, SensorManager.SENSOR_DELAY_UI
         )
     }
-
+    //same
     override fun onPause() {
         super.onPause()
         mSensorManager.unregisterListener(deviceOrientation.eventListener)
     }
-
-    //카메라에서 지원하는 크기 목록
+    //same
+    //카메라에서 지원하는 크기 목록 (해상도 너비, 해상도 높
+    //종횡비 텍스처보기 설정
     private fun setAspectRatioTextureView(ResolutionWidth: Int, ResolutionHeight: Int) {
         if (ResolutionWidth > ResolutionHeight) {
             val newWidth = mWidth
@@ -343,7 +318,7 @@ class ShareActivity : AppCompatActivity() {
             updateTextureViewSize(newWidth, newHeight)
         }
     }
-
+    //same
     private fun updateTextureViewSize(viewWidth: Int, viewHeight: Int) {
 //        var surfaceView :SurfaceView = findViewById(R.id.surfaceView)
         Log.d("ViewSize", "TextureView Width : $viewWidth TextureView Height : $viewHeight")

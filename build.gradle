@@ -3,6 +3,7 @@ buildscript {
     ext.kotlin_version = "1.4.32"
     ext.camerax_version = "1.1.0-alpha03"
     ext.camerax_view_version = "1.0.0-alpha23"
+// alpha api가 자주 변경된다는 것이다. 카메라 가이드라인 매번 변경사항이 documnent에 올라가
     repositories {
         google()
         jcenter()
