@@ -6,6 +6,5 @@ import androidx.camera.core.CameraXConfig
 
 class gooroomeeliteApplication: Application(),CameraXConfig.Provider {
 
-    //
     override fun getCameraXConfig(): CameraXConfig = Camera2Config.defaultConfig()
 }
