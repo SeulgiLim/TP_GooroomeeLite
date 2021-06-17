@@ -48,15 +48,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/controllerGuideline" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/previewImageVIew"-->
-<!--        android:layout_width="48dp"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:layout_marginStart="26dp"-->
-<!--        android:background="@drawable/button_round_corner_4_black_24"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/captureButton"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/captureButton" />-->
+    <!-- 이미지뷰 지정:  이 이미지뷰에 사진이 촬영이 되면 gooroomeliteApplication 에 반응이 된다. -->
+    <ImageView
+        android:id="@+id/previewImageVIew"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="26dp"
+        android:background="@drawable/button_round_corner_4_black_24"
+        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

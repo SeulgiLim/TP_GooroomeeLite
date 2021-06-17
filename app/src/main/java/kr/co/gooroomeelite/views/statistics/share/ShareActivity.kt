@@ -1,6 +1,4 @@
 package kr.co.gooroomeelite.views.statistics.share
-
-
 import android.content.Context
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
