@@ -16,6 +16,7 @@ import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
@@ -43,6 +44,8 @@ class ShareActivity : AppCompatActivity() {
     private var root: View? = null
 
     private var isCapturing : Boolean = false
+
+    private var isFlashEnabled: Boolean = false //이 변수는 플래시가 필요할 때 쓰게 만들도록 한다.
 
     //이미지가 촬영된 이후레 이미지를 관리한다.
     private var uriList = mutableListOf<Uri>()
@@ -114,10 +117,21 @@ class ShareActivity : AppCompatActivity() {
                 preview.setSurfaceProvider(viewFinder.surfaceProvider) //화상으로 보여줄 수 있도록
                 bindCaptureListener()//캡처기능, 외부에다가 저장된 Uri를 알려줘야 하기 때문에
                 bindZoomListner()
+                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
             }
         },cameraMainExecutor) //카메라 용 쓰레드가 따로 필요하다
+    }
+
+    private fun bindCaptureListener() = with(binding){
+        captureButton.setOnClickListener{
+            //클릭하는 시점에 현재 캡처 중인지 아닌지 체크
+            if(isCapturing.not()){
+                isCapturing = true
+                captureCamera()
+            }
+        }
     }
 
     private fun bindZoomListner() = with(binding){
@@ -139,15 +153,19 @@ class ShareActivity : AppCompatActivity() {
         }//터치 시 해당 이벤트를 scaleGestureDetector(스케일 제스처)로부터 바인딩
     }
 
-    private fun bindCaptureListener() = with(binding){
-        captureButton.setOnClickListener{
-            //클릭하는 시점에 현재 캡처 중인지 아닌지 체크
-            if(isCapturing.not()){
-                isCapturing = true
-                captureCamera()
+    private fun initFlashAndAddListener() = with(binding){
+        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false //현재 플래시가 있는지 확인
+        flashSwitch.isGone = hasFlash.not() //플래시가 없는 경우
+        if(hasFlash){
+            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
+                isFlashEnabled = isChecked
             }
+        }else{
+            isFlashEnabled = false
+            flashSwitch.setOnClickListener(null)
         }
     }
+
 
 
     private var contentUri : Uri? = null
@@ -160,6 +178,7 @@ class ShareActivity : AppCompatActivity() {
             ).format(System.currentTimeMillis()) + ".jpg" //이 시간대로 format이 지정이 되었음, .jpg는 확장자명
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build() //이 파일을 쓸 수 있는 아웃풋
+        if(isFlashEnabled) flashLight(true)
         //imageCapture가 초기화가 된 상태에서 확인이 되었음
         imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
@@ -174,9 +193,17 @@ class ShareActivity : AppCompatActivity() {
             override fun onError(exception: ImageCaptureException) {
                 exception.printStackTrace()
                 isCapturing = false
+                flashLight(false)//켰는데 에러가 났으면
             }
 
         })
+    }
+    //플래시를 켜주는 함수
+    private fun flashLight(light:Boolean){
+        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+        if(hasFlash){
+            camera?.cameraControl?.enableTorch(light) //카메라 껐다 켰다
+        }
     }
 
     //이미지가 저장이 되었으니 다른 갤러리를 보여줄 수 있도록 설정해 달라!!
@@ -193,10 +220,12 @@ class ShareActivity : AppCompatActivity() {
                     binding.previewImageVIew.loadCenterCrop(url = it.toString(), corner = 4f)//현재 메인쓰레드에서 이미지를 처리해줄 수 있도록 한다.
                 }
                 uriList.add(it)
+                flashLight(false)//플래시가 필요 없는 경우 꺼준다!!
                 false
             }catch (e: Exception){
                 e.printStackTrace()//에러가 있기 때문에 토스트 뛰어준다. 중간에 유실될 수 있다는 가정 하에 인 것!!
                 Toast.makeText(this,"파일이 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
+                flashLight(false)
                 false //에러가 나면 false로 처리한다.
             }
         }
