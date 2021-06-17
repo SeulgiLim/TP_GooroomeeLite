@@ -128,6 +128,35 @@ class ShareActivity : AppCompatActivity() {
     }
 
 
+    private var contentUri : Uri? = null
+    private fun captureCamera(){
+        if(::imageCapture.isInitialized.not()) return //초기화가 안 되어 있으면 return을 해서 함수를 실행하지 못하게 막는다.
+        val photoFile = File( //특정 위치에 넣어줄 수 있도록 파일을 넣어준다. 즉,PathUtility라는 것을 구현해서 외장하드에 구현할 수 있도록 한다.
+            PathUtil.getOutputDirectory(this),
+            SimpleDateFormat(//하위에는 파일명을 넣어 줄 것이다.
+                FILENAME_FORMAT, Locale.KOREA
+            ).format(System.currentTimeMillis()) + ".jpg" //이 시간대로 format이 지정이 되었음, .jpg는 확장자명
+        )
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build() //이 파일을 쓸 수 있는 아웃풋
+        //imageCapture가 초기화가 된 상태에서 확인이 되었음
+        imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                //outputFileResults에서 꺼내서 Saved된(저장된) Uri를 꺼낸다.
+                val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile) //(이 값이 null일 수 있다.)저장이 안되어 있는 경우에는 아까 fromFile하는 곳에다가 photoFile를 지정해준다.!!
+                //가장 최근에 저장했었던 fileUri를 보개 위해서
+                contentUri = savedUri //저장된 Uri를 넣어준다.
+                updateSavedImageContent()
+
+            }
+
+            override fun onError(exception: ImageCaptureException) {
+                exception.printStackTrace()
+                isCapturing = false
+            }
+
+        })
+    }
+
     //이미지가 저장이 되었으니 다른 갤러리를 보여줄 수 있도록 설정해 달라!!
     private fun updateSavedImageContent() {
         contentUri?.let{
@@ -149,34 +178,6 @@ class ShareActivity : AppCompatActivity() {
                 false //에러가 나면 false로 처리한다.
             }
         }
-    }
-
-    private var contentUri : Uri? = null
-    private fun captureCamera(){
-        if(::imageCapture.isInitialized.not()) return //초기화가 안 되어 있으면 return을 해서 함수를 실행하지 못하게 막는다.
-        val photoFile = File( //특정 위치에 넣어줄 수 있도록 파일을 넣어준다. 즉,PathUtility라는 것을 구현해서 외장하드에 구현할 수 있도록 한다.
-            PathUtil.getOutputDirectory(this),
-            SimpleDateFormat(//하위에는 파일명을 넣어 줄 것이다.
-                FILENAME_FORMAT, Locale.KOREA
-            ).format(System.currentTimeMillis()) + ".jpg" //이 시간대로 format이 지정이 되었음, .jpg는 확장자명
-        )
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build() //이 파일을 쓸 수 있는 아웃풋
-        //imageCapture가 초기화가 된 상태에서 확인이 되었음
-        imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
-            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                //outputFileResults에서 꺼내서 Saved된(저장된) Uri를 꺼낸다.
-                val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile) //(이 값이 null일 수 있다.)저장이 안되어 있는 경우에는 아까 fromFile하는 곳에다가 photoFile를 지정해준다.!!
-                //가장 최근에 저장했었던 fileUri를 보개 위해서
-                contentUri = savedUri //저장된 Uri를 넣어준다.
-
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                exception.printStackTrace()
-                isCapturing = false
-            }
-
-        })
     }
     companion object{
         //권한 관리를 해 줄 수 있도록 한다.(난 이미 statisticsFramgment에서 permission check를 해)
