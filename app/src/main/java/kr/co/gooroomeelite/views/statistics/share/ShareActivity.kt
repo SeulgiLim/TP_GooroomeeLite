@@ -2,6 +2,7 @@ package kr.co.gooroomeelite.views.statistics.share
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
@@ -41,14 +42,19 @@ class ShareActivity : AppCompatActivity() {
     private lateinit var imageCapture: ImageCapture
 
     private var camera: Camera? = null
+    //------------------ 최근 이미지 보이기 -----------------------------
     private var root: View? = null
+    //---------------------------------------------------------------
+
 
     private var isCapturing : Boolean = false
 
     private var isFlashEnabled: Boolean = false //이 변수는 플래시가 필요할 때 쓰게 만들도록 한다.
 
+    //------------------ 최근 이미지 보이기 -----------------------------
     //이미지가 촬영된 이후레 이미지를 관리한다.
     private var uriList = mutableListOf<Uri>()
+    //---------------------------------------------------------------
 
     private val displayManager by lazy{
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager //디스플레이가 변경(카메라 회전을 했을 때,카메가 화면이 바뀌었을 때)이 되었을 때 그 로테이션의 값을 얻어와서 지정을 해주기 위함이다.
@@ -62,17 +68,21 @@ class ShareActivity : AppCompatActivity() {
 
         override fun onDisplayChanged(displayId: Int) {
             if(this@ShareActivity.displayId == displayId) {//디스플레이가 변경 시(화면이 회전 시) 처리 필요
+                //------------------ 최근 이미지 보이기 -----------------------------
                 if (::imageCapture.isInitialized && root != null) {//현재 바라보고 있는 화면이 어디있는지
                     //화면 회전 시 대응해줄 수 있는 코드,  만약에 이 값이 잘못된 코드이면 INVALID_ROTATION(잘못된 회전)로 처리
                     imageCapture.targetRotation = root?.display?.rotation ?: ImageOutputConfig.INVALID_ROTATION //?:(이 연산자)만약 좌항이 INVALID_ROTATION이면 INVALID_ROTATION를 반환한다.
                 }
+                //-----------------------------------------------------------------
             }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShareBinding.inflate(layoutInflater) //inflate, xml에 씌어져 있는 view의 객체를 실제로 가져오는 것!!
+        //------------------ 최근 이미지 보이기 -----------------------------
         root = binding.root //현재 디스플레이 상태??24:37
+        //--------------------------------------------------------------
         setContentView(binding.root) //R.id.activity_main
 
         startCamera(binding.viewFinder)
@@ -129,6 +139,8 @@ class ShareActivity : AppCompatActivity() {
             //클릭하는 시점에 현재 캡처 중인지 아닌지 체크
             if(isCapturing.not()){
                 isCapturing = true
+                val stickerIntent = Intent(this@ShareActivity,StickerActivity::class.java)
+                startActivity(stickerIntent)
                 captureCamera()
             }
         }
@@ -215,11 +227,13 @@ class ShareActivity : AppCompatActivity() {
                 val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException()) //만약 파일을 없는 경우에 에러를 내보낸다.
                 //이거를 밖에다 어떻게 처리할 것 인지는 이미지에 image/jpeg?스택을 갖고 있는 파일을 외부로 보내서 처리해주겠다.즉, 외부에서도 이 파일을 읽힌다.null은 콜백은 따로 지정하지 않겠다는 뜻이다.
                 MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpeg"),null)
+                //------------------ 최근 이미지 보이기 -----------------------------
                 //사진이 저장한 상태에서 미리보기 이미지를 보여주면 좋을 것 같다 생각을 했는데...
                 Handler(Looper.getMainLooper()).post{ //getMainLooper()함수는 Main Thread(UI Thread)가 사용하는 Looper 즉 언제든 Main Looper를 반환한다.
                     binding.previewImageVIew.loadCenterCrop(url = it.toString(), corner = 4f)//현재 메인쓰레드에서 이미지를 처리해줄 수 있도록 한다.
                 }
                 uriList.add(it)
+                //---------------------------------------------------------------------
                 flashLight(false)//플래시가 필요 없는 경우 꺼준다!!
                 false
             }catch (e: Exception){
