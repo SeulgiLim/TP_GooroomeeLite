@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.mypage.MypageFragment
@@ -26,7 +27,14 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.home -> replaceFragment(homeFragment)
                 R.id.statistics-> replaceFragment(statisticsFragment)
-                R.id.mypage-> replaceFragment(mypageFragment)
+                R.id.mypage-> {
+                    var mypageFragment = MypageFragment(this)
+                    var bundle = Bundle()
+                    var uid = FirebaseAuth.getInstance().currentUser?.uid
+                    bundle.putString("destinationUid",uid)
+                    mypageFragment.arguments=bundle
+                    replaceFragment(mypageFragment)
+                }
             }
             true
         }
