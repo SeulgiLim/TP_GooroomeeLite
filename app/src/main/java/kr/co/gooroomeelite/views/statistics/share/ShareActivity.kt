@@ -1,11 +1,13 @@
 package kr.co.gooroomeelite.views.statistics.share
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.*
+import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -110,11 +112,31 @@ class ShareActivity : AppCompatActivity() {
                     this@ShareActivity,cameraSelector,preview,imageCapture
                 ) //카메라 객체를 가져와야 한다.
                 preview.setSurfaceProvider(viewFinder.surfaceProvider) //화상으로 보여줄 수 있도록
-                bindCaptureListener()//외부에다가 저장된 Uri를 알려줘야 하기 때문에
+                bindCaptureListener()//캡처기능, 외부에다가 저장된 Uri를 알려줘야 하기 때문에
+                bindZoomListner()
             }catch(e:Exception){
                 e.printStackTrace()
             }
         },cameraMainExecutor) //카메라 용 쓰레드가 따로 필요하다
+    }
+
+    private fun bindZoomListner() = with(binding){
+        //줌아웃 시 두 손가락이 키다운?이라는 키를 받아서 두가지의 값이 얾마나 늘어나냐 줄어드냐를 값을 계산해서 콜백으로 넘겨주는 것!!
+        val listener = object : ScaleGestureDetector.SimpleOnScaleGestureListener(){
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                val currentZoomRatio = camera?.cameraInfo?.zoomState?.value?.zoomRatio ?: 1f//배율 값 계산, 비율값 가져옴
+                val delta = detector?.scaleFactor//currentZoomRatio 이 값을 가지고 얼마나 움직였는지,움직인 실제 비율값!!
+                //delta(이 비율값)을 기준으로 계산을 해준다. 이 값을 곱하면 그 다음에 얼마나 확대를 할 건지
+                   camera?.cameraControl?.setZoomRatio(currentZoomRatio * delta!!)
+                return true//콜백 메서드
+            }
+        }
+        @SuppressLint("ClickableViewAccessibility")//터치 이벤트를 성공적으로 작동했다는 것을 보여주기 위해 사용
+        val scaleGestureDetector = ScaleGestureDetector(this@ShareActivity,listener) //위에 listener 등
+        viewFinder.setOnTouchListener{_,event-> //_(view)는 안 쓰니까 제외
+            scaleGestureDetector.onTouchEvent(event)
+            return@setOnTouchListener true
+        }//터치 시 해당 이벤트를 scaleGestureDetector(스케일 제스처)로부터 바인딩
     }
 
     private fun bindCaptureListener() = with(binding){
