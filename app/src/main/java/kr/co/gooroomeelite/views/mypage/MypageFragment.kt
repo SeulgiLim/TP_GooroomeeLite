@@ -14,6 +14,7 @@ import android.os.Environment
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -44,8 +45,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
     val version = BuildConfig.VERSION_NAME
     var firestore : FirebaseFirestore? = null
     var uid : String? = null
-    //Storage에서 받아오는 이미지를 프로필 사진으로.
-    //Storage에서 받아오는 닉네임을 닉네임 스트링으로.
+    var photoUri : String?= null
 
     companion object {
         fun newInstance(owner: AppCompatActivity) : Fragment {
@@ -63,9 +63,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding.my = this
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-//        var filename = "profile$uid.jpg"
-//        if()
-//        getImageNickName(10)
         owner.setSupportActionBar(binding.toolbar2)
 
 
@@ -80,16 +77,8 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
-            val nickname = ds.data?.get("nickname").toString()
-            binding.nickname.text = nickname
-        }
-
-//        if (스토리지에 이미지파일이 없으면.)
-        getImageNickName(uid!!)
         with(owner.supportActionBar) {
             this!!.setDisplayHomeAsUpEnabled(true)
-            this.setHomeAsUpIndicator(kr.co.gooroomeelite.R.drawable.ic_back_icon)
             setTitle("Gooroomee")
         }
 
@@ -117,7 +106,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
                 Toast.makeText(owner,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
-//                owner.finish()
             }
             cancelButton.setOnClickListener {
                 Toast.makeText(owner, "취소되었습니다.", Toast.LENGTH_SHORT).show()
@@ -168,21 +156,18 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
     }
     private fun downloadImgNickName(num: String){
         var filename = "profile$num.jpg"
+        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
+            val nickname = ds.data?.get("nickname").toString()
+            binding.nickname.text = nickname
+        }
         storage = FirebaseStorage.getInstance()
         storageRef = storage!!.reference
         storageRef!!.child("profile_img/$filename").child(filename).downloadUrl.addOnSuccessListener{
             Glide.with(owner).load(it).into(binding.imageView)
         }
-            .addOnSuccessListener {
-
-                Toast.makeText(owner,"다운로드 되었습니다.", Toast.LENGTH_LONG).show()
-            }
-            .addOnFailureListener {
-
-                Toast.makeText(owner,"다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
-            }
 
     }
+
 
 }
 

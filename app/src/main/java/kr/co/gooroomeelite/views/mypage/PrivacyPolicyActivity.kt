@@ -8,6 +8,7 @@ package kr.co.gooroomeelite.views.mypage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityPrivacyPolicyBinding
 
@@ -24,5 +25,13 @@ class PrivacyPolicyActivity : AppCompatActivity() {
             this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
             setTitle(R.string.service3)
         }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
