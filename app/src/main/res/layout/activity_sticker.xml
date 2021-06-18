@@ -8,43 +8,50 @@
     android:orientation="vertical"
     tools:context=".views.statistics.share.StickerActivity">
 
+    <ImageView
+        android:id="@+id/previewImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-
-        <ImageView
-            android:id="@+id/previewImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
 
     <LinearLayout
-        android:id="@+id/share_buttons"
+        android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <android.widget.Button
             android:id="@+id/share_buttons_cancel"
-            android:text="취소"
-            android:textSize="14sp"
-            android:textColor="#767676"
-            android:textStyle="bold"
             android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_weight="1"/>
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="취소"
+            android:textColor="#767676"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
         <android.widget.Button
             android:id="@+id/share_buttons_confirm"
-            android:text="확인"
-            android:textSize="14sp"
-            android:textColor="#767676"
-            android:textStyle="bold"
             android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_weight="1"/>
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="공유하기"
+            android:textColor="#767676"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

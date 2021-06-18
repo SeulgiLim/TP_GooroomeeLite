@@ -34,7 +34,7 @@ class ShareActivity : AppCompatActivity() {
 
     //ShareActivity에 binding객체를 받아온다.
     private lateinit var binding: ActivityShareBinding
-    private lateinit var cameraExcutor :  ExecutorService
+    private lateinit var cameraExcutor :  ExecutorService //카메라 집행자??
     private val cameraMainExecutor by lazy { ContextCompat.getMainExecutor(this) }
     //카메라 기능을 사용하기 위해서!! 카메라 얻어오면 이후 실행 리스너 등록
     private val cameraProviderFuture by lazy { ProcessCameraProvider.getInstance(this) }
