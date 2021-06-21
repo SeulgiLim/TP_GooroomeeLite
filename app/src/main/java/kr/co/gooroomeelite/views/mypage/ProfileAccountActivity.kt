@@ -84,13 +84,13 @@ class ProfileAccountActivity : AppCompatActivity() {
 
     }
 
-    init {
-        firestore?.collection("users")?.document(uid!!)?.get()?.addOnCompleteListener {
-            if (it.isSuccessful) {
-                val contentDTOs = it.result?.toObject(ContentDTO::class.java)
-            }
-        }
-    }
+//    init {
+//        firestore?.collection("users")?.document(uid!!)?.get()?.addOnCompleteListener {
+//            if (it.isSuccessful) {
+//                val contentDTOs = it.result?.toObject(ContentDTO::class.java)
+//            }
+//        }
+//    }
 
     private fun contentUploadandDelete() {
         val num: String = uid!!
@@ -98,23 +98,33 @@ class ProfileAccountActivity : AppCompatActivity() {
         val storageRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
 
 
-        storageRef!!.putFile(photoUri!!).addOnSuccessListener {
-            storageRef.downloadUrl.addOnSuccessListener { uri ->
-                val contentDTO = ContentDTO()
-                //이미지 주소
-                contentDTO.profileImageUrl = uri.toString()
-                //닉네임
-                contentDTO.nickname = binding.edittext.text.toString()
-                firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
+        if (photoUri != null) {
+            storageRef!!.putFile(photoUri!!).addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    val contentDTO = ContentDTO()
+                    //이미지 주소
+                    contentDTO.profileImageUrl = uri.toString()
+                    //닉네임
+                    contentDTO.nickname = binding.edittext.text.toString()
+                    firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
 
-                isLoading.value = false
-                finish()
+                    isLoading.value = false
+                    finish()
+                }
+                setResult(Activity.RESULT_OK)
             }
-            setResult(Activity.RESULT_OK)
-        }
 
-        val desertRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
-        desertRef?.delete()?.addOnSuccessListener {
+            val desertRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
+            desertRef?.delete()?.addOnSuccessListener {
+            }
+        } else {storageRef!!.downloadUrl.addOnSuccessListener { uri ->
+            val contentDTO = ContentDTO()
+            contentDTO.nickname = binding.edittext.text.toString()
+            firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
+            isLoading.value = false
+            finish()
+        }
+            setResult(Activity.RESULT_OK)
         }
     }
 
