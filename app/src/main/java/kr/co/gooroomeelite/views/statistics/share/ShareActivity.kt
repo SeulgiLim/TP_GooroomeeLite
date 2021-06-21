@@ -86,11 +86,13 @@ class ShareActivity : AppCompatActivity() {
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
         val rotation = viewFinder.display.rotation
-        val cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
-        val cameraSelectorFront = CameraSelector.Builder().requireLensFacing(LENS_FRONT).build()
-        val selector : Int = 0
-
-
+        var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+//        btnConvert.setOnClickListener{
+//            cameraSelector = when(selector){
+//                LENS_BACK -> CameraSelector.Builder().requireLensFacing(LENS_FRONT).build()
+//                else -> CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+//            }
+//        }
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().apply{
@@ -107,12 +109,13 @@ class ShareActivity : AppCompatActivity() {
 
             try{
                 cameraProvider.unbindAll()
-                binding.btnConvert.setOnClickListener {
-                    camera = when (selector) {
-                        1 -> cameraProvider.bindToLifecycle(this@ShareActivity, cameraSelector, preview, imageCapture )
-                        else -> cameraProvider.bindToLifecycle(this@ShareActivity, cameraSelectorFront, preview, imageCapture )
-                    }
-                }
+                camera = cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
+//                btnConvert.setOnClickListener{
+//                    camera = when(selector){
+//                        LENS_BACK -> cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelectorFront,preview,imageCapture)
+//                        else -> cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
+//                    }
+//                }
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
@@ -222,8 +225,8 @@ class ShareActivity : AppCompatActivity() {
         }
     }
     companion object{
-        private val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
-        private val LENS_FRONT: Int = CameraSelector.LENS_FACING_FRONT
+        private const val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
+        private const val LENS_FRONT: Int = CameraSelector.LENS_FACING_FRONT
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 }

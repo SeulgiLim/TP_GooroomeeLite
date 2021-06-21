@@ -62,29 +62,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/captureButton" />
 
-        <ImageButton
-            android:id="@+id/btn_convert"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_baseline_autorenew_24"
-            app:layout_constraintBottom_toBottomOf="@+id/captureButton"
-            app:layout_constraintTop_toTopOf="@+id/captureButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="26dp"
-            android:layout_marginBottom="30dp"
-            />
+<!--    <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--        android:id="@+id/flashSwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="26dp"-->
+<!--        android:text="@string/flash"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/captureButton"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/captureButton"-->
+<!--        app:layout_constraintVertical_bias="0.49"-->
+<!--        tools:visibility="visible" />-->
 
+
+    <ImageButton
+        android:id="@+id/btnConvert"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/ic_baseline_autorenew_24"
+        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/flashSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:text="@string/flash"
         android:layout_marginEnd="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_convert"
+        app:layout_constraintTop_toBottomOf="@+id/btnConvert"
         tools:visibility="visible" />
 <!--    android:text="@string/flash"-->
     <!--&lt;!&ndash;    플래시가 없는 디비아스도 있기 때문에 &ndash;&gt;-->
