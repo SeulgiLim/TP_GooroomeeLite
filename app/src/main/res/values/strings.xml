@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">gooroomeelite</string>
     <string name="flash">플래시</string>
+    <string name="app_content_path">Pictures/gooroomeelite</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

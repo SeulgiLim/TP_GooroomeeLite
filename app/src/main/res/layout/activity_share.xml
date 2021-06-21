@@ -49,29 +49,72 @@
         app:layout_constraintTop_toBottomOf="@+id/controllerGuideline" />
 
     <!-- 이미지뷰 지정:  이 이미지뷰에 사진이 촬영이 되면 gooroomeliteApplication 에 반응이 된다. -->
+    <!--    android:src="@drawable/ic_baseline_image_24"-->
+
     <ImageView
         android:id="@+id/previewImageVIew"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginStart="28dp"
         android:background="@drawable/button_round_corner_4_black_24"
+        android:src="@drawable/ic_baseline_image_24"
         app:layout_constraintBottom_toBottomOf="@+id/captureButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/captureButton" />
+
+        <ImageButton
+            android:id="@+id/btn_convert"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_baseline_autorenew_24"
+            app:layout_constraintBottom_toBottomOf="@+id/captureButton"
+            app:layout_constraintTop_toTopOf="@+id/captureButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="30dp"
+            />
+
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/flashSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
-        app:layout_constraintTop_toTopOf="@+id/captureButton"
-        android:layout_marginEnd="26dp"
-        android:text="@string/flash"
         android:visibility="gone"
-        tools:visibility="visible"/>
-<!--    플래시가 없는 디비아스도 있기 때문에 -->
-<!--    android:visibility="gone" 없으면 tools:visibility="visible" -->
+        android:layout_marginEnd="26dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_convert"
+        tools:visibility="visible" />
+<!--    android:text="@string/flash"-->
+    <!--&lt;!&ndash;    플래시가 없는 디비아스도 있기 때문에 &ndash;&gt;-->
+    <!--&lt;!&ndash;    android:visibility="gone" 없으면 tools:visibility="visible" &ndash;&gt;-->
+
+
+<!--    <com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--        android:id="@+id/flashSwitch"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="26dp"-->
+<!--        android:layout_marginBottom="46dp"-->
+<!--        android:text="@string/flash"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/captureButton"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/captureButton"-->
+<!--        app:layout_constraintVertical_bias="0.51"-->
+<!--        tools:visibility="visible" />-->
+<!--&lt;!&ndash;    플래시가 없는 디비아스도 있기 때문에 &ndash;&gt;-->
+<!--&lt;!&ndash;    android:visibility="gone" 없으면 tools:visibility="visible" &ndash;&gt;-->
+
+<!--    <ImageButton-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.87"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:src="@drawable/ic_baseline_autorenew_24"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/flashSwitch" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

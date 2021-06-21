@@ -133,4 +133,7 @@ dependencies {
     // Circle Indicator
     implementation 'me.relex:circleindicator:2.1.6'
 
+    //ScreenShot
+    implementation "com.github.tarek360:instacapture:2.0.1"
+
 }

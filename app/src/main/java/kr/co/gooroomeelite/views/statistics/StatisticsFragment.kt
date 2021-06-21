@@ -72,7 +72,6 @@ class StatisticsFragment : Fragment() {
                     startActivity(shareIntent)
 //                    finish()
                 }
-
                 override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
                     permissions = false
                 }
@@ -83,6 +82,5 @@ class StatisticsFragment : Fragment() {
             .check()
         return permissions
     }
-
 }
 
