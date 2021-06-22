@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context=".views.statistics.share.StickerActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/share_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:titleTextColor="@color/black"
+        android:elevation="5dp"
+        app:title="공유하기"
+        app:layout_constraintTop_toTopOf="parent">
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/previewStickerImageView"

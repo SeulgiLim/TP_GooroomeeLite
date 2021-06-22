@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -18,6 +19,8 @@ import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
+import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
@@ -37,13 +40,43 @@ class StickerActivity : AppCompatActivity() {
         binding = ActivityStickerBinding.inflate(layoutInflater)
         root = binding.root
         setContentView(binding.root)
+        initToolBar()
         val pictures = intent.getStringExtra("picture")
         Log.d("aaaas", pictures.toString())
         if (pictures != null) {
             imageContent(pictures)
         }
+
+        //갤러리 이미지
+        val gallery = intent.getStringExtra("gallery")
+        if (gallery != null) {
+            binding.previewStickerImageView.loadCenterCrop(url = gallery, corner = 4f)
+        }
+
+        //취소 버튼
+        binding.shareButtonsCancel.setOnClickListener{
+//            val home = Intent(this@StickerActivity,MainActivity::class.java)
+//            startActivity(home)
+            finish()
+        }
+
         val button: Button = findViewById(R.id.share_buttons_confirm)
         button.setOnClickListener { takeAndShareScreenShot(pictures.toString()) }
+    }
+
+    private fun initToolBar() {
+        val toolbar = binding.shareToolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> { finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun imageContent(pictures: String) {

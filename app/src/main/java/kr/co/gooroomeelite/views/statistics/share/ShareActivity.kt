@@ -1,5 +1,6 @@
 package kr.co.gooroomeelite.views.statistics.share
 
+import android.R
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -11,6 +12,7 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.widget.Toast
@@ -22,7 +24,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
-import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -72,17 +73,37 @@ class ShareActivity : AppCompatActivity() {
         binding = ActivityShareBinding.inflate(layoutInflater)
         root = binding.root
         setContentView(binding.root)
+        initToolBar()
 
         binding.showImage.setOnClickListener{ openGallery() }
         startCamera(binding.viewFinder)
+    }
+
+    private fun initToolBar() {
+        val toolbar = binding.pictureToolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.home -> { finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
     
     //갤러리 앱 화면에 띄우기
     private val OPEN_GALLERY = 1
     private fun openGallery(){
         val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+//        val intent: Intent = Intent(Intent.ACTION_SEND_MULTIPLE)
+//        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+//        val mimeTypes = arrayOf<String?>("image/jpeg", "image/png")
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
         intent.type = "image/*"
+
         startActivityForResult(intent,OPEN_GALLERY)
     }
 
@@ -94,7 +115,11 @@ class ShareActivity : AppCompatActivity() {
                 var currentImageUrl : Uri? = data?.data
                 try{
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImageUrl)
-                    binding.showImageView.setImageBitmap(bitmap)
+                    val galleryIntent = Intent(this@ShareActivity,StickerActivity::class.java)
+                    Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
+                    galleryIntent.putExtra("gallery",currentImageUrl.toString())
+                    startActivity(galleryIntent)
+//                    binding.showImageView.setImageBitmap(bitmap)
                 }catch(e: Exception){
                     e.printStackTrace()
                 }

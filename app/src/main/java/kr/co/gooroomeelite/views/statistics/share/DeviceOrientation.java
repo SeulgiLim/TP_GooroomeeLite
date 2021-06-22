@@ -7,7 +7,7 @@ import android.hardware.SensorManager;
 import android.media.ExifInterface;
 
 
-//장치 방향 DeviceOrientation
+//장치 방향 DeviceOrientation (화면 전환 보류)
 public class DeviceOrientation {
     private final int ORIENTATION_PORTRAIT = ExifInterface.ORIENTATION_ROTATE_90; // 6
     private final int ORIENTATION_LANDSCAPE_REVERSE = ExifInterface.ORIENTATION_ROTATE_180; // 3
