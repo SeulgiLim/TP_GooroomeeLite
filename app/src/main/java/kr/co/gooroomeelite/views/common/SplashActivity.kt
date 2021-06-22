@@ -10,6 +10,7 @@ import com.firebase.ui.auth.AuthUI
 import kr.co.gooroomeelite.databinding.ActivitySplashBinding
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
 import kr.co.gooroomeelite.utils.RC_SIGN_IN
+import kr.co.gooroomeelite.views.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -33,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
     private fun startProcess() {
         if(isLogin()) {
             finish()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         } else {
             signIn()
@@ -57,7 +58,7 @@ class SplashActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtras(data!!)
                 startActivity(intent)
                 finish()
