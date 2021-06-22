@@ -187,9 +187,7 @@ class MonthFragment : Fragment() {
                 }
                 axisMinimum = 3F
 //                axisMaximum = 9F
-
             }
-
 
             notifyDataSetChanged()
             this.data = data

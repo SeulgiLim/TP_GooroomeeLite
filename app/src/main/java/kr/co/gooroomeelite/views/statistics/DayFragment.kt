@@ -174,7 +174,6 @@ class DayFragment : Fragment() {
 
             }
 
-
             notifyDataSetChanged()
             this.data = data
             invalidate()

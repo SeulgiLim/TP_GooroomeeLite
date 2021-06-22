@@ -3,6 +3,7 @@ package kr.co.gooroomeelite.views.statistics.share
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,9 @@ import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
+import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
+import java.io.File
+import java.io.FileNotFoundException
 import java.io.OutputStream
 
 class StickerActivity : AppCompatActivity() {
@@ -43,9 +47,7 @@ class StickerActivity : AppCompatActivity() {
     }
 
     private fun imageContent(pictures: String) {
-        Log.d("aaaai", pictures)
         Handler(Looper.getMainLooper()).post {
-            Log.d("aaaau", pictures)
             binding.previewStickerImageView.loadCenterCrop(url = pictures, corner = 4f)
         }
     }
@@ -62,12 +64,11 @@ class StickerActivity : AppCompatActivity() {
                 shareImageURI(uri)
             }
         }, buttonView)
-
     }
 
 
     private fun saveImageExternal(image: Bitmap): Uri? {
-        val filename = "gooroomee_${System.currentTimeMillis()}.jpg"
+        val filename = "gooroomeelite_${System.currentTimeMillis()}.jpg"
         var fos: OutputStream? = null
         var uri: Uri? = null
         val contentValues = ContentValues().apply {

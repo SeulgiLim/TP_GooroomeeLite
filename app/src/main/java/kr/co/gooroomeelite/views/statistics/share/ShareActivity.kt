@@ -1,6 +1,7 @@
 package kr.co.gooroomeelite.views.statistics.share
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.hardware.camera2.*
@@ -8,6 +9,7 @@ import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.*
+import android.provider.MediaStore
 import android.util.Log
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -71,7 +73,35 @@ class ShareActivity : AppCompatActivity() {
         root = binding.root
         setContentView(binding.root)
 
+        binding.showImage.setOnClickListener{ openGallery() }
         startCamera(binding.viewFinder)
+    }
+    
+    //갤러리 앱 화면에 띄우기
+    private val OPEN_GALLERY = 1
+    private fun openGallery(){
+        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = MediaStore.Images.Media.CONTENT_TYPE
+        intent.type = "image/*"
+        startActivityForResult(intent,OPEN_GALLERY)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == OPEN_GALLERY){
+                var currentImageUrl : Uri? = data?.data
+                try{
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImageUrl)
+                    binding.showImageView.setImageBitmap(bitmap)
+                }catch(e: Exception){
+                    e.printStackTrace()
+                }
+            }else{
+                Log.d("aaaa","something wrong")
+            }
+        }
     }
 
     private fun startCamera(viewFinder : PreviewView){ //어떤 걸 넘겨줄 것인가?
@@ -87,12 +117,7 @@ class ShareActivity : AppCompatActivity() {
         //화면 회전에 대해 체크
         val rotation = viewFinder.display.rotation
         var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
-//        btnConvert.setOnClickListener{
-//            cameraSelector = when(selector){
-//                LENS_BACK -> CameraSelector.Builder().requireLensFacing(LENS_FRONT).build()
-//                else -> CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
-//            }
-//        }
+
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().apply{
@@ -110,12 +135,6 @@ class ShareActivity : AppCompatActivity() {
             try{
                 cameraProvider.unbindAll()
                 camera = cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
-//                btnConvert.setOnClickListener{
-//                    camera = when(selector){
-//                        LENS_BACK -> cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelectorFront,preview,imageCapture)
-//                        else -> cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
-//                    }
-//                }
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
@@ -204,15 +223,13 @@ class ShareActivity : AppCompatActivity() {
 
     private fun updateSavedImageContent() {
         contentUri?.let{
-            Log.d("aaaa",it.toString())
             isCapturing = try{
                 val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException())
                 MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpeg"),null)
-                Handler(Looper.getMainLooper()).post{
-//                    binding.previewImageVIew.loadCenterCrop(url = it.toString(), corner = 4f)//현재 메인쓰레드에서 이미지를 처리해줄 수 있도록 한다.
-                }
+
                 val stickerIntent = Intent(this@ShareActivity,StickerActivity::class.java)
                 stickerIntent.putExtra("picture",contentUri.toString())
+                Log.d("aaaa",contentUri.toString())
                 startActivity(stickerIntent)
                 flashLight(false)
                 false
@@ -226,7 +243,6 @@ class ShareActivity : AppCompatActivity() {
     }
     companion object{
         private const val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
-        private const val LENS_FRONT: Int = CameraSelector.LENS_FACING_FRONT
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 }

@@ -8,9 +8,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 
-//class ImageViewExtensions {
-//}
-
 //이미지뷰를 가져올 수 있는 함수를 미리 세팅!!
 private val factory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
@@ -23,6 +20,6 @@ internal fun ImageView.loadCenterCrop(url: String, corner: Float = 0f) {
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .apply {
             if (corner > 0) transforms(CenterCrop(), RoundedCorners(corner.fromDpToPx()))
-        }// 4dp만큼 원형모양이 처리가 되었는데 요것을 쓸 수 있도록 만들어 줄 것이다.
+        }// 4dp만큼 원형모양
         .into(this)
 }
