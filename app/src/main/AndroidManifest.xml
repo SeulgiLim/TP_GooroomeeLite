@@ -17,14 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
         <activity android:name=".views.login.Login04Activity"/>
-        <activity android:name=".views.login.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".views.login.LoginActivity"/>
         <activity android:name=".views.login.Login03Activity" />
         <activity android:name=".views.login.Login02Activity" />
         <activity android:name=".views.login.Login01Activity" />
@@ -36,6 +29,11 @@
         <activity android:name=".views.statistics.share.StickerActivity"/>
         <activity android:name=".views.statistics.share.ShareActivity" />
         <activity android:name=".views.common.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".views.common.MainActivity"/>
 
