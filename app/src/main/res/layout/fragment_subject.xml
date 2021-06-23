@@ -12,7 +12,7 @@
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="과목 추가하기" />
+        android:text="과목 추가" />
 
     <EditText
         android:id="@+id/subject_name"

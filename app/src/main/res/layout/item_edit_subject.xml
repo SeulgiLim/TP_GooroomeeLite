@@ -34,21 +34,29 @@
             app:layout_constraintStart_toEndOf="@id/subject_color"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/subject_studytime"
+        <ImageView
+            android:id="@+id/move_up_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0시간 0분"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_baseline_arrow_up"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/start_btn"
-            android:layout_marginEnd="8dp"/>
+            app:layout_constraintEnd_toStartOf="@id/move_down_btn"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/start_btn"
+            android:id="@+id/move_down_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_arrow_right_24"
+            android:src="@drawable/ic_baseline_arrow_down"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/more"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_more_vert_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
