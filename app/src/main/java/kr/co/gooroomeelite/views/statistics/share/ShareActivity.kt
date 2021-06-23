@@ -34,7 +34,6 @@ import java.util.concurrent.Executors
 
 
 class ShareActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityShareBinding
     private lateinit var cameraExcutor :  ExecutorService
     private val cameraMainExecutor by lazy { ContextCompat.getMainExecutor(this) }

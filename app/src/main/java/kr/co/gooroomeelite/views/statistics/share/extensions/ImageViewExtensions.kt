@@ -12,7 +12,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 private val factory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
 internal fun ImageView.clear() = Glide.with(context).clear(this)
-//이 함수를 이용해 최근에 찍힌 이미지를 이미지뷰에 대응해준다!!
+
 internal fun ImageView.loadCenterCrop(url: String) {
     Glide.with(this)
         .load(url)

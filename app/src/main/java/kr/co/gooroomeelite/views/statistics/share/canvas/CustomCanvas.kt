@@ -17,9 +17,9 @@ class CustomCanvas(
     : View(context, attrs, defStyleAttr), View.OnClickListener{
 
 //    private val whitePathPaint = Paint().apply{
-//        isAntiAlias = true// AntiAliasing은 그려지는 가장자리를 매끄럽게하지만 모양 내부에는 영향을주지 않습니다.
+//        isAntiAlias = true// AntiAliasing은 그려지는 가장자리를 매끄럽게하지만 모양 내부에는 영향을주지 않는다.
 //        color = Color.WHITE
-//        style = Paint.Style.STROKE //이 스타일로 그린 도형과 텍스트는 페인트의 획 관련 필드에 따라 획이 그려집니다.
+//        style = Paint.Style.STROKE //이 스타일로 그린 도형과 텍스트는 페인트의 획 관련 필드에 따라 획이 그려진다.
 //        strokeWidth = 8.0f
 //    }
 //
@@ -32,6 +32,7 @@ class CustomCanvas(
 //        strokeWidth = 3.0f
 //    }
 
+    //그리는 내용
     private lateinit var canvas : Canvas
     private var srcBitmap : Bitmap? = null
 
