@@ -36,11 +36,13 @@
 
         </com.google.android.material.tabs.TabLayout>
 
+
         <FrameLayout
             android:id="@+id/chart_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tabs" />
+
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -52,6 +54,5 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/share_icon"
         android:textColor="@color/grey" />
-
 
 </RelativeLayout>

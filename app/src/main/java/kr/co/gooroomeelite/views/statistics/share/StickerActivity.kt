@@ -3,7 +3,6 @@ package kr.co.gooroomeelite.views.statistics.share
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,12 +18,8 @@ import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
-import kr.co.gooroomeelite.views.common.MainActivity
-import kr.co.gooroomeelite.views.statistics.StatisticsFragment
+import kr.co.gooroomeelite.views.statistics.share.canvas.CustomCanvas
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
-import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
-import java.io.File
-import java.io.FileNotFoundException
 import java.io.OutputStream
 
 class StickerActivity : AppCompatActivity() {
@@ -35,6 +30,8 @@ class StickerActivity : AppCompatActivity() {
 
     private val shareButtonViewImage: Boolean = false
 
+    private lateinit var canvasView : CustomCanvas
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStickerBinding.inflate(layoutInflater)
@@ -42,26 +39,39 @@ class StickerActivity : AppCompatActivity() {
         setContentView(binding.root)
         initToolBar()
         val pictures = intent.getStringExtra("picture")
-        Log.d("aaaas", pictures.toString())
+        //Parsing string into uri
+//        val uriPicture : Uri = Uri.parse(pictures)
+//        Log.d("aaaas", pictures.toString())
         if (pictures != null) {
             imageContent(pictures)
         }
-
         //갤러리 이미지
         val gallery = intent.getStringExtra("gallery")
         if (gallery != null) {
-            binding.previewStickerImageView.loadCenterCrop(url = gallery, corner = 4f)
+            binding.previewStickerImageView.loadCenterCrop(url = gallery)
         }
 
         //취소 버튼
-        binding.shareButtonsCancel.setOnClickListener{
+//        binding.shareButtonsCancel.setOnClickListener{
 //            val home = Intent(this@StickerActivity,MainActivity::class.java)
 //            startActivity(home)
-            finish()
-        }
+//            finish()
+//        }
 
         val button: Button = findViewById(R.id.share_buttons_confirm)
         button.setOnClickListener { takeAndShareScreenShot(pictures.toString()) }
+
+//        Log.d("aaaauri", uriPicture.toString())
+//        canvasView.initialize(uriPricture)
+//        canvasView.initialized(uriPicture)
+        //기존 이미지뷰 지우기
+//        binding.stickerContainer.removeView(binding.previewStickerImageView)
+        initCanvas()
+    }
+
+    private fun initCanvas(){
+        canvasView = CustomCanvas(this,null,0)
+        binding.stickerContainer.addView(canvasView)
     }
 
     private fun initToolBar() {
@@ -69,7 +79,7 @@ class StickerActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
-
+    //뒤로가기 눌렀을 때 작동
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> { finish()
@@ -81,7 +91,7 @@ class StickerActivity : AppCompatActivity() {
 
     private fun imageContent(pictures: String) {
         Handler(Looper.getMainLooper()).post {
-            binding.previewStickerImageView.loadCenterCrop(url = pictures, corner = 4f)
+            binding.previewStickerImageView.loadCenterCrop(url = pictures)
         }
     }
 

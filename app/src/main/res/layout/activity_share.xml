@@ -67,7 +67,6 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="28dp"
-        android:background="@drawable/button_round_corner_4_black_24"
         android:src="@drawable/ic_baseline_image_24"
         app:layout_constraintBottom_toBottomOf="@+id/captureButton"
         app:layout_constraintStart_toStartOf="parent"

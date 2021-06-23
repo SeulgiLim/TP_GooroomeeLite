@@ -13,13 +13,10 @@ private val factory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(tru
 
 internal fun ImageView.clear() = Glide.with(context).clear(this)
 //이 함수를 이용해 최근에 찍힌 이미지를 이미지뷰에 대응해준다!!
-internal fun ImageView.loadCenterCrop(url: String, corner: Float = 0f) {
+internal fun ImageView.loadCenterCrop(url: String) {
     Glide.with(this)
         .load(url)
         .transition(DrawableTransitionOptions.withCrossFade(factory))
         .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .apply {
-            if (corner > 0) transforms(CenterCrop(), RoundedCorners(corner.fromDpToPx()))
-        }// 4dp만큼 원형모양
         .into(this)
 }
