@@ -1,11 +1,9 @@
 package kr.co.gooroomeelite.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import java.util.LinkedList
 

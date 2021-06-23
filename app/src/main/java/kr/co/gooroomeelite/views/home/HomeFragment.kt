@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,12 +16,10 @@ import kr.co.gooroomeelite.databinding.FragmentHomeBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
-import kr.co.gooroomeelite.utils.RC_EDIT_SUBJECTS
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.common.StudyTimerDialog
 import kr.co.gooroomeelite.views.login.LoginActivity
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -149,6 +146,10 @@ class HomeFragment : Fragment() {
     private fun getUserInfo() {
         FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
             .addOnSuccessListener {
+                if(it["studyTime"] == null) {
+                    myStudyTime.value = -1
+                    return@addOnSuccessListener
+                }
                 myStudyTime.value = it["studyTime"].toString().toInt()
                 binding.nickname.text = "반가워요, ${it["nickname"]}님"
             }

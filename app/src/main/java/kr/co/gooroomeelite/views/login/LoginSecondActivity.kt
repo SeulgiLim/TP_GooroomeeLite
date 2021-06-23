@@ -5,17 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityLogin03Binding
+import kr.co.gooroomeelite.databinding.ActivityLoginsecondBinding
 import kr.co.gooroomeelite.views.common.MainActivity
 
-class Login03Activity : AppCompatActivity() {
-    private lateinit var binding:ActivityLogin03Binding
+class LoginSecondActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityLoginsecondBinding
     var auth: FirebaseAuth? = null
     var email: String? = null
     var firestore: FirebaseFirestore? = null
@@ -23,7 +22,7 @@ class Login03Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin03Binding.inflate(layoutInflater)
+        binding = ActivityLoginsecondBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
@@ -77,10 +76,10 @@ class Login03Activity : AppCompatActivity() {
                 binding.tvError.text = ""
                 binding.editTextPassword.setBackgroundResource(R.drawable.btn_white)
                 moveMainPage(task.result?.user)
+                finish()
             } else {
                 binding.tvError.text = "비밀번호가 일치하지 않습니다."
                 binding.editTextPassword.setBackgroundResource(R.drawable.btn_red)
-                Toast.makeText(this,"TEST!", Toast.LENGTH_LONG).show()
             }
         }
     }

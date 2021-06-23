@@ -16,11 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.login.Login04Activity"/>
+        <activity android:name=".views.login.LoginNicknameActivity"/>
         <activity android:name=".views.login.LoginActivity"/>
-        <activity android:name=".views.login.Login03Activity" />
-        <activity android:name=".views.login.Login02Activity" />
-        <activity android:name=".views.login.Login01Activity" />
+        <activity android:name=".views.login.LoginSecondActivity" />
+        <activity android:name=".views.login.LoginFirstActivity" />
+        <activity android:name=".views.login.LoginEmailActivity" />
         <activity android:name=".views.mypage.WithdrawalActivity" />
         <activity android:name=".views.mypage.OpenSourceActivity" />
         <activity android:name=".views.mypage.PrivacyPolicyActivity" />

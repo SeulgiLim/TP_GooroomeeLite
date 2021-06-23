@@ -44,11 +44,11 @@
 
                     <TextView
                         android:id="@+id/nickname"
-                        android:textColor="@color/white"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="반가워요, 구루미님"/>
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        tools:text="반가워요, 구루미님" />
 
                     <ImageView
                         android:id="@+id/imageView"

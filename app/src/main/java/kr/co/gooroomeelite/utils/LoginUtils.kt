@@ -3,7 +3,6 @@ package kr.co.gooroomeelite.utils
 import android.content.Context
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
-import kr.co.gooroomeelite.R
 
 class LoginUtils {
     companion object {

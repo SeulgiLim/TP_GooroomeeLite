@@ -8,7 +8,7 @@ data class Subject(
     val uid: String? = null,
     val name: String? = null,
     val color: String? = null,
-    val studytime: Int = -1,
+    val studytime: Int = 0,
     var prevDocumentId: String? = null,
     var nextDocumentId: String? = null,
     @ServerTimestamp

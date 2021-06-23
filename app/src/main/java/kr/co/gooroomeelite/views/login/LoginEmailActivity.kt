@@ -9,16 +9,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityLogin01Binding
+import kr.co.gooroomeelite.databinding.ActivityLoginemailBinding
 
-class Login01Activity : AppCompatActivity() {
-    private lateinit var binding: ActivityLogin01Binding
+class LoginEmailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginemailBinding
     var auth: FirebaseAuth? = null
     var storage: FirebaseStorage? = null
     private var firestore: FirebaseFirestore? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin01Binding.inflate(layoutInflater)
+        binding = ActivityLoginemailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Firebase Database
@@ -28,12 +28,7 @@ class Login01Activity : AppCompatActivity() {
         // Firebase Storage
         storage = FirebaseStorage.getInstance()
 
-
         val check = firestore!!.collection("users")
-        //현재 아이디로 입력한 이메일
-
-        binding = ActivityLogin01Binding.inflate(layoutInflater)
-        setContentView(binding.root)
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
@@ -68,13 +63,14 @@ class Login01Activity : AppCompatActivity() {
 
                     //신규유저
                     if (it.isEmpty) {
-                        val intent = Intent(this, Login02Activity::class.java)
+                        val intent = Intent(this, LoginFirstActivity::class.java)
                         intent.putExtra("email", email)
                         startActivity(intent)
+                        finish()
                     }
                     //이미 있는 이메일일경우
                     else {
-                        val intent1 = Intent(this, Login03Activity::class.java)
+                        val intent1 = Intent(this, LoginSecondActivity::class.java)
                         intent1.putExtra("email", email)
                         startActivity(intent1)
                     }
