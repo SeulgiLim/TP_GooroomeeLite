@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kr.co.gooroomeelite.databinding.ActivitySplashBinding
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
 import kr.co.gooroomeelite.utils.RC_SIGN_IN
+import kr.co.gooroomeelite.views.login.LoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

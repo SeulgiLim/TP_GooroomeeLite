@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Camera
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
@@ -93,7 +92,7 @@ class ShareActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    
+
     //갤러리 앱 화면에 띄우기
     private val OPEN_GALLERY = 1
     private fun openGallery(){
@@ -185,7 +184,7 @@ class ShareActivity : AppCompatActivity() {
             override fun onScale(detector: ScaleGestureDetector?): Boolean {
                 val currentZoomRatio = camera?.cameraInfo?.zoomState?.value?.zoomRatio ?: 1f
                 val delta = detector?.scaleFactor
-                   camera?.cameraControl?.setZoomRatio(currentZoomRatio * delta!!)
+                camera?.cameraControl?.setZoomRatio(currentZoomRatio * delta!!)
                 return true//콜백 메서드
             }
         }

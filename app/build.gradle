@@ -92,6 +92,34 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //Splitties, Toast
+    implementation 'com.louiscad.splitties:splitties-toast:2.1.1'
+
+    //androidx
+    implementation 'androidx.exifinterface:exifinterface:1.2.0-beta01'
+
+    // CameraX core library using camera2 implementation
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    // CameraX Lifecycle Library
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    // CameraX View class
+    implementation "androidx.camera:camera-view:$camerax_view_version"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    //Add plugins id 'kotlin-kapt'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
+    //circle shape
+    implementation 'jp.wasabeef:glide-transformations:4.0.0'
+
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
+
+    // Circle Indicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    //ScreenShot
+    implementation "com.github.tarek360:instacapture:2.0.1"
 
     //https://github.com/Karumi/Dexter
     implementation 'com.karumi:dexter:6.2.2'

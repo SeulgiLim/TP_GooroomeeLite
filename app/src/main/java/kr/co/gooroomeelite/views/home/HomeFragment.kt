@@ -19,8 +19,8 @@ import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.utils.RC_EDIT_SUBJECTS
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
-import kr.co.gooroomeelite.views.common.LoginActivity
 import kr.co.gooroomeelite.views.common.StudyTimerDialog
+import kr.co.gooroomeelite.views.login.LoginActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
