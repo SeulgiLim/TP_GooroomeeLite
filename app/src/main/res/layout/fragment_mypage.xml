@@ -66,7 +66,7 @@
                         android:layout_height="0dp"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="24dp"
-                        android:text="@string/nickname"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         app:layout_constraintStart_toEndOf="@+id/cardView7"
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="@string/email"
+                        android:text=""
                         app:layout_constraintStart_toEndOf="@+id/cardView7"
                         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 

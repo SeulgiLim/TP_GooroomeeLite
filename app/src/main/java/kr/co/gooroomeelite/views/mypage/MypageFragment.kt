@@ -46,6 +46,8 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
     var firestore : FirebaseFirestore? = null
     var uid : String? = null
     var photoUri : String?= null
+    var nickname : String?=null
+    var email : String?=null
 
     companion object {
         fun newInstance(owner: AppCompatActivity) : Fragment {
@@ -57,26 +59,27 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         uid = arguments?.getString("destinationUid")
         binding = FragmentMypageBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage,container,false)
         binding.my = this
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        email = auth!!.currentUser?.email
         owner.setSupportActionBar(binding.toolbar2)
-
-
+        setting()
         return binding.root
     }
 
+
     override fun onResume() {
         super.onResume()
-        getImageNickName(uid!!)
+        getImageNickName()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(owner.supportActionBar) {
             this!!.setDisplayHomeAsUpEnabled(true)
             setTitle("Gooroomee")
@@ -146,20 +149,21 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         }
     }
 
-    private fun getImageNickName(num:String){
+    private fun getImageNickName(){
         var file : File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/profile_img")
         if(file?.isDirectory == null){
             file?.mkdir()
         }
         else
-        downloadImgNickName(num)
+        downloadImgNickName()
     }
-    private fun downloadImgNickName(num: String){
+    private fun downloadImgNickName(){
+        val num = uid
         var filename = "profile$num.jpg"
-        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
-            val nickname = ds.data?.get("nickname").toString()
-            binding.nickname.text = nickname
-        }
+//        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
+//            val nickname = ds.data?.get("nickname").toString()
+//            binding.nickname.text = nickname
+//        }
         storage = FirebaseStorage.getInstance()
         storageRef = storage!!.reference
         storageRef!!.child("profile_img/$filename").child(filename).downloadUrl.addOnSuccessListener{
@@ -167,7 +171,14 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         }
 
     }
-
-
+    private fun setting(){
+        firestore!!.collection("users").whereEqualTo("userId",email).get().addOnSuccessListener { ds ->
+            val contentDTO = ds.toObjects(ContentDTO::class.java)
+            val nickname = contentDTO[0].nickname
+            val email = contentDTO[0].userId
+            binding.emailaddress.text=email
+            binding.nickname.text=nickname
+        }
+    }
 }
 

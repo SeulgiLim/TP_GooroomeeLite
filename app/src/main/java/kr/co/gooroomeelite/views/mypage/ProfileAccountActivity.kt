@@ -11,11 +11,13 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -29,7 +31,9 @@ class ProfileAccountActivity : AppCompatActivity() {
     var storage: FirebaseStorage? = null
     var photoUri: Uri? = null
     var firestore: FirebaseFirestore? = null
+    var auth : FirebaseAuth?=null
     var uid: String? = null
+    var email : String?= null
     private val isLoading = MutableLiveData<Boolean>()
 
     var storageRef: StorageReference? = null
@@ -39,8 +43,11 @@ class ProfileAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileAccountBinding.inflate(layoutInflater)
         uid = intent.getStringExtra("destinationUid")
+        auth = FirebaseAuth.getInstance()
+        email = auth?.currentUser?.email
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+
 
 
 
@@ -52,11 +59,24 @@ class ProfileAccountActivity : AppCompatActivity() {
 
 
 
-        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
-            val nickname = ds.data?.get("nickname").toString()
-            val profileImageUrl: String = ds.data?.get("profileImageUrl").toString()
+//        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
+//            val nickname = ds.data?.get("nickname").toString()
+//            val profileImageUrl: String = ds.data?.get("profileImageUrl").toString()
+//            binding.edittext.setText(nickname)
+//            Glide.with(this).load(profileImageUrl).into(binding.imageView2)
+//        }
+
+
+        firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener { ds ->
+            val contentDTO = ds.toObjects(ContentDTO::class.java)
+            val nickname = contentDTO[0].nickname
+            val profileImageUrl = contentDTO[0].profileImageUrl
             binding.edittext.setText(nickname)
-            Glide.with(this).load(profileImageUrl).into(binding.imageView2)
+            if (profileImageUrl != null) {
+                Glide.with(this).load(profileImageUrl).into(binding.imageView2)
+            } else {
+                binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
+            }
         }
 
         binding.imageView2.setOnClickListener {
@@ -106,7 +126,13 @@ class ProfileAccountActivity : AppCompatActivity() {
                     contentDTO.profileImageUrl = uri.toString()
                     //닉네임
                     contentDTO.nickname = binding.edittext.text.toString()
-                    firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
+//                    firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
+                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
+                        ?.addOnSuccessListener {
+                            firestore?.collection("users")!!.document().set(contentDTO)
+                            val tt = firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
+                            Log.e("Test","$tt")
+                        }
 
                     isLoading.value = false
                     finish()
@@ -120,7 +146,10 @@ class ProfileAccountActivity : AppCompatActivity() {
         } else {storageRef!!.downloadUrl.addOnSuccessListener { uri ->
             val contentDTO = ContentDTO()
             contentDTO.nickname = binding.edittext.text.toString()
-            firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
+//            firestore?.collection("users")?.document()?.set(contentDTO)
+            firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
+                firestore?.collection("users")?.document()?.set(contentDTO)
+            }
             isLoading.value = false
             finish()
         }
@@ -144,7 +173,7 @@ class ProfileAccountActivity : AppCompatActivity() {
     }
 
     //이미지를 세팅하기.
-    private fun getImage(num: String) {
+    private fun getImage(num:String) {
         val file: File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/profile_img")
         if (file?.isDirectory == null) {
             file?.mkdir()
@@ -152,7 +181,8 @@ class ProfileAccountActivity : AppCompatActivity() {
             downloadImgNickname(num)
     }
 
-    private fun downloadImgNickname(num: String) {
+    private fun downloadImgNickname(num:String) {
+        val num = uid
         val filename = "profile$num.jpg"
 
         storage = FirebaseStorage.getInstance()
