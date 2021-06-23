@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'kotlin-android-extensions'
 }
@@ -32,8 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    viewBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -70,7 +72,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-config:21.0.0'
     implementation 'com.google.firebase:firebase-analytics:19.0.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
-    implementation 'com.google.firebase:firebase-firestore:20.0.0'
+    implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
 
     //firebase-ui
     implementation 'com.firebaseui:firebase-ui-auth:4.3.2'
@@ -78,6 +81,20 @@ dependencies {
 
     //color picker
     implementation 'com.github.dhaval2404:colorpicker:2.0'
+    //애니메이션
+    implementation 'com.airbnb.android:lottie:3.7.0'
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+
+    //mpandroidchart
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    //https://github.com/Karumi/Dexter
+    implementation 'com.karumi:dexter:6.2.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

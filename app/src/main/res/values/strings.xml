@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">gooroomeelite</string>
+
+    //login //
+    <string name="email_id">이메일로 시작하기</string>
+    <string name="google_id">구글로 시작하기</string>
+    <string name="email_login">이메일을 입력해주세요.</string>
+    <string name="email_login2">이메일</string>
+
+    <string name="password_login">비밀번호를 입력해주세요.</string>
+    <string name="password_login2">비밀번호</string>
+
+    <string name="newpassword_login">새 비밀번호를 입력해주세요.</string>
+    <string name="newpassword_login2">새 비밀번호</string>
+    <string name="newpassword_login3">새 비밀번호 확인</string>
+    <string name="newpassword_hint">영문 + 숫자 8자리 이상</string>
+
+    <string name="first">첫 방문이시네요!</string>
+    <string name="second">반가워요 루미님!</string>
+    <string name="nickname_login">닉네임을 입력해주세요.</string>
+    <string name="nickname_login2">닉네임</string>
+    <string name="nickname_hint">최대 6글자</string>
+
+
+    // mypage //
+    <string name="nickname">닉네임</string>
+    <string name="profile_account">프로필 및 계정</string>
+    <string name="service1">약관 및 정책</string>
+    <string name="service2">이용약관</string>
+    <string name="service3">개인정보처리방침</string>
+    <string name="service4">오픈소스 라이센스</string>
+    <string name="etc">기타</string>
+    <string name="version">앱 버전</string>
+    <string name="report_">건의하기</string>
+    <string name="logout">로그아웃</string>
+    <string name="withdrawal">탈퇴하기</string>
+
+    <string name="text">"과목을 입력하세요</string>
+
+    <string name="email">silmxmail@naver.com</string>
+    <string name="report">건의사항보내기</string>
+    <string name="flash">플래시</string>
+    <string name="app_content_path">Android/media/kr.co.gooroomeelite/gooroomeelite</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

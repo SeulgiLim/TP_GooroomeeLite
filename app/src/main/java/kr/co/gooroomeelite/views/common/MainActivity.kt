@@ -2,12 +2,10 @@ package kr.co.gooroomeelite.views.common
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.mypage.MypageFragment
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
@@ -19,17 +17,24 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = HomeFragment()
         val statisticsFragment = StatisticsFragment()
-        val mypageFragment = MypageFragment()
+        val mypageFragment = MypageFragment(this)
 
         replaceFragment(homeFragment)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
+        bottomNavigationView.setOnNavigationItemSelectedListener{
+            when(it.itemId){
                 R.id.home -> replaceFragment(homeFragment)
-                R.id.statistics -> replaceFragment(statisticsFragment)
-                R.id.mypage -> replaceFragment(mypageFragment)
+                R.id.statistics-> replaceFragment(statisticsFragment)
+                R.id.mypage-> {
+                    var mypageFragment = MypageFragment(this)
+                    var bundle = Bundle()
+                    var uid = FirebaseAuth.getInstance().currentUser?.uid
+                    bundle.putString("destinationUid",uid)
+                    mypageFragment.arguments=bundle
+                    replaceFragment(mypageFragment)
+                }
             }
             true
         }
