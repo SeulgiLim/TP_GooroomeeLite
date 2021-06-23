@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">gooroomeelite</string>
+    <string name="flash">플래시</string>
+    <string name="app_content_path">Android/media/kr.co.gooroomeelite/gooroomeelite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
