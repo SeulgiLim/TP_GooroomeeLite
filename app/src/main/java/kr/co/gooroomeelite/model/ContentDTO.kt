@@ -9,5 +9,6 @@ package kr.co.gooroomeelite.model
 data class ContentDTO(
     var profileImageUrl : String? = null,
     var nickname : String? = null,
-    var userId : String? = null
+    var userId : String? = null,
+    var studyTime : Int = 0
 )

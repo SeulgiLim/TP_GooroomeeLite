@@ -28,11 +28,7 @@ class LoginEmailActivity : AppCompatActivity() {
         // Firebase Storage
         storage = FirebaseStorage.getInstance()
 
-
         val check = firestore!!.collection("users")
-        //현재 아이디로 입력한 이메일
-
-        setContentView(binding.root)
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
@@ -70,6 +66,7 @@ class LoginEmailActivity : AppCompatActivity() {
                         val intent = Intent(this, LoginFirstActivity::class.java)
                         intent.putExtra("email", email)
                         startActivity(intent)
+                        finish()
                     }
                     //이미 있는 이메일일경우
                     else {

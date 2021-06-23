@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +13,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
 import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.views.common.MainActivity
 
 class LoginNicknameActivity : AppCompatActivity() {
@@ -33,6 +33,7 @@ class LoginNicknameActivity : AppCompatActivity() {
         bundle = intent.getBundleExtra("bundle")
         email = bundle?.getString("email")
         password= bundle?.getString("password")
+
         setContentView(binding.root)
 
 
@@ -82,9 +83,9 @@ class LoginNicknameActivity : AppCompatActivity() {
                 //Creating a user account
                 contentUpload()
                 moveMainPage(task.result?.user)
-            } else if (task.exception?.message.isNullOrEmpty()) {
-                //Show the error message
-                Toast.makeText(this,"TEST@", Toast.LENGTH_LONG).show()
+            }
+
+            else if (task.exception?.message.isNullOrEmpty()) {
             } else {
             }
         }
@@ -93,29 +94,15 @@ class LoginNicknameActivity : AppCompatActivity() {
         val contentDTO = ContentDTO()
         contentDTO.userId = auth?.currentUser?.email
         contentDTO.nickname = binding.editTextNickname.text.toString()
-        firestore?.collection("users")?.document()?.set(contentDTO)
+        contentDTO.studyTime = 0
+        firestore?.collection("users")?.document(getUid()!!)?.set(contentDTO)
         setResult(Activity.RESULT_OK)
     }
 
-//    fun signinEmail() {
-//        auth?.signInWithEmailAndPassword(email.toString(),binding.passwordEdittext.text.toString()
-//        )?.addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                //Login
-//
-//                Log.e("TEST6","$email")
-//                moveMainPage(task.result?.user)
-//            } else {
-//                //Show the error message
-//
-//                Log.e("TEST7","$email")
-//                Toast.makeText(this,task.exception?.message, Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
     fun moveMainPage(user: FirebaseUser?) {
         if (user != null) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
     private fun changecolor() {

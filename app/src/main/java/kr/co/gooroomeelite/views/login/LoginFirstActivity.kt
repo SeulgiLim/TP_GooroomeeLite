@@ -95,6 +95,7 @@ class LoginFirstActivity : AppCompatActivity() {
                     bundle.putString("password",binding.editTextNewPassword2.text.toString())
                     intent.putExtra("bundle",bundle)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
