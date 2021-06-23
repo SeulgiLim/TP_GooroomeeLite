@@ -33,4 +33,8 @@
     <color name="dot_edge">#707070</color>
     <color name="black_gradient">#80000000</color>
     <color name="icon_small_color">#707070</color>
+    <color name="blue">#0D47A1</color>
+    <color name="grey">#8E8C8C</color>
+
+    <color name="black_24">#3D000000</color>
 </resources>

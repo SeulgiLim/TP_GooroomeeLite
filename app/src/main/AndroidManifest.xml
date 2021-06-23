@@ -2,10 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.gooroomeelite">
 
+    <!--    카매라 권한 추가 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="landscape"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
@@ -19,7 +26,14 @@
         <activity android:name=".views.mypage.PrivacyPolicyActivity" />
         <activity android:name=".views.mypage.TermsOfServiceActivity" />
         <activity android:name=".views.mypage.ProfileAccountActivity" />
+        android:theme="@style/Theme.Gooroomeelite"
+        android:name=".views.statistics.share.gooroomeeliteApplication"
+        >
+        <activity android:name=".views.statistics.share.StickerActivity"></activity>
+        <activity android:name=".views.statistics.share.ShareActivity" />
         <activity android:name=".views.common.SplashActivity">
+        </activity>
+        <activity android:name=".views.common.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
