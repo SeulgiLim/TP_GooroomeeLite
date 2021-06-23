@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.login.Login04Activity">
+    tools:context=".views.login.LoginSecondActivity">
 
     <ImageView
         android:id="@+id/ic_back"
@@ -23,62 +23,52 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
-        android:text="@string/first"
+        android:text="@string/second"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ic_back" />
 
-    <TextView
-        android:id="@+id/tv2_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="2/3"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_nickname"
+        android:id="@+id/tv_password_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp"
         android:layout_marginStart="20dp"
         android:gravity="center_vertical"
-        android:text="@string/nickname_login"
+        android:text="@string/password_login"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hi" />
 
     <TextView
-        android:id="@+id/tv_email_login2"
+        android:id="@+id/tv_password_second2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
-        android:text="@string/nickname_login2"
+        android:text="@string/password_login2"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password_second" />
 
     <EditText
-        android:id="@+id/editTextNickname"
+        android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginStart="20dp"
         android:ems="10"
-        android:hint="@string/nickname_hint"
+        android:hint="@string/password_login"
         android:paddingStart="10dp"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
         android:background="@drawable/btn_white"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email_login2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password_second2" />
 
     <TextView
         android:id="@+id/tv_Error"
@@ -91,7 +81,18 @@
 
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNickname" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <TextView
+        android:id="@+id/tvfindpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/password_login"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Error" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login_next"

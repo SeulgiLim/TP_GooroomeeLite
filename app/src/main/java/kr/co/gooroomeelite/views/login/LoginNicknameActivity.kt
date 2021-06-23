@@ -6,19 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityLogin04Binding
+import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.views.common.MainActivity
 
-class Login04Activity : AppCompatActivity() {
-    private lateinit var binding : ActivityLogin04Binding
+class LoginNicknameActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityLoginnicknameBinding
     var bundle : Bundle? = null
     var email : String? = null
     var password : String? = null
@@ -27,7 +26,7 @@ class Login04Activity : AppCompatActivity() {
     var storage: FirebaseStorage? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin04Binding.inflate(layoutInflater)
+        binding = ActivityLoginnicknameBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()

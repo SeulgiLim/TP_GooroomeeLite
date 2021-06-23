@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginBinding
 import kr.co.gooroomeelite.views.common.MainActivity
 
@@ -22,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.startEmail.setOnClickListener {
             //이메일로 시작
-            startActivity(Intent(this,Login01Activity::class.java))
+            startActivity(Intent(this,LoginEmailActivity::class.java))
             Toast.makeText(this,"이메일로 시작",Toast.LENGTH_SHORT).show()
         }
         binding.startGoogle.setOnClickListener {

@@ -9,6 +9,8 @@
 
     <string name="password_login">비밀번호를 입력해주세요.</string>
     <string name="password_login2">비밀번호</string>
+    <string name="password_find">비밀번호를 잊어버리셨나요?</string>
+
 
     <string name="newpassword_login">새 비밀번호를 입력해주세요.</string>
     <string name="newpassword_login2">새 비밀번호</string>
@@ -20,6 +22,12 @@
     <string name="nickname_login">닉네임을 입력해주세요.</string>
     <string name="nickname_login2">닉네임</string>
     <string name="nickname_hint">최대 6글자</string>
+
+
+    <string name="findpassword_login">비밀번호를 잊으셨나요?</string>
+    <string name="findpassword_login2">이메일(계정)을 입력하시면 비밀번호를 재설정할 수 있는\n 이메일을 보내드리겠습니다.</string>
+
+
 
 
     // mypage //

@@ -1,32 +1,26 @@
 package kr.co.gooroomeelite.views.login
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityLogin02Binding
-import kr.co.gooroomeelite.model.ContentDTO
-import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.databinding.ActivityLoginfirstBinding
 
-class Login02Activity : AppCompatActivity() {
+class LoginFirstActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLogin02Binding
+    private lateinit var binding: ActivityLoginfirstBinding
     var auth: FirebaseAuth? = null
     var email: String? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin02Binding.inflate(layoutInflater)
+        binding = ActivityLoginfirstBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
@@ -95,7 +89,7 @@ class Login02Activity : AppCompatActivity() {
                 else{
                     binding.tvError.text = ""
                     binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
-                    val intent = Intent(this, Login04Activity::class.java)
+                    val intent = Intent(this, LoginNicknameActivity::class.java)
                     val bundle = Bundle()
                     bundle.putString("email",email)
                     bundle.putString("password",binding.editTextNewPassword2.text.toString())

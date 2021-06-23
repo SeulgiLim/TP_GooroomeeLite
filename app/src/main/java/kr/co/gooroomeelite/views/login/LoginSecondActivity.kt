@@ -11,11 +11,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityLogin03Binding
+import kr.co.gooroomeelite.databinding.ActivityLoginsecondBinding
 import kr.co.gooroomeelite.views.common.MainActivity
 
-class Login03Activity : AppCompatActivity() {
-    private lateinit var binding:ActivityLogin03Binding
+class LoginSecondActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityLoginsecondBinding
     var auth: FirebaseAuth? = null
     var email: String? = null
     var firestore: FirebaseFirestore? = null
@@ -23,7 +23,7 @@ class Login03Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLogin03Binding.inflate(layoutInflater)
+        binding = ActivityLoginsecondBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
@@ -34,16 +34,14 @@ class Login03Activity : AppCompatActivity() {
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
-
         binding.editTextPassword.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {
                 true -> changecolor()
                 false -> changecolor()
             }
         }
-
         changecolor()
-
+        //에디트텍스트 색변경
         binding.editTextPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -57,6 +55,10 @@ class Login03Activity : AppCompatActivity() {
         })
         binding.btnLoginNext.setOnClickListener {
             signinEmail()
+        }
+        binding.tvfindpassword.setOnClickListener {
+            val intent =Intent(this,LoginNewPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 
