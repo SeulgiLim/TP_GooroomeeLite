@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Camera
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
