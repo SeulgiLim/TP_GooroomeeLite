@@ -13,7 +13,7 @@ import android.provider.MediaStore
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
@@ -51,7 +51,7 @@ class StickerActivity : AppCompatActivity() {
         //갤러리 이미지
         val gallery = intent.getStringExtra("gallery")
         if (gallery != null) {
-            binding.previewStickerImageView.loadCenterCrop(url = gallery)
+            binding.imageCapture.loadCenterCrop(url = gallery)
         }
 
         //공유하기
@@ -79,7 +79,7 @@ class StickerActivity : AppCompatActivity() {
 
     private fun imageContent(pictures: String) {
         Handler(Looper.getMainLooper()).post {
-            binding.previewStickerImageView.loadCenterCrop(url = pictures)
+            binding.imageCapture.loadCenterCrop(url = pictures)
         }
     }
 
@@ -88,7 +88,7 @@ class StickerActivity : AppCompatActivity() {
         val buttonView: Button = findViewById(R.id.share_buttons)
         Instacapture.capture(this, object : SimpleScreenCapturingListener() {
             override fun onCaptureComplete(captureview: Bitmap) {
-                val capture: ImageView = findViewById<ImageView>(R.id.previewStickerImageView)
+                val capture: FrameLayout = findViewById<FrameLayout>(R.id.previewStickerImageView)
                 capture.buildDrawingCache()
                 val captureview: Bitmap = capture.getDrawingCache()
                 val uri = saveImageExternal(captureview)
