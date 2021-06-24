@@ -83,7 +83,6 @@ class StickerActivity : AppCompatActivity() {
         }
     }
 
-    // --- 캡처 후 공유 --
     private fun takeAndShareScreenShot(uri: String) {
         val buttonView: Button = findViewById(R.id.share_buttons)
         Instacapture.capture(this, object : SimpleScreenCapturingListener() {
