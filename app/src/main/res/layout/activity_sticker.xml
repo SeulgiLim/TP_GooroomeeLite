@@ -16,7 +16,9 @@
         android:elevation="5dp"
         app:layout_constraintTop_toTopOf="parent"
         app:title="공유하기"
-        app:titleTextColor="@color/black"></androidx.appcompat.widget.Toolbar>
+        app:titleTextColor="@color/black">
+
+    </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -91,6 +93,7 @@
                         android:layout_height="35dp"
                         android:src="@drawable/ic_baseline_access_time_24" />
 
+
                     <TextView
                         android:id="@+id/now_time"
                         android:layout_width="wrap_content"
@@ -154,6 +157,7 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <!--<FrameLayout-->
     <!--android:id="@+id/sticker_container"-->
     <!--android:layout_width="match_parent"-->
@@ -203,3 +207,4 @@
     <!--    android:textStyle="bold" />-->
 
     <!--</FrameLayout>-->
+
