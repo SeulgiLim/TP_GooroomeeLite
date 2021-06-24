@@ -37,6 +37,7 @@ class MonthFragment : Fragment() {
 //        while (i <= 31) {
 //            val name : String = ""
 //            mutableListOf(
+//
 //                ChartData(name,(Math.random()*16).toFloat())
 //            )
 //            i++
@@ -104,7 +105,7 @@ class MonthFragment : Fragment() {
             setDrawValues(false)
 
             val colors = ArrayList<Int>()
-            colors.add(Color.argb(55,61,171,91))
+            colors.add(Color.argb(100,68,158,246))
             setColors(colors)
             highLightAlpha = 0
         }
