@@ -6,6 +6,7 @@ package kr.co.gooroomeelite.views.mypage
  * @desc
  */
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,17 +15,25 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityWithdrawalBinding
+import kr.co.gooroomeelite.utils.LoginUtils
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
+import kr.co.gooroomeelite.views.login.LoginActivity
 
 class WithdrawalActivity : AppCompatActivity() {
     private lateinit var binding : ActivityWithdrawalBinding
-    private lateinit var mAuth : FirebaseAuth
+    var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
         binding = ActivityWithdrawalBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
@@ -49,19 +58,19 @@ class WithdrawalActivity : AppCompatActivity() {
             }
             val okButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_ok)
             val cancelButton = mWithdrawalView.findViewById<Button>(R.id.btn_withdrawl_no)
+
             okButton.setOnClickListener {
-                //탈퇴
+                Toast.makeText(this,"TEST",Toast.LENGTH_SHORT).show()
+                    if (LoginUtils.isLogin()){
+                        AuthUI.getInstance().delete(this)
+                        deleteId()
+                        Toast.makeText(this, "탈퇴되었습니다.", Toast.LENGTH_SHORT).show()
+                        mAlertDialog.dismiss()
+                        startActivity(Intent(this,LoginActivity::class.java))
+                        finish()
+                        }
+                    }
 
-                mAuth.currentUser!!.delete()
-
-                //파이어베이스 회원탈퇴//
-
-
-
-                Toast.makeText(this,"탈퇴되었습니다.",Toast.LENGTH_SHORT).show()
-                mAlertDialog.dismiss()
-//                finish()
-            }
             cancelButton.setOnClickListener {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
@@ -88,5 +97,8 @@ class WithdrawalActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+    fun deleteId(){
+        firestore?.collection("users")?.document(getUid()!!)?.delete()?.addOnSuccessListener {
+        }
+    }
 }

@@ -73,6 +73,7 @@ class LoginEmailActivity : AppCompatActivity() {
                         val intent1 = Intent(this, LoginSecondActivity::class.java)
                         intent1.putExtra("email", email)
                         startActivity(intent1)
+                        finish()
                     }
                 }
             }

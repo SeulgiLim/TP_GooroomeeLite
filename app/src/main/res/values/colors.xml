@@ -23,11 +23,13 @@
     <color name="yellow">#FBC02D</color>
     <color name="orange">#F95849</color>
     <color name="base">#EDEDED</color>
+    <color name="red">#EA3F3F</color>
+
 
 
     <color name="button">#feeeeb</color>
-    <color name="divide">#f1f1f1</color>
-    <color name="divide2">#e1e1e1</color>
+    <color name="divide">#F5F5F5</color>
+    <color name="divide2">#EEEEEE</color>
     <color name="transparent">#1A000000</color>
     <color name="transparentcolor">#FFFFFF</color>
     <color name="dot_edge">#707070</color>

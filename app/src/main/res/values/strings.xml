@@ -27,21 +27,22 @@
     <string name="findpassword_login">비밀번호를 잊으셨나요?</string>
     <string name="findpassword_login2">이메일(계정)을 입력하시면 비밀번호를 재설정할 수 있는\n 이메일을 보내드리겠습니다.</string>
 
-
+    <string name="studytime_login">하루 목표 공부 시간을 알려주세요!</string>
+    <string name="studytime_login2">목표 공부 시간은 이후에 수정이 가능합니다</string>
 
 
     // mypage //
     <string name="nickname">닉네임</string>
     <string name="profile_account">프로필 및 계정</string>
     <string name="service1">약관 및 정책</string>
-    <string name="service2">이용약관</string>
-    <string name="service3">개인정보처리방침</string>
-    <string name="service4">오픈소스 라이센스</string>
+    <string name="service2">서비스 이용약관</string>
+    <string name="service3">개인정보 처리방침</string>
+    <string name="service4">오픈소스 라이선스</string>
     <string name="etc">기타</string>
-    <string name="version">앱 버전</string>
+    <string name="version">버전 정보</string>
     <string name="report_">건의하기</string>
     <string name="logout">로그아웃</string>
-    <string name="withdrawal">탈퇴하기</string>
+    <string name="withdrawal">탈퇴</string>
 
     <string name="text">"과목을 입력하세요</string>
 

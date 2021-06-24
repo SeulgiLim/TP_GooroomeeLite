@@ -14,7 +14,6 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
-import kr.co.gooroomeelite.views.common.MainActivity
 
 class LoginNicknameActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginnicknameBinding
@@ -70,41 +69,55 @@ class LoginNicknameActivity : AppCompatActivity() {
             } else {
                 binding.tvError.text = ""
                 binding.editTextNickname.setBackgroundResource(R.drawable.btn_white)
-                signinAndSignup()
+                moveNextPage()
+//                signinAndSignup()
             }
         }
     }
-    fun signinAndSignup() {
-        auth?.createUserWithEmailAndPassword(
-            email.toString(),
-            password.toString()
-        )?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //Creating a user account
-                contentUpload()
-                moveMainPage(task.result?.user)
-            }
+//    fun signinAndSignup() {
+//        auth?.createUserWithEmailAndPassword(
+//            email.toString(),
+//            password.toString()
+//        )?.addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                //Creating a user account
+//                contentUpload()
+//                moveNextPage(task.result?.user)
+//            }
+//
+//            else if (task.exception?.message.isNullOrEmpty()) {
+//            } else {
+//            }
+//        }
+//    }
+//    private fun contentUpload() {
+//        val contentDTO = ContentDTO()
+//        contentDTO.userId = auth?.currentUser?.email
+//        contentDTO.nickname = binding.editTextNickname.text.toString()
+//        contentDTO.studyTime = 0
+//        firestore?.collection("users")?.document(getUid()!!)?.set(contentDTO)
+//        setResult(Activity.RESULT_OK)
+//    }
 
-            else if (task.exception?.message.isNullOrEmpty()) {
-            } else {
-            }
-        }
-    }
-    private fun contentUpload() {
-        val contentDTO = ContentDTO()
-        contentDTO.userId = auth?.currentUser?.email
-        contentDTO.nickname = binding.editTextNickname.text.toString()
-        contentDTO.studyTime = 0
-        firestore?.collection("users")?.document(getUid()!!)?.set(contentDTO)
-        setResult(Activity.RESULT_OK)
-    }
-
-    fun moveMainPage(user: FirebaseUser?) {
-        if (user != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+    private fun moveNextPage(){
+            val intent = Intent(this, LoginStudyTimeActivity::class.java)
+            val bundle = Bundle()
+            bundle.putString("password",password)
+            bundle.putString("email",email)
+            bundle.putString("nickname",binding.editTextNickname.text.toString())
+            intent.putExtra("bundle",bundle)
+            startActivity(intent)
             finish()
         }
-    }
+//    }
+
+//    fun moveMainPage(user: FirebaseUser?) {
+//        if (user != null) {
+//            startActivity(Intent(this, MainActivity::class.java))
+//            finish()
+//        }
+//    }
+
     private fun changecolor() {
         binding.editTextNickname.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {

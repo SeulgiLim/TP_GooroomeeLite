@@ -58,6 +58,7 @@ class LoginSecondActivity : AppCompatActivity() {
         binding.tvfindpassword.setOnClickListener {
             val intent =Intent(this,LoginNewPasswordActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
