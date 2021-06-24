@@ -96,13 +96,8 @@ class ShareActivity : AppCompatActivity() {
     //갤러리 앱 화면에 띄우기
     private val OPEN_GALLERY = 1
     private fun openGallery(){
-        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-//        val intent: Intent = Intent(Intent.ACTION_SEND_MULTIPLE)
-//        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//        val mimeTypes = arrayOf<String?>("image/jpeg", "image/png")
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
+        val intent: Intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-
         startActivityForResult(intent,OPEN_GALLERY)
     }
 
