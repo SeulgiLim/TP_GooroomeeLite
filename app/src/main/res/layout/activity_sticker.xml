@@ -19,17 +19,6 @@
         app:titleTextColor="@color/black"></androidx.appcompat.widget.Toolbar>
 
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:orientation="vertical"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/buttonContainer"-->
-    <!--        app:layout_constraintHorizontal_bias="0.0"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/share_toolbar"-->
-    <!--        app:layout_constraintVertical_bias="0.0">-->
-    <!--    app:layout_constraintDimensionRatio="1:1"-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -42,7 +31,6 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/previewStickerImageView"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_gravity="center"
@@ -63,44 +51,83 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/ic_group" />
 
-                <!--            <LinearLayout-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:layout_gravity="center_horizontal|bottom">-->
 
-                <TextView
-                    android:id="@+id/study_time"
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginBottom="20dp"
-                    android:text="10:50"
-                    android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/now_time"
+                    <ImageView
+                        android:id="@+id/study_time_image"
+                        android:layout_width="34dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_timelapse_24" />
+
+                    <TextView
+                        android:id="@+id/study_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="10:23"
+                        android:textColor="@color/white"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
                     android:layout_marginBottom="20dp"
-                    android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/start_end_time"
+                    <ImageView
+                        android:id="@+id/now_time_image"
+                        android:layout_width="34dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_timer_24" />
+
+                    <TextView
+                        android:id="@+id/now_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="20dp"
-                    android:text="8:20"
-                    android:textColor="@color/white"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/start_end_time_image"
+                        android:layout_width="34dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_timeline_24" />
+
+                    <TextView
+                        android:id="@+id/start_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="8:20"
+                        android:textColor="@color/white"
+                        android:textSize="25dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
             </FrameLayout>
         </FrameLayout>
@@ -115,7 +142,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/share_buttons_confirm"
+            android:id="@+id/share_buttons"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -127,3 +154,53 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<FrameLayout-->
+<!--android:id="@+id/sticker_container"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="400dp"-->
+<!--android:layout_gravity="center">-->
+
+<!--<ImageView-->
+<!--    android:layout_width="50dp"-->
+<!--    android:layout_height="50dp"-->
+<!--    android:layout_gravity="right|top"-->
+<!--    android:layout_marginTop="20dp"-->
+<!--    android:layout_marginRight="20dp"-->
+<!--    android:src="@drawable/ic_group" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/study_time"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_gravity="left|bottom"-->
+<!--    android:layout_marginLeft="20dp"-->
+<!--    android:layout_marginBottom="20dp"-->
+<!--    android:text="10:50"-->
+<!--    android:textColor="@color/white"-->
+<!--    android:textSize="25dp"-->
+<!--    android:textStyle="bold" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/now_time"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_gravity="center_horizontal|bottom"-->
+<!--    android:layout_marginBottom="20dp"-->
+<!--    android:textColor="@color/white"-->
+<!--    android:textSize="25dp"-->
+<!--    android:textStyle="bold" />-->
+
+<!--<TextView-->
+<!--    android:id="@+id/start_end_time"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_gravity="right|bottom"-->
+<!--    android:layout_marginRight="20dp"-->
+<!--    android:layout_marginBottom="20dp"-->
+<!--    android:text="8:20"-->
+<!--    android:textColor="@color/white"-->
+<!--    android:textSize="25dp"-->
+<!--    android:textStyle="bold" />-->
+
+<!--</FrameLayout>-->
