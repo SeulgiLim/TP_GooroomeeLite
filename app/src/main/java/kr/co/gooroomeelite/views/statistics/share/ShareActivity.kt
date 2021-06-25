@@ -15,7 +15,6 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
@@ -23,7 +22,6 @@ import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
@@ -47,7 +45,7 @@ class ShareActivity : AppCompatActivity() {
 
     private var isCapturing : Boolean = false
 
-    private var isFlashEnabled: Boolean = false
+//    private var isFlashEnabled: Boolean = false
 
     private val displayManager by lazy{
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -111,7 +109,7 @@ class ShareActivity : AppCompatActivity() {
     }
 
     //갤러리 앱 화면에 띄우기
-    private val OPEN_GALLERY = 1
+    private val OPEN_GALLERY : Int = 1
     private fun openGallery(){
         val intent: Intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -173,7 +171,7 @@ class ShareActivity : AppCompatActivity() {
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
-                initFlashAndAddListener()
+//                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
             }
@@ -208,18 +206,18 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFlashAndAddListener() = with(binding){
-        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-        flashSwitch.isGone = hasFlash.not()
-        if(hasFlash){
-            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
-                isFlashEnabled = isChecked
-            }
-        }else{
-            isFlashEnabled = false
-            flashSwitch.setOnClickListener(null)
-        }
-    }
+//    private fun initFlashAndAddListener() = with(binding){
+//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+//        flashSwitch.isGone = hasFlash.not()
+//        if(hasFlash){
+//            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
+//                isFlashEnabled = isChecked
+//            }
+//        }else{
+//            isFlashEnabled = false
+//            flashSwitch.setOnClickListener(null)
+//        }
+//    }
 
 
 
@@ -233,7 +231,7 @@ class ShareActivity : AppCompatActivity() {
             ).format(System.currentTimeMillis()) + ".jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-        if(isFlashEnabled) flashLight(true)
+//        if(isFlashEnabled) flashLight(true)
         imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
@@ -244,17 +242,17 @@ class ShareActivity : AppCompatActivity() {
             override fun onError(exception: ImageCaptureException) {
                 exception.printStackTrace()
                 isCapturing = false
-                flashLight(false)
+//                flashLight(false)
             }
 
         })
     }
-    private fun flashLight(light:Boolean){
-        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-        if(hasFlash){
-            camera?.cameraControl?.enableTorch(light)
-        }
-    }
+//    private fun flashLight(light:Boolean){
+//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+//        if(hasFlash){
+//            camera?.cameraControl?.enableTorch(light)
+//        }
+//    }
 
     private fun updateSavedImageContent() {
         contentUri?.let{
@@ -266,19 +264,17 @@ class ShareActivity : AppCompatActivity() {
                 stickerIntent.putExtra("picture",contentUri.toString())
                 Log.d("aaaa",contentUri.toString())
                 startActivity(stickerIntent)
-                flashLight(false)
+//                flashLight(false)
                 false
             }catch (e: Exception){
                 e.printStackTrace()
                 Toast.makeText(this,"파일이 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
-                flashLight(false)
+//                flashLight(false)
                 false
             }
         }
     }
     companion object{
-        private const val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
-        private const val LENS_FRONT: Int = CameraSelector.LENS_FACING_FRONT
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 }
