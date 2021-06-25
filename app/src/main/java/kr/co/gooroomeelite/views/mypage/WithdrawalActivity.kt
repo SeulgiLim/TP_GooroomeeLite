@@ -36,16 +36,13 @@ class WithdrawalActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         binding = ActivityWithdrawalBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
-        with(supportActionBar) {
-            this!!.setDisplayHomeAsUpEnabled(true)
-            this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
-            setTitle(R.string.withdrawal)
+        //백버튼 활성화
+        binding.icBack.setOnClickListener {
+            onBackPressed()
         }
         binding.checkBox.setOnCheckedChangeListener { _, _ -> checkall() }
-        binding.checkBox2.setOnCheckedChangeListener { _, _ -> checkall() }
-        binding.checkBox3.setOnCheckedChangeListener { _, _ -> checkall() }
+//        binding.checkBox2.setOnCheckedChangeListener { _, _ -> checkall() }
+//        binding.checkBox3.setOnCheckedChangeListener { _, _ -> checkall() }
 
                     // 회원탈퇴 //
         binding.checkbefore.setOnClickListener {
@@ -77,8 +74,8 @@ class WithdrawalActivity : AppCompatActivity() {
             }
         }
     }
-    private fun checkall (){
-        if (binding.checkBox.isChecked and binding.checkBox2.isChecked and binding.checkBox3.isChecked ){
+        private fun checkall (){
+        if (binding.checkBox.isChecked){
             binding.checkbefore.setBackgroundColor(resources.getColor(R.color.skyBlue))
             binding.checkbefore.setTextColor(resources.getColor(R.color.white))
             binding.checkbefore.isClickable=true
@@ -89,6 +86,19 @@ class WithdrawalActivity : AppCompatActivity() {
             binding.checkbefore.isClickable=false
         }
     }
+
+//    private fun checkall (){
+//        if (binding.checkBox.isChecked and binding.checkBox2.isChecked and binding.checkBox3.isChecked ){
+//            binding.checkbefore.setBackgroundColor(resources.getColor(R.color.skyBlue))
+//            binding.checkbefore.setTextColor(resources.getColor(R.color.white))
+//            binding.checkbefore.isClickable=true
+//        }
+//        else{
+//            binding.checkbefore.setBackgroundColor(resources.getColor(R.color.divide2))
+//            binding.checkbefore.setTextColor(resources.getColor(R.color.black))
+//            binding.checkbefore.isClickable=false
+//        }
+//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             android.R.id.home -> {

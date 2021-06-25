@@ -8,6 +8,8 @@ package kr.co.gooroomeelite.views.mypage
  */
 
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import androidx.fragment.app.Fragment
@@ -115,6 +117,14 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
                 Toast.makeText(owner, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
             }
+        }
+
+        //구루미 플레이스토어 이동
+
+        binding.btnGooroomee.setOnClickListener {
+            val intent = Intent(ACTION_VIEW)
+            intent.setData(Uri.parse("market://details?id=com.gooroomee.meet"))
+            startActivity(intent)
         }
 
 

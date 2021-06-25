@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +33,6 @@ class LoginNicknameActivity : AppCompatActivity() {
         bundle = intent.getBundleExtra("bundle")
         email = bundle?.getString("email")
         password= bundle?.getString("password")
-
         setContentView(binding.root)
 
 
@@ -102,12 +102,22 @@ class LoginNicknameActivity : AppCompatActivity() {
     private fun moveNextPage(){
             val intent = Intent(this, LoginStudyTimeActivity::class.java)
             val bundle = Bundle()
+        if (password!=null){
             bundle.putString("password",password)
             bundle.putString("email",email)
             bundle.putString("nickname",binding.editTextNickname.text.toString())
             intent.putExtra("bundle",bundle)
             startActivity(intent)
             finish()
+        }
+        else{
+            bundle.putString("email",email)
+            bundle.putString("nickname",binding.editTextNickname.text.toString())
+            intent.putExtra("bundle",bundle)
+            startActivity(intent)
+            finish()
+        }
+
         }
 //    }
 

@@ -50,9 +50,28 @@ class LoginStudyTimeActivity : AppCompatActivity() {
 
         binding.btnLoginNext.setOnClickListener {
             timecal()
-            signinAndSignup()
+            if (password!=null){
+                signinAndSignup()
+            }
+            else{
+                signingoogle()
+            }
         }
     }
+
+    private fun signingoogle() {
+        contentUpload()
+        val contentDTO = ContentDTO()
+        contentDTO.google = true
+        val data = hashMapOf<String, Any>()
+        data["google"] = contentDTO.google
+        firestore?.collection("users")?.document(LoginUtils.getUid()!!)?.update(data)
+
+        startActivity(Intent(this,MainActivity::class.java))
+        finish()
+    }
+
+
     fun signinAndSignup() {
         auth?.createUserWithEmailAndPassword(
             email.toString(),

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrowleft" />
@@ -25,7 +24,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
         android:text="반가워요 루미님"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ic_back" />
 
@@ -36,7 +35,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:text="3/3"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +81,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:text=":"
-            android:textSize="40dp" />
+            android:textSize="40sp" />
 
         <NumberPicker
             android:id="@+id/minute_picker"
@@ -113,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
-        android:text="시작"
+        android:text="@string/studytime_btn"
         android:textColor="@color/white"
         android:background="@color/skyBlue"
         android:layout_marginStart="20dp"

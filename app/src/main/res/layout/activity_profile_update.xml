@@ -70,6 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="닉네임"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:gravity="center_horizontal"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,19 +80,26 @@
 
 
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_modify_ok"
-            android:layout_width="0dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="28dp"
-            android:background="@color/skyBlue"
-            android:text="저장"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="25dp">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_modify_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="28dp"
+                android:background="@color/skyBlue"
+                android:text="저장"/>
+
+
+        </androidx.cardview.widget.CardView>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

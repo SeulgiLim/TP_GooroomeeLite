@@ -52,63 +52,18 @@ class ProfileAccountActivity : AppCompatActivity() {
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
-
-//        if(구글인지아닌지){
-//            아니면
-//            binding.imageView.setImageResource(R.drawable.ic_gooroomee_logo)
-//            구글이면
-//            binding.imageView.setImageResource(R.drawable.ic_google)
-//        }
-
-
-
-//        getImage(getUid()!!)
-
-
-
-        isLoading.value = false
         //Initiate storage
         storage = FirebaseStorage.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        
+        //구글인지 아닌지 체크
+        setting()
 
-
-
-
-
-//        firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener { ds ->
-//            val contentDTO = ds.toObject(ContentDTO::class.java)
-//            val nickname = contentDTO!!.nickname
-//            val profileImageUrl = contentDTO!!.profileImageUrl
-//            binding.edittext.setText(nickname)
-//            if (profileImageUrl != null) {
-//                Glide.with(this).load(profileImageUrl).into(binding.imageView2)
-//            } else {
-//                binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
-//            }
-//        }
-
-
-
-
-        binding.imageView2.setOnClickListener {
-            //앨범 열기
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
-        }
 
         //클릭시 업로드 메소드 수행
         binding.btnModifyOk.setOnClickListener {
             startActivity(Intent(this,ProfileUpdateActivity::class.java))
-//            isLoading.value = true
-//            contentUploadandDelete()
         }
-
-
-//        isLoading.observe(this) {
-//            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-//        }
-
     }
 
     override fun onResume() {
@@ -126,67 +81,20 @@ class ProfileAccountActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun contentUploadandDelete() {
-        val num: String = getUid()!!
-        val filename = "profile$num.jpg"
-        val storageRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
-
-
-        if (photoUri != null) {
-            storageRef!!.putFile(photoUri!!).addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val contentDTO = ContentDTO()
-                    //이미지 주소
-                    contentDTO.profileImageUrl = uri.toString()
-                    //닉네임
-                    contentDTO.nickname = binding.edittext.text.toString()
-//                    firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
-                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
-                        ?.addOnSuccessListener {
-                            var data = hashMapOf<String,Any>()
-                            data.put("profileImageUrl",uri.toString())
-                            data.put("nickname",binding.edittext.text.toString())
-                            firestore?.collection("users")!!.document(getUid()!!).update(data)
-                        }
-
-                    isLoading.value = false
-                    finish()
-                }
-                setResult(Activity.RESULT_OK)
-            }
-        } else {
-            storageRef!!.downloadUrl.addOnSuccessListener { uri ->
-                val contentDTO = ContentDTO()
-                contentDTO.nickname = binding.edittext.text.toString()
-                firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
-                    val data = hashMapOf<String, Any>()
-                    data["profileImageUrl"] = contentDTO.profileImageUrl!!
-                    data["nickname"] = contentDTO.nickname!!
-                    firestore?.collection("users")?.document(getUid()!!)?.update(data)
-                }
-                isLoading.value = false
-                finish()
-            }
-            setResult(Activity.RESULT_OK)
-        }
-    }
-
     //갤러리에서 꺼낸 이미지를 세팅해주기.
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
-            if (resultCode == RESULT_OK) {
-                //This is path to the selected image
-                photoUri = data?.data
-                binding.imageView2.setImageURI(photoUri)
-            } else {
-                //Exit the addPhotoActivity if you leave the album without selecting it
-                finish()
-            }
-        }
-    }
-
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
+//            if (resultCode == RESULT_OK) {
+//                //This is path to the selected image
+//                photoUri = data?.data
+//                binding.imageView2.setImageURI(photoUri)
+//            } else {
+//                //Exit the addPhotoActivity if you leave the album without selecting it
+//                finish()
+//            }
+//        }
+//    }
     //이미지를 세팅하기.
     private fun getImage(num:String) {
         val num = getUid()!!
@@ -196,7 +104,6 @@ class ProfileAccountActivity : AppCompatActivity() {
         } else
             downloadImgNickname(num)
     }
-
     private fun downloadImgNickname(num:String) {
         val num = getUid()!!
         val filename = "profile$num.jpg"
@@ -218,13 +125,18 @@ class ProfileAccountActivity : AppCompatActivity() {
             }
 
     }
+    private fun setting() {
+        firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener { ds ->
+            val contentDTO = ds.toObject(ContentDTO::class.java)
+            val check = contentDTO!!.google
+            if (check) {
+                binding.imageView.setImageResource(R.drawable.ic_google)
+            } else {
+                binding.imageView.setImageResource(R.drawable.ic_gooroomee_logo)
+            }
 
-//    fun saveSetting(){
-//        binding.edittext.isEnabled = true
-//        binding.edittext.isCursorVisible = true
-//        binding.button.visibility = View.VISIBLE
-//    }
-
+        }
+    }
 }
 
 
