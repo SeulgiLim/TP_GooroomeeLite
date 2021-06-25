@@ -56,6 +56,7 @@ class ShareActivity : AppCompatActivity() {
 //    private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
 //    private var mCameraID = LENS_BACK
 
+    private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
 
     private var displayId : Int = 1
     private val displayListener = object: DisplayManager.DisplayListener{
@@ -79,10 +80,18 @@ class ShareActivity : AppCompatActivity() {
         initToolBar()
 
         binding.showImage.setOnClickListener{ openGallery() }
+        binding.converterCamera.setOnClickListener{ swicthCamera() }
         startCamera(binding.viewFinder)
     }
 
-
+    //카메라 전환(앞면/후면)
+    private fun swicthCamera() {
+        if(lensFacing == CameraSelector.DEFAULT_BACK_CAMERA){
+            lensFacing = CameraSelector.DEFAULT_FRONT_CAMERA
+        }else if(lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA){
+            lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
+        }
+    }
 
     private fun initToolBar() {
         val toolbar = binding.pictureToolbar
@@ -139,7 +148,7 @@ class ShareActivity : AppCompatActivity() {
 
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
-        var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+//        private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
         val rotation = viewFinder.display.rotation
 
         cameraProviderFuture.addListener({
@@ -158,7 +167,7 @@ class ShareActivity : AppCompatActivity() {
 
             try{
                 cameraProvider.unbindAll()
-                camera = cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
+                camera = cameraProvider.bindToLifecycle(this@ShareActivity,lensFacing,preview,imageCapture)
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
