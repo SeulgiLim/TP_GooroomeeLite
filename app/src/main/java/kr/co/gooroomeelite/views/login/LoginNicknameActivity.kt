@@ -38,7 +38,12 @@ class LoginNicknameActivity : AppCompatActivity() {
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            if (password!=null){
+                startActivity(Intent(this,LoginFirstActivity::class.java))
+            }
+            else{
+                startActivity(Intent(this,LoginActivity::class.java))
+            }
         }
 
         binding.editTextNickname.setOnFocusChangeListener { v, hasFocus ->
@@ -70,34 +75,9 @@ class LoginNicknameActivity : AppCompatActivity() {
                 binding.tvError.text = ""
                 binding.editTextNickname.setBackgroundResource(R.drawable.btn_white)
                 moveNextPage()
-//                signinAndSignup()
             }
         }
     }
-//    fun signinAndSignup() {
-//        auth?.createUserWithEmailAndPassword(
-//            email.toString(),
-//            password.toString()
-//        )?.addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                //Creating a user account
-//                contentUpload()
-//                moveNextPage(task.result?.user)
-//            }
-//
-//            else if (task.exception?.message.isNullOrEmpty()) {
-//            } else {
-//            }
-//        }
-//    }
-//    private fun contentUpload() {
-//        val contentDTO = ContentDTO()
-//        contentDTO.userId = auth?.currentUser?.email
-//        contentDTO.nickname = binding.editTextNickname.text.toString()
-//        contentDTO.studyTime = 0
-//        firestore?.collection("users")?.document(getUid()!!)?.set(contentDTO)
-//        setResult(Activity.RESULT_OK)
-//    }
 
     private fun moveNextPage(){
             val intent = Intent(this, LoginStudyTimeActivity::class.java)
@@ -116,17 +96,10 @@ class LoginNicknameActivity : AppCompatActivity() {
             intent.putExtra("bundle",bundle)
             startActivity(intent)
             finish()
+
         }
 
         }
-//    }
-
-//    fun moveMainPage(user: FirebaseUser?) {
-//        if (user != null) {
-//            startActivity(Intent(this, MainActivity::class.java))
-//            finish()
-//        }
-//    }
 
     private fun changecolor() {
         binding.editTextNickname.setOnFocusChangeListener { v, hasFocus ->

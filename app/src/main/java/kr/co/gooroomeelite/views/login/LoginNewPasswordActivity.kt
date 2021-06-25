@@ -17,7 +17,7 @@ class LoginNewPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this,LoginSecondActivity::class.java))
         }
 
         binding.btnLoginNext.setOnClickListener {

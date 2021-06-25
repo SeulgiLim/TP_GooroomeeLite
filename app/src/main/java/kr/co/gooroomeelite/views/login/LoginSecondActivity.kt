@@ -31,7 +31,7 @@ class LoginSecondActivity : AppCompatActivity() {
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this,LoginEmailActivity::class.java))
         }
         binding.editTextPassword.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {
@@ -58,7 +58,6 @@ class LoginSecondActivity : AppCompatActivity() {
         binding.tvfindpassword.setOnClickListener {
             val intent =Intent(this,LoginNewPasswordActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 

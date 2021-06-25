@@ -17,6 +17,8 @@ import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginBinding
 import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.mypage.PrivacyPolicyActivity
+import kr.co.gooroomeelite.views.mypage.TermsOfServiceActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -36,22 +38,21 @@ class LoginActivity : AppCompatActivity() {
         // Firebase Storage
         storage = FirebaseStorage.getInstance()
 
+        binding.btnPrivacy.setOnClickListener {
+            startActivity(Intent(this,PrivacyPolicyActivity::class.java))
+        }
+        binding.btnService.setOnClickListener {
+            startActivity(Intent(this,TermsOfServiceActivity::class.java))
 
-
-        binding.tvPreview.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
         }
 
         binding.startEmail.setOnClickListener {
             //이메일로 시작
             startActivity(Intent(this, LoginEmailActivity::class.java))
-            Toast.makeText(this, "이메일로 시작", Toast.LENGTH_SHORT).show()
         }
         binding.startGoogle.setOnClickListener {
             //구글로 시작
             googleLogin()
-            Toast.makeText(this, "구글로 시작", Toast.LENGTH_SHORT).show()
         }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))

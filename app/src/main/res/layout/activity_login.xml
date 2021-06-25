@@ -7,40 +7,31 @@
     tools:context=".views.login.LoginActivity"
     android:layout_margin="20dp">
 
-    <TextView
-        android:id="@+id/tv_preview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="둘러보기"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/startEmail"
+        android:layout_height="100dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="115dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_preview"
-        app:srcCompat="@drawable/ic_gooroomee_logo" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:srcCompat="@drawable/ic_titlegooroomee"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/startEmail"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="140dp"
         android:background="@drawable/rectangle_3"
-        app:layout_constraintBottom_toTopOf="@+id/startGoogle"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -70,15 +61,19 @@
         android:id="@+id/startGoogle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/rectangle_3"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/startEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        app:layout_constraintBottom_toTopOf="@+id/startGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
 
         <ImageView
             android:id="@+id/imageView7"
@@ -102,5 +97,79 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="135dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/title"
+        android:textColor="@color/title"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="142dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="110dp"
+        android:fontFamily="@font/opificio"
+        android:gravity="center"
+        android:letterSpacing="0.1"
+        android:text="@string/title2"
+        android:textColor="@color/skyBlue"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/startGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="45dp"
+        android:gravity="center"
+        android:text="@string/title3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startEmail" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_service"
+        android:layout_width="97dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginBottom="62dp"
+        android:background="@null"
+        android:backgroundTint="@color/transparent"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView17" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_privacy"
+        android:layout_width="99dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="62dp"
+        android:background="@null"
+        android:backgroundTint="@color/transparent"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_service"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/textView17" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

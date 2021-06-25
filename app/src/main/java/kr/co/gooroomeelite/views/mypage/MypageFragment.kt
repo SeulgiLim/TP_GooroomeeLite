@@ -68,7 +68,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         auth = FirebaseAuth.getInstance()
         uid = auth?.currentUser?.uid
         email = auth!!.currentUser?.email
-//        owner.setSupportActionBar(binding.toolbar2)
 
         return binding.root
     }
@@ -82,11 +81,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        with(owner.supportActionBar) {
-//            this!!.setDisplayHomeAsUpEnabled(true)
-//            setTitle("Gooroomee")
-//        }
 
         //로그아웃하기
         binding.btnLogout.setOnClickListener {
@@ -102,7 +96,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
             okButton.setOnClickListener {
                 //로그아웃
-
                 if(LoginUtils.isLogin()){
                     AuthUI.getInstance().signOut(owner)
                         .addOnSuccessListener {

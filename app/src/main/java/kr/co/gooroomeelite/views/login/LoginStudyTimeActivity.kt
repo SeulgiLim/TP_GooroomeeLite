@@ -4,15 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.fragment_home.*
-import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginStudyTimeBinding
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
@@ -45,7 +40,7 @@ class LoginStudyTimeActivity : AppCompatActivity() {
         setContentView(binding.root)
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this,LoginNicknameActivity::class.java))
         }
 
         binding.btnLoginNext.setOnClickListener {

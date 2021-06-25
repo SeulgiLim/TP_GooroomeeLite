@@ -81,20 +81,6 @@ class ProfileAccountActivity : AppCompatActivity() {
             }
         }
     }
-    //갤러리에서 꺼낸 이미지를 세팅해주기.
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
-//            if (resultCode == RESULT_OK) {
-//                //This is path to the selected image
-//                photoUri = data?.data
-//                binding.imageView2.setImageURI(photoUri)
-//            } else {
-//                //Exit the addPhotoActivity if you leave the album without selecting it
-//                finish()
-//            }
-//        }
-//    }
     //이미지를 세팅하기.
     private fun getImage(num:String) {
         val num = getUid()!!
@@ -123,7 +109,6 @@ class ProfileAccountActivity : AppCompatActivity() {
                         Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
                     }
             }
-
     }
     private fun setting() {
         firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener { ds ->

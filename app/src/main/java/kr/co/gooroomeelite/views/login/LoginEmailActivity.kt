@@ -66,12 +66,14 @@ class LoginEmailActivity : AppCompatActivity() {
                         val intent = Intent(this, LoginFirstActivity::class.java)
                         intent.putExtra("email", email)
                         startActivity(intent)
+                        finish()
                     }
                     //이미 있는 이메일일경우
                     else {
                         val intent1 = Intent(this, LoginSecondActivity::class.java)
                         intent1.putExtra("email", email)
                         startActivity(intent1)
+                        finish()
                     }
                 }
             }

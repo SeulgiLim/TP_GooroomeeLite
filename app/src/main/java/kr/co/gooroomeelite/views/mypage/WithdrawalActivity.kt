@@ -41,8 +41,6 @@ class WithdrawalActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.checkBox.setOnCheckedChangeListener { _, _ -> checkall() }
-//        binding.checkBox2.setOnCheckedChangeListener { _, _ -> checkall() }
-//        binding.checkBox3.setOnCheckedChangeListener { _, _ -> checkall() }
 
                     // 회원탈퇴 //
         binding.checkbefore.setOnClickListener {
@@ -86,19 +84,6 @@ class WithdrawalActivity : AppCompatActivity() {
             binding.checkbefore.isClickable=false
         }
     }
-
-//    private fun checkall (){
-//        if (binding.checkBox.isChecked and binding.checkBox2.isChecked and binding.checkBox3.isChecked ){
-//            binding.checkbefore.setBackgroundColor(resources.getColor(R.color.skyBlue))
-//            binding.checkbefore.setTextColor(resources.getColor(R.color.white))
-//            binding.checkbefore.isClickable=true
-//        }
-//        else{
-//            binding.checkbefore.setBackgroundColor(resources.getColor(R.color.divide2))
-//            binding.checkbefore.setTextColor(resources.getColor(R.color.black))
-//            binding.checkbefore.isClickable=false
-//        }
-//    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             android.R.id.home -> {
