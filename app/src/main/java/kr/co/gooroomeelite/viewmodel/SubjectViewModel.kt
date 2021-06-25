@@ -51,6 +51,7 @@ class SubjectViewModel : ViewModel() {
                             break
                         }
                     }
+                    tmp2.reverse()
                     subjectList.value = tmp2
                 }
                 // 최근 순 정렬
@@ -61,7 +62,7 @@ class SubjectViewModel : ViewModel() {
     fun addSubject(item: Subject) {
         var prevSubject: DocumentSnapshot? = null
         if (subjectList.value!!.size > 0) {
-            prevSubject = subjectList.value!!.last
+            prevSubject = subjectList.value!!.first
         }
         db.collection("subject").add(item)
             //아래의 addOnSuccessListener보다 위의 addSnapshotListener가 먼저 호출된다.
