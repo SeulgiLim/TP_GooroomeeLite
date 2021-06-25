@@ -19,6 +19,8 @@ import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
+import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import java.io.OutputStream
 import java.time.LocalDateTime
@@ -52,6 +54,12 @@ class StickerActivity : AppCompatActivity() {
         val gallery = intent.getStringExtra("gallery")
         if (gallery != null) {
             binding.imageCapture.loadCenterCrop(url = gallery)
+        }
+
+        //취소하기
+        binding.exitButtons.setOnClickListener{
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
         }
 
         //공유하기

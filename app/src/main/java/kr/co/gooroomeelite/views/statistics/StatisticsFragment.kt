@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.tabs.TabLayout
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
@@ -15,6 +18,9 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 
 class StatisticsFragment : Fragment() {
+
+    private lateinit var stackedChart: BarChart
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

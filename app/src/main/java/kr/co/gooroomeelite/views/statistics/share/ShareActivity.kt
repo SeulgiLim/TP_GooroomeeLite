@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
@@ -48,10 +49,13 @@ class ShareActivity : AppCompatActivity() {
 
     private var isFlashEnabled: Boolean = false
 
-
     private val displayManager by lazy{
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
+
+//    private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+//    private var mCameraID = LENS_BACK
+
 
     private var displayId : Int = 1
     private val displayListener = object: DisplayManager.DisplayListener{
@@ -78,6 +82,8 @@ class ShareActivity : AppCompatActivity() {
         startCamera(binding.viewFinder)
     }
 
+
+
     private fun initToolBar() {
         val toolbar = binding.pictureToolbar
         setSupportActionBar(toolbar)
@@ -101,7 +107,6 @@ class ShareActivity : AppCompatActivity() {
         startActivityForResult(intent,OPEN_GALLERY)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -123,7 +128,7 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun startCamera(viewFinder : PreviewView){ //어떤 걸 넘겨줄 것인가?
+    private fun startCamera(viewFinder : PreviewView){
         displayManager.registerDisplayListener(displayListener,null)
         cameraExcutor = Executors.newSingleThreadExecutor()
         viewFinder.postDelayed({
@@ -134,8 +139,8 @@ class ShareActivity : AppCompatActivity() {
 
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
-        val rotation = viewFinder.display.rotation
         var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+        val rotation = viewFinder.display.rotation
 
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
@@ -163,6 +168,7 @@ class ShareActivity : AppCompatActivity() {
             }
         },cameraMainExecutor)
     }
+
 
     private fun bindCaptureListener() = with(binding){
         captureButton.setOnClickListener{
@@ -222,7 +228,6 @@ class ShareActivity : AppCompatActivity() {
                 val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
                 contentUri = savedUri //저장된 Uri를 넣어준다.
                 updateSavedImageContent()
-
             }
 
             override fun onError(exception: ImageCaptureException) {
@@ -262,6 +267,7 @@ class ShareActivity : AppCompatActivity() {
     }
     companion object{
         private const val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
+        private const val LENS_FRONT: Int = CameraSelector.LENS_FACING_FRONT
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 }

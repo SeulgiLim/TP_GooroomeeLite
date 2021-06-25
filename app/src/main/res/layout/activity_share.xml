@@ -36,8 +36,10 @@
             app:layout_constraintDimensionRatio="h,4:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_default="percent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -72,20 +74,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/captureButton" />
 
+    <ImageView
+        android:id="@+id/converter_camera"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="28dp"
+        android:src="@drawable/ic_baseline_flip_camera_android_24"
+        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/captureButton" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/flashSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="26dp"
-        android:text="@string/flash"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/captureButton"
-        app:layout_constraintVertical_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.993"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/converter_camera"
         tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+<!--<com.google.android.material.switchmaterial.SwitchMaterial-->
+<!--android:id="@+id/flashSwitch"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginEnd="26dp"-->
+<!--android:visibility="gone"-->
+<!--app:layout_constraintBottom_toBottomOf="@+id/captureButton"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="@+id/captureButton"-->
+<!--app:layout_constraintVertical_bias="0.0"-->
+<!--tools:visibility="visible" />-->
+<!--    &lt;!&ndash;    android:text="@string/flash"&ndash;&gt;-->
+
+<!--<ImageView-->
+<!--android:id="@+id/converter_camera"-->
+<!--android:layout_width="48dp"-->
+<!--android:layout_height="48dp"-->
+<!--android:layout_marginStart="28dp"-->
+<!--android:layout_marginTop="30dp"-->
+<!--android:src="@drawable/ic_baseline_flip_camera_android_24"-->
+<!--app:layout_constraintEnd_toEndOf="@+id/flashSwitch"-->
+<!--app:layout_constraintHorizontal_bias="1.0"-->
+<!--app:layout_constraintStart_toStartOf="@+id/flashSwitch"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/flashSwitch" />-->
