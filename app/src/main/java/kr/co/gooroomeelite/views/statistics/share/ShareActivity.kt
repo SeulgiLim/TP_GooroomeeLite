@@ -91,6 +91,8 @@ class ShareActivity : AppCompatActivity() {
         }else if(lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA){
             lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
         }
+//        startCamera(binding.viewFinder)
+        bindCameraUseCase()
     }
 
     private fun initToolBar() {
