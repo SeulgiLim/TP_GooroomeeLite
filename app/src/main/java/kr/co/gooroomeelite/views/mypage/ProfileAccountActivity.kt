@@ -63,6 +63,7 @@ class ProfileAccountActivity : AppCompatActivity() {
         //클릭시 업로드 메소드 수행
         binding.btnModifyOk.setOnClickListener {
             startActivity(Intent(this,ProfileUpdateActivity::class.java))
+            finish()
         }
     }
 

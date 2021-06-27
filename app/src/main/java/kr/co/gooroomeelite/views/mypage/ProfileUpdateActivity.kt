@@ -100,7 +100,6 @@ class ProfileUpdateActivity : AppCompatActivity() {
                         }
 
                     isLoading.value = false
-                    startActivity(Intent(this,MainActivity::class.java))
                     finish()
                 }
                 setResult(Activity.RESULT_OK)
@@ -116,7 +115,6 @@ class ProfileUpdateActivity : AppCompatActivity() {
                     firestore?.collection("users")?.document(getUid()!!)?.update(data)
                 }
                 isLoading.value = false
-                startActivity(Intent(this,MainActivity::class.java))
                 finish()
             }
             setResult(Activity.RESULT_OK)
