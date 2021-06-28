@@ -24,7 +24,6 @@ class DayFragment : Fragment() {
 
     private val listData by lazy {
         mutableListOf(
-            //am 12t ~ am 6t
             ChartData("오전 12시", 0F), ChartData("", 0F), ChartData("", 0F),
             ChartData("", 0F), ChartData("", 0F), ChartData("", 0F),
             //am 6t ~ am 12t
@@ -120,8 +119,10 @@ class DayFragment : Fragment() {
         val dataSets = mutableListOf(barDataSet)
         val data = BarData(dataSets as List<IBarDataSet>?).apply {
 //            setValueTextSize(30F)
-            barWidth = 0.5F
+//            barWidth = 0.5F
+            barWidth = 2.5F
         }
+
         //애니메이션 효과 0.1초
         with(chart) {
             animateY(100)

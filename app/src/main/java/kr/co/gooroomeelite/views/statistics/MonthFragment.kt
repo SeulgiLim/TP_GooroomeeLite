@@ -1,12 +1,14 @@
 package kr.co.gooroomeelite.views.statistics
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -17,10 +19,17 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kr.co.gooroomeelite.R
 import java.text.DecimalFormat
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+@RequiresApi(Build.VERSION_CODES.O)
 class MonthFragment : Fragment() {
 
     private lateinit var chart: BarChart
+
+    // 현재 날짜/시간 가져오기
+    val dateNow: LocalDateTime = LocalDateTime.now()
+    val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd")
+    val textformatterString: String = dateNow.format(textformatter)
 
     private val listData by lazy {
         mutableListOf(

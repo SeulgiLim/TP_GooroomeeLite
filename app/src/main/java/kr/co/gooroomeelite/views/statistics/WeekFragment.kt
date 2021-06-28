@@ -22,19 +22,6 @@ import java.text.DecimalFormat
 class WeekFragment : Fragment() {
     private lateinit var chart: BarChart
 
-    private val listData by lazy {
-        mutableListOf(
-            ChartData("월", 5.1F),
-            ChartData("화", 10F),
-            ChartData("수", 8.1F),
-            ChartData("목", 7.1F),
-            ChartData("금", 6.1F),
-            ChartData("토", 5.1F),
-            ChartData("일", 9.1F),
-        )
-    }
-
-
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.black)
@@ -81,17 +68,34 @@ class WeekFragment : Fragment() {
             renderer = barChartRender
         }
         setData(listData)
+//        setData()
+    }
+    private val listData by lazy {
+        mutableListOf(
+            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
+            ChartDatas("화", arrayListOf(2.1f)),                 //5
+            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
+            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
+            ChartDatas("금", arrayListOf(6.1f,4.5f,10.1f,8.5f)),      //3
+            ChartDatas("토", arrayListOf(5f,7.1f,5.5f)),              //3
+            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
+        )
     }
 
-    private fun setData(barData: List<ChartData>) {
+    private fun setData(barData: List<ChartDatas>) {
+
         val values = mutableListOf<BarEntry>()
+
         barData.forEachIndexed { index, chartData ->
-            values.add(BarEntry(index.toFloat(), chartData.value))
+            //첫번째 인자 x , 두번째 인자 y
+            for(i in chartData.value){
+                values.add(BarEntry(index.toFloat(), i))
+            }
         }
 
+        //해당 entries를 그래프에 설정해준다
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
-            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
             setDrawValues(false)
 
             val colors = ArrayList<Int>()
@@ -130,19 +134,22 @@ class WeekFragment : Fragment() {
 
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        barData.forEachIndexed { index, chartData ->
+                            while (i > axisMaximum) {
+                                count++
+                                if (i > axisMaximum) {
+                                    axisMaximum = maxValue
+                                } else {
+                                    axisMaximum = 9F
+                                }
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 0F
 //                axisMaximum = 9F
@@ -162,19 +169,21 @@ class WeekFragment : Fragment() {
                 gridColor = transparentBlackColor
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+//                var chartDataMax = listData.maxBy { it -> it.value}
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        while (i > axisMaximum) {
+                            count++
+                            if (i > axisMaximum) {
+                                axisMaximum = maxValue
+                            } else {
+                                axisMaximum = 9F
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 3F
 //                axisMaximum = 9F
