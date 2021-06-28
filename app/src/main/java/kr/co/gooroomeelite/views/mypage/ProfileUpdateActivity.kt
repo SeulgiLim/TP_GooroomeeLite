@@ -6,10 +6,16 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -17,8 +23,10 @@ import com.google.firebase.storage.StorageReference
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityProfileUpdateBinding
 import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
 class ProfileUpdateActivity : AppCompatActivity() {
@@ -61,12 +69,44 @@ class ProfileUpdateActivity : AppCompatActivity() {
             }
         }
 
-        binding.imageView2.setOnClickListener {
-            //앨범 열기
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+        //버튼 클릭시 닉네임 제거
+        binding.clearText.setOnClickListener {
+            binding.edittext.text.clear()
         }
+
+        binding.imageView2.setOnClickListener {
+
+            val mAlbumView =
+                LayoutInflater.from(this).inflate(R.layout.fragment_album, null)
+            val mBuilder = androidx.appcompat.app.AlertDialog.Builder(this).setView(mAlbumView)
+            val mAlertDialog = mBuilder.show().apply {
+                window?.setBackgroundDrawable(null)
+                window?.setGravity(Gravity.BOTTOM)
+            }
+            val albumButton = mAlbumView.findViewById<TextView>(R.id.btn_album)
+            val defaultButton = mAlbumView.findViewById<TextView>(R.id.btn_default)
+
+
+            albumButton.setOnClickListener {
+                //앨범 선택
+                val photoPickerIntent = Intent(Intent.ACTION_PICK)
+                photoPickerIntent.type = "image/*"
+                startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+
+            }
+            defaultButton.setOnClickListener {
+                //기본값
+                binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
+            }
+        }
+
+
+
+//            //앨범 열기
+//            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+//            photoPickerIntent.type = "image/*"
+//            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
+//        }
 
         //클릭시 업로드 메소드 수행
         binding.btnModifyOk.setOnClickListener {
@@ -165,6 +205,5 @@ class ProfileUpdateActivity : AppCompatActivity() {
                         Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
                     }
             }
-
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/btn_white3"
+    >
+
+    <TextView
+        android:id="@+id/btn_album"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="사진 보관함에서 선택"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:id="@+id/btn_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="기본 이미지로 변경"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="28dp"
+        android:layout_marginStart="20dp"/>
+</LinearLayout>

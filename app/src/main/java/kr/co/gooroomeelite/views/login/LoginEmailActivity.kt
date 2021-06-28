@@ -54,7 +54,7 @@ class LoginEmailActivity : AppCompatActivity() {
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editTextTextEmailAddress.text.toString())
                     .matches()
             ) {
-                binding.tvError.text = "이메일 형식을 입력해 주세요"
+                binding.tvError.text = "올바른 이메일 주소를 입력해 주세요."
                 binding.editTextTextEmailAddress.setBackgroundResource(R.drawable.btn_red)
             } else {
                 binding.tvError.text = ""

@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginfirstBinding
+import splitties.resources.color
 
 class LoginFirstActivity : AppCompatActivity() {
 
@@ -68,6 +69,16 @@ class LoginFirstActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (binding.editTextNewPassword2 == binding.editTextNewPassword){
+                    binding.tvError.color(R.color.green)
+                    binding.tvError.text = "비밀번호가 일치합니다."
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_skyblue)
+                }
+                else{binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+                    binding.tvError.text = ""
+
+                    
+                }
             }
         })
 

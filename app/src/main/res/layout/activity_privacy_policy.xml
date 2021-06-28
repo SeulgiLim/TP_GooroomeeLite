@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrowleft" />
@@ -21,11 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="@string/privacypolicy"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/black"
 
         app:layout_constraintEnd_toEndOf="parent"

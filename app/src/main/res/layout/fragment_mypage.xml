@@ -24,12 +24,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="160dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="160dp"
                 android:gravity="center"
                 android:text="더보기"
-                android:textSize="16sp"
                 android:textColor="@color/black"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,8 +63,8 @@
                         android:id="@+id/cardView7"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:layout_marginStart="16dp"
                         android:layout_marginTop="26dp"
+                        android:elevation="0dp"
                         app:cardCornerRadius="100dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -105,7 +105,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginTop="46dp"
-                        android:layout_marginEnd="25dp"
+                        android:layout_marginEnd="16dp"
                         android:src="@drawable/ic_arrowright"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -125,7 +125,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="62dp"
+                            android:layout_height="72dp"
                             android:elevation="5dp"
                             android:layout_marginTop="20dp"
                             app:cardCornerRadius="12dp">
@@ -133,39 +133,39 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@color/divide2"
+                                android:background="@drawable/btn_withdrawal"
                                 >
 
                                 <TextView
                                     android:id="@+id/textView3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginTop="14dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="16dp"
                                     android:text="함께해서 재미있는 공부"
-                                    android:textSize="10sp"
+                                    android:textSize="12sp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginBottom="14dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_marginBottom="16dp"
                                     android:text="구루미 캠스터디"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
+                                    android:textSize="13sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                                 <androidx.cardview.widget.CardView
-                                    android:layout_width="55dp"
+                                    android:layout_width="56dp"
                                     android:layout_height="30dp"
-                                    android:layout_marginTop="16dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_marginBottom="16dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="20dp"
                                     app:cardCornerRadius="8dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +175,7 @@
                                         android:id="@+id/btn_gooroomee"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@color/skyBlue"
+                                        android:background="@drawable/btn_login"
                                         android:text="바로가기"
                                         android:textColor="@color/white"
                                         android:textSize="10sp"
@@ -200,7 +200,6 @@
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="50dp"
-                                android:layout_marginStart="16dp"
                                 android:textSize="14sp"
                                 android:layout_weight="1"
                                 android:background="#FFFFFF"
@@ -224,7 +223,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -248,7 +247,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@color/white"
-                            android:layout_marginStart="16dp"
                             android:textSize="14sp"
                             android:gravity="start|center_vertical"
                             android:text="@string/service2"
@@ -259,7 +257,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -284,7 +282,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@color/white"
-                                android:layout_marginStart="16dp"
                                 android:textSize="14sp"
                                 android:gravity="start|center_vertical"
                                 android:text="@string/service3"
@@ -295,7 +292,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -319,7 +316,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@color/white"
-                                android:layout_marginStart="16dp"
                                 android:textSize="14sp"
                                 android:gravity="start|center_vertical"
                                 android:text="@string/service4"
@@ -330,7 +326,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -356,7 +352,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@color/white"
-                                android:layout_marginStart="16dp"
                                 android:gravity="start|center_vertical"
                                 android:text="@string/logout"
                                 android:textColor="@color/black"
@@ -367,7 +362,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -391,7 +386,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:background="@color/white"
-                                android:layout_marginStart="16dp"
                                 android:gravity="start|center_vertical"
                                 android:text="@string/withdrawal"
                                 android:textColor="@color/red"
@@ -402,7 +396,7 @@
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_gravity="center"
-                                android:layout_marginEnd="25dp"
+                                android:layout_marginEnd="16dp"
                                 android:src="@drawable/ic_arrowright"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />

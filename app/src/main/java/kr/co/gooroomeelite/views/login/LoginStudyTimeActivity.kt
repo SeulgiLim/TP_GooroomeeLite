@@ -35,6 +35,7 @@ class LoginStudyTimeActivity : AppCompatActivity() {
         password = bundle?.getString("password")
         nickname = bundle?.getString("nickname")
         timepciker()
+        binding.tvHi.text = "반가워요 "+nickname+"님!"
 
 
         setContentView(binding.root)

@@ -5,7 +5,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#000000</color>
+    <color name="black">#333333</color>
+    <color name="black3">#9E9E9E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#57A8D8</color>
     <color name="colorPrimaryDark">#AD1457</color>
@@ -26,6 +27,9 @@
     <color name="red">#EA3F3F</color>
     <color name="red2">#F95849</color>
     <color name="title">#999999</color>
+    <color name="title2">#333333</color>
+    <color name="title3">#D8D8D8</color>
+    <color name="green">#44C851</color>
 
 
 
