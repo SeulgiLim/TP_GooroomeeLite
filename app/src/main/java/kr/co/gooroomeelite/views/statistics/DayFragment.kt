@@ -24,31 +24,20 @@ class DayFragment : Fragment() {
 
     private val listData by lazy {
         mutableListOf(
-            ChartData("오전 12시", 0F), ChartData("", 0F), ChartData("", 0F),
-            ChartData("", 0F), ChartData("", 0F), ChartData("", 0F),
-            //am 6t ~ am 12t
-            ChartData("오전 6시", 25.1F), ChartData("", 10F), ChartData("", 38.1F),
-            ChartData("", 25.1F), ChartData("", 10F), ChartData("", 48.1F),
+            ChartDatas("오전 12시", arrayListOf(0F)), ChartDatas("", arrayListOf(0F)), ChartDatas("", arrayListOf(0F)),
+                ChartDatas("", arrayListOf(0F)), ChartDatas("", arrayListOf(0F)), ChartDatas("", arrayListOf(0F)),
+                //am 6t ~ am 12t
+            ChartDatas("오전 6시", arrayListOf(25.1F,35f,47.1f)), ChartDatas("", arrayListOf(3f,5f,10F)), ChartDatas("", arrayListOf(10f,38.1F,46f,50f)),
+            ChartDatas("", arrayListOf(35f,60f)), ChartDatas("", arrayListOf(5f,10F,48f)), ChartDatas("", arrayListOf(48.1F,20f)),
             //pm 12t ~ pm 6t
-            ChartData("오후 6시", 0F), ChartData("", 0F), ChartData("", 28.1F),
-            ChartData("", 45.1F), ChartData("", 10F), ChartData("", 48.1F),
+            ChartDatas("오후 6시", arrayListOf(0F)), ChartDatas("", arrayListOf(0F)), ChartDatas("", arrayListOf(10f,20f,28.1F,45f,60f)),
+            ChartDatas("", arrayListOf(45.1F,50f,60f,10f)), ChartDatas("", arrayListOf(10F)), ChartDatas("", arrayListOf(48.1F,20f)),
             //pm 6t ~ pm 12t
-            ChartData("오후 12시", 5.1F), ChartData("", 10F), ChartData("", 18.1F),
-            ChartData("", 35.1F), ChartData("", 10F), ChartData("", 28.1F),
+            ChartDatas("오후 12시", arrayListOf(5.1F,10f,15f,20f,25f,30f)), ChartDatas("", arrayListOf(10F,20f,30f,40f,50f)), ChartDatas("", arrayListOf(18.1F)),
+            ChartDatas("", arrayListOf(35.1F)), ChartDatas("", arrayListOf(10F,40f)), ChartDatas("", arrayListOf(28.1F,40f,10f,5f)),
             )
     }
 
-//    private fun listDataValue(){
-//        var i : Int = 1
-//        while (i <= 31) {
-//            val name : String = ""
-//            mutableListOf(
-//                ChartData(name,(Math.random()*16).toFloat())
-//            )
-//            i++
-//            return
-//        }
-//    }
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -98,10 +87,13 @@ class DayFragment : Fragment() {
         setData(listData)
     }
 
-    private fun setData(barData: List<ChartData>) {
+    private fun setData(barData: List<ChartDatas>) {
         val values = mutableListOf<BarEntry>()
         barData.forEachIndexed { index, chartData ->
-            values.add(BarEntry(index.toFloat(), chartData.value))
+            //첫번째 인자 x , 두번째 인자 y
+            for(i in chartData.value){
+                values.add(BarEntry(index.toFloat(), i))
+            }
         }
 
         //막대 그래프 색상 추가
@@ -120,7 +112,7 @@ class DayFragment : Fragment() {
         val data = BarData(dataSets as List<IBarDataSet>?).apply {
 //            setValueTextSize(30F)
 //            barWidth = 0.5F
-            barWidth = 2.5F
+            barWidth = 0.5F
         }
 
         //애니메이션 효과 0.1초
@@ -145,18 +137,34 @@ class DayFragment : Fragment() {
                 gridLineWidth = 0.5F
                 enableGridDashedLine(5f,5f,5f)
 
-                axisMaximum = 60F
-                axisMinimum = 0F
-                granularity = 20F
+                var count = 0
+                //차트데이터 값에서 가장 큰 값
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        barData.forEachIndexed { index, chartData ->
+                            while (i > axisMaximum) {
+                                count++
+                                if (i > axisMaximum) {
+                                    axisMaximum = maxValue
+                                } else {
+                                    axisMaximum = 60F
+                                }
+                            }
+                        }
+                    }
+                    axisMinimum = 0F
+                    granularity = 20F
 
-                //y축 제목 커스텀
-                valueFormatter = object : ValueFormatter() {
-                    private val mFormat: DecimalFormat = DecimalFormat("###")
-                    override fun getFormattedValue(value: Float): String {
-                        return mFormat.format(value) + "분"
-                   }
+                    //y축 제목 커스텀
+                    valueFormatter = object : ValueFormatter() {
+                        private val mFormat: DecimalFormat = DecimalFormat("###")
+                        override fun getFormattedValue(value: Float): String {
+                            return mFormat.format(value) + "분"
+                        }
+                    }
                 }
-
             }
 
             //차트 오른쪽 축, Y방향 false처리
@@ -165,14 +173,24 @@ class DayFragment : Fragment() {
                 gridColor = transparentBlackColor
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-
-                axisMaximum = 60F
+//                var chartDataMax = listData.maxBy { it -> it.value}
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        while (i > axisMaximum) {
+                            count++
+                            if (i > axisMaximum) {
+                                axisMaximum = maxValue
+                            } else {
+                                axisMaximum = 60F
+                            }
+                        }
+                    }
+                }
                 axisMinimum = 0F
                 granularity = 20F
-
             }
 
             notifyDataSetChanged()
@@ -180,7 +198,8 @@ class DayFragment : Fragment() {
             invalidate()
         }
     }
-
-
-
+//    val subject = intent.getSerializableExtra("subject") as Subject
+//    val documentId = intent.getSerializableExtra("documentId") as String
+//    Log.d("subject", subject.toString())
+//    Log.d("documentId", documentId)
 }
