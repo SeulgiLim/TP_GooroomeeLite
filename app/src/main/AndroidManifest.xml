@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.gooroomeelite">
+
     <!-- 카매라 권한 추가 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,30 +15,74 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.mypage.ProfileUpdateActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginStudyTimeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginNicknameActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginSecondActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginFirstActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginEmailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.login.LoginNewPasswordActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.mypage.WithdrawalActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.mypage.OpenSourceActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.mypage.PrivacyPolicyActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.mypage.TermsOfServiceActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.mypage.ProfileAccountActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.statistics.share.StickerActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.statistics.share.ShareActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".views.home.EditSubjectsActivity" android:screenOrientation="portrait"/> <!-- <activity android:name=".views.common.Login2Activity" /> -->
-        <activity android:name=".views.common.SplashActivity" android:screenOrientation="portrait">
+        <service
+            android:name=".utils.MusicService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <activity android:name=".views.mypage.TestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.ProfileUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginStudyTimeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginNicknameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginSecondActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginFirstActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.login.LoginNewPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.WithdrawalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.OpenSourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.PrivacyPolicyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.TermsOfServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.mypage.ProfileAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.statistics.share.StickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.statistics.share.ShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.home.EditSubjectsActivity"
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".views.common.Login2Activity" /> -->
+        <activity
+            android:name=".views.common.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.common.MainActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".views.common.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

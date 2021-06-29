@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.login
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-21
+ * @desc
+ */
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

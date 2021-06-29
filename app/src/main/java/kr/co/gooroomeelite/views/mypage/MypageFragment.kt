@@ -151,6 +151,10 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
         }
+        binding.toolbar2.setOnClickListener {
+            val intent06 = Intent(owner,TestActivity::class.java)
+            startActivity(intent06)
+        }
     }
 
     private fun getImageNickName(){
