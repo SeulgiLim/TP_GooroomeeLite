@@ -27,6 +27,7 @@ class SubjectAdapter(
         return SubjectViewHolder(ItemSubjectBinding.bind(view))
     }
 
+    //하나씩 가져오면 된다.~
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val subject = subjects[position]

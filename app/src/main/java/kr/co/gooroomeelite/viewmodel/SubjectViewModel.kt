@@ -20,6 +20,7 @@ class SubjectViewModel : ViewModel() {
         fetchSubjectList()
     }
 
+    //과목별 전체
     private fun fetchSubjectList() {
         db.collection("subject")
             .whereEqualTo("uid", uid)

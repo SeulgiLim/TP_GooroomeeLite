@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -15,12 +18,41 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.fragment_home.*
+import kr.co.gooroomeelite.BuildConfig
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.databinding.FragmentWeekBinding
+import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.model.SubjectDTO
+import kr.co.gooroomeelite.utils.LoginUtils
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
+import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class WeekFragment : Fragment() {
+    private lateinit var binding : FragmentWeekBinding
+    private val viewModel: SubjectViewModel by viewModels()
     private lateinit var chart: BarChart
+    private val myStudyTime = MutableLiveData<Int>()
+
+    var storage : FirebaseStorage? = null
+    var auth : FirebaseAuth? = null
+    var storageRef : StorageReference? = null
+    val version = BuildConfig.VERSION_NAME
+    var firestore : FirebaseFirestore? = null
+    var uid : String? = null
+    var stduyTime : Int = 0
+    var name : String? = null
+
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -41,14 +73,82 @@ class WeekFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_week, container, false)
+         binding = FragmentWeekBinding.inflate(inflater,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
+
+        uid = arguments?.getString("destinationUid")
+        binding.my = this
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         //바 차트
-        chart = view.findViewById(R.id.week_bar_chart)
+        chart = binding.weekBarChart
         chart.setNoDataText("")
         initChart(chart)
-        return view
+        return binding.root
     }
+
+    override fun onResume() {
+        super.onResume()
+        setting()
+    }
+
+    private fun setting(){
+        firestore!!.collection("subject").document(getUid()!!).get().addOnSuccessListener { ds ->
+            if (ds!=null){
+                val subjectDTO = ds.toObject(SubjectDTO::class.java)
+                val studytime = subjectDTO!!.studytime
+                val userid = subjectDTO!!.userId
+                Log.d("studyTime",studytime.toString())
+//                val email = SubjectDTO!!.userId()
+//                binding.emailaddress.text=email
+//                binding.nickname.text=nickname
+            }
+        }
+    }
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        myStudyTime.observe(viewLifecycleOwner){
+//            binding.dayStudyTime.text = "%02d".format(myStudyTime.value?.div(60)) + "시간" +
+//                    "%02d".format(myStudyTime.value?.rem(60))+"분"
+//        }
+//    }
+
+//    val db: FirebaseFirestore
+//    private lateinit var subjects : List<DocumentSnapshot>
+//
+//    init {
+//        db = FirebaseFirestore.getInstance()
+//        uid = LoginUtils.currentUser()!!.uid
+//        setting()
+//    }
+//    private fun setting(){
+//        db.collection("subject")
+//            .whereEqualTo("uid", uid)
+//            .addSnapshotListener{  value, error ->
+//                if (error != null) {
+//                    return@addSnapshotListener
+//                }
+//                if(value != null){
+//                    if(value.documents.isEmpty()){
+//                        return@addSnapshotListener
+//                    }
+//                    var fit : Int = -1
+//                    val subject = subjects[fit]
+//                    val studtytime =  subject["studytime"] as Long
+////                    binding.dayStudyTime.text = studtytime.toString()
+//                    binding.name.text = subject["name"] as String
+//
+//                    Log.d("studtytime",studtytime.toString())
+//                }
+//            }
+//
+//    }
+//    val subject = ds.toObject(Subject::class.java)
+//    val studytime = subject!!.studytime
+//    Log.d("studytime",studytime.toString())
+//    val color = subject!!.color
+////                binding.dayStudyTime.text = studytime.toString()
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
@@ -130,7 +230,7 @@ class WeekFragment : Fragment() {
                 setDrawAxisLine(false) //격자
                 gridColor = transparentBlackColor
                 gridLineWidth = 0.5F
-                enableGridDashedLine(5f,5f,5f)
+               enableGridDashedLine(5f,5f,5f)
 
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
@@ -138,7 +238,7 @@ class WeekFragment : Fragment() {
                     for (i in chartData.value) {
 //                        var chartDataMax = listData.maxBy { it -> it. }
                         var maxValue = i
-                        Log.d("aaa", "$maxValue")
+                        Log.d("aaa", "$maxValue"+"maxValue값")
                         barData.forEachIndexed { index, chartData ->
                             while (i > axisMaximum) {
                                 count++

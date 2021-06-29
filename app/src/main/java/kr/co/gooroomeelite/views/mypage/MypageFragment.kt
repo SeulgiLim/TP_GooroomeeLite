@@ -62,7 +62,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding.my = this
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-        email = auth!!.currentUser?.email
+//        email = auth!!.currentUser?.email
         owner.setSupportActionBar(binding.toolbar2)
 
         return binding.root

@@ -3,11 +3,13 @@ package kr.co.gooroomeelite.views.statistics
 import android.Manifest
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.HorizontalBarChart
@@ -19,7 +21,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
-
+@RequiresApi(Build.VERSION_CODES.O)
 class StatisticsFragment : Fragment() {
 
     private lateinit var horizontalChart: HorizontalBarChart
