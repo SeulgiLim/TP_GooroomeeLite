@@ -1,11 +1,17 @@
 package kr.co.gooroomeelite.views.mypage
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-15
+ * @desc
+ */
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +42,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     var auth : FirebaseAuth?=null
     var email : String?= null
+    var check : String?=null
     private val isLoading = MutableLiveData<Boolean>()
 
     private var storageRef: StorageReference? = null
@@ -92,11 +99,14 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
                 startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
-
             }
             defaultButton.setOnClickListener {
                 //기본값
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
+                check = "default"
+                contentUploadandDelete()
+                Log.e("TEST","2")
+                mAlertDialog.dismiss()
             }
         }
 
@@ -144,20 +154,49 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 }
                 setResult(Activity.RESULT_OK)
             }
-        } else {
-            storageRef!!.downloadUrl.addOnSuccessListener { uri ->
-                val contentDTO = ContentDTO()
-                contentDTO.nickname = binding.edittext.text.toString()
-                firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
-                    val data = hashMapOf<String, Any>()
-                    data["nickname"] = contentDTO.nickname!!
+        }
 
-                    firestore?.collection("users")?.document(getUid()!!)?.update(data)
+
+
+        else {
+            if (check == "default"){
+                Log.e("TEST","3")
+                storageRef?.downloadUrl?.addOnSuccessListener { uri ->
+                    val contentDTO = ContentDTO()
+                    //닉네임
+                    contentDTO.nickname = binding.edittext.text.toString()
+                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
+                        ?.addOnSuccessListener {
+                            var data = hashMapOf<String,Any>()
+                            data["profileImageUrl"] == null
+                            Log.e("TEST","4")
+                            data["nickname"] = contentDTO.nickname!!
+                            firestore?.collection("users")!!.document(getUid()!!).update(data)
+                        }
+
+                    isLoading.value = false
+                    Log.e("TEST","5")
+                    finish()
                 }
-                isLoading.value = false
-                finish()
+                setResult(Activity.RESULT_OK)
+
+
+            }else{
+                storageRef!!.downloadUrl.addOnSuccessListener { uri ->
+                    val contentDTO = ContentDTO()
+                    contentDTO.nickname = binding.edittext.text.toString()
+                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
+                        val data = hashMapOf<String, Any>()
+                        data["nickname"] = contentDTO.nickname!!
+
+                        firestore?.collection("users")?.document(getUid()!!)?.update(data)
+                    }
+                    isLoading.value = false
+                    finish()
+                }
+                setResult(Activity.RESULT_OK)
             }
-            setResult(Activity.RESULT_OK)
+
         }
     }
 
