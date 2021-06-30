@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -16,6 +18,7 @@ import kr.co.gooroomeelite.databinding.FragmentHomeBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
+import kr.co.gooroomeelite.utils.RC_START_STUDY
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.common.StudyTimerDialog
 import kr.co.gooroomeelite.views.login.LoginActivity
@@ -27,13 +30,17 @@ class HomeFragment : Fragment() {
     private val subjectAdapter: SubjectAdapter by lazy {
         SubjectAdapter(emptyList(),
             onClickStartBtn = { subject ->
-
+                val intent = Intent(mainActivityContext, StudyActivity::class.java)
+                intent.putExtra("subject", subject.toObject(Subject::class.java))
+                intent.putExtra("documentId", subject.id)
+                startActivityForResult(intent, RC_START_STUDY)
             })
     }
     private val mainActivityContext by lazy {
         requireContext()
     }
-    private val myStudyTime = MutableLiveData<Int>()
+    private val myStudyGoal = MutableLiveData<Int>()
+    private val todayStudyTime = MutableLiveData<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +75,8 @@ class HomeFragment : Fragment() {
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
+        val ingImg = binding.ing.layoutParams as ConstraintLayout.LayoutParams
+        ingImg.horizontalBias = binding.seekBar.progress.toFloat() / 10
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(
@@ -82,6 +91,8 @@ class HomeFragment : Fragment() {
             StudyTimerDialog(this).show()
         }
 
+        todayStudyTime.value = 0
+
         return binding.root
     }
 
@@ -90,9 +101,9 @@ class HomeFragment : Fragment() {
             subjectAdapter.setData(it)
             binding.subjectExample.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
-        myStudyTime.observe(viewLifecycleOwner) {
+        myStudyGoal.observe(viewLifecycleOwner) {
             binding.studytime.text =
-                "%02d".format(myStudyTime.value?.div(60)) + "시간 " + "%02d".format(myStudyTime.value?.rem(
+                "%02d".format(myStudyGoal.value?.div(60)) + "시간 " + "%02d".format(myStudyGoal.value?.rem(
                     60)) + "분"
         }
 
@@ -126,7 +137,7 @@ class HomeFragment : Fragment() {
                                 "목표 공부 시간을 수정하였습니다.",
                                 Toast.LENGTH_SHORT)
                                 .show()
-                            myStudyTime.value = studyTime
+                            myStudyGoal.value = studyTime
                         }
                 } else {
                     FirebaseFirestore.getInstance().collection("users")
@@ -137,7 +148,7 @@ class HomeFragment : Fragment() {
                                 "목표 공부 시간을 설정하였습니다.",
                                 Toast.LENGTH_SHORT)
                                 .show()
-                            myStudyTime.value = studyTime
+                            myStudyGoal.value = studyTime
                         }
                 }
             }
@@ -147,15 +158,15 @@ class HomeFragment : Fragment() {
         FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
             .addOnSuccessListener {
                 if(it["studyTime"] == null) {
-                    myStudyTime.value = -1
+                    myStudyGoal.value = -1
                     return@addOnSuccessListener
                 }
-                myStudyTime.value = it["studyTime"].toString().toInt()
+                myStudyGoal.value = it["studyTime"].toString().toInt()
                 binding.nickname.text = "반가워요, ${it["nickname"]}님"
             }
             .addOnFailureListener {
                 Toast.makeText(mainActivityContext, it.toString(), Toast.LENGTH_SHORT).show()
-                myStudyTime.value = -1
+                myStudyGoal.value = -1
             }
     }
 }

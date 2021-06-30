@@ -2,6 +2,7 @@ package kr.co.gooroomeelite.views.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -9,10 +10,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.gooroomeelite.adapter.EditSubjectAdapter
 import kr.co.gooroomeelite.databinding.ActivityEditSubjectsBinding
+import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.viewmodel.EditSubjectViewModel
 import java.util.*
 
-class EditSubjectsActivity : AppCompatActivity() {
+class EditSubjectsActivity : AppCompatActivity(), SubjectFragment.onDataPassListener {
     private lateinit var binding : ActivityEditSubjectsBinding
     private val isLoading = MutableLiveData<Boolean>()
     private val viewModel : EditSubjectViewModel by viewModels()
@@ -34,9 +36,13 @@ class EditSubjectsActivity : AppCompatActivity() {
                     }
                 }
             },
-            onClickMoreBtn = { subject ->
-                viewModel.deleteSubject(subject)
-                this.editSubjectAdapter.notifyDataSetChanged()
+            onClickMoreBtn = { subject, position ->
+                val bundle = Bundle()
+                bundle.putSerializable("subject", subject.toObject(Subject::class.java))
+                bundle.putInt("position", position)
+                val bottomSheet = SubjectFragment()
+                bottomSheet.arguments = bundle
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
         )
     }
@@ -82,5 +88,15 @@ class EditSubjectsActivity : AppCompatActivity() {
         isLoading.observe(this) {
             binding.progressBar.visibility = if(it) View.VISIBLE else View.GONE
         }
+    }
+
+    override fun delete(position: Int) {
+        viewModel.deleteSubject(position)
+        editSubjectAdapter.notifyDataSetChanged()
+    }
+
+    override fun edit(position: Int, subjectName: String, color: String) {
+        viewModel.editSubject(position, subjectName, color)
+        editSubjectAdapter.notifyDataSetChanged()
     }
 }

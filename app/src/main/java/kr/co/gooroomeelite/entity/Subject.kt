@@ -6,9 +6,9 @@ import java.util.*
 
 data class Subject(
     val uid: String? = null,
-    val name: String? = null,
-    val color: String? = null,
-    val studytime: Int = 0,
+    var name: String? = null,
+    var color: String? = null,
+    var studytime: Int = 0,
     var prevDocumentId: String? = null,
     var nextDocumentId: String? = null,
     @ServerTimestamp

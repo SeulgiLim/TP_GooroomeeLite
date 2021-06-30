@@ -1,42 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_bottom_sheet"
+    style="@style/BottomSheetDialogTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".views.home.SubjectFragment"
-    android:padding="8dp">
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="30dp">
 
-    <TextView
-        android:id="@+id/textView6"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="과목 추가" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="과목 추가" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:src="@drawable/ic_delete"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:textSize="14sp"
+                android:textColor="#F95849"
+                android:layout_marginStart="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="삭제" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/subject_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:maxLength="20" />
+        android:textSize="20sp"
+        android:hint="과목 이름을 입력해 주세요."
+        android:textColorHint="#DCDCDC"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textStyle="bold"
+        android:maxLength="20"
+        android:backgroundTint="#F2F4F6"
+        android:textCursorDrawable="@drawable/color_cursor"
+        style="@style/EditTextSelectHandle"/>
 
     <TextView
+        android:id="@+id/textCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="과목 색상 선택하기" />
+        android:textSize="13sp"
+        android:textColor="#B6B6B6"
+        android:textAlignment="viewEnd"
+        android:text="0 / 10" />
 
-    <ImageView
-        android:id="@+id/color_selector"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/shape_oval"/>
+    <TableLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/color1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"
+                    />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/color6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+            </FrameLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/color11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/color15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <kr.co.gooroomeelite.customview.RoundedSquare
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="12dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_checked"/>
+            </FrameLayout>
+        </TableRow>
+
+    </TableLayout>
 
     <Button
-        android:layout_gravity="center"
+        android:shadowRadius="0"
         android:id="@+id/enroll_btn"
-        android:text="설정"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:text="완료"
+        android:textSize="15sp"
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        />
 </LinearLayout>

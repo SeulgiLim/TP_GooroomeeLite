@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.Gooroomeelite" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="colorAccent">@color/skyBlue</item>
+        <item name="android:colorEdgeEffect">@color/colorPrimary</item>
     </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_bottom_sheet</item>
+    </style>
+
+    <style name="AppTheme.NumberPicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">#D8D8D8</item>
+        <item name="colorControlNormal">#EEEEEE</item>
+        <item name="android:editTextColor">#444444</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+    </style>
+
+    <style name="EditTextSelectHandle">
+        <item name="android:textSelectHandle"></item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
 </resources>

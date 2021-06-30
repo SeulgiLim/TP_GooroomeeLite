@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.co.gooroomeelite">
-
-    <!--    카매라 권한 추가 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-
-
+    <!-- 카매라 권한 추가 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:screenOrientation="landscape"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.login.LoginNicknameActivity"/>
-        <activity android:name=".views.login.LoginActivity"/>
+        <activity android:name=".views.home.StudyActivity"/>
+        <activity android:name=".views.login.LoginNicknameActivity" />
+        <activity android:name=".views.login.LoginActivity" />
         <activity android:name=".views.login.LoginSecondActivity" />
         <activity android:name=".views.login.LoginFirstActivity" />
         <activity android:name=".views.login.LoginEmailActivity" />
@@ -26,9 +21,9 @@
         <activity android:name=".views.mypage.PrivacyPolicyActivity" />
         <activity android:name=".views.mypage.TermsOfServiceActivity" />
         <activity android:name=".views.mypage.ProfileAccountActivity" />
-        <activity android:name=".views.statistics.share.StickerActivity"/>
+        <activity android:name=".views.statistics.share.StickerActivity" />
         <activity android:name=".views.statistics.share.ShareActivity" />
-        <activity android:name=".views.home.EditSubjectsActivity"/>
+        <activity android:name=".views.home.EditSubjectsActivity" />
         <activity android:name=".views.common.Login2Activity" />
         <activity android:name=".views.common.SplashActivity">
             <intent-filter>
@@ -37,7 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.common.MainActivity"/>
+        <activity android:name=".views.common.MainActivity" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

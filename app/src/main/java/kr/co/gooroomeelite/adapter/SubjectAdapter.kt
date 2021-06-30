@@ -1,12 +1,8 @@
 package kr.co.gooroomeelite.adapter
 
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import kr.co.gooroomeelite.R
@@ -27,10 +23,9 @@ class SubjectAdapter(
         return SubjectViewHolder(ItemSubjectBinding.bind(view))
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val subject = subjects[position]
-        holder.binding.subjectColor.background.colorFilter = BlendModeColorFilter(Color.parseColor(subject["color"] as String), BlendMode.SRC_ATOP)
+        holder.binding.subjectColor.paint.color = Color.parseColor(subject["color"] as String)
         holder.binding.subjectTitle.text = subject["name"] as String
         holder.binding.startBtn.setOnClickListener {
             onClickStartBtn(subject)
