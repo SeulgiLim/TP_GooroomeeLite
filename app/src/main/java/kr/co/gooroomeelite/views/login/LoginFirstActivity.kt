@@ -79,10 +79,9 @@ class LoginFirstActivity : AppCompatActivity() {
                     binding.tvError.text = "비밀번호가 일치합니다."
                     binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_skyblue)
                 }
-                else{binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
-                    binding.tvError.text = ""
-
-                    
+                else{
+//                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+//                    binding.tvError.text = ""
                 }
             }
         })
@@ -90,8 +89,16 @@ class LoginFirstActivity : AppCompatActivity() {
         binding.btnLoginNext.setOnClickListener {
 
             if (binding.editTextNewPassword.text.toString() != binding.editTextNewPassword2.text.toString()) {
-                binding.tvError.text = "비밀번호가 일치하지 않습니다."
-                binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                if(binding.editTextNewPassword.text.toString().length <8){
+                    binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
+                    binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+                    binding.editTextNewPassword.hasFocus()
+                    binding.editTextNewPassword2.clearFocus()
+                }else{
+                    binding.tvError.text = "비밀번호가 일치하지 않습니다."
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                }
             }
             else if (binding.editTextNewPassword.text.toString().isEmpty() or binding.editTextNewPassword2.text.toString().isEmpty()){
                 binding.tvError.text = "비밀번호를 입력해주세요."

@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
-        android:text="2/3"
+        android:text="2 / 3"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -99,10 +99,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login_next"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginBottom="28dp"
         android:text="@string/email_btn"
         android:textColor="@color/white"
+
+        android:textSize="15sp"
         android:background="@drawable/btn_login"
         android:backgroundTint="@null"
         android:layout_marginStart="20dp"

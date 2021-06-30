@@ -15,7 +15,7 @@
 
     <string name="password_login">비밀번호를 입력해 주세요.</string>
     <string name="password_login2">비밀번호</string>
-    <string name="password_find">비밀번호를 잊어버리셨나요?</string>
+    <string name="password_find"><u>비밀번호를 잊어버리셨나요?</u></string>
 
 
     <string name="newpassword_login">새 비밀번호를 입력해 주세요.</string>
@@ -33,7 +33,7 @@
 
 
     <string name="findpassword_login">비밀번호를 잊으셨나요?</string>
-    <string name="findpassword_login2">이메일(계정)을 입력하시면 비밀번호를 재설정할 수 있는\n 이메일을 보내드리겠습니다.</string>
+    <string name="findpassword_login2">이메일(계정)을 입력하시면 비밀번호를 재설정할 수 있는\n이메일을 보내드리겠습니다.</string>
 
     <string name="studytime_login">하루 목표 공부 시간을 알려주세요!</string>
     <string name="studytime_login2">목표 공부 시간은 이후에 수정이 가능합니다</string>

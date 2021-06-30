@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -86,6 +87,7 @@ class LoginSecondActivity : AppCompatActivity() {
                 finish()
             } else {
                 binding.tvError.text = "비밀번호가 일치하지 않습니다."
+                binding.tvError.visibility = View.VISIBLE
                 binding.editTextPassword.setBackgroundResource(R.drawable.btn_red)
             }
         }
