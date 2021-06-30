@@ -47,15 +47,11 @@ class ProfileAccountActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
 
-
-
         getImage(getUid()!!)
         isLoading.value = false
         //Initiate storage
         storage = FirebaseStorage.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
-
 
 //        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
 //            val nickname = ds.data?.get("nickname").toString()

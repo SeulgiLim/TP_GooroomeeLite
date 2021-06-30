@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.BarChart
@@ -18,19 +17,11 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_home.*
-import kr.co.gooroomeelite.BuildConfig
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
-import kr.co.gooroomeelite.entity.Subject
-import kr.co.gooroomeelite.model.ContentDTO
-import kr.co.gooroomeelite.model.SubjectDTO
-import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import java.text.DecimalFormat
@@ -43,15 +34,6 @@ class WeekFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
     private lateinit var chart: BarChart
     private val myStudyTime = MutableLiveData<Int>()
-
-    var storage : FirebaseStorage? = null
-    var auth : FirebaseAuth? = null
-    var storageRef : StorageReference? = null
-    val version = BuildConfig.VERSION_NAME
-    var firestore : FirebaseFirestore? = null
-    var uid : String? = null
-    var stduyTime : Int = 0
-    var name : String? = null
 
 
     //아래,왼쪽 제목 이름
@@ -73,19 +55,16 @@ class WeekFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         binding = FragmentWeekBinding.inflate(inflater,container,false)
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
+//        binding = FragmentWeekBinding.inflate(inflater,container,false)
+//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
+        val view = inflater.inflate(R.layout.fragment_month, container, false)
 
-        uid = arguments?.getString("destinationUid")
-        binding.my = this
-        firestore = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
 
         //바 차트
-        chart = binding.weekBarChart
+        chart = view.weekBarChart
         chart.setNoDataText("")
         initChart(chart)
-        return binding.root
+        return view
     }
 
     override fun onResume() {
@@ -93,16 +72,26 @@ class WeekFragment : Fragment() {
         setting()
     }
 
+    private lateinit var subjects : List<DocumentSnapshot>
+    private val studyTime = MutableLiveData<Int>()
+
     private fun setting(){
-        firestore!!.collection("subject").document(getUid()!!).get().addOnSuccessListener { ds ->
-            if (ds!=null){
-                val subjectDTO = ds.toObject(SubjectDTO::class.java)
-                val studytime = subjectDTO!!.studytime
-                val userid = subjectDTO!!.userId
-                Log.d("studyTime",studytime.toString())
-//                val email = SubjectDTO!!.userId()
+        FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
+            .addOnSuccessListener {
+            if (it["studyTime"]!=null){
+//                val subjectDTO = it.toObject(SubjectDTO::class.java)
+//                val studytime = subjectDTO!!.studytime
+//                val userid = subjectDTO!!.userId
 //                binding.emailaddress.text=email
-//                binding.nickname.text=nickname
+                if(it["studyTime"] == null) {
+                    return@addOnSuccessListener
+                }
+                studyTime.value = it["studyTime"].toString().toInt()
+                binding.name.text = "반가워요, ${it["nickname"]}님"
+
+
+
+                Log.d("studyTime",studytime.toString())
             }
         }
     }

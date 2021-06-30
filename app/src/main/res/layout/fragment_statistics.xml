@@ -117,11 +117,19 @@
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_baseline_local_fire_department_24"
                     />
+
                 <TextView
+                    android:id="@+id/name_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="시간"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="시간" />
+
+
+                <ImageView
+                    android:id="@+id/color"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="30dp" />
             </LinearLayout>
 
 

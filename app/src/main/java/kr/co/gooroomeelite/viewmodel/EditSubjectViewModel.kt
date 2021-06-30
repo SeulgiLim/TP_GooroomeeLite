@@ -23,8 +23,8 @@ class EditSubjectViewModel : ViewModel() {
 
     private fun fetchSubjectList() {
         db.collection("subject")
-            .whereEqualTo("uid", uid)
-            .get()
+            .whereEqualTo("uid", uid) //계정 id
+            .get() // 값이 변경시 바로 값이 변경된다.
             .addOnSuccessListener { docs ->
                 if (!docs.isEmpty) {
                     val tmp = hashMapOf<String, DocumentSnapshot>()

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
-
-    <data>
-        <variable
-            name = "my"
-            type ="kr.co.gooroomeelite.views.statistics.WeekFragment"/>
-    </data>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.statistics.WeekFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
-            android:text=""
+            android:text="2156"
             android:textColor="@color/black"
             />
         <TextView
@@ -44,4 +39,4 @@
             tools:ignore="MissingClass" />
     </LinearLayout>
 
-</layout>
+</FrameLayout>
