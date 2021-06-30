@@ -22,7 +22,6 @@ import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isGone
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
@@ -46,12 +45,16 @@ class ShareActivity : AppCompatActivity() {
 
     private var isCapturing : Boolean = false
 
-    private var isFlashEnabled: Boolean = false
-
+//    private var isFlashEnabled: Boolean = false
 
     private val displayManager by lazy{
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
+
+//    private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
+//    private var mCameraID = LENS_BACK
+
+    private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
 
     private var displayId : Int = 1
     private val displayListener = object: DisplayManager.DisplayListener{
@@ -75,7 +78,19 @@ class ShareActivity : AppCompatActivity() {
         initToolBar()
 
         binding.showImage.setOnClickListener{ openGallery() }
+        binding.converterCamera.setOnClickListener{ swicthCamera() }
         startCamera(binding.viewFinder)
+    }
+
+    //카메라 전환(앞면/후면)
+    private fun swicthCamera() {
+        if(lensFacing == CameraSelector.DEFAULT_BACK_CAMERA){
+            lensFacing = CameraSelector.DEFAULT_FRONT_CAMERA
+        }else if(lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA){
+            lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
+        }
+//        startCamera(binding.viewFinder)
+        bindCameraUseCase()
     }
 
     private fun initToolBar() {
@@ -94,18 +109,12 @@ class ShareActivity : AppCompatActivity() {
     }
 
     //갤러리 앱 화면에 띄우기
-    private val OPEN_GALLERY = 1
+    private val OPEN_GALLERY : Int = 1
     private fun openGallery(){
-        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-//        val intent: Intent = Intent(Intent.ACTION_SEND_MULTIPLE)
-//        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-//        val mimeTypes = arrayOf<String?>("image/jpeg", "image/png")
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes)
+        val intent: Intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-
         startActivityForResult(intent,OPEN_GALLERY)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -128,7 +137,7 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun startCamera(viewFinder : PreviewView){ //어떤 걸 넘겨줄 것인가?
+    private fun startCamera(viewFinder : PreviewView){
         displayManager.registerDisplayListener(displayListener,null)
         cameraExcutor = Executors.newSingleThreadExecutor()
         viewFinder.postDelayed({
@@ -139,8 +148,8 @@ class ShareActivity : AppCompatActivity() {
 
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
+//        private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
         val rotation = viewFinder.display.rotation
-        var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
 
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
@@ -158,16 +167,17 @@ class ShareActivity : AppCompatActivity() {
 
             try{
                 cameraProvider.unbindAll()
-                camera = cameraProvider.bindToLifecycle(this@ShareActivity,cameraSelector,preview,imageCapture)
+                camera = cameraProvider.bindToLifecycle(this@ShareActivity,lensFacing,preview,imageCapture)
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
-                initFlashAndAddListener()
+//                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
             }
         },cameraMainExecutor)
     }
+
 
     private fun bindCaptureListener() = with(binding){
         captureButton.setOnClickListener{
@@ -196,18 +206,18 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFlashAndAddListener() = with(binding){
-        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-        flashSwitch.isGone = hasFlash.not()
-        if(hasFlash){
-            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
-                isFlashEnabled = isChecked
-            }
-        }else{
-            isFlashEnabled = false
-            flashSwitch.setOnClickListener(null)
-        }
-    }
+//    private fun initFlashAndAddListener() = with(binding){
+//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+//        flashSwitch.isGone = hasFlash.not()
+//        if(hasFlash){
+//            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
+//                isFlashEnabled = isChecked
+//            }
+//        }else{
+//            isFlashEnabled = false
+//            flashSwitch.setOnClickListener(null)
+//        }
+//    }
 
 
 
@@ -221,29 +231,28 @@ class ShareActivity : AppCompatActivity() {
             ).format(System.currentTimeMillis()) + ".jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-        if(isFlashEnabled) flashLight(true)
+//        if(isFlashEnabled) flashLight(true)
         imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
                 contentUri = savedUri //저장된 Uri를 넣어준다.
                 updateSavedImageContent()
-
             }
 
             override fun onError(exception: ImageCaptureException) {
                 exception.printStackTrace()
                 isCapturing = false
-                flashLight(false)
+//                flashLight(false)
             }
 
         })
     }
-    private fun flashLight(light:Boolean){
-        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-        if(hasFlash){
-            camera?.cameraControl?.enableTorch(light)
-        }
-    }
+//    private fun flashLight(light:Boolean){
+//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
+//        if(hasFlash){
+//            camera?.cameraControl?.enableTorch(light)
+//        }
+//    }
 
     private fun updateSavedImageContent() {
         contentUri?.let{
@@ -255,18 +264,17 @@ class ShareActivity : AppCompatActivity() {
                 stickerIntent.putExtra("picture",contentUri.toString())
                 Log.d("aaaa",contentUri.toString())
                 startActivity(stickerIntent)
-                flashLight(false)
+//                flashLight(false)
                 false
             }catch (e: Exception){
                 e.printStackTrace()
                 Toast.makeText(this,"파일이 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
-                flashLight(false)
+//                flashLight(false)
                 false
             }
         }
     }
     companion object{
-        private const val LENS_BACK: Int = CameraSelector.LENS_FACING_BACK
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
 }

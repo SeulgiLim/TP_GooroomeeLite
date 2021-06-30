@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -15,24 +17,23 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.databinding.FragmentWeekBinding
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
+import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class WeekFragment : Fragment() {
+    private lateinit var binding : FragmentWeekBinding
+    private val viewModel: SubjectViewModel by viewModels()
     private lateinit var chart: BarChart
-
-    private val listData by lazy {
-        mutableListOf(
-            ChartData("월", 5.1F),
-            ChartData("화", 10F),
-            ChartData("수", 8.1F),
-            ChartData("목", 7.1F),
-            ChartData("금", 6.1F),
-            ChartData("토", 5.1F),
-            ChartData("일", 9.1F),
-        )
-    }
+    private val myStudyTime = MutableLiveData<Int>()
 
 
     //아래,왼쪽 제목 이름
@@ -54,14 +55,89 @@ class WeekFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_week, container, false)
+//        binding = FragmentWeekBinding.inflate(inflater,container,false)
+//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
+        val view = inflater.inflate(R.layout.fragment_month, container, false)
+
 
         //바 차트
-        chart = view.findViewById(R.id.week_bar_chart)
+        chart = view.weekBarChart
         chart.setNoDataText("")
         initChart(chart)
         return view
     }
+
+    override fun onResume() {
+        super.onResume()
+        setting()
+    }
+
+    private lateinit var subjects : List<DocumentSnapshot>
+    private val studyTime = MutableLiveData<Int>()
+
+    private fun setting(){
+        FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
+            .addOnSuccessListener {
+            if (it["studyTime"]!=null){
+//                val subjectDTO = it.toObject(SubjectDTO::class.java)
+//                val studytime = subjectDTO!!.studytime
+//                val userid = subjectDTO!!.userId
+//                binding.emailaddress.text=email
+                if(it["studyTime"] == null) {
+                    return@addOnSuccessListener
+                }
+                studyTime.value = it["studyTime"].toString().toInt()
+                binding.name.text = "반가워요, ${it["nickname"]}님"
+
+
+
+                Log.d("studyTime",studytime.toString())
+            }
+        }
+    }
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        myStudyTime.observe(viewLifecycleOwner){
+//            binding.dayStudyTime.text = "%02d".format(myStudyTime.value?.div(60)) + "시간" +
+//                    "%02d".format(myStudyTime.value?.rem(60))+"분"
+//        }
+//    }
+
+//    val db: FirebaseFirestore
+//    private lateinit var subjects : List<DocumentSnapshot>
+//
+//    init {
+//        db = FirebaseFirestore.getInstance()
+//        uid = LoginUtils.currentUser()!!.uid
+//        setting()
+//    }
+//    private fun setting(){
+//        db.collection("subject")
+//            .whereEqualTo("uid", uid)
+//            .addSnapshotListener{  value, error ->
+//                if (error != null) {
+//                    return@addSnapshotListener
+//                }
+//                if(value != null){
+//                    if(value.documents.isEmpty()){
+//                        return@addSnapshotListener
+//                    }
+//                    var fit : Int = -1
+//                    val subject = subjects[fit]
+//                    val studtytime =  subject["studytime"] as Long
+////                    binding.dayStudyTime.text = studtytime.toString()
+//                    binding.name.text = subject["name"] as String
+//
+//                    Log.d("studtytime",studtytime.toString())
+//                }
+//            }
+//
+//    }
+//    val subject = ds.toObject(Subject::class.java)
+//    val studytime = subject!!.studytime
+//    Log.d("studytime",studytime.toString())
+//    val color = subject!!.color
+////                binding.dayStudyTime.text = studytime.toString()
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
@@ -81,21 +157,38 @@ class WeekFragment : Fragment() {
             renderer = barChartRender
         }
         setData(listData)
+//        setData()
+    }
+    private val listData by lazy {
+        mutableListOf(
+            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
+            ChartDatas("화", arrayListOf(2.1f)),                 //5
+            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
+            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
+            ChartDatas("금", arrayListOf(6.1f,4.5f,10.1f,8.5f)),      //3
+            ChartDatas("토", arrayListOf(5f,7.1f,5.5f)),              //3
+            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
+        )
     }
 
-    private fun setData(barData: List<ChartData>) {
+    private fun setData(barData: List<ChartDatas>) {
+
         val values = mutableListOf<BarEntry>()
+
         barData.forEachIndexed { index, chartData ->
-            values.add(BarEntry(index.toFloat(), chartData.value))
+            //첫번째 인자 x , 두번째 인자 y
+            for(i in chartData.value){
+                values.add(BarEntry(index.toFloat(), i))
+            }
         }
 
+        //해당 entries를 그래프에 설정해준다
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
-            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
             setDrawValues(false)
 
             val colors = ArrayList<Int>()
-            colors.add(Color.argb(55,61,171,91))
+            colors.add(Color.argb(100,68,158,246))
             setColors(colors)
             highLightAlpha = 0
         }
@@ -126,23 +219,26 @@ class WeekFragment : Fragment() {
                 setDrawAxisLine(false) //격자
                 gridColor = transparentBlackColor
                 gridLineWidth = 0.5F
-                enableGridDashedLine(5f,5f,5f)
+               enableGridDashedLine(5f,5f,5f)
 
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue"+"maxValue값")
+                        barData.forEachIndexed { index, chartData ->
+                            while (i > axisMaximum) {
+                                count++
+                                if (i > axisMaximum) {
+                                    axisMaximum = maxValue
+                                } else {
+                                    axisMaximum = 9F
+                                }
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 0F
 //                axisMaximum = 9F
@@ -162,19 +258,21 @@ class WeekFragment : Fragment() {
                 gridColor = transparentBlackColor
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+//                var chartDataMax = listData.maxBy { it -> it.value}
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        while (i > axisMaximum) {
+                            count++
+                            if (i > axisMaximum) {
+                                axisMaximum = maxValue
+                            } else {
+                                axisMaximum = 9F
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 3F
 //                axisMaximum = 9F

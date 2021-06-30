@@ -3,13 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item android:id="@+id/home"
         android:title="홈"
+        android:icon="@drawable/ic_home"
         />
 
     <item android:id="@+id/statistics"
         android:title="통계"
+        android:icon="@drawable/ic_bar_chart"
         />
 
     <item android:id="@+id/mypage"
         android:title="더보기"
-        tools:ignore="DuplicateIds" />
+        tools:ignore="DuplicateIds"
+        android:icon="@drawable/ic_more_horizontal"
+        />
 </menu>

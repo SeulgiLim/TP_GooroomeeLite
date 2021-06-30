@@ -24,7 +24,6 @@
     <color name="orange">#F95849</color>
     <color name="base">#EDEDED</color>
 
-
     <color name="button">#feeeeb</color>
     <color name="divide">#f1f1f1</color>
     <color name="divide2">#e1e1e1</color>
@@ -35,6 +34,10 @@
     <color name="icon_small_color">#707070</color>
     <color name="blue">#0D47A1</color>
     <color name="grey">#8E8C8C</color>
-
     <color name="black_24">#3D000000</color>
+
+    <color name="lightGredy">#ACA8A8</color>
+    <color name="light_blue">#C2DCF6</color>
+    <color name="groomColor">#449EF6</color>
+
 </resources>
