@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
                 val intent = Intent(mainActivityContext, StudyActivity::class.java)
                 intent.putExtra("subject", subject.toObject(Subject::class.java))
                 intent.putExtra("documentId", subject.id)
-                startActivityForResult(intent, RC_START_STUDY)tudy
+                startActivityForResult(intent, RC_START_STUDY)
             })
 
         /*onClickStartBtn = { subject ->

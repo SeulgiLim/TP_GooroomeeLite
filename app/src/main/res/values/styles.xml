@@ -31,7 +31,7 @@
     </style>
 
     <style name="EditTextSelectHandle">
-        <item name="android:textSelectHandle"></item>
+        <item name="android:textSelectHandle" >@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 

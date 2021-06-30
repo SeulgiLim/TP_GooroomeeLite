@@ -1,8 +1,10 @@
 package kr.co.gooroomeelite.adapter
 
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import kr.co.gooroomeelite.R

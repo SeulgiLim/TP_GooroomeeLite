@@ -23,7 +23,8 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="과목 추가" />
+            android:text="과목 추가"
+            />
 
         <Space
             android:layout_width="0dp"
@@ -63,9 +64,12 @@
         android:textSize="20sp"
         android:hint="과목 이름을 입력해 주세요."
         android:textColorHint="#DCDCDC"
+        android:textColor="#333333"
         android:textColorHighlight="@color/colorPrimary"
+        android:paddingBottom="15dp"
         android:textStyle="bold"
         android:maxLength="20"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#F2F4F6"
         android:textCursorDrawable="@drawable/color_cursor"
         style="@style/EditTextSelectHandle"/>
