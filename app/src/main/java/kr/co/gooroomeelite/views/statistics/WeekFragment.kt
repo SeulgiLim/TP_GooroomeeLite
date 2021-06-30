@@ -61,7 +61,7 @@ class WeekFragment : Fragment() {
 
 
         //바 차트
-        chart = view.weekBarChart
+        chart = view.findViewById(R.id.week_bar_chart)
         chart.setNoDataText("")
         initChart(chart)
         return view
