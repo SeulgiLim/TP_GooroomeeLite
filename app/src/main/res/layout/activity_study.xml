@@ -7,23 +7,67 @@
     android:orientation="vertical"
     tools:context=".views.home.StudyActivity">
 
+
+    <!-- 시간화면 전환 -->
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="400dp"
+        android:layout_height="416dp"
+        android:layout_margin="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnST"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.253" >
+
+    </FrameLayout>
+
+    <!-- 과목명-->
+
+
+    <!-- 타이머 작동 버튼 -->
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="585dp"
+        android:text="공부시작" />
+
+
+    <!-- 과목 변경 버튼-->
+    <Button
+        android:id="@+id/btnST"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:text="과목변경"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnPM"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <!-- 화이트 노이즈 실행버튼-->
+    <Button
+        android:id="@+id/btnPM"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:text="화이트노이즈"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnST" />
+
     <TextView
         android:id="@+id/textView"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="0" />
+        android:text="정보처리기사(실기)"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:layout_editor_absoluteX="114dp"
+        tools:layout_editor_absoluteY="517dp" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="증가" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="감소" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

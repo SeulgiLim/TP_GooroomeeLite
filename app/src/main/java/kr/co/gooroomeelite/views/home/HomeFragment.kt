@@ -1,7 +1,10 @@
 package kr.co.gooroomeelite.views.home
 
+import android.app.Activity
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +16,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_pomodoro.*
+import kotlinx.android.synthetic.main.fragment_stopwatch.*
 import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentHomeBinding
 import kr.co.gooroomeelite.entity.Subject
@@ -22,7 +28,8 @@ import kr.co.gooroomeelite.utils.RC_START_STUDY
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.common.StudyTimerDialog
 import kr.co.gooroomeelite.views.login.LoginActivity
-import java.util.*
+import splitties.resources.int
+
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -33,8 +40,16 @@ class HomeFragment : Fragment() {
                 val intent = Intent(mainActivityContext, StudyActivity::class.java)
                 intent.putExtra("subject", subject.toObject(Subject::class.java))
                 intent.putExtra("documentId", subject.id)
-                startActivityForResult(intent, RC_START_STUDY)
+                startActivityForResult(intent, RC_START_STUDY)tudy
             })
+
+        /*onClickStartBtn = { subject ->
+            val intent = Intent(context,StudyActivity::class.java)
+            // intent.putExtra("key", "value")
+            // setResult(RESULT.OK, intent)
+            startActivity(intent)
+            // finish()
+        })*/
     }
     private val mainActivityContext by lazy {
         requireContext()
@@ -131,7 +146,7 @@ class HomeFragment : Fragment() {
                 if (it.exists()) {
                     FirebaseFirestore.getInstance().collection("users")
                         .document(LoginUtils.getUid()!!)
-                        .update(hashMapOf("studyTime" to studyTime) as Map<String, Any>)
+                        .update(hashMapOf("studyTime" to studyTime) as Map<String, Any>) // 업데이트 부분
                         .addOnSuccessListener {
                             Toast.makeText(mainActivityContext,
                                 "목표 공부 시간을 수정하였습니다.",
