@@ -18,6 +18,9 @@ class OpenSourceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOpenSourceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.icBack.setOnClickListener {
+            onBackPressed()
+        }
 
     }
 }

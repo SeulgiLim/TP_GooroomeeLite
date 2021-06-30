@@ -4,10 +4,13 @@ import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
+import androidx.appcompat.app.AppCompatActivity
 import kr.co.gooroomeelite.R
 
-class MusicService : Service() {
+class MusicService: Service() {
     private var mediaPlayer: MediaPlayer? = null
+    var playlist = listOf<Int>()
+    var select : String? = null
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -15,6 +18,7 @@ class MusicService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        mediaPlayer = MediaPlayer.create(this, playlist[0])
         mediaPlayer = MediaPlayer.create(this, R.raw.serenity)
         mediaPlayer!!.isLooping = true
     }
@@ -28,4 +32,5 @@ class MusicService : Service() {
         super.onDestroy()
         mediaPlayer!!.stop()
     }
+
 }

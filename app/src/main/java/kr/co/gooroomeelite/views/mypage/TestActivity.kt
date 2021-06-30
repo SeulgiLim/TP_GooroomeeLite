@@ -10,19 +10,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityTestBinding
 import kr.co.gooroomeelite.utils.MusicService
 
 
 class TestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTestBinding
+    var check1 :String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityTestBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         intent = Intent(this, MusicService::class.java)
         binding.btnStart.setOnClickListener {
+            check1 = intent.getStringExtra("key")
+
             startService(intent)
             Log.e("TEST","1")
         }

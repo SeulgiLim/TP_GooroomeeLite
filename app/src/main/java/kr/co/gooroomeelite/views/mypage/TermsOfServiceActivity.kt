@@ -16,5 +16,8 @@ class TermsOfServiceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTermsOfServiceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.icBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
