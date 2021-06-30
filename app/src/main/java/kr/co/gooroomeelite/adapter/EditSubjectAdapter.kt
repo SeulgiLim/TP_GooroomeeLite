@@ -28,6 +28,8 @@ class EditSubjectAdapter(
         return SubjectViewHolder(ItemEditSubjectBinding.bind(view))
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val editSubject = editSubjects[position]

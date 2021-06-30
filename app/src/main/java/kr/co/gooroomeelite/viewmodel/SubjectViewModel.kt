@@ -63,6 +63,7 @@ class SubjectViewModel : ViewModel() {
         if (subjectList.value!!.size > 0) {
             prevSubject = subjectList.value!!.last
         }
+        // 측정시간 서버로 바로 보내는 방법
         db.collection("subject").add(item)
             //아래의 addOnSuccessListener보다 위의 addSnapshotListener가 먼저 호출된다.
             .addOnSuccessListener { newSubject ->

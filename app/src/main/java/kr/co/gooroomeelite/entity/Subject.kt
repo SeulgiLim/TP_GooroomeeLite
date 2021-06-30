@@ -11,6 +11,8 @@ data class Subject(
     val studytime: Int = 0,
     var prevDocumentId: String? = null,
     var nextDocumentId: String? = null,
+    //
+
     @ServerTimestamp
     val timestamp: Date? = null
 ) : Serializable {
