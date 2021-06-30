@@ -6,79 +6,145 @@
     android:layout_height="match_parent"
     tools:context=".views.mypage.ProfileAccountActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrowleft" />
+
+    <TextView
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/skyBlue"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="160dp"
+        android:gravity="center"
+        android:text="내 정보"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/white" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_modify_ok"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="36dp"
+        app:cardCornerRadius="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:clickable="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_gooroomee_logo" />
+    </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_gooroomee_logo" />
-        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="닉네임"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4"
+            android:cursorVisible="false"
+            android:enabled="false"/>
+
+        <TextView
+            android:id="@+id/btn_modify_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:text="수정"
+            android:textColor="@color/skyBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edittext" />
+
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_modify_ok" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="닉네임" />
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="내 계정"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="clip_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-            <EditText
-                android:id="@+id/edittext"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="닉네임" />
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_marginTop="3dp"
+                android:text=""
+                android:textSize="19sp"
+                android:textColor="@color/black" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="100dp">
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_gooroomee_logo" />
+            </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/btn_modify_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

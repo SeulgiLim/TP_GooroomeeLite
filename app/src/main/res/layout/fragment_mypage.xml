@@ -19,17 +19,31 @@
             android:layout_height="match_parent">
 
 
-            <androidx.appcompat.widget.Toolbar
+            <TextView
                 android:id="@+id/toolbar2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/skyBlue"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:titleTextColor="@color/white"
+                android:layout_marginStart="160dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="160dp"
+                android:gravity="center"
+                android:text="더보기"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:minHeight="?attr/actionBarSize"-->
+<!--                android:theme="?attr/actionBarTheme"-->
+<!--                app:titleTextColor="@color/black"-->
+
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -47,16 +61,18 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginTop="26dp"
+                        android:elevation="0dp"
                         app:cardCornerRadius="100dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
                             android:id="@+id/imageView"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:background="@drawable/ic_gooroomee_logo" />
                     </androidx.cardview.widget.CardView>
 
@@ -64,11 +80,12 @@
                         android:id="@+id/nickname"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="36dp"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
                         app:layout_constraintStart_toEndOf="@+id/cardView7"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,14 +93,26 @@
                         android:id="@+id/emailaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="3dp"
                         android:text=""
+                        android:textSize="12sp"
                         app:layout_constraintStart_toEndOf="@+id/cardView7"
                         app:layout_constraintTop_toBottomOf="@+id/nickname" />
 
+                    <ImageView
+                        android:id="@+id/btn_profile_account"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="46dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_arrowright"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
 
                     <LinearLayout
+                        android:id="@+id/linearLayout3"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
@@ -93,103 +122,86 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView7">
 
-                        <View
-                            android:id="@+id/view0"
+
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/divide2" />
+                            android:layout_height="72dp"
+                            android:elevation="0dp"
+                            android:layout_marginTop="20dp"
+                            app:cardCornerRadius="12dp">
 
-                        <Button
-                            android:id="@+id/btn_profile_account"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:drawableEnd="@drawable/btn_nexticon"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/profile_account"
-                            android:textColor="@color/black"
-                            app:backgroundTint="@null" />
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/btn_withdrawal"
+                                android:elevation="0dp"
+                                >
 
-                        <View
-                            android:id="@+id/view1"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:background="@color/divide2" />
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="16dp"
+                                    android:text="함께해서 재미있는 공부"
+                                    android:textSize="12sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
-                            android:id="@+id/terms"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/service1" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:text="구루미 캠스터디"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                        <View
-                            android:id="@+id/view2"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divide" />
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="56dp"
+                                    android:layout_height="30dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    app:cardCornerRadius="8dp"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
 
-                        <Button
-                            android:id="@+id/btn_terms_of_service"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:drawableEnd="@drawable/btn_nexticon"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/service2"
-                            android:textColor="@color/black"
+                                    <androidx.appcompat.widget.AppCompatButton
+                                        android:id="@+id/btn_gooroomee"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/btn_login"
+                                        android:text="바로가기"
+                                        android:textColor="@color/white"
+                                        android:textSize="10sp"
+                                        tools:layout_editor_absoluteX="263dp"
+                                        tools:layout_editor_absoluteY="1dp" />
 
-                            app:backgroundTint="@null" />
-
-                        <Button
-                            android:id="@+id/btn_privacy_policy"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:drawableEnd="@drawable/btn_nexticon"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/service3"
-                            android:textColor="@color/black"
-
-                            app:backgroundTint="@null" />
-
-                        <Button
-                            android:id="@+id/btn_open_source"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:drawableEnd="@drawable/btn_nexticon"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/service4"
-                            android:textColor="@color/black"
-
-                            app:backgroundTint="@null" />
+                                </androidx.cardview.widget.CardView>
 
 
-                        <TextView
-                            android:id="@+id/etc"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginStart="8dp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/etc" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <View
-                            android:id="@+id/view4"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/divide" />
+                        </androidx.cardview.widget.CardView>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="8dp">
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="50dp"
-                                android:layout_marginStart="16dp"
+                                android:textSize="14sp"
                                 android:layout_weight="1"
                                 android:background="#FFFFFF"
                                 android:gravity="start|center_vertical"
@@ -204,43 +216,198 @@
                                 android:elevation="0dp"
                                 android:gravity="center"
                                 android:text="@{my.version}"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
+                                android:textColor="@color/skyBlue"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </LinearLayout>
 
-<!--                        <Button-->
-<!--                            android:id="@+id/btn_report"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="50dp"-->
-<!--                            android:background="@color/white"-->
-<!--                            android:drawableEnd="@drawable/btn_nexticon"-->
-<!--                            android:gravity="start|center_vertical"-->
-<!--                            android:text="@string/report_"-->
-<!--                            android:textColor="@color/black"-->
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide"
+                            />
+                    <LinearLayout
+                        android:id="@+id/btn_terms_of_service"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/white"
+                            android:textSize="14sp"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/service2"
+                            android:textColor="@color/black"
+                            android:layout_weight="1"
+                            app:backgroundTint="@null" />
+                        <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-<!--                            app:backgroundTint="@null" />-->
+                        </LinearLayout>
 
-                        <Button
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+
+                        <LinearLayout
+                            android:id="@+id/btn_privacy_policy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/white"
+                                android:textSize="14sp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/service3"
+                                android:textColor="@color/black"
+                                android:layout_weight="1"
+                                app:backgroundTint="@null" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+                        <LinearLayout
+                            android:id="@+id/btn_open_source"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/white"
+                                android:textSize="14sp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/service4"
+                                android:textColor="@color/black"
+                                android:layout_weight="1"
+                                app:backgroundTint="@null" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+                        <LinearLayout
                             android:id="@+id/btn_logout"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/logout"
-                            android:textColor="@color/black"
-                            app:backgroundTint="@null" />
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/white"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/logout"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:layout_weight="1"
+                                app:backgroundTint="@null" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        <Button
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view6"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
+
+                        <LinearLayout
                             android:id="@+id/btn_withdrawal"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/withdrawal"
-                            android:textColor="@color/black"
-                            app:backgroundTint="@null" />
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/white"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/withdrawal"
+                                android:textColor="@color/red"
+                                android:textSize="14sp"
+                                android:layout_weight="1"
+                                app:backgroundTint="@null" />
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="16dp"
+                                android:src="@drawable/ic_arrowright"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/view7"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/divide" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.core.widget.NestedScrollView>

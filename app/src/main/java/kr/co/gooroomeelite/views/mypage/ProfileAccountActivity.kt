@@ -8,9 +8,12 @@ package kr.co.gooroomeelite.views.mypage
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -44,23 +47,31 @@ class ProfileAccountActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         email = auth?.currentUser?.email
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+        binding.email.text = email
 
-
-        getImage(getUid()!!)
         isLoading.value = false
+        binding.icBack.setOnClickListener {
+            onBackPressed()
+        }
+
         //Initiate storage
         storage = FirebaseStorage.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
-//        firestore?.collection("users")?.document(uid!!)?.get()?.addOnSuccessListener { ds ->
-//            val nickname = ds.data?.get("nickname").toString()
-//            val profileImageUrl: String = ds.data?.get("profileImageUrl").toString()
-//            binding.edittext.setText(nickname)
-//            Glide.with(this).load(profileImageUrl).into(binding.imageView2)
-//        }
+        
+        //구글인지 아닌지 체크
+        setting()
 
 
+        //클릭시 업로드 메소드 수행
+        binding.btnModifyOk.setOnClickListener {
+            startActivity(Intent(this,ProfileUpdateActivity::class.java))
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getImage(getUid()!!)
         firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener { ds ->
             val contentDTO = ds.toObject(ContentDTO::class.java)
             val nickname = contentDTO!!.nickname
@@ -72,99 +83,7 @@ class ProfileAccountActivity : AppCompatActivity() {
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
             }
         }
-
-        binding.imageView2.setOnClickListener {
-            //앨범 열기
-            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-            photoPickerIntent.type = "image/*"
-            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
-        }
-
-        //클릭시 업로드 메소드 수행
-        binding.btnModifyOk.setOnClickListener {
-            isLoading.value = true
-            contentUploadandDelete()
-        }
-        with(supportActionBar) {
-            this!!.setDisplayHomeAsUpEnabled(true)
-            this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
-            setTitle(R.string.profile_account)
-        }
-
-
-        isLoading.observe(this) {
-            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-        }
-
     }
-
-//    init {
-//        firestore?.collection("users")?.document(uid!!)?.get()?.addOnCompleteListener {
-//            if (it.isSuccessful) {
-//                val contentDTOs = it.result?.toObject(ContentDTO::class.java)
-//            }
-//        }
-//    }
-
-    private fun contentUploadandDelete() {
-        val num: String = getUid()!!
-        val filename = "profile$num.jpg"
-        val storageRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
-
-
-        if (photoUri != null) {
-            storageRef!!.putFile(photoUri!!).addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val contentDTO = ContentDTO()
-                    //이미지 주소
-                    contentDTO.profileImageUrl = uri.toString()
-                    //닉네임
-                    contentDTO.nickname = binding.edittext.text.toString()
-//                    firestore?.collection("users")?.document(uid!!)?.set(contentDTO)
-                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
-                        ?.addOnSuccessListener {
-                            var data = hashMapOf<String,Any>()
-                            data.put("profileImageUrl",uri.toString())
-                            data.put("nickname",binding.edittext.text.toString())
-                            firestore?.collection("users")!!.document(getUid()!!).update(data)
-                        }
-
-                    isLoading.value = false
-                    finish()
-                }
-                setResult(Activity.RESULT_OK)
-            }
-        } else {storageRef!!.downloadUrl.addOnSuccessListener { uri ->
-            val contentDTO = ContentDTO()
-            contentDTO.nickname = binding.edittext.text.toString()
-            firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
-                val data = hashMapOf<String, Any>()
-                data["profileImageUrl"] = contentDTO.profileImageUrl!!
-                data["nickname"] = contentDTO.nickname!!
-                firestore?.collection("users")?.document(getUid()!!)?.update(data)
-            }
-            isLoading.value = false
-            finish()
-        }
-            setResult(Activity.RESULT_OK)
-        }
-    }
-
-    //갤러리에서 꺼낸 이미지를 세팅해주기.
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_FROM_ALBUM) {
-            if (resultCode == RESULT_OK) {
-                //This is path to the selected image
-                photoUri = data?.data
-                binding.imageView2.setImageURI(photoUri)
-            } else {
-                //Exit the addPhotoActivity if you leave the album without selecting it
-                finish()
-            }
-        }
-    }
-
     //이미지를 세팅하기.
     private fun getImage(num:String) {
         val num = getUid()!!
@@ -174,7 +93,6 @@ class ProfileAccountActivity : AppCompatActivity() {
         } else
             downloadImgNickname(num)
     }
-
     private fun downloadImgNickname(num:String) {
         val num = getUid()!!
         val filename = "profile$num.jpg"
@@ -194,15 +112,18 @@ class ProfileAccountActivity : AppCompatActivity() {
                         Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
                     }
             }
-
     }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                finish()
+    private fun setting() {
+        firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener { ds ->
+            val contentDTO = ds.toObject(ContentDTO::class.java)
+            val check = contentDTO!!.google
+            if (check) {
+                binding.imageView.setImageResource(R.drawable.ic_google)
+            } else {
+                binding.imageView.setImageResource(R.drawable.ic_gooroomee_logo)
             }
+
         }
-        return super.onOptionsItemSelected(item)
     }
 }
 

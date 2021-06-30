@@ -1,11 +1,17 @@
 package kr.co.gooroomeelite.views.login
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-21
+ * @desc
+ */
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,7 +20,6 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
-import kr.co.gooroomeelite.views.common.MainActivity
 
 class LoginNicknameActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginnicknameBinding
@@ -33,13 +38,17 @@ class LoginNicknameActivity : AppCompatActivity() {
         bundle = intent.getBundleExtra("bundle")
         email = bundle?.getString("email")
         password= bundle?.getString("password")
-
         setContentView(binding.root)
 
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            if (password!=null){
+                startActivity(Intent(this,LoginFirstActivity::class.java))
+            }
+            else{
+                startActivity(Intent(this,LoginActivity::class.java))
+            }
         }
 
         binding.editTextNickname.setOnFocusChangeListener { v, hasFocus ->
@@ -70,41 +79,33 @@ class LoginNicknameActivity : AppCompatActivity() {
             } else {
                 binding.tvError.text = ""
                 binding.editTextNickname.setBackgroundResource(R.drawable.btn_white)
-                signinAndSignup()
+                moveNextPage()
             }
         }
     }
-    fun signinAndSignup() {
-        auth?.createUserWithEmailAndPassword(
-            email.toString(),
-            password.toString()
-        )?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //Creating a user account
-                contentUpload()
-                moveMainPage(task.result?.user)
-            }
 
-            else if (task.exception?.message.isNullOrEmpty()) {
-            } else {
-            }
-        }
-    }
-    private fun contentUpload() {
-        val contentDTO = ContentDTO()
-        contentDTO.userId = auth?.currentUser?.email
-        contentDTO.nickname = binding.editTextNickname.text.toString()
-        contentDTO.studyTime = 0
-        firestore?.collection("users")?.document(getUid()!!)?.set(contentDTO)
-        setResult(Activity.RESULT_OK)
-    }
-
-    fun moveMainPage(user: FirebaseUser?) {
-        if (user != null) {
-            startActivity(Intent(this, MainActivity::class.java))
+    private fun moveNextPage(){
+            val intent = Intent(this, LoginStudyTimeActivity::class.java)
+            val bundle = Bundle()
+        if (password!=null){
+            bundle.putString("password",password)
+            bundle.putString("email",email)
+            bundle.putString("nickname",binding.editTextNickname.text.toString())
+            intent.putExtra("bundle",bundle)
+            startActivity(intent)
             finish()
         }
-    }
+        else{
+            bundle.putString("email",email)
+            bundle.putString("nickname",binding.editTextNickname.text.toString())
+            intent.putExtra("bundle",bundle)
+            startActivity(intent)
+            finish()
+
+        }
+
+        }
+
     private fun changecolor() {
         binding.editTextNickname.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {

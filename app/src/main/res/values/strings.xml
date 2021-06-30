@@ -1,45 +1,76 @@
 <resources>
     <string name="app_name">gooroomeelite</string>
 
+    <string name="title">나를 위한 공부 시간 관리</string>
+    <string name="title2">Lite</string>
+    <string name="title3">로그인 시 <u>개인정보처리방침</u> 및 <u>서비스이용약관</u>에\n 동의하게 됩니다.</string>
+
     //login //
     <string name="email_id">이메일로 시작하기</string>
     <string name="google_id">구글로 시작하기</string>
-    <string name="email_login">이메일을 입력해주세요.</string>
+    <string name="email_login">이메일을 입력해 주세요.</string>
     <string name="email_login2">이메일</string>
+    <string name="email_hello">안녕하세요!</string>
+    <string name="email_btn">다음</string>
 
-    <string name="password_login">비밀번호를 입력해주세요.</string>
+    <string name="password_login">비밀번호를 입력해 주세요.</string>
     <string name="password_login2">비밀번호</string>
+    <string name="password_find"><u>비밀번호를 잊어버리셨나요?</u></string>
 
-    <string name="newpassword_login">새 비밀번호를 입력해주세요.</string>
+
+    <string name="newpassword_login">새 비밀번호를 입력해 주세요.</string>
     <string name="newpassword_login2">새 비밀번호</string>
     <string name="newpassword_login3">새 비밀번호 확인</string>
     <string name="newpassword_hint">영문 + 숫자 8자리 이상</string>
+    <string name="newpassword_hint2">gooroome@gooroome.com</string>
+    <string name="newpassword_btn">새 비밀번호 받기</string>
 
     <string name="first">첫 방문이시네요!</string>
     <string name="second">반가워요 루미님!</string>
-    <string name="nickname_login">닉네임을 입력해주세요.</string>
+    <string name="nickname_login">닉네임을 입력해 주세요.</string>
     <string name="nickname_login2">닉네임</string>
     <string name="nickname_hint">최대 6글자</string>
+
+
+    <string name="findpassword_login">비밀번호를 잊으셨나요?</string>
+    <string name="findpassword_login2">이메일(계정)을 입력하시면 비밀번호를 재설정할 수 있는\n이메일을 보내드리겠습니다.</string>
+
+    <string name="studytime_login">하루 목표 공부 시간을 알려주세요!</string>
+    <string name="studytime_login2">목표 공부 시간은 이후에 수정이 가능합니다</string>
+    <string name="studytime_btn">시작</string>
 
 
     // mypage //
     <string name="nickname">닉네임</string>
     <string name="profile_account">프로필 및 계정</string>
     <string name="service1">약관 및 정책</string>
-    <string name="service2">이용약관</string>
-    <string name="service3">개인정보처리방침</string>
-    <string name="service4">오픈소스 라이센스</string>
+    <string name="service2">서비스 이용약관</string>
+    <string name="service3">개인정보 처리방침</string>
+    <string name="service4">오픈소스 라이선스</string>
     <string name="etc">기타</string>
-    <string name="version">앱 버전</string>
+    <string name="version">버전 정보</string>
     <string name="report_">건의하기</string>
     <string name="logout">로그아웃</string>
-    <string name="withdrawal">탈퇴하기</string>
+    <string name="withdrawal">탈퇴</string>
+    <string name="withdrawal4">구루미 라이트 탈퇴 전 확인하세요.</string>
+    <string name="withdrawal5">탈퇴하시면 구루미 라이트 버전 내의\n모든 데이터가 삭제되며 복구가 불가능 합니다.</string>
 
-    <string name="text">"과목을 입력하세요</string>
+    <string name="opensource">오픈소스</string>
+    <string name="privacypolicy">개인정보 처리방침</string>
+
+
+    <string name="text">"과목을 입력하세요"</string>
+
+    <string name="withdrawal1">나의 과목 리스트 및 공부 시간이 삭제됩니다.</string>
+    <string name="withdrawal2">나의 공부 통계가 삭제됩니다.</string>
+    <string name="withdrawal3">안내사항을 모두 확인하였으며, 이에 동의합니다.</string>
+
 
     <string name="email">silmxmail@naver.com</string>
     <string name="report">건의사항보내기</string>
     <string name="flash">플래시</string>
     <string name="app_content_path">Android/media/kr.co.gooroomeelite/gooroomeelite</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 </resources>

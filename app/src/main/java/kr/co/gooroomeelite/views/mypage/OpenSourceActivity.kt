@@ -18,20 +18,9 @@ class OpenSourceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOpenSourceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+        binding.icBack.setOnClickListener {
+            onBackPressed()
+        }
 
-        with(supportActionBar) {
-            this!!.setDisplayHomeAsUpEnabled(true)
-            this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
-            setTitle(R.string.service4)
-        }
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

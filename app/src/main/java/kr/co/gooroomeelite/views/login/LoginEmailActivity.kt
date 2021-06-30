@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.login
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-21
+ * @desc
+ */
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -54,7 +59,7 @@ class LoginEmailActivity : AppCompatActivity() {
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editTextTextEmailAddress.text.toString())
                     .matches()
             ) {
-                binding.tvError.text = "이메일 형식을 입력해 주세요"
+                binding.tvError.text = "올바른 이메일 주소를 입력해 주세요."
                 binding.editTextTextEmailAddress.setBackgroundResource(R.drawable.btn_red)
             } else {
                 binding.tvError.text = ""
@@ -73,6 +78,7 @@ class LoginEmailActivity : AppCompatActivity() {
                         val intent1 = Intent(this, LoginSecondActivity::class.java)
                         intent1.putExtra("email", email)
                         startActivity(intent1)
+                        finish()
                     }
                 }
             }

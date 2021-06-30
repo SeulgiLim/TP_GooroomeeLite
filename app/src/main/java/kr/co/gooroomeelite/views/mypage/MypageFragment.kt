@@ -8,6 +8,8 @@ package kr.co.gooroomeelite.views.mypage
  */
 
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import androidx.fragment.app.Fragment
@@ -19,6 +21,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -27,8 +30,10 @@ import kr.co.gooroomeelite.BuildConfig
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentMypageBinding
 import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
+import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
 class MypageFragment(val owner:AppCompatActivity) : Fragment() {
@@ -38,7 +43,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
     var storage : FirebaseStorage? = null
     var auth : FirebaseAuth? = null
     var storageRef : StorageReference? = null
-    val version = BuildConfig.VERSION_NAME
+    val version = BuildConfig.VERSION_NAME + ".0"
     var firestore : FirebaseFirestore? = null
     var uid : String? = null
     var photoUri : String?= null
@@ -56,14 +61,13 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        uid = arguments?.getString("destinationUid")
         binding = FragmentMypageBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage,container,false)
         binding.my = this
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        uid = auth?.currentUser?.uid
         email = auth!!.currentUser?.email
-        owner.setSupportActionBar(binding.toolbar2)
 
         return binding.root
     }
@@ -77,10 +81,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(owner.supportActionBar) {
-            this!!.setDisplayHomeAsUpEnabled(true)
-            setTitle("Gooroomee")
-        }
 
         //로그아웃하기
         binding.btnLogout.setOnClickListener {
@@ -96,21 +96,28 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
             okButton.setOnClickListener {
                 //로그아웃
-
-                if(isLogin()) {
-                    FirebaseAuth.getInstance().signOut()
+                if(LoginUtils.isLogin()){
+                    AuthUI.getInstance().signOut(owner)
+                        .addOnSuccessListener {
+                            Toast.makeText(owner,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
+                            mAlertDialog.dismiss()
+                            startActivity(Intent(owner,LoginActivity::class.java))
+                            owner.finish()
+                        }
                 }
-
-                //파이어베이스 로그아웃//
-
-
-                Toast.makeText(owner,"로그아웃되었습니다.",Toast.LENGTH_SHORT).show()
-                mAlertDialog.dismiss()
             }
             cancelButton.setOnClickListener {
                 Toast.makeText(owner, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
             }
+        }
+
+        //구루미 플레이스토어 이동
+
+        binding.btnGooroomee.setOnClickListener {
+            val intent = Intent(ACTION_VIEW)
+            intent.setData(Uri.parse("market://details?id=com.gooroomee.meet"))
+            startActivity(intent)
         }
 
 
@@ -143,6 +150,10 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding.btnWithdrawal.setOnClickListener {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
+        }
+        binding.toolbar2.setOnClickListener {
+            val intent06 = Intent(owner,TestActivity::class.java)
+            startActivity(intent06)
         }
     }
 

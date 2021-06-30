@@ -1,10 +1,16 @@
 package kr.co.gooroomeelite.views.login
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-21
+ * @desc
+ */
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,18 +37,16 @@ class LoginSecondActivity : AppCompatActivity() {
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this,LoginEmailActivity::class.java))
         }
-
         binding.editTextPassword.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {
                 true -> changecolor()
                 false -> changecolor()
             }
         }
-
         changecolor()
-
+        //에디트텍스트 색변경
         binding.editTextPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -56,6 +60,10 @@ class LoginSecondActivity : AppCompatActivity() {
         })
         binding.btnLoginNext.setOnClickListener {
             signinEmail()
+        }
+        binding.tvfindpassword.setOnClickListener {
+            val intent =Intent(this,LoginNewPasswordActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -79,6 +87,7 @@ class LoginSecondActivity : AppCompatActivity() {
                 finish()
             } else {
                 binding.tvError.text = "비밀번호가 일치하지 않습니다."
+                binding.tvError.visibility = View.VISIBLE
                 binding.editTextPassword.setBackgroundResource(R.drawable.btn_red)
             }
         }

@@ -18,20 +18,8 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivacyPolicyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
-
-        with(supportActionBar) {
-            this!!.setDisplayHomeAsUpEnabled(true)
-            this.setHomeAsUpIndicator(R.drawable.ic_back_icon)
-            setTitle(R.string.service3)
+        binding.icBack.setOnClickListener {
+            onBackPressed()
         }
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }

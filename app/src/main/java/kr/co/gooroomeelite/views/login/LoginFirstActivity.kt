@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.login
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-21
+ * @desc
+ */
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginfirstBinding
+import splitties.resources.color
 
 class LoginFirstActivity : AppCompatActivity() {
 
@@ -29,7 +35,7 @@ class LoginFirstActivity : AppCompatActivity() {
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this,LoginEmailActivity::class.java))
         }
 
 
@@ -68,14 +74,31 @@ class LoginFirstActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
+                if (binding.editTextNewPassword2 == binding.editTextNewPassword){
+                    binding.tvError.color(R.color.green)
+                    binding.tvError.text = "비밀번호가 일치합니다."
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_skyblue)
+                }
+                else{
+//                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+//                    binding.tvError.text = ""
+                }
             }
         })
 
         binding.btnLoginNext.setOnClickListener {
 
             if (binding.editTextNewPassword.text.toString() != binding.editTextNewPassword2.text.toString()) {
-                binding.tvError.text = "비밀번호가 일치하지 않습니다."
-                binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                if(binding.editTextNewPassword.text.toString().length <8){
+                    binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
+                    binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+                    binding.editTextNewPassword.hasFocus()
+                    binding.editTextNewPassword2.clearFocus()
+                }else{
+                    binding.tvError.text = "비밀번호가 일치하지 않습니다."
+                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                }
             }
             else if (binding.editTextNewPassword.text.toString().isEmpty() or binding.editTextNewPassword2.text.toString().isEmpty()){
                 binding.tvError.text = "비밀번호를 입력해주세요."

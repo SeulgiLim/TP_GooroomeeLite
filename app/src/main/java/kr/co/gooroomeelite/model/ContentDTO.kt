@@ -10,5 +10,6 @@ data class ContentDTO(
     var profileImageUrl : String? = null,
     var nickname : String? = null,
     var userId : String? = null,
-    var studyTime : Int = 0
+    var studyTime : Int = 0,
+    var google : Boolean = false
 )

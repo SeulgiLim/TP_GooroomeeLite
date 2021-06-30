@@ -11,8 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
+        android:layout_marginTop="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrowleft" />
@@ -24,7 +23,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
         android:text="@string/second"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ic_back" />
 
@@ -39,7 +38,7 @@
         android:gravity="center_vertical"
         android:text="@string/password_login"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hi" />
 
@@ -47,7 +46,7 @@
         android:id="@+id/tv_password_second2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:layout_marginStart="20dp"
         android:text="@string/password_login2"
         android:textColor="@color/black"
@@ -57,12 +56,16 @@
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="@string/password_login"
-        android:paddingStart="10dp"
+        android:paddingStart="12dp"
+        android:textColorHint="@color/black3"
+        android:textColor="@color/black"
+        android:textSize="14sp"
         android:inputType="textPassword"
         android:background="@drawable/btn_white"
 
@@ -78,24 +81,37 @@
         android:layout_marginStart="20dp"
 
         android:textColor="@color/orange"
-
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvfindpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/password_find"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_Error"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login_next"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginBottom="28dp"
-        android:text="다음"
+        android:text="@string/email_btn"
         android:textColor="@color/white"
-        android:background="@color/skyBlue"
+
+        android:textSize="15sp"
+        android:background="@drawable/btn_login"
         android:backgroundTint="@null"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:clickable="true"/>
+        style="?android:attr/borderlessButtonStyle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
