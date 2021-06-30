@@ -30,7 +30,7 @@ class SubjectViewModel : ViewModel() {
                 }
 
                 if (value != null) {
-                    if(value.documents.isEmpty()) {
+                    if(value.documents.isEmpty()) {//문서
                         subjectList.value = LinkedList()
                         return@addSnapshotListener
                     }
