@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,6 +26,7 @@ class LoginSecondActivity : AppCompatActivity() {
     var email: String? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class LoginSecondActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         setContentView(binding.root)
         email = intent.getStringExtra("email")
 
@@ -63,7 +66,9 @@ class LoginSecondActivity : AppCompatActivity() {
         }
         binding.tvfindpassword.setOnClickListener {
             val intent =Intent(this,LoginNewPasswordActivity::class.java)
+            intent.putExtra("email", email)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -97,5 +102,9 @@ class LoginSecondActivity : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
     }
-
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
+        }
+    }
 }

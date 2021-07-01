@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -24,6 +26,7 @@ class LoginFirstActivity : AppCompatActivity() {
     var email: String? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginfirstBinding.inflate(layoutInflater)
@@ -32,6 +35,8 @@ class LoginFirstActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         setContentView(binding.root)
         email = intent.getStringExtra("email")
+
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
@@ -139,6 +144,12 @@ class LoginFirstActivity : AppCompatActivity() {
 
                 false -> v.setBackgroundResource(R.drawable.btn_white)
             }
+        }
+    }
+
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
         }
     }
 }

@@ -10,6 +10,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +31,7 @@ class LoginStudyTimeActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,7 @@ class LoginStudyTimeActivity : AppCompatActivity() {
         email = bundle?.getString("email")
         password = bundle?.getString("password")
         nickname = bundle?.getString("nickname")
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         timepciker()
         binding.tvHi.text = "반가워요 "+nickname+"님!"
 
@@ -118,5 +122,10 @@ class LoginStudyTimeActivity : AppCompatActivity() {
     }
     fun timecal(){
         studyTime = binding.hourPicker.value * 60 + binding.minutePicker.value * 10
+    }
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
+        }
     }
 }

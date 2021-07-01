@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +31,7 @@ class LoginNicknameActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginnicknameBinding.inflate(layoutInflater)
@@ -38,6 +41,7 @@ class LoginNicknameActivity : AppCompatActivity() {
         bundle = intent.getBundleExtra("bundle")
         email = bundle?.getString("email")
         password= bundle?.getString("password")
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         setContentView(binding.root)
 
 
@@ -112,6 +116,11 @@ class LoginNicknameActivity : AppCompatActivity() {
                 true -> v.setBackgroundResource(R.drawable.btn_skyblue)
                 false -> v.setBackgroundResource(R.drawable.btn_white)
             }
+        }
+    }
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
         }
     }
 }

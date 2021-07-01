@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -43,6 +44,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
     var auth : FirebaseAuth?=null
     var email : String?= null
     var check : String?=null
+    var imm : InputMethodManager? = null
     private val isLoading = MutableLiveData<Boolean>()
 
     private var storageRef: StorageReference? = null
@@ -52,6 +54,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
         binding = ActivityProfileUpdateBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         email = auth?.currentUser?.email
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
@@ -244,5 +247,10 @@ class ProfileUpdateActivity : AppCompatActivity() {
                         Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
                     }
             }
+    }
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
+        }
     }
 }
