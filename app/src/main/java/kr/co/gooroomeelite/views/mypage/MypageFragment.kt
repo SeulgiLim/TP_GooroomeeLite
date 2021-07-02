@@ -9,9 +9,11 @@ package kr.co.gooroomeelite.views.mypage
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +35,7 @@ import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
+import kr.co.gooroomeelite.views.common.MainActivity
 import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
@@ -114,10 +117,11 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
         //구루미 플레이스토어 이동
 
+
+
         binding.btnGooroomee.setOnClickListener {
-            val intent = Intent(ACTION_VIEW)
-            intent.setData(Uri.parse("market://details?id=com.gooroomee.meet"))
-            startActivity(intent)
+
+            playgooroomee()
         }
 
 
@@ -125,7 +129,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
 
         //화면이동
-        binding.btnProfileAccount.setOnClickListener {
+        binding.btnProfileAccount2.setOnClickListener {
             var uid = FirebaseAuth.getInstance().currentUser?.uid
             val intent01 = Intent(owner,ProfileAccountActivity::class.java)
             intent01.putExtra("destinationUid",uid)
@@ -184,6 +188,21 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
                 binding.emailaddress.text=email
                 binding.nickname.text=nickname
             }
+        }
+    }
+
+
+    private fun playgooroomee(){
+        val packageName = "com.nhn.android.search"
+        val pm = requireContext().packageManager
+        val launchintent = pm.getLaunchIntentForPackage(packageName)
+        if (launchintent == null){
+            val intent = Intent(ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=com.gooroomee.meet")
+            startActivity(intent)
+        }
+        else{
+            startActivity(launchintent)
         }
     }
 }

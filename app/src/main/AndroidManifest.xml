@@ -14,11 +14,11 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <service
-            android:name=".utils.MusicService"
-            android:enabled="true"
-            android:exported="true">
-        </service>
+<!--        <service-->
+<!--            android:name=".utils.MusicService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true">-->
+<!--        </service>-->
 
         <activity android:name=".views.mypage.TestActivity"
             android:screenOrientation="portrait" />

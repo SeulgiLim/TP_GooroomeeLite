@@ -76,7 +76,7 @@ class ProfileAccountActivity : AppCompatActivity() {
             val contentDTO = ds.toObject(ContentDTO::class.java)
             val nickname = contentDTO!!.nickname
             val profileImageUrl = contentDTO!!.profileImageUrl
-            binding.edittext.setText(nickname)
+            binding.edittext.text = nickname
             if (profileImageUrl != null) {
                 Glide.with(this).load(profileImageUrl).into(binding.imageView2)
             } else {
@@ -118,7 +118,7 @@ class ProfileAccountActivity : AppCompatActivity() {
             val contentDTO = ds.toObject(ContentDTO::class.java)
             val check = contentDTO!!.google
             if (check) {
-                binding.imageView.setImageResource(R.drawable.ic_google)
+                binding.imageView.setImageResource(R.drawable.ic_google2)
             } else {
                 binding.imageView.setImageResource(R.drawable.ic_gooroomee_logo)
             }

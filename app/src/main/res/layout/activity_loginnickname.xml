@@ -75,6 +75,7 @@
         android:background="@drawable/btn_white"
         android:ems="10"
         android:hint="@string/nickname_hint"
+        android:maxLength="6"
         android:inputType="textEmailAddress"
         android:paddingStart="12dp"
         android:textColor="@color/black"
@@ -96,6 +97,19 @@
 
         android:text=""
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNickname" />
+
+    <TextView
+        android:id="@+id/textCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="0 / 6"
+        android:textAlignment="viewEnd"
+        android:textColor="#B6B6B6"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNickname" />
 
     <androidx.appcompat.widget.AppCompatButton

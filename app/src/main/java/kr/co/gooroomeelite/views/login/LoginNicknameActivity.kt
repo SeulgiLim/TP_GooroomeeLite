@@ -32,6 +32,7 @@ class LoginNicknameActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
     var imm : InputMethodManager? = null
+    private val maxlength = 6
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginnicknameBinding.inflate(layoutInflater)
@@ -64,12 +65,28 @@ class LoginNicknameActivity : AppCompatActivity() {
 
         changecolor()
 
+
+
         binding.editTextNickname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.editTextNickname.setBackgroundResource(R.drawable.btn_skyblue)
+                binding.editTextNickname.apply {
+                    if (this.isFocusable && s.toString() != "") {
+                        val string: String = s.toString()
+                        val len = string.length
+                        if (len > maxlength) {
+                            this.setText(string.substring(0, maxlength))
+                            this.setSelection(maxlength)
+                        } else {
+                            binding.textCount.text = "$len / $maxlength"
+                        }
+                    } else {
+                        binding.textCount.text = "0 / $maxlength"
+                    }
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {

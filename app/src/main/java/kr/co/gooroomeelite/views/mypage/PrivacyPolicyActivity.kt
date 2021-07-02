@@ -6,10 +6,10 @@ package kr.co.gooroomeelite.views.mypage
  * @desc
  */
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.MenuItem
-import kr.co.gooroomeelite.R
+import androidx.appcompat.app.AppCompatActivity
 import kr.co.gooroomeelite.databinding.ActivityPrivacyPolicyBinding
 
 class PrivacyPolicyActivity : AppCompatActivity() {

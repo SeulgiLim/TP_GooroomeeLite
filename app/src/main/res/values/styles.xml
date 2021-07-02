@@ -3,7 +3,8 @@
 
     <style name="Theme.Gooroomeelite" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorAccent">@color/skyBlue</item>
         <item name="android:colorEdgeEffect">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/divide2</item>

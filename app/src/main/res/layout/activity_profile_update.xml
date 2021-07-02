@@ -62,30 +62,44 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:gravity="center_horizontal"
-        android:hint="닉네임"
+        android:paddingBottom="24dp"
         android:textColor="@color/black"
-        android:textSize="14sp"
-        android:paddingBottom="16dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:maxLength="6"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
-
     <ImageView
         android:id="@+id/clear_text"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/edittext"
         app:layout_constraintEnd_toEndOf="@+id/edittext"
         app:layout_constraintTop_toTopOf="@+id/edittext"
         app:srcCompat="@drawable/ic_clear" />
 
 
+    <TextView
+        android:id="@+id/textCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="0 / 6"
+        android:textAlignment="viewEnd"
+        android:textColor="#B6B6B6"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_modify_ok"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="28dp"

@@ -29,6 +29,7 @@ import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.common.StudyTimerDialog
 import kr.co.gooroomeelite.views.login.LoginActivity
 import splitties.resources.int
+import splitties.systemservices.windowManager
 
 
 class HomeFragment : Fragment() {
@@ -102,7 +103,7 @@ class HomeFragment : Fragment() {
             adapter = subjectAdapter
         }
 
-        binding.setStudytimeBtn.setOnClickListener {
+        binding.setStudytimeBtn2.setOnClickListener {
             StudyTimerDialog(this).show()
         }
 
