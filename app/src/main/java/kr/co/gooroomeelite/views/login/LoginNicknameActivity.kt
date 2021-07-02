@@ -5,23 +5,18 @@ package kr.co.gooroomeelite.views.login
  * @created 2021-06-21
  * @desc
  */
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
-import kr.co.gooroomeelite.model.ContentDTO
-import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 
 class LoginNicknameActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginnicknameBinding
