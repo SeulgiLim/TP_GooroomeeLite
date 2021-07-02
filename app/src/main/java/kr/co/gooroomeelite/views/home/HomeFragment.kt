@@ -41,6 +41,9 @@ class HomeFragment : Fragment() {
                 intent.putExtra("subject", subject.toObject(Subject::class.java))
                 intent.putExtra("documentId", subject.id)
                 startActivityForResult(intent, RC_START_STUDY)
+
+                Log.d("aaa1",subject.toString())
+                startActivity(intent)                       // 새로운 Activity를 화면에 띄울 때
             })
 
         /*onClickStartBtn = { subject ->

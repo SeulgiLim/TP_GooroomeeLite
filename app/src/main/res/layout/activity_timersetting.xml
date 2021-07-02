@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.home.TimersettingActivity">
+
+    <!-- 뒤로가기 -->
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrowleft" />
+
+
+    <!-- 화면명 -->
+    <TextView
+        android:id="@+id/mode_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="160dp"
+        android:gravity="center"
+        android:text="타이머 설정"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 타이머 모드 문구구-->    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:text="타이머 모드"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#999999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/btn_nomelmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="   일반 모드" />
+
+        <RadioButton
+            android:id="@+id/btn_pomodoromode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   뽀모도로 모드" />
+    </RadioGroup>
+
+
+    <!-- 뽀모도로 설정 문구-->
+    <TextView
+        android:id="@+id/text_pomodorosetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="272dp"
+        android:layout_marginEnd="16dp"
+        android:text="뽀모도로 설정"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#999999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <!-- 뽀모도로 설정 항목 -->
+    <!-- android:visibility="gone"-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="810dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/text_pomodorosetting"
+        >
+
+        <!-- 뽀모도로_집중 시간 -->
+        <TextView
+            android:id="@+id/text_focustime"
+            android:layout_width="100dp"
+            android:layout_height="19dp"
+            android:text="집중 시간"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text_focustime2"
+            android:layout_width="35dp"
+            android:layout_height="19dp"
+            android:layout_marginEnd="16dp"
+            android:text="5분"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            app:layout_constraintEnd_toStartOf="@id/btn_resettime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 뽀모도로_휴식 시간-->
+        <ImageView
+            android:id="@+id/btn_focustime"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_study_go"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_resttime"
+            android:layout_width="100dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="60dp"
+            android:text="휴식 시간"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_resttime2"
+            android:layout_width="35dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="16dp"
+            android:text="5분"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            app:layout_constraintEnd_toStartOf="@id/btn_resettime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!-- 뽀모도로_장기 휴식 시간-->
+
+        <ImageView
+            android:id="@+id/btn_resettime"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_study_go"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_longresettime"
+            android:layout_width="100dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="120dp"
+            android:text="장기 휴식 시간"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_longresettime2"
+            android:layout_width="35dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="16dp"
+            android:text="20분"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            app:layout_constraintEnd_toStartOf="@id/btn_longresettime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_longresettime"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="124dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_study_go"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!-- 뽀모도로_반복 세트 -->
+        <TextView
+            android:id="@+id/text_settime"
+            android:layout_width="100dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="180dp"
+            android:text="세트"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_settime2"
+            android:layout_width="35dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="16dp"
+            android:text="3회"
+            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            app:layout_constraintEnd_toStartOf="@id/btn_settime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_settime"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="184dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_study_go"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

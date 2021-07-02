@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,13 +17,16 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
+        <activity android:name=".views.home.TimersettingActivity"></activity>
+
         <service
             android:name=".utils.MusicService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"></service>
 
-        <activity android:name=".views.mypage.TestActivity"
+        <activity android:name=".views.home.StudyActivity" />
+        <activity
+            android:name=".views.mypage.TestActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".views.mypage.ProfileUpdateActivity"
@@ -83,9 +89,5 @@
             android:name=".views.common.MainActivity"
             android:screenOrientation="portrait" />
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
