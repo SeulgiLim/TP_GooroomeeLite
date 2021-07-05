@@ -49,9 +49,9 @@ class DayFragment : Fragment() {
         ContextCompat.getColor(this.requireContext(), R.color.black)
     }
 
-//    private val customMarkerView by lazy {
-//        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
-//    }
+    private val customMarkerView by lazy {
+        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
+    }
 
 
     override fun onCreateView(
@@ -68,9 +68,9 @@ class DayFragment : Fragment() {
     }
 
     private fun initChart(chart: BarChart) {
-//        customMarkerView.chartView = chart
+        customMarkerView.chartView = chart
         with(chart) {
-//            marker = customMarkerView
+            marker = customMarkerView
             description.isEnabled = false
             legend.isEnabled = false
             isDoubleTapToZoomEnabled = false

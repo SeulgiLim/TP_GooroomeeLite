@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -96,8 +97,13 @@ class ShareActivity : AppCompatActivity() {
     private fun initToolBar() {
         val toolbar = binding.pictureToolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)//뒤로 버튼
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.,menu)
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -148,7 +154,6 @@ class ShareActivity : AppCompatActivity() {
 
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
-//        private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
         val rotation = viewFinder.display.rotation
 
         cameraProviderFuture.addListener({

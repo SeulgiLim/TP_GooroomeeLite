@@ -22,8 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
+import org.w3c.dom.Document
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,94 +52,58 @@ class WeekFragment : Fragment() {
 //        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
 //    }
 
+    private val listData by lazy {
+        mutableListOf(
+            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
+            ChartDatas("화", arrayListOf(2.1f)),                 //5
+            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
+            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
+            ChartDatas("금", arrayListOf(6.1f,4.5f,10.1f,8.5f)),      //3
+            ChartDatas("토", arrayListOf(5f,7.1f,5.5f)),              //3
+            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        binding = FragmentWeekBinding.inflate(inflater,container,false)
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
-        val view = inflater.inflate(R.layout.fragment_month, container, false)
-
+        val view = inflater.inflate(R.layout.fragment_week, container, false)
 
         //바 차트
         chart = view.findViewById(R.id.week_bar_chart)
         chart.setNoDataText("")
         initChart(chart)
+        setting()
         return view
     }
-
-    override fun onResume() {
-        super.onResume()
-        setting()
-    }
-
     private lateinit var subjects : List<DocumentSnapshot>
     private val studyTime = MutableLiveData<Int>()
+    val uid :String
 
-    private fun setting(){
-        FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
-            .addOnSuccessListener {
-            if (it["studyTime"]!=null){
-//                val subjectDTO = it.toObject(SubjectDTO::class.java)
-//                val studytime = subjectDTO!!.studytime
-//                val userid = subjectDTO!!.userId
-//                binding.emailaddress.text=email
-                if(it["studyTime"] == null) {
-                    return@addOnSuccessListener
-                }
-                studyTime.value = it["studyTime"].toString().toInt()
-                binding.name.text = "반가워요, ${it["nickname"]}님"
-
-
-
-                Log.d("studyTime",studytime.toString())
-            }
-        }
+    init{
+        uid = currentUser()!!.uid
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        myStudyTime.observe(viewLifecycleOwner){
-//            binding.dayStudyTime.text = "%02d".format(myStudyTime.value?.div(60)) + "시간" +
-//                    "%02d".format(myStudyTime.value?.rem(60))+"분"
-//        }
-//    }
 
-//    val db: FirebaseFirestore
-//    private lateinit var subjects : List<DocumentSnapshot>
-//
-//    init {
-//        db = FirebaseFirestore.getInstance()
-//        uid = LoginUtils.currentUser()!!.uid
-//        setting()
-//    }
-//    private fun setting(){
-//        db.collection("subject")
-//            .whereEqualTo("uid", uid)
-//            .addSnapshotListener{  value, error ->
-//                if (error != null) {
-//                    return@addSnapshotListener
-//                }
-//                if(value != null){
-//                    if(value.documents.isEmpty()){
-//                        return@addSnapshotListener
-//                    }
-//                    var fit : Int = -1
-//                    val subject = subjects[fit]
-//                    val studtytime =  subject["studytime"] as Long
-////                    binding.dayStudyTime.text = studtytime.toString()
-//                    binding.name.text = subject["name"] as String
-//
-//                    Log.d("studtytime",studtytime.toString())
-//                }
-//            }
-//
-//    }
-//    val subject = ds.toObject(Subject::class.java)
-//    val studytime = subject!!.studytime
-//    Log.d("studytime",studytime.toString())
-//    val color = subject!!.color
-////                binding.dayStudyTime.text = studytime.toString()
+    private fun setting() {
+        FirebaseFirestore.getInstance().collection("subject")
+            .whereEqualTo("uid",uid)
+            .addSnapshotListener{ value,error ->
+            if(error != null){
+                return@addSnapshotListener
+            }
+                if (value != null) {
+                    value.documents.forEach {
+                        val tmp = hashMapOf<String,DocumentSnapshot>()
+                        if(it["studyTime"] as String? != null) {
+                            Log.d("cccaa", it.toString())
+                        }
+                    }
+                }
+
+        }
+    }
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
@@ -157,18 +123,6 @@ class WeekFragment : Fragment() {
             renderer = barChartRender
         }
         setData(listData)
-//        setData()
-    }
-    private val listData by lazy {
-        mutableListOf(
-            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
-            ChartDatas("화", arrayListOf(2.1f)),                 //5
-            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
-            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
-            ChartDatas("금", arrayListOf(6.1f,4.5f,10.1f,8.5f)),      //3
-            ChartDatas("토", arrayListOf(5f,7.1f,5.5f)),              //3
-            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
-        )
     }
 
     private fun setData(barData: List<ChartDatas>) {
