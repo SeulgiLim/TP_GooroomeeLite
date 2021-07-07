@@ -38,8 +38,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/custom_radio_button"/>
-<!--        android:onClick="@{holderView::onClick}"/>-->
+        android:background="@drawable/custom_radio_button"
+        android:onClick="@{holderView::onClick}"/>
 
     <View
         android:id="@+id/view"

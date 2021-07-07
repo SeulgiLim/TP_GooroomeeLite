@@ -1,22 +1,17 @@
 package kr.co.gooroomeelite.adapter
 
-import android.content.Context
 import android.media.MediaPlayer
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.selects.select
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ItemRecyclerviewMusicBinding
-import kr.co.gooroomeelite.views.mypage.BottomSheetFragment
 import kr.co.gooroomeelite.views.mypage.MusicItem
 import java.io.IOException
 
@@ -30,6 +25,12 @@ class MusicAdapter(private val owner : AppCompatActivity,
                    private val musicList:MutableList<MusicItem>) :
     RecyclerView.Adapter<MusicAdapter.ViewHolder>(){
 
+
+    //Item의 클릭 상태를 저장할 SparseBooleanarray 객체
+    private val selectedItems = SparseBooleanArray()
+    private var prePosition = -1
+    var mediaplayer : MediaPlayer? = null
+
     inner class ViewHolder(private val binding : ItemRecyclerviewMusicBinding): RecyclerView.ViewHolder(binding.root){
         val tvmusic : TextView =itemView.findViewById(R.id.tv_music)
         val btnplayandstop : Button = itemView.findViewById(R.id.btn_playandstop)
@@ -37,6 +38,47 @@ class MusicAdapter(private val owner : AppCompatActivity,
         fun setView(item : MusicItem) {
             with(binding) {
                 holderView = this@ViewHolder
+            }
+        }
+        fun onClick(v: View) {
+            if (selectedItems[layoutPosition]) {    //클릭시 닫힌다 -> 이벤트 동작한 포지션의 아이템뷰가 selectedItems에 추가
+                selectedItems.delete(layoutPosition)
+            } else {    //클릭시
+                selectedItems.delete(prePosition)   //이전 포지션 아이템뷰 삭제
+                selectedItems.put(layoutPosition, true)
+            }
+            if (prePosition != -1) notifyItemChanged(prePosition)
+            notifyItemChanged(layoutPosition)
+            prePosition = layoutPosition
+        }
+
+        //음악을 켜고 끄고, 이미지를 바꾸는 메소드
+        fun changemusic(isPlaying:Boolean){
+            val musicdata =musicList[position]
+
+            if (mediaplayer!=null){
+                mediaplayer?.release()
+                mediaplayer = null
+            }
+            mediaplayer = MediaPlayer.create(owner,musicdata.music)
+
+            if (isPlaying){
+                musicdata.musiccheck = true
+                mediaplayer?.start()
+                btnplayandstop.setBackgroundResource(R.drawable.ic_stopmusic)
+            }
+            else{
+                musicdata.musiccheck = false
+                mediaplayer?.stop()
+                Log.e("TEST","1")
+
+                try {
+                    Log.e("TEST","2")
+                }
+                catch (e:IOException){
+                    e.printStackTrace()
+                }
+                btnplayandstop.setBackgroundResource(R.drawable.ic_playmusic)
             }
         }
 
@@ -52,24 +94,8 @@ class MusicAdapter(private val owner : AppCompatActivity,
         val music = MediaPlayer.create(owner,musicdata.music)
         with(holder){
             setView(musicdata)
+            changemusic(selectedItems[position])
             tvmusic.text =musicdata.tvmusic
-            btnplayandstop.setOnClickListener {
-                if (music.isPlaying){
-                    music.stop()
-                    try {
-                        music.prepare()
-                    }
-                    catch (e:IOException){
-                        e.printStackTrace()
-                    }
-                    btnplayandstop.setBackgroundResource(R.drawable.ic_playmusic)
-                }
-                else{
-                    music.start()
-                    music.isLooping = true
-                    btnplayandstop.setBackgroundResource(R.drawable.ic_stopmusic)
-                }
-            }
         }
 
     }
