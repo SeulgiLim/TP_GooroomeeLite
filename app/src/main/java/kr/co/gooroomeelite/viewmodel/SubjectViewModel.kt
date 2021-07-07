@@ -8,10 +8,12 @@ import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import java.util.LinkedList
 
+//데이터를 activity가 아니라 viewModel이 관리하게 할 것
 class SubjectViewModel : ViewModel() {
     val db: FirebaseFirestore
     val subjectList = MutableLiveData<LinkedList<DocumentSnapshot>>()
     val uid: String
+    val subjectsList = MutableLiveData<DocumentSnapshot>()
 
     init {
         db = FirebaseFirestore.getInstance()
@@ -20,7 +22,7 @@ class SubjectViewModel : ViewModel() {
         fetchSubjectList()
     }
 
-    //과목별 전체
+    //과목별 전체 (가져오기
     private fun fetchSubjectList() {
         db.collection("subject")
             .whereEqualTo("uid", uid)
@@ -78,6 +80,18 @@ class SubjectViewModel : ViewModel() {
                             hashMapOf("prevDocumentId" to prevSubject.id) as Map<String, Any>
                         )
                     }
+                }
+            }
+    }
+
+    private fun getsubjectList(){
+        db.collection("subject")
+            .get()
+            .addOnSuccessListener { result ->
+                for(document in result){
+//                    Log.d("ccc","${document.id} => ${document.data}")
+//                    document.data["text"] as String
+//                    document.data["isDone"] as Boolean
                 }
             }
     }

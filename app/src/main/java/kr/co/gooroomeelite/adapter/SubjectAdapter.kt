@@ -39,6 +39,7 @@ class SubjectAdapter(
 
     fun setData(item : LinkedList<DocumentSnapshot>) {
         subjects = item
+        //연결된 관찰자에게 기본 데이터가 변경되었으며 데이터 세트를 반영하는 모든보기가 자체적으로 새로 고쳐 져야 함을 알린다.
         notifyDataSetChanged()
     }
 

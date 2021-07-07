@@ -33,11 +33,11 @@ class MonthFragment : Fragment() {
 
     private val listData by lazy {
         mutableListOf(
-            ChartData("1일", 5.1F), ChartData("", 10F), ChartData("", 8.1F), ChartData("", 7.1F), ChartData("", 6.1F), ChartData("", 5.1F), ChartData("", 9.1F),
-            ChartData("", 3.1F), ChartData("", 11F), ChartData("", 8.1F), ChartData("", 7.1F), ChartData("", 8.1F), ChartData("", 5.1F), ChartData("", 9.1F),
-            ChartData("15일", 3.1F), ChartData("", 6.4F), ChartData("", 8.1F), ChartData("", 7.1F), ChartData("", 1.1F), ChartData("", 5.1F), ChartData("", 9.1F),
-            ChartData("", 7.1F), ChartData("", 9.3F), ChartData("", 8.2F), ChartData("", 7.1F), ChartData("", 7F), ChartData("", 5.1F), ChartData("", 9.1F),
-            ChartData("29일", 5F), ChartData("", 5F), ChartData("", 5F)
+            ChartDatas("1일", arrayListOf(1.5f,6.1f,3.3f,4.4f)), ChartDatas("",  arrayListOf(2.1f)), ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)), ChartDatas("", arrayListOf(3f,5.1f,3.5f)), ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)), ChartDatas("", arrayListOf(5.1F)), ChartDatas("", arrayListOf(5.1F,9.1f)),
+            ChartDatas("", arrayListOf(1.5f,6.1f,3.3f,4.4f)), ChartDatas("",  arrayListOf(2.1f)), ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)), ChartDatas("", arrayListOf(3f,5.1f,3.5f)), ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)), ChartDatas("", arrayListOf(5.1F)), ChartDatas("", arrayListOf(5.1F,9.1f)),
+            ChartDatas("15일", arrayListOf(1.5f,6.1f,3.3f,4.4f)), ChartDatas("",  arrayListOf(2.1f)), ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)), ChartDatas("", arrayListOf(3f,5.1f,3.5f)), ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)), ChartDatas("", arrayListOf(5.1F)), ChartDatas("", arrayListOf(5.1F,9.1f)),
+            ChartDatas("", arrayListOf(1.5f,6.1f,3.3f,4.4f)), ChartDatas("",  arrayListOf(2.1f)), ChartDatas("",arrayListOf(3.0f,5.5f,6.6f)), ChartDatas("", arrayListOf(3f,5.1f,3.5f)), ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)), ChartDatas("", arrayListOf(5.1F)), ChartDatas("", arrayListOf(5.1F,9.1f)),
+            ChartDatas("29일", arrayListOf(1.5f,6.1f,3.3f,4.4f)), ChartDatas("",  arrayListOf(2.1f)), ChartDatas("", arrayListOf(3.0f,5.5f,6.6f))
         )
     }
 
@@ -47,7 +47,7 @@ class MonthFragment : Fragment() {
 //            val name : String = ""
 //            mutableListOf(
 //
-//                ChartData(name,(Math.random()*16).toFloat())
+//                ChartDatas(name,(Math.random()*16).toFloat())
 //            )
 //            i++
 //            return
@@ -102,10 +102,13 @@ class MonthFragment : Fragment() {
         setData(listData)
     }
 
-    private fun setData(barData: List<ChartData>) {
+    private fun setData(barData: List<ChartDatas>) {
         val values = mutableListOf<BarEntry>()
         barData.forEachIndexed { index, chartData ->
-            values.add(BarEntry(index.toFloat(), chartData.value))
+            //첫번째 인자 x , 두번째 인자 y
+            for(i in chartData.value){
+                values.add(BarEntry(index.toFloat(), i))
+            }
         }
 
         //막대 그래프 색상 추가
@@ -149,19 +152,22 @@ class MonthFragment : Fragment() {
 
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue"+"maxValue값")
+                        barData.forEachIndexed { index, chartData ->
+                            while (i > axisMaximum) {
+                                count++
+                                if (i > axisMaximum) {
+                                    axisMaximum = maxValue
+                                } else {
+                                    axisMaximum = 9F
+                                }
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 0F
 //                axisMaximum = 9F
@@ -181,19 +187,20 @@ class MonthFragment : Fragment() {
                 gridColor = transparentBlackColor
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                var chartDataMax = listData.maxBy { it -> it.value}
-                var maxValue = chartDataMax!!.value
-                Log.d("aaa","$maxValue")
-                barData.forEachIndexed{ index, chartData ->
-                    while(chartData.value > axisMaximum){
-                        count++
-                        if(chartData.value > axisMaximum){
-                            axisMaximum = maxValue
-                        }else{
-                            axisMaximum = 9F
+                barData.forEachIndexed { index, chartData ->
+                    for (i in chartData.value) {
+//                        var chartDataMax = listData.maxBy { it -> it. }
+                        var maxValue = i
+                        Log.d("aaa", "$maxValue")
+                        while (i > axisMaximum) {
+                            count++
+                            if (i > axisMaximum) {
+                                axisMaximum = maxValue
+                            } else {
+                                axisMaximum = 9F
+                            }
                         }
                     }
-
                 }
                 axisMinimum = 3F
 //                axisMaximum = 9F

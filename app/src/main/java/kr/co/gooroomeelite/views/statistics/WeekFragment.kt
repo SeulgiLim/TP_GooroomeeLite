@@ -74,36 +74,36 @@ class WeekFragment : Fragment() {
         chart = view.findViewById(R.id.week_bar_chart)
         chart.setNoDataText("")
         initChart(chart)
-        setting()
+//        setting()
         return view
     }
     private lateinit var subjects : List<DocumentSnapshot>
     private val studyTime = MutableLiveData<Int>()
-    val uid :String
+//    val uid :String
 
-    init{
-        uid = currentUser()!!.uid
-    }
-
-
-    private fun setting() {
-        FirebaseFirestore.getInstance().collection("subject")
-            .whereEqualTo("uid",uid)
-            .addSnapshotListener{ value,error ->
-            if(error != null){
-                return@addSnapshotListener
-            }
-                if (value != null) {
-                    value.documents.forEach {
-                        val tmp = hashMapOf<String,DocumentSnapshot>()
-                        if(it["studyTime"] as String? != null) {
-                            Log.d("cccaa", it.toString())
-                        }
-                    }
-                }
-
-        }
-    }
+//    init{
+//        uid = currentUser()!!.uid
+//    }
+//
+//
+//    private fun setting() {
+//        FirebaseFirestore.getInstance().collection("subject")
+//             .whereEqualTo("uid",uid)
+//            .addSnapshotListener{ value,error ->
+//            if(error != null){
+//                return@addSnapshotListener
+//            }
+//                if (value != null) {
+//                    value.documents.forEach {
+//                        val tmp = hashMapOf<String,DocumentSnapshot>()
+//                        if(it["studyTime"] as String? != null) {
+//                            Log.d("cccaa", it.toString())
+//                        }
+//                    }
+//                }
+//
+//        }
+//    }
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
