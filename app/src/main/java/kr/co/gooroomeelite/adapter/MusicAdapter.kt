@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.adapter.MusicAdapter.medi.mediaplayer
 import kr.co.gooroomeelite.databinding.ItemRecyclerviewMusicBinding
 import kr.co.gooroomeelite.views.mypage.MusicItem
 import java.io.IOException
@@ -29,7 +30,6 @@ class MusicAdapter(private val owner : AppCompatActivity,
     //Item의 클릭 상태를 저장할 SparseBooleanarray 객체
     private val selectedItems = SparseBooleanArray()
     private var prePosition = -1
-    var mediaplayer : MediaPlayer? = null
 
     inner class ViewHolder(private val binding : ItemRecyclerviewMusicBinding): RecyclerView.ViewHolder(binding.root){
         val tvmusic : TextView =itemView.findViewById(R.id.tv_music)
@@ -65,6 +65,7 @@ class MusicAdapter(private val owner : AppCompatActivity,
             if (isPlaying){
                 musicdata.musiccheck = true
                 mediaplayer?.start()
+                mediaplayer?.isLooping = true
                 btnplayandstop.setBackgroundResource(R.drawable.ic_stopmusic)
             }
             else{
@@ -102,5 +103,8 @@ class MusicAdapter(private val owner : AppCompatActivity,
 
     override fun getItemCount(): Int {
         return musicList.size
+    }
+    object medi{
+        var mediaplayer:MediaPlayer?=null
     }
 }

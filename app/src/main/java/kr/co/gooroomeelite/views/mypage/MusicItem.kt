@@ -9,6 +9,5 @@ import android.widget.TextView
  * @desc
  */
 data class MusicItem(val tvmusic: String,
-                     val music: Int,
-                     var musiccheck : Boolean = false
+                     val music: Int
                      )
