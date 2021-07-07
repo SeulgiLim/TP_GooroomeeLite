@@ -8,11 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.selects.select
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.databinding.ItemRecyclerviewMusicBinding
 import kr.co.gooroomeelite.views.mypage.BottomSheetFragment
 import kr.co.gooroomeelite.views.mypage.MusicItem
+import java.io.IOException
 
 /**
  * @author Gnoss
@@ -24,41 +30,45 @@ class MusicAdapter(private val owner : AppCompatActivity,
                    private val musicList:MutableList<MusicItem>) :
     RecyclerView.Adapter<MusicAdapter.ViewHolder>(){
 
-    val mediaPlayer : MediaPlayer? = null
-    inner class ViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(private val binding : ItemRecyclerviewMusicBinding): RecyclerView.ViewHolder(binding.root){
         val tvmusic : TextView =itemView.findViewById(R.id.tv_music)
         val btnplayandstop : Button = itemView.findViewById(R.id.btn_playandstop)
-        val musiccheck : Boolean = false
+
+        fun setView(item : MusicItem) {
+            with(binding) {
+                holderView = this@ViewHolder
+            }
+        }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_music,parent,false)
-        return ViewHolder(view)
+        val binding = ItemRecyclerviewMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MusicAdapter.ViewHolder, position: Int) {
         val musicdata =musicList[position]
+        val music = MediaPlayer.create(owner,musicdata.music)
         with(holder){
+            setView(musicdata)
             tvmusic.text =musicdata.tvmusic
             btnplayandstop.setOnClickListener {
-                val mediaPlayer = MediaPlayer.create(owner,musicdata.music)
-                Log.e("TEST","1")
-                if (mediaPlayer.isPlaying){
-
-                    Log.e("TEST","2")
-                    mediaPlayer.stop()
-                    Log.e("TEST","3")
-                    mediaPlayer.reset()
-                    Log.e("TEST","4")
+                if (music.isPlaying){
+                    music.stop()
+                    try {
+                        music.prepare()
+                    }
+                    catch (e:IOException){
+                        e.printStackTrace()
+                    }
+                    btnplayandstop.setBackgroundResource(R.drawable.ic_playmusic)
                 }
                 else{
-                    musiccheck == true
-                    Log.e("TEST","5")
-                    mediaPlayer.isLooping = true
-                    mediaPlayer.start()
+                    music.start()
+                    music.isLooping = true
+                    btnplayandstop.setBackgroundResource(R.drawable.ic_stopmusic)
                 }
-
             }
         }
 
