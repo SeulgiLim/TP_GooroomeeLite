@@ -91,8 +91,8 @@ class HomeFragment : Fragment() {
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
 
-        val ingImg = binding.ing.layoutParams as ConstraintLayout.LayoutParams
-        ingImg.horizontalBias = binding.seekBar.progress.toFloat() / 10
+//        val ingImg = binding.ing.layoutParams as ConstraintLayout.LayoutParams
+//        ingImg.horizontalBias = binding.seekBar.progress.toFloat() / 10
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(

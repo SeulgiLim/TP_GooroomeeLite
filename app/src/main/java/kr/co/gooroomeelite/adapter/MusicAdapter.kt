@@ -63,13 +63,11 @@ class MusicAdapter(private val owner : AppCompatActivity,
             mediaplayer = MediaPlayer.create(owner,musicdata.music)
 
             if (isPlaying){
-                musicdata.musiccheck = true
                 mediaplayer?.start()
                 mediaplayer?.isLooping = true
                 btnplayandstop.setBackgroundResource(R.drawable.ic_stopmusic)
             }
             else{
-                musicdata.musiccheck = false
                 mediaplayer?.stop()
                 Log.e("TEST","1")
 
@@ -92,7 +90,6 @@ class MusicAdapter(private val owner : AppCompatActivity,
 
     override fun onBindViewHolder(holder: MusicAdapter.ViewHolder, position: Int) {
         val musicdata =musicList[position]
-        val music = MediaPlayer.create(owner,musicdata.music)
         with(holder){
             setView(musicdata)
             changemusic(selectedItems[position])
@@ -104,6 +101,7 @@ class MusicAdapter(private val owner : AppCompatActivity,
     override fun getItemCount(): Int {
         return musicList.size
     }
+    //미디어플레이어가 여러개 생기는것을 방지하기 위해 싱글톤 적용.
     object medi{
         var mediaplayer:MediaPlayer?=null
     }
