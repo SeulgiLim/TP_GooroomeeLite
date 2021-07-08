@@ -175,7 +175,12 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         storage = FirebaseStorage.getInstance()
         storageRef = storage!!.reference
         storageRef!!.child("profile_img/$filename").child(filename).downloadUrl.addOnSuccessListener{
-            Glide.with(owner).load(it).into(binding.imageView)
+            if (it!=null){
+                Glide.with(owner).load(it).into(binding.imageView)
+            }
+            else{
+                binding.imageView.setBackgroundResource(R.drawable.ic_gooroomee_logo)
+            }
         }
 
     }
