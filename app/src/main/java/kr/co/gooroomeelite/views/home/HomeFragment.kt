@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_pomodoro.*
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
+import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentHomeBinding
 import kr.co.gooroomeelite.entity.Subject
@@ -30,6 +32,10 @@ import kr.co.gooroomeelite.views.common.StudyTimerDialog
 import kr.co.gooroomeelite.views.login.LoginActivity
 import splitties.resources.int
 import splitties.systemservices.windowManager
+import java.lang.NullPointerException
+import java.lang.NumberFormatException
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 class HomeFragment : Fragment() {
@@ -57,8 +63,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding.home = this
         getUserInfo()
-        getTotalStudy()
         childFragmentManager.setFragmentResultListener(
             "subject",
             viewLifecycleOwner
@@ -104,7 +111,10 @@ class HomeFragment : Fragment() {
             StudyTimerDialog(this).show()
         }
 
-        todayStudyTime.value = 0
+        //Seekbar, 오늘 공부시간 설정
+        getTotalStudy()
+        seekbar()
+
 
         return binding.root
     }
@@ -121,6 +131,7 @@ class HomeFragment : Fragment() {
                         60
                     )
                 ) + "분"
+            seekbar()
         }
         binding.subjectEdit.setOnClickListener {
             startActivity(Intent(mainActivityContext, EditSubjectsActivity::class.java))
@@ -130,6 +141,8 @@ class HomeFragment : Fragment() {
                 "%02d".format(todayStudyTime.value?.div(60))
             binding.minute.text =
                 "%02d".format(todayStudyTime.value?.rem(60))
+            getTotalStudy()
+            seekbar()
         }
 
     }
@@ -194,10 +207,20 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener {
                 val subject = it.toObjects(Subject::class.java)
                 var studytimetodaylist = mutableListOf<Int>()
-                for (i in 0..subject.size-1){
+                for (i in 0..subject.size - 1) {
                     studytimetodaylist.add(subject[i].studytime)
                 }
                 todayStudyTime.value = studytimetodaylist.sum()
             }
+    }
+
+    fun seekbar() : Int {
+        myStudyGoal.observe(viewLifecycleOwner) {
+            todayStudyTime.observe(viewLifecycleOwner) {
+                val test : Float  = ((todayStudyTime.value!!*100/(myStudyGoal.value!!))/100.toFloat())*100
+                binding.seekBar.progress = test.toInt()
+            }
+        }
+        return Log.e("TEST","TEST")
     }
 }
