@@ -1,9 +1,11 @@
 package kr.co.gooroomeelite.views.common
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +17,7 @@ import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 
 class MainActivity : AppCompatActivity() {
     var mBackWait : Long = 0
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

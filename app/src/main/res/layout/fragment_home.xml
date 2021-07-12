@@ -188,12 +188,6 @@
                                 android:textSize="11sp"
                                 android:textStyle="bold" />
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:background="#E5E5E5" />
 
                             <TextView
                                 android:id="@+id/studytime"
