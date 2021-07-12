@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.BarChart
@@ -30,6 +31,8 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.databinding.FragmentMypageBinding
+import kr.co.gooroomeelite.databinding.FragmentStatisticsBinding
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.util.*
@@ -40,6 +43,7 @@ class StatisticsFragment : Fragment() {
 
     private lateinit var horizontalChart: HorizontalBarChart
     private lateinit var horizontal2Chart: HorizontalBarChart
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,10 +80,10 @@ class StatisticsFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        val shareButton: Button = pageView.findViewById(R.id.share_button)
-        shareButton.setOnClickListener {
-            requestPermission()
-        }
+//        val shareButton: Button = pageView.findViewById(R.id.share_button)
+//        shareButton.setOnClickListener{
+//            requestPermission()
+//        }
 
         horizontalChart = pageView.findViewById(R.id.highligte_today_Bar_Chart)
         horizontal2Chart = pageView.findViewById(R.id.highligte_before_Bar_Chart)
@@ -137,21 +141,21 @@ class StatisticsFragment : Fragment() {
         var barDataSet = BarDataSet(dataValue(), "")
         var color = ArrayList<Int>()
         color.add(Color.argb(100, 68, 158, 246))
-        barDataSet.colors = color
+        barDataSet.colors= color
 
         var barData = BarData(barDataSet)
-        horizontalChart.data = barData
+        horizontalChart.data= barData
         horizontalChart.invalidate()
     }
 
     private fun dataValue(): ArrayList<BarEntry> {
         var dataValues = ArrayList<BarEntry>()
-        dataValues.add(BarEntry(0.toFloat(), floatArrayOf(1.3f)))
+        dataValues.add(BarEntry(0.toFloat(),floatArrayOf(1.3f)))
         return dataValues
     }
 
     private fun initChart2(horizontal2Chart: HorizontalBarChart) {
-        with(horizontal2Chart) { //축 선 제거
+        with(horizontal2Chart){//축 선 제거
 //            description.isEnabled = false
 //            legend.isEnabled = false
 //            isDoubleTapToZoomEnabled = false
@@ -168,49 +172,29 @@ class StatisticsFragment : Fragment() {
 //            xAxis.setDrawGridLines(false)
 //            axisLeft.isEnabled = false
 //            axisRight.isEnabled = false
-            axisLeft.apply {
-                axisMinimum = 0F
-                granularity = 6F
-                axisMaximum = 12F
+            axisLeft.apply{
+                axisMinimum= 0F
+                granularity= 6F
+                axisMaximum= 12F
             }
         }
 
         var barDataSet = BarDataSet(dataValue2(), "")
         var color = ArrayList<Int>()
         color.add(Color.argb(100, 68, 158, 246))
-        barDataSet.colors = color
+        barDataSet.colors= color
 
         var barData = BarData(barDataSet)
-        horizontal2Chart.data = barData
+        horizontal2Chart.data= barData
         horizontal2Chart.invalidate()
     }
 
     private fun dataValue2(): ArrayList<BarEntry> {
         var dataValues = ArrayList<BarEntry>()
-        dataValues.add(BarEntry(0.toFloat(), floatArrayOf(5.3f)))
+        dataValues.add(BarEntry(0.toFloat(),floatArrayOf(5.3f)))
         return dataValues
     }
 
-    private fun requestPermission(): Boolean {
-        var permissions = false
-        TedPermission.with(context)
-            .setPermissionListener(object : PermissionListener {
-                override fun onPermissionGranted() {
-                    permissions = true      //p0=response(응답)
-                    val shareIntent = Intent(context, ShareActivity::class.java)
-                    startActivity(shareIntent)
-//                    finish()
-                }
 
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    permissions = false
-                }
-
-            })
-            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
-            .setPermissions(Manifest.permission.CAMERA)
-            .check()
-        return permissions
-    }
 }
 

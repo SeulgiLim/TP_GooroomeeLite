@@ -128,6 +128,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
             binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
+
     private fun contentUploadandDelete() {
         val num: String = getUid()!!
         val filename = "profile$num.jpg"

@@ -64,11 +64,15 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         getUserInfo()
+        Log.d("cccaa","hurry up")
+        //데이터를 받는 리스터
+        //"resultKey"는 Fragment에서 어떤 Listener로 값을 "전달"할 지 결정하는 식별자
         childFragmentManager.setFragmentResultListener("subject",
             viewLifecycleOwner) { resultKey, bundle ->
             if(viewModel.subjectList.value!!.size <= 20) {
                 Toast.makeText(mainActivityContext, "과목을 등록하였습니다.", Toast.LENGTH_SHORT).show()
-                val subject = bundle.getSerializable("subject") as Subject
+                 // 여기서 문자열을 사용하지만 번들에 넣을 수있는 모든 유형이 지원된다.
+                val subject = bundle.getSerializable("subject") as Subject //bundle로 받기
                 viewModel.addSubject(subject)
             } else {
                 Toast.makeText(mainActivityContext, "과목은 최대 20개 까지만 등록할 수 있습니다.", Toast.LENGTH_SHORT).show()

@@ -2,6 +2,7 @@ package kr.co.gooroomeelite.adapter
 
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -35,6 +36,7 @@ class SubjectAdapter(
         }
         val studytime = subject["studytime"] as Long
         holder.binding.subjectStudytime.text = "${studytime / 60}시간 ${studytime % 60}분"
+
     }
 
     fun setData(item : LinkedList<DocumentSnapshot>) {
