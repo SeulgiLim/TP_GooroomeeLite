@@ -217,8 +217,14 @@ class HomeFragment : Fragment() {
     fun seekbar() : Int {
         myStudyGoal.observe(viewLifecycleOwner) {
             todayStudyTime.observe(viewLifecycleOwner) {
-                val test : Float  = ((todayStudyTime.value!!*100/(myStudyGoal.value!!))/100.toFloat())*100
-                binding.seekBar.progress = test.toInt()
+                if (myStudyGoal.value != 0) {
+                    val percent: Float =
+                        ((todayStudyTime.value!! * 100 / (myStudyGoal.value!!)) / 100.toFloat()) * 100
+                    binding.seekBar.progress = percent.toInt()
+                }
+                else{
+                    binding.seekBar.progress = 100
+                }
             }
         }
         return Log.e("TEST","TEST")
