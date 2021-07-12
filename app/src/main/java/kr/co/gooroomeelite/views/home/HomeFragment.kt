@@ -44,13 +44,6 @@ class HomeFragment : Fragment() {
                 startActivityForResult(intent, RC_START_STUDY)
             })
 
-        /*onClickStartBtn = { subject ->
-            val intent = Intent(context,StudyActivity::class.java)
-            // intent.putExtra("key", "value")
-            // setResult(RESULT.OK, intent)
-            startActivity(intent)
-            // finish()
-        })*/
     }
     private val mainActivityContext by lazy {
         requireContext()
@@ -65,14 +58,21 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         getUserInfo()
-        childFragmentManager.setFragmentResultListener("subject",
-            viewLifecycleOwner) { resultKey, bundle ->
-            if(viewModel.subjectList.value!!.size <= 20) {
+        getTotalStudy()
+        childFragmentManager.setFragmentResultListener(
+            "subject",
+            viewLifecycleOwner
+        ) { resultKey, bundle ->
+            if (viewModel.subjectList.value!!.size <= 20) {
                 Toast.makeText(mainActivityContext, "과목을 등록하였습니다.", Toast.LENGTH_SHORT).show()
                 val subject = bundle.getSerializable("subject") as Subject
                 viewModel.addSubject(subject)
             } else {
-                Toast.makeText(mainActivityContext, "과목은 최대 20개 까지만 등록할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    mainActivityContext,
+                    "과목은 최대 20개 까지만 등록할 수 있습니다.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -90,9 +90,6 @@ class HomeFragment : Fragment() {
             val bottomSheet = SubjectFragment()
             bottomSheet.show(childFragmentManager, bottomSheet.tag)
         }
-
-//        val ingImg = binding.ing.layoutParams as ConstraintLayout.LayoutParams
-//        ingImg.horizontalBias = binding.seekBar.progress.toFloat() / 10
 
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(
@@ -119,24 +116,23 @@ class HomeFragment : Fragment() {
         }
         myStudyGoal.observe(viewLifecycleOwner) {
             binding.studytime.text =
-                "%02d".format(myStudyGoal.value?.div(60)) + "시간 " + "%02d".format(myStudyGoal.value?.rem(
-                    60)) + "분"
+                "%02d".format(myStudyGoal.value?.div(60)) + "시간 " + "%02d".format(
+                    myStudyGoal.value?.rem(
+                        60
+                    )
+                ) + "분"
         }
-
         binding.subjectEdit.setOnClickListener {
             startActivity(Intent(mainActivityContext, EditSubjectsActivity::class.java))
         }
-    }
+        todayStudyTime.observe(viewLifecycleOwner) {
+            binding.hour.text =
+                "%02d".format(todayStudyTime.value?.div(60))
+            binding.minute.text =
+                "%02d".format(todayStudyTime.value?.rem(60))
+        }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if(resultCode != Activity.RESULT_OK) {
-//            when(requestCode) {
-//                RC_ENROLL_STUDY_TIME -> { activity?.finish() }
-//            }
-//            return
-//        }
-//    }
+    }
 
     fun setStudyTimeCallback(studyTime: Int) {
         FirebaseFirestore.getInstance()
@@ -149,9 +145,11 @@ class HomeFragment : Fragment() {
                         .document(LoginUtils.getUid()!!)
                         .update(hashMapOf("studyTime" to studyTime) as Map<String, Any>) // 업데이트 부분
                         .addOnSuccessListener {
-                            Toast.makeText(mainActivityContext,
+                            Toast.makeText(
+                                mainActivityContext,
                                 "목표 공부 시간을 수정하였습니다.",
-                                Toast.LENGTH_SHORT)
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                             myStudyGoal.value = studyTime
                         }
@@ -160,9 +158,11 @@ class HomeFragment : Fragment() {
                         .document(LoginUtils.getUid()!!)
                         .set(hashMapOf("studyTime" to studyTime))
                         .addOnSuccessListener {
-                            Toast.makeText(mainActivityContext,
+                            Toast.makeText(
+                                mainActivityContext,
                                 "목표 공부 시간을 설정하였습니다.",
-                                Toast.LENGTH_SHORT)
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                             myStudyGoal.value = studyTime
                         }
@@ -173,7 +173,7 @@ class HomeFragment : Fragment() {
     private fun getUserInfo() {
         FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
             .addOnSuccessListener {
-                if(it["studyTime"] == null) {
+                if (it["studyTime"] == null) {
                     myStudyGoal.value = -1
                     return@addOnSuccessListener
                 }
@@ -183,6 +183,21 @@ class HomeFragment : Fragment() {
             .addOnFailureListener {
                 Toast.makeText(mainActivityContext, it.toString(), Toast.LENGTH_SHORT).show()
                 myStudyGoal.value = -1
+            }
+    }
+
+    fun getTotalStudy() {
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", getUid())
+            .get()
+            .addOnSuccessListener {
+                val subject = it.toObjects(Subject::class.java)
+                var studytimetodaylist = mutableListOf<Int>()
+                for (i in 0..subject.size-1){
+                    studytimetodaylist.add(subject[i].studytime)
+                }
+                todayStudyTime.value = studytimetodaylist.sum()
             }
     }
 }

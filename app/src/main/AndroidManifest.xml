@@ -20,8 +20,6 @@
 <!--            android:exported="true">-->
 <!--        </service>-->
 
-        <activity android:name=".views.mypage.TestActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".views.mypage.ProfileUpdateActivity"
             android:screenOrientation="portrait"
