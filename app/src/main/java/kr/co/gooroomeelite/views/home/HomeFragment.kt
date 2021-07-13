@@ -227,6 +227,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        return Log.e("TEST","TEST")
+        return Log.e("e","Error")
     }
 }

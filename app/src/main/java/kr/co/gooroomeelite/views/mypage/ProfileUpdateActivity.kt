@@ -250,4 +250,5 @@ class ProfileUpdateActivity : AppCompatActivity() {
     fun hideKeyboard(v: View) {
         imm?.hideSoftInputFromWindow(v.windowToken, 0)
     }
+
 }

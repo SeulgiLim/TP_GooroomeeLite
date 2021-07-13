@@ -6,6 +6,7 @@ package kr.co.gooroomeelite.views.mypage
  * @desc
  */
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -26,8 +27,10 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         }
 
         binding.toolbar.setOnClickListener {
-            val bottomSheetFragment = BottomSheetFragment(this@PrivacyPolicyActivity)
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+            val intent = Intent(this,MusicActivity::class.java)
+            startActivity(intent)
+//            val bottomSheetFragment = BottomSheetFragment(this@PrivacyPolicyActivity)
+//            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
 
         with(binding){

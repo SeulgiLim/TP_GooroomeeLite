@@ -31,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
         handler.postDelayed({
             startProcess()
         }, 1000L)
+        job()
     }
 
     private fun startProcess() {

@@ -9,6 +9,7 @@
         <variable
             name = "home"
             type ="kr.co.gooroomeelite.views.home.HomeFragment"/>
+
     </data>
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout

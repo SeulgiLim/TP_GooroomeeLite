@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStudyEndBinding
 import kr.co.gooroomeelite.viewmodel.StudyEndViewModel
@@ -19,6 +20,10 @@ class StudyEndActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityStudyEndBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        
+
 
     }
 }
