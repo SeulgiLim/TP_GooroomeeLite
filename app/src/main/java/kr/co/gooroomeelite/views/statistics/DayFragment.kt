@@ -55,8 +55,8 @@ class DayFragment : Fragment() {
 
     private lateinit var binding: FragmentDayBinding
 //    private lateinit var chart: BarChart
-//    private val viewModel: SubjectViewModel by viewModels()
-//    private val dailySubjectAdapter: DailySubjectAdapter  by lazy { DailySubjectAdapter(emptyList())}
+    private val viewModel: SubjectViewModel by viewModels()
+    private val dailySubjectAdapter: DailySubjectAdapter  by lazy { DailySubjectAdapter(emptyList())}
     //db값 저장
     private var subjectsList : MutableList<ReadSubejct> = mutableListOf()
 
@@ -143,23 +143,23 @@ class DayFragment : Fragment() {
         moveCalendarByDay(binding.calendar,binding.calRightBtn,binding.calLeftBtn,binding.typeDay)
        getUserInfo()
 
-//        binding.recyclerViewDay.apply {
-//            layoutManager = LinearLayoutManager(
-//                requireContext(),
-//                LinearLayoutManager.VERTICAL,
-//                false
-//            )
-//            adapter = dailySubjectAdapter
-//        }
+        binding.recyclerViewDay.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = dailySubjectAdapter
+        }
         return binding.root
     }
 
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewModel.subjectList.observe(viewLifecycleOwner) {
-//            dailySubjectAdapter.setData(it)
-//        }
-//    }
+    //adapter에 데이터 추가
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.subjectList.observe(viewLifecycleOwner) {
+            dailySubjectAdapter.setData(it)
+        }
+    }
 
     private fun weeklySubjectStudytimeChart(pieChart : PieChart,list: MutableList<Subjects>){
         pieChart.setUsePercentValues(true)
