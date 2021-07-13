@@ -85,12 +85,12 @@ class StatisticsFragment : Fragment() {
 //            requestPermission()
 //        }
 
-        horizontalChart = pageView.findViewById(R.id.highligte_today_Bar_Chart)
-        horizontal2Chart = pageView.findViewById(R.id.highligte_before_Bar_Chart)
+//        horizontalChart = pageView.findViewById(R.id.highligte_today_Bar_Chart)
+//        horizontal2Chart = pageView.findViewById(R.id.highligte_before_Bar_Chart)
 
-        horizontalChart.setNoDataText("")
-        initChart(horizontalChart)
-        initChart2(horizontal2Chart)
+//        horizontalChart.setNoDataText("")
+//        initChart(horizontalChart)
+//        initChart2(horizontal2Chart)
         //get() 값을 다 가져오는
 
 //        var color : ImageView = pageView.findViewById(R.id.color)

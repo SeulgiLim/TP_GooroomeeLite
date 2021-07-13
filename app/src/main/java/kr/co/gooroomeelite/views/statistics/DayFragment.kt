@@ -13,16 +13,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.firebase.firestore.DocumentSnapshot
@@ -30,12 +33,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentDayBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
+import kr.co.gooroomeelite.views.home.EditSubjectsActivity
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DecimalFormat
 import java.time.LocalDateTime
@@ -48,7 +54,14 @@ import kotlin.collections.ArrayList
 class DayFragment : Fragment() {
 
     private lateinit var binding: FragmentDayBinding
-    private lateinit var chart: BarChart
+//    private lateinit var chart: BarChart
+//    private val viewModel: SubjectViewModel by viewModels()
+//    private val dailySubjectAdapter: DailySubjectAdapter  by lazy { DailySubjectAdapter(emptyList())}
+    //db값 저장
+    private var subjectsList : MutableList<ReadSubejct> = mutableListOf()
+
+    private lateinit var subjects: Subjects
+    private var list: MutableList<Subjects> = mutableListOf()
 
     private val listData by lazy {
         mutableListOf(
@@ -66,7 +79,6 @@ class DayFragment : Fragment() {
             )
     }
 
-
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.black)
@@ -80,57 +92,158 @@ class DayFragment : Fragment() {
     private val customMarkerView by lazy {
         CustomMarketView(this.requireContext(), R.layout.item_marker_view)
     }
-    private lateinit var readSubjects: ReadSubejct  //각 과목별 list
-    private lateinit var subjects: Subjects
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_day, container, false)
-
-
-        val shareButton: Button = view.findViewById(R.id.share_button)
-        shareButton.setOnClickListener {
+//        val view = inflater.inflate(R.layout.fragment_day, container, false)
+        binding = FragmentDayBinding.inflate(inflater,container,false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_day,container,false)
+        binding.day = this
+//        val shareButton: Button = view.findViewById(R.id.share_button)
+        binding.shareButton.setOnClickListener {
             requestPermission()
         }
 //        ChartData(sixDaysAgo.format(formatter).toString(), oneWeekRecord[0]),
 //        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E")
 //        val formatterString: String = dateNow.format(formatter)
         //바 차트
-        chart = view.findViewById(R.id.day_bar_chart)
-        chart.setNoDataText("")
-        initChart(chart)
+//        chart = view.findViewById(R.id.day_bar_chart)
+        binding.dayBarChart.setNoDataText("")
+        initChart(binding.dayBarChart)
 
         FirebaseFirestore.getInstance()
             .collection("subject")
             .whereEqualTo("uid", getUid()!!)
             .get() //값이 변경 시 바로 값이 변경된다.
             .addOnSuccessListener { docs ->
-              docs.documents.forEach{
-                  subjects = it.toObject(Subjects::class.java)!!
-                  Log.d("qwqw", subjects.name.toString())
-                  Log.d("qwqw", subjects.color.toString())
-                  Log.d("qwqw", subjects.studytime.toString())
-              }
+                if(docs != null) {
+                    lateinit var subjectValue: ReadSubejct
+                    docs.documents.forEach {
+//                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
+//                        subjectsList.add(subjectValue)
+                        subjects = it.toObject(Subjects::class.java)!!
+//                        Log.d("aqaqStudytime", subjects.studytime.toString())
+//                        Log.d("aqaqName", subjects.name.toString())
+//                        Log.d("aqaqColor", subjects.color.toString())
+                        list.add(subjects)
+                        weeklySubjectStudytimeChart(binding.weeklyPieChart,list)
+                        Log.d("aqaqList", list.size.toString())
+                    }
+                }
             }
+//        Log.d("aqaqAllList", list.size.toString())
 
-        var calendarDay : TextView = view.findViewById(R.id.calendar)
-        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
-        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
-        moveCalendarByDay(calendarDay,calRightBtn,calLeftBtn)
 
-        return view
+//        var calendarDay : TextView = view.findViewById(R.id.calendar)
+//        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
+//        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
+//        moveCalendarByDay(calendarDay,calRightBtn,calLeftBtn,binding.typeDay)
+        moveCalendarByDay(binding.calendar,binding.calRightBtn,binding.calLeftBtn,binding.typeDay)
+       getUserInfo()
+
+//        binding.recyclerViewDay.apply {
+//            layoutManager = LinearLayoutManager(
+//                requireContext(),
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//            adapter = dailySubjectAdapter
+//        }
+        return binding.root
     }
 
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewModel.subjectList.observe(viewLifecycleOwner) {
+//            dailySubjectAdapter.setData(it)
+//        }
+//    }
+
+    private fun weeklySubjectStudytimeChart(pieChart : PieChart,list: MutableList<Subjects>){
+        pieChart.setUsePercentValues(true)
+    Log.d("qwqwqwqwqw",subjects.studytime.toString())
+    Log.d("qwqwqwqwqw",subjects.color.toString())
+        Log.d("aqaqAllList", list.size.toString())
+//        var subjectValueList = mutableListOf<Subjects>(subjects)
+//        val subjectValueIterator = subjectValueList.iterator()
+//        val studytimeList = mutableListOf<Int>(subjects.studytime)
+//        val studytimeListIterator = studytimeList.iterator()
+//        while(studytimeListIterator.hasNext()){
+//            entries.add(PieEntry(studytimeListIterator.next().toFloat(),""))
+//        }
+//        while(subjectValueIterator.hasNext()){
+//            Log.d("iterator",subjectValueIterator.next().toString())
+//            Log.d("qwqwqwqwqwiterator",subjects.studytime.toString())
+//            Log.d("qwqwqwqwqwiterator",subjects.color.toString())
+//        }
+//
+//        val values = mutableListOf<PieEntry>()
+//        val colorItems = mutableListOf<Int>()
+//        var subjectValueLists = mutableListOf(subjects)
+//        Log.d("forEachIndexed",subjectValueLists.size.toString())
+//        subjectValueLists.forEachIndexed { index, subjects ->
+//            Log.d("forEachIndexed",subjects.studytime.toString())
+//            Log.d("forEachIndexed",subjects.color.toString())
+//            values.add(PieEntry(index.toFloat(), subjects.studytime))
+//            colorItems.add(index,Color.parseColor(subjects.color))
+//        }
+
+        val values = mutableListOf<PieEntry>()
+        val colorItems = mutableListOf<Int>()
+        list.forEachIndexed{ index, _ ->
+            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
+            colorItems.add(index,Color.parseColor(list[index].color))
+        }
+
+//% : 퍼센트 수치 색상과 사이즈 지정
+//        val entries = ArrayList<PieEntry>()
+//        entries.add(PieEntry(45f,""))
+//        entries.add(PieEntry(30f,""))
+//        entries.add(PieEntry(10f,""))
+//
+//        var colorItems = ArrayList<Int>() //색
+//        colorItems.add(Color.parseColor("#D8EBD8"))
+//        colorItems.add(Color.parseColor("#F2A6A0"))
+//        colorItems.add(Color.parseColor("#C8DCEB"))
+//        val pieDataSet = PieDataSet(entries,"")
+        val pieDataSet = PieDataSet(values,"")
+        pieDataSet.colors = colorItems
+        pieDataSet.apply {
+//            valueTextColor = Color.BLACK
+            setDrawValues(false) //차트에 표시되는 값 지우기
+            valueTextSize = 16f
+        }
+        //% : 퍼센트 수치 색상과 사이즈 지정
+        val pieData = PieData(pieDataSet)
+        pieChart.apply {
+            data = pieData
+            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
+//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
+            isEnabled = false
+            legend.isEnabled = false //범례 지우기
+            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+            holeRadius = 50f //흰색을 증앙에 꽉 채우기
+            setDrawEntryLabels(false) //차트에 있는 이름 지우
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+    }
 //
 
-    private fun moveCalendarByDay(calendarDay:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton){
+    private fun moveCalendarByDay(calendarDay:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,day:TextView){
+
         // 현재 날짜/시간 가져오기
         val dateNow: LocalDateTime = LocalDateTime.now()
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
 
         var count : Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
+        day.text =  dateNow.format(textformatter)
 
         dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
@@ -218,7 +331,7 @@ class DayFragment : Fragment() {
         }
 
         //애니메이션 효과 0.1초
-        with(chart) {
+        with(binding.dayBarChart) {
             animateY(100)
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
@@ -301,12 +414,25 @@ class DayFragment : Fragment() {
         }
     }
 
+    private fun getUserInfo() {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(getUid()!!).get()
+            .addOnSuccessListener {
+                binding.studyTypeName.text = "${it["nickname"]}"
+//                binding.nickname.text = it["nickname"]
+            }
+
+    }
+
+
+
+}
 
 //    val subject = intent.getSerializableExtra("subject") as Subject
 //    val documentId = intent.getSerializableExtra("documentId") as String
 //    Log.d("subject", subject.toString())
 //    Log.d("documentId", documentId)
-}
 
 //val uid :String = currentUser()!!.uid
 //
