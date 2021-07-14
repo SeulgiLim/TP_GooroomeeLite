@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,8 +14,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
+import kotlinx.android.synthetic.main.fragment_statistics.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
 import kr.co.gooroomeelite.views.common.MainActivity
@@ -26,12 +27,14 @@ import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 @RequiresApi(Build.VERSION_CODES.O)
 class StickerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStickerBinding
 
     private var root: View? = null
+    private lateinit var statisticsFragment: StatisticsFragment
 
     private val shareButtonViewImage: Boolean = false
 
@@ -40,12 +43,13 @@ class StickerActivity : AppCompatActivity() {
     val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     val textformatterString: String = dateNow.format(textformatter)
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStickerBinding.inflate(layoutInflater)
         root = binding.root
         setContentView(binding.root)
-        initToolBar()
+//        initToolBar()
         val pictures = intent.getStringExtra("picture")
         if (pictures != null) {
             imageContent(pictures)
@@ -57,24 +61,42 @@ class StickerActivity : AppCompatActivity() {
         }
 
         //취소하기
-        binding.exitButtons.setOnClickListener{
-            val intent = Intent(this,MainActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.exitButtons.setOnClickListener{
+//            val intent = Intent(this,MainActivity::class.java)
+//            startActivity(intent)
+//        }
 
+        binding.shareCancel.setOnClickListener{finish()}
+
+        //통계페이지로 이동
+        binding.shareComplete.setOnClickListener {
+            //방법1 (앱이 닫힘)
+            supportFragmentManager.beginTransaction().replace(R.id.stickerActivity, StatisticsFragment()).commit()
+            //방법2 (앱이 닫힘)
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
+            //방법3(아예오류남)
+//            statisticsFragment = StatisticsFragment()
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.scrollview_mypage, walkTimeFramgnet)
+//                .addToBackStack(MainActivity)
+//                .commit()
+        }
         //공유하기
         binding.shareButtons.setOnClickListener{ takeAndShareScreenShot(pictures.toString()) }
 
         //현재시간
-        binding.nowTime.setText(textformatterString)
+//        binding.nowTime.setText(textformatterString)
     }
 
 
-    private fun initToolBar() {
-        val toolbar = binding.shareToolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
+
+
+//    private fun initToolBar() {
+//        val toolbar = binding.shareToolbar
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//    }
     //뒤로가기 눌렀을 때 작동
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

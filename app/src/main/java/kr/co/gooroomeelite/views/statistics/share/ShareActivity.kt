@@ -77,8 +77,17 @@ class ShareActivity : AppCompatActivity() {
         root = binding.root
         setContentView(binding.root)
 //        initToolBar()
-
+        binding.picturePrevious.setOnClickListener{
+            finish()
+        }
+        binding.pictureNext.setOnClickListener{
+            val nextIntent = Intent(this, StickerActivity::class.java)
+            startActivity(nextIntent)
+        }
         binding.showImage.setOnClickListener{ openGallery() }
+        binding.rotateBtn.setOnClickListener{
+            swicthCamera()
+        }
 //        binding.converterCamera.setOnClickListener{ swicthCamera() }
         startCamera(binding.viewFinder)
     }
