@@ -19,13 +19,11 @@ import kr.co.gooroomeelite.views.mypage.MypageFragment
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding : ActivityMainBinding
     var mBackWait : Long = 0
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
         val homeFragment = HomeFragment()
         val statisticsFragment = StatisticsFragment()
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 //            true
 //        }
         fun setView() {
-            with(binding.bottomNavigationView) {
+            with(bottomNavigationView) {
                 selectedItemId = R.id.home
                 setOnNavigationItemSelectedListener {
                     when (it.itemId) {
