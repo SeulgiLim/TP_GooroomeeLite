@@ -52,5 +52,8 @@
     <color name="lightGredy">#ACA8A8</color>
     <color name="light_blue">#C2DCF6</color>
     <color name="groomColor">#449EF6</color>
+    <color name="bottomon">#0FA7FD</color>
+    <color name="bottomoff">#4D0000</color>
+    <color name="bottomtitle">#C4C4C4</color>
 
 </resources>
