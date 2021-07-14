@@ -78,8 +78,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="공부 시간"
-                    android:textSize="12dp" />
+                    android:textColor="@color/black"
+                    android:text="오늘"
+                    android:textStyle="bold"
+                    android:textSize="22dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -92,41 +94,50 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="00"
-                        android:textColor="@color/black"
-                        android:textSize="36dp"
+                        android:text="00시간 00분"
+                        android:textColor="#FF0F8CFF"
+                        android:textSize="22dp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="시간"
-                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_marginTop="10dp"
-                        android:text="00"
+                        android:text="공부했어요!"
                         android:textColor="@color/black"
-                        android:textSize="36dp"
+                        android:textSize="22dp"
                         android:textStyle="bold" />
 
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="분"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:text="어제 대비"/>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_polygon"
+                        android:layout_marginLeft="8dp"/>
 
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/red"
+                        android:textSize="14dp"
+                        android:gravity="right"
+                        android:text="4시간"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -138,339 +149,37 @@
                 android:layout_margin="20dp"
                 tools:ignore="MissingClass" />
 
-<!--            <Button-->
-<!--                android:id="@+id/share_button"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:layout_below="@+id/graph"-->
-<!--                android:layout_marginLeft="16dp"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:background="@drawable/background_share_btn">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="32dp"-->
-<!--                    android:layout_height="32dp"-->
-<!--                    android:src="@drawable/ic_share_btn_image" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="나의 공부 기록 공유하기"-->
-<!--                    android:textColor="#449EF6"-->
-<!--                    android:textSize="14dp" />-->
-<!--                -->
-<!--            </Button>-->
-
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/share_button"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:textColor="#449EF6"
-                    android:drawableStart="@drawable/ic_share_btn_image"
-                    android:drawablePadding="8dp"
-                    android:paddingLeft="74dp"
-                    android:paddingRight="74dp"
-                    android:gravity="left|center"
-                    android:text="나의 공부 기록 공유하기"
+                    android:gravity="center"
+                    android:text="공부 기록 공유하기"
+                    android:textColor="@color/studytime_record_text_share"
                     android:background="@drawable/background_share_btn">
                 </androidx.appcompat.widget.AppCompatButton>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="30dp"
+                android:background="#FFF2F4F6"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="나의 공부 타입"
-                android:layout_marginTop="80dp"
+                android:text="과목별 공부 시간"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/type_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textSize="14dp"
-                    android:textColor="@color/black"
-                    />
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text=" ~ "-->
-<!--                    android:textSize="14dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    />-->
-<!--                <TextView-->
-<!--                    android:id="@+id/share_button"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text=""-->
-<!--                    android:textSize="14dp"-->
-<!--                    android:textColor="@color/black"-->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="145dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="@drawable/background_study_type_sheet">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bird"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/study_type_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:text="구루미"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        android:text="님은 일찍 일어나는 새시네요!"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="구루미 유저"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" 56%"
-                        android:textStyle="bold"
-                        android:textSize="12dp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="가 일찍 일어나는 새 타입이에요."
-                        android:textSize="12dp"/>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="26dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="공부 시작 평균 시간"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    android:text="09:30 am"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#F5F5F5"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="26dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="공부 시작 평균 시간"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    android:text="20:00 am"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일간 공부 시간"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="16dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:text="어제 대비"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/ic_polygon"
-                    android:layout_marginLeft="8dp"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:textColor="@color/red"
-                    android:textSize="14dp"
-                    android:gravity="right"
-                    android:text="4시간"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp">
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/compare_day_bar_chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    tools:ignore="MissingClass" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="26dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/background_today_studytime_sheet"
-                    android:layout_marginLeft="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="16dp"
-                    android:text="오늘"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    android:text="08시간 10분"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#F5F5F5"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="26dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/background_yesterday_studytime_sheet"
-                    android:layout_marginLeft="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:textSize="16dp"
-                    android:text="어제"/>
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    android:gravity="right"
-                    android:text="04시간 10분"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="#F5F5F5"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일간 과목 공부 시간"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="16dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
-
-            <LinearLayout
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="36dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
@@ -488,80 +197,6 @@
                 android:clipToPadding="false"
                 android:paddingBottom="12dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="목표 공부 시간 달성률"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="16dp"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:textColor="@color/black"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/background_achievement_rate_sheeet"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="월" />
-
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="화" />
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="수" />
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="목" />
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="금" />
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:text="토" />
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_height="14dp"
-                        android:layout_weight="1"
-                        android:textColor="#FFFF8D8D"
-                        android:text="일" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
-
             </LinearLayout>
-
-
-        </LinearLayout>
     </FrameLayout>
-
 </layout>

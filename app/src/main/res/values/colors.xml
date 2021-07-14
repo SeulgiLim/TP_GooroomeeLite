@@ -48,11 +48,14 @@
     <color name="light_blue">#C2DCF6</color>
     <color name="groomColor">#449EF6</color>
 
+    <color name="studytime_record_share">#FFDDF3FF</color>
+    <color name="studytime_record_text_share">#FF0FA9FF</color>
     <color name="share_delete">#444444</color>
     <color name="share_picture">#223322</color>
     <color name="share_next">#51A9FE</color>
 
     <color name="share_btn">#449EF6</color>
+
 
 
 </resources>

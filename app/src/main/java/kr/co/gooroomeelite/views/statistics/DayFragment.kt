@@ -123,13 +123,11 @@ class DayFragment : Fragment() {
                         weeklySubjectPieChart(binding.weeklyPieChart,list)
                         Log.d("aqaqList", list.size.toString())
                         //일간 공부 시간
-                        compareInitChart(binding.compareDayBarChart,list)
                     }
                 }
             }
 
-        moveCalendarByDay(binding.calendar,binding.calRightBtn,binding.calLeftBtn,binding.typeDay)
-       getUserInfo()
+        moveCalendarByDay(binding.calendar,binding.calRightBtn,binding.calLeftBtn)
 
         binding.recyclerViewDay.apply {
             layoutManager = LinearLayoutManager(
@@ -188,7 +186,7 @@ class DayFragment : Fragment() {
 
     }
 
-    private fun moveCalendarByDay(calendarDay:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,day:TextView){
+    private fun moveCalendarByDay(calendarDay:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton){
 
         // 현재 날짜/시간 가져오기
         val dateNow: LocalDateTime = LocalDateTime.now()
@@ -196,7 +194,6 @@ class DayFragment : Fragment() {
 
         var count : Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
-        day.text =  dateNow.format(textformatter)
 
         dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
@@ -344,40 +341,6 @@ class DayFragment : Fragment() {
         }
     }
 
-    //compare
-    private val comparelistData by lazy { mutableListOf(ChartData("어제", 10F), ChartData("오늘", 30f))}
-    private fun compareInitChart(chart: BarChart,list: MutableList<Subjects>) {
-        with(chart) {
-            description.isEnabled = false
-            legend.isEnabled = false
-            isDoubleTapToZoomEnabled = false
-
-            setPinchZoom(false)
-            setDrawBarShadow(false)
-            setDrawValueAboveBar(false)
-            //둥근 모서리 색상
-            val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
-                setRadius(10)
-            }
-            renderer = barChartRender
-        }
-        // 현재 날짜/시간 가져오기
-        val today: LocalDate = LocalDate.now()
-        val t : Int
-        val yesterday : LocalDate = today.minusDays(1)
-        Log.d("listforEachIndexed", today.toString())
-
-        list.forEachIndexed{ index, subject ->
-            Log.d("listforEachIndexed", list[index].studytime.toString())
-            Log.d("listforEachIndexed", subject.studytime.toString())
-            Log.d("listforEachIndexed", subject.timestamp.toString())
-
-        }
-
-
-//        comareSetData(comparelistData)
-    }
-
 //    private fun compareSetData(barData: List<ChartData>) {
 //        val values = mutableListOf<BarEntry>()
 //        barData.forEachIndexed { index, chartData ->
@@ -490,15 +453,6 @@ class DayFragment : Fragment() {
 //        }
 //    }
 
-    //유저 이름 가져오기
-    private fun getUserInfo() {
-        FirebaseFirestore.getInstance()
-            .collection("users")
-            .document(getUid()!!).get()
-            .addOnSuccessListener {
-                binding.studyTypeName.text = "${it["nickname"]}"
-            }
-    }
     //사진 권한 허용
     private fun requestPermission(): Boolean {
         var permissions = false
