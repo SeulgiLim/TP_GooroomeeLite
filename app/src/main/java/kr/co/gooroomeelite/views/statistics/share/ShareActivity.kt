@@ -76,10 +76,10 @@ class ShareActivity : AppCompatActivity() {
         binding = ActivityShareBinding.inflate(layoutInflater)
         root = binding.root
         setContentView(binding.root)
-        initToolBar()
+//        initToolBar()
 
         binding.showImage.setOnClickListener{ openGallery() }
-        binding.converterCamera.setOnClickListener{ swicthCamera() }
+//        binding.converterCamera.setOnClickListener{ swicthCamera() }
         startCamera(binding.viewFinder)
     }
 
@@ -93,12 +93,12 @@ class ShareActivity : AppCompatActivity() {
 //        startCamera(binding.viewFinder)
         bindCameraUseCase()
     }
-
-    private fun initToolBar() {
-        val toolbar = binding.pictureToolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)//뒤로 버튼
-    }
+//      툴바 뒤로가기
+//    private fun initToolBar() {
+//        val toolbar = binding.pictureToolbar
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)//뒤로 버튼
+//    }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        menuInflater.inflate(R.menu.,menu)

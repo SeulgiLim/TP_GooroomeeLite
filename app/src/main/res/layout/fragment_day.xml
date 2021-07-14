@@ -138,8 +138,6 @@
                 android:layout_margin="20dp"
                 tools:ignore="MissingClass" />
 
-
-
 <!--            <Button-->
 <!--                android:id="@+id/share_button"-->
 <!--                android:layout_width="match_parent"-->
@@ -464,7 +462,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주간 과목 공부 시간"
+                android:text="일간 과목 공부 시간"
                 android:layout_marginTop="80dp"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
@@ -490,6 +488,77 @@
                 android:clipToPadding="false"
                 android:paddingBottom="12dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="목표 공부 시간 달성률"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="16dp"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/background_achievement_rate_sheeet"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="월" />
+
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="화" />
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="수" />
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="목" />
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="금" />
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:text="토" />
+                    <TextView
+                        android:layout_width="10dp"
+                        android:layout_height="14dp"
+                        android:layout_weight="1"
+                        android:textColor="#FFFF8D8D"
+                        android:text="일" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>

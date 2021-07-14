@@ -44,6 +44,7 @@ import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.home.EditSubjectsActivity
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DecimalFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -58,8 +59,6 @@ class DayFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
     private val dailySubjectAdapter: DailySubjectAdapter  by lazy { DailySubjectAdapter(emptyList())}
     //db값 저장
-    private var subjectsList : MutableList<ReadSubejct> = mutableListOf()
-
     private lateinit var subjects: Subjects
     private var list: MutableList<Subjects> = mutableListOf()
 
@@ -79,6 +78,7 @@ class DayFragment : Fragment() {
             )
     }
 
+
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.black)
@@ -97,20 +97,15 @@ class DayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val view = inflater.inflate(R.layout.fragment_day, container, false)
         binding = FragmentDayBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_day,container,false)
         binding.day = this
-//        val shareButton: Button = view.findViewById(R.id.share_button)
         binding.shareButton.setOnClickListener {
             requestPermission()
         }
-//        ChartData(sixDaysAgo.format(formatter).toString(), oneWeekRecord[0]),
-//        val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E")
-//        val formatterString: String = dateNow.format(formatter)
-        //바 차트
-//        chart = view.findViewById(R.id.day_bar_chart)
+
         binding.dayBarChart.setNoDataText("")
+        //일간 차트
         initChart(binding.dayBarChart)
 
         FirebaseFirestore.getInstance()
@@ -124,22 +119,15 @@ class DayFragment : Fragment() {
 //                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
 //                        subjectsList.add(subjectValue)
                         subjects = it.toObject(Subjects::class.java)!!
-//                        Log.d("aqaqStudytime", subjects.studytime.toString())
-//                        Log.d("aqaqName", subjects.name.toString())
-//                        Log.d("aqaqColor", subjects.color.toString())
                         list.add(subjects)
-                        weeklySubjectStudytimeChart(binding.weeklyPieChart,list)
+                        weeklySubjectPieChart(binding.weeklyPieChart,list)
                         Log.d("aqaqList", list.size.toString())
+                        //일간 공부 시간
+                        compareInitChart(binding.compareDayBarChart,list)
                     }
                 }
             }
-//        Log.d("aqaqAllList", list.size.toString())
 
-
-//        var calendarDay : TextView = view.findViewById(R.id.calendar)
-//        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
-//        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
-//        moveCalendarByDay(calendarDay,calRightBtn,calLeftBtn,binding.typeDay)
         moveCalendarByDay(binding.calendar,binding.calRightBtn,binding.calLeftBtn,binding.typeDay)
        getUserInfo()
 
@@ -161,34 +149,11 @@ class DayFragment : Fragment() {
         }
     }
 
-    private fun weeklySubjectStudytimeChart(pieChart : PieChart,list: MutableList<Subjects>){
+    private fun weeklySubjectPieChart(pieChart : PieChart,list: MutableList<Subjects>){
         pieChart.setUsePercentValues(true)
     Log.d("qwqwqwqwqw",subjects.studytime.toString())
     Log.d("qwqwqwqwqw",subjects.color.toString())
         Log.d("aqaqAllList", list.size.toString())
-//        var subjectValueList = mutableListOf<Subjects>(subjects)
-//        val subjectValueIterator = subjectValueList.iterator()
-//        val studytimeList = mutableListOf<Int>(subjects.studytime)
-//        val studytimeListIterator = studytimeList.iterator()
-//        while(studytimeListIterator.hasNext()){
-//            entries.add(PieEntry(studytimeListIterator.next().toFloat(),""))
-//        }
-//        while(subjectValueIterator.hasNext()){
-//            Log.d("iterator",subjectValueIterator.next().toString())
-//            Log.d("qwqwqwqwqwiterator",subjects.studytime.toString())
-//            Log.d("qwqwqwqwqwiterator",subjects.color.toString())
-//        }
-//
-//        val values = mutableListOf<PieEntry>()
-//        val colorItems = mutableListOf<Int>()
-//        var subjectValueLists = mutableListOf(subjects)
-//        Log.d("forEachIndexed",subjectValueLists.size.toString())
-//        subjectValueLists.forEachIndexed { index, subjects ->
-//            Log.d("forEachIndexed",subjects.studytime.toString())
-//            Log.d("forEachIndexed",subjects.color.toString())
-//            values.add(PieEntry(index.toFloat(), subjects.studytime))
-//            colorItems.add(index,Color.parseColor(subjects.color))
-//        }
 
         val values = mutableListOf<PieEntry>()
         val colorItems = mutableListOf<Int>()
@@ -197,17 +162,6 @@ class DayFragment : Fragment() {
             colorItems.add(index,Color.parseColor(list[index].color))
         }
 
-//% : 퍼센트 수치 색상과 사이즈 지정
-//        val entries = ArrayList<PieEntry>()
-//        entries.add(PieEntry(45f,""))
-//        entries.add(PieEntry(30f,""))
-//        entries.add(PieEntry(10f,""))
-//
-//        var colorItems = ArrayList<Int>() //색
-//        colorItems.add(Color.parseColor("#D8EBD8"))
-//        colorItems.add(Color.parseColor("#F2A6A0"))
-//        colorItems.add(Color.parseColor("#C8DCEB"))
-//        val pieDataSet = PieDataSet(entries,"")
         val pieDataSet = PieDataSet(values,"")
         pieDataSet.colors = colorItems
         pieDataSet.apply {
@@ -233,7 +187,6 @@ class DayFragment : Fragment() {
         }
 
     }
-//
 
     private fun moveCalendarByDay(calendarDay:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,day:TextView){
 
@@ -257,29 +210,6 @@ class DayFragment : Fragment() {
             val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text =  minusDay.format(textformatter).toString()
         }
-    }
-
-    //사진 권한 허용
-    private fun requestPermission(): Boolean {
-        var permissions = false
-        TedPermission.with(context)
-            .setPermissionListener(object : PermissionListener {
-                override fun onPermissionGranted() {
-                    permissions = true      //p0 = response(응답)
-                    val shareIntent = Intent(context, ShareActivity::class.java)
-                    startActivity(shareIntent)
-//                    finish()
-                }
-
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    permissions = false
-                }
-
-            })
-            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
-            .setPermissions(Manifest.permission.CAMERA)
-            .check()
-        return permissions
     }
 
     private fun initChart(chart: BarChart) {
@@ -414,15 +344,182 @@ class DayFragment : Fragment() {
         }
     }
 
+    //compare
+    private val comparelistData by lazy { mutableListOf(ChartData("어제", 10F), ChartData("오늘", 30f))}
+    private fun compareInitChart(chart: BarChart,list: MutableList<Subjects>) {
+        with(chart) {
+            description.isEnabled = false
+            legend.isEnabled = false
+            isDoubleTapToZoomEnabled = false
+
+            setPinchZoom(false)
+            setDrawBarShadow(false)
+            setDrawValueAboveBar(false)
+            //둥근 모서리 색상
+            val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
+                setRadius(10)
+            }
+            renderer = barChartRender
+        }
+        // 현재 날짜/시간 가져오기
+        val today: LocalDate = LocalDate.now()
+        val t : Int
+        val yesterday : LocalDate = today.minusDays(1)
+        Log.d("listforEachIndexed", today.toString())
+
+        list.forEachIndexed{ index, subject ->
+            Log.d("listforEachIndexed", list[index].studytime.toString())
+            Log.d("listforEachIndexed", subject.studytime.toString())
+            Log.d("listforEachIndexed", subject.timestamp.toString())
+
+        }
+
+
+//        comareSetData(comparelistData)
+    }
+
+//    private fun compareSetData(barData: List<ChartData>) {
+//        val values = mutableListOf<BarEntry>()
+//        barData.forEachIndexed { index, chartData ->
+//            //첫번째 인자 x , 두번째 인자 y
+//            for(i in barData.value){
+//                values.add(BarEntry(index.toFloat(), i))
+//            }
+//        }
+//
+//        //막대 그래프 색상 추가
+//        val barDataSet = BarDataSet(values, "").apply {
+//            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
+//            setDrawValues(false)
+//
+//            val colors = ArrayList<Int>()
+//            colors.add(Color.argb(100,68,158,246))
+//            setColors(colors)
+//            highLightAlpha = 0
+//        }
+//
+//        //막대 그래프 너비 설정
+//        val dataSets = mutableListOf(barDataSet)
+//        val data = BarData(dataSets as List<IBarDataSet>?).apply {
+////            setValueTextSize(30F)
+////            barWidth = 0.5F
+//            barWidth = 0.5F
+//        }
+//
+//        //애니메이션 효과 0.1초
+//        with(binding.dayBarChart) {
+//            animateY(100)
+//            xAxis.apply {
+//                position = XAxis.XAxisPosition.BOTTOM
+//                setDrawGridLines(false)
+//                textColor = whiteColor
+//                //월 ~ 일
+//                valueFormatter = object : ValueFormatter() {
+//                    override fun getFormattedValue(value: Float): String {
+//                        return barData[value.toInt()].date
+//                    }
+//                }
+//            }
+//            //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
+//            axisRight.apply {
+//                textColor = whiteColor
+//                setDrawAxisLine(false) //격자
+//                gridColor = transparentBlackColor
+//                gridLineWidth = 0.5F
+//                enableGridDashedLine(5f,5f,5f)
+//
+//                var count = 0
+//                //차트데이터 값에서 가장 큰 값
+//                barData.forEachIndexed { index, chartData ->
+//                    for (i in chartData.value) {
+//                        var maxValue = i
+//                        Log.d("aaa", "$maxValue")
+//                        barData.forEachIndexed { index, chartData ->
+//                            while (i > axisMaximum) {
+//                                count++
+//                                if (i > axisMaximum) {
+//                                    axisMaximum = maxValue
+//                                } else {
+//                                    axisMaximum = 60F
+//                                }
+//                            }
+//                        }
+//                    }
+//                    axisMinimum = 0F
+//                    granularity = 20F
+//
+//                    //y축 제목 커스텀
+//                    valueFormatter = object : ValueFormatter() {
+//                        private val mFormat: DecimalFormat = DecimalFormat("###")
+//                        override fun getFormattedValue(value: Float): String {
+//                            return mFormat.format(value) + "분"
+//                        }
+//                    }
+//                }
+//            }
+//
+//            //차트 오른쪽 축, Y방향 false처리
+//            axisLeft.apply {
+//                isEnabled = false
+//                gridColor = transparentBlackColor
+//                var count = 0
+//                //차트데이터 값에서 가장 큰 값
+////                var chartDataMax = listData.maxBy { it -> it.value}
+//                barData.forEachIndexed { index, chartData ->
+//                    for (i in chartData.value) {
+////                        var chartDataMax = listData.maxBy { it -> it. }
+//                        var maxValue = i
+//                        Log.d("aaa", "$maxValue")
+//                        while (i > axisMaximum) {
+//                            count++
+//                            if (i > axisMaximum) {
+//                                axisMaximum = maxValue
+//                            } else {
+//                                axisMaximum = 60F
+//                            }
+//                        }
+//                    }
+//                }
+//                axisMinimum = 0F
+//                granularity = 20F
+//            }
+//
+//            notifyDataSetChanged()
+//            this.data = data
+//            invalidate()
+//        }
+//    }
+
+    //유저 이름 가져오기
     private fun getUserInfo() {
         FirebaseFirestore.getInstance()
             .collection("users")
             .document(getUid()!!).get()
             .addOnSuccessListener {
                 binding.studyTypeName.text = "${it["nickname"]}"
-//                binding.nickname.text = it["nickname"]
             }
+    }
+    //사진 권한 허용
+    private fun requestPermission(): Boolean {
+        var permissions = false
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    permissions = true      //p0 = response(응답)
+                    val shareIntent = Intent(context, ShareActivity::class.java)
+                    startActivity(shareIntent)
+//                    finish()
+                }
 
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    permissions = false
+                }
+
+            })
+            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
+            .setPermissions(Manifest.permission.CAMERA)
+            .check()
+        return permissions
     }
 
 
