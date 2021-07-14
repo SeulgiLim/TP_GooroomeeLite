@@ -22,7 +22,7 @@
         app:itemRippleColor="@null"
         android:background="#fff"
         app:itemBackground="@color/cardview_light_background"
-        app:itemIconTint="@drawable/color_bottom_icon"
+        app:itemIconTint="@drawable/menu_selector_color"
         app:itemTextColor="@drawable/color_bottom_icon"
         app:menu="@menu/bottom_navigation_menu"
         app:layout_constraintStart_toStartOf="parent"

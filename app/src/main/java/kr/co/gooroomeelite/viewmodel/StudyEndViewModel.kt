@@ -1,10 +1,14 @@
 package kr.co.gooroomeelite.viewmodel
 
+import android.content.ContentValues.TAG
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 
 /**
  * @author Gnoss
@@ -13,29 +17,29 @@ import com.google.firebase.firestore.FirebaseFirestore
  * @desc
  */
 class StudyEndViewModel : ViewModel() {
+    var firestore : FirebaseFirestore? = null
     val db: FirebaseFirestore
-    // 뮤터블 라이브 데이터 - 변경 가능한거
-    // 라이브 데이터 - 읽기 전용
 
-
-    companion object {
-        const val TAG:String ="로그"
-    }
     private val _today = MutableLiveData<String>()
-    val today : LiveData<String>
-    get() = _today
+    private val myStudyGoal = MutableLiveData<Int>()
+    private val todayStudyTime = MutableLiveData<Int>()
 
     //초기값 설정
     init {
         db = FirebaseFirestore.getInstance()
         Log.d(TAG,"StudyEndViewBodel - 생성자 호출")
         _today.value = ""
+        myStudyGoal.value = 0
+        todayStudyTime.value = 0
+        setting()
     }
 
-    fun changePercent(){
-
+    fun setting(){
+        val firestore = FirebaseFirestore.getInstance()
+        firestore.collection("users").document(getUid()!!).get().addOnSuccessListener {
+            Log.e("asdfasdf","$it")
+            Log.e("asdfasdf","${it.toObject(ContentDTO::class.java)}")
+            Log.e("asdfasdf","${it.toObject(ContentDTO::class.java)?.todaystudytime}")
+        }
     }
-
-
-
 }

@@ -1,11 +1,13 @@
 package kr.co.gooroomeelite.views.mypage
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.MusicAdapter
 import kr.co.gooroomeelite.databinding.ActivityMusicBinding
+import kr.co.gooroomeelite.views.home.StudyEndActivity
 
 class MusicActivity : AppCompatActivity() {
     lateinit var binding : ActivityMusicBinding
@@ -18,6 +20,9 @@ class MusicActivity : AppCompatActivity() {
                 layoutManager = LinearLayoutManager(this@MusicActivity,LinearLayoutManager.VERTICAL,false)
                 adapter = MusicAdapter(this@MusicActivity,musicData())
             }
+        }
+        binding.textView6.setOnClickListener{
+            startActivity(Intent(this,StudyEndActivity::class.java))
         }
     }
     private fun musicData(): MutableList<MusicItem> {

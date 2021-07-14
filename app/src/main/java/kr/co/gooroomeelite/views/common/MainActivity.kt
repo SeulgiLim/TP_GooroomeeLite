@@ -4,15 +4,11 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.ActivityMainBinding
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.mypage.MypageFragment
