@@ -157,7 +157,6 @@ class StopwatchFragment : Fragment() {
             val intent = Intent(requireContext(), StudyEndActivity::class.java)
             intent.putExtra(STUDY_TIME, curTime)
             intent.putExtra("subject", subject)
-            intent.putExtra("documentId", documentId)
             startActivity(intent)
 
             resetStopwatch()

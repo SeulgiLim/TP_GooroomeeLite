@@ -14,7 +14,6 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
         android:background="@color/divide2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +30,7 @@
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_btn_back" />
+        app:srcCompat="@drawable/ic_arrowleft" />
 
 
     <!-- 화면명 -->
@@ -50,7 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 타이머 모드 문구구-->    <TextView
+    <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +57,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="16dp"
         android:text="타이머 모드"
+        android:textSize="16sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#999999"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,35 +65,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
+        android:paddingBottom="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
 
         <RadioButton
             android:id="@+id/btn_nomelmode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="   일반 모드" />
+            android:text="일반 모드"
+            android:paddingStart="12px"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/view10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <RadioButton
             android:id="@+id/btn_pomodoromode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="   뽀모도로 모드" />
+            android:text="뽀모도로 모드"
+            android:paddingStart="3dp"
+            android:layout_marginTop="24dp"
+            android:textSize="14sp" />
+
     </RadioGroup>
 
 
@@ -111,7 +123,7 @@
         android:layout_marginTop="32dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9">
@@ -124,15 +136,16 @@
             android:text="뽀모도로 설정"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#999999"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_focus"
-            android:layout_width="100dp"
-            android:layout_height="19dp"
-            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
             android:text="집중 시간"
             android:textColor="#333333"
             android:textSize="14sp"
@@ -141,8 +154,8 @@
 
         <TextView
             android:id="@+id/text_focustime"
-            android:layout_width="35dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="5분"
             android:textColor="#9E9E9E"
@@ -153,31 +166,41 @@
 
         <ImageView
             android:id="@+id/btn_focustime"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="2dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_focustime" />
 
 
         <!-- 뽀모도로_휴식 시간-->
-        <TextView
-            android:id="@+id/text_rest"
-            android:layout_width="100dp"
-            android:layout_height="19dp"
-            android:layout_marginTop="40dp"
-            android:text="휴식 시간"
-            android:textColor="#333333"
-            android:textSize="14sp"
+        <View
+            android:id="@+id/view11"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_focus" />
 
         <TextView
+            android:id="@+id/text_rest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="휴식 시간"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view11" />
+
+        <TextView
             android:id="@+id/text_resttime"
-            android:layout_width="35dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="16dp"
             android:text="5분"
@@ -189,30 +212,41 @@
 
         <ImageView
             android:id="@+id/btn_resettime"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="2dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_resttime" />
 
         <!-- 뽀모도로_장기 휴식 시간-->
 
+        <View
+            android:id="@+id/view12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_resttime" />
+
         <TextView
             android:id="@+id/text_longreset"
-            android:layout_width="100dp"
-            android:layout_height="19dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="장기 휴식 시간"
             android:textColor="#333333"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_rest" />
+            app:layout_constraintTop_toBottomOf="@+id/view12" />
 
         <TextView
             android:id="@+id/text_longresettime"
-            android:layout_width="35dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="20분"
             android:textColor="#9E9E9E"
@@ -222,30 +256,41 @@
 
         <ImageView
             android:id="@+id/btn_longresettime"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="2dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_longresettime" />
+
+        <View
+            android:id="@+id/view13"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_longresettime" />
 
 
         <!-- 뽀모도로_반복 세트 -->
         <TextView
             android:id="@+id/text_set"
-            android:layout_width="100dp"
-            android:layout_height="19dp"
-            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="세트"
             android:textColor="#333333"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_longreset" />
+            app:layout_constraintTop_toBottomOf="@+id/view13" />
 
         <TextView
             android:id="@+id/text_settime"
-            android:layout_width="35dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="3회"
             android:textColor="#9E9E9E"
@@ -255,12 +300,24 @@
 
         <ImageView
             android:id="@+id/btn_settime"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="2dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_settime" />
+
+
+        <View
+            android:id="@+id/view14"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_settime" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

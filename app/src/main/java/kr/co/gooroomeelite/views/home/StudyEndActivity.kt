@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kr.co.gooroomeelite.databinding.ActivityStudyEndBinding
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
+import javax.security.auth.Subject
 
 
 class StudyEndActivity : AppCompatActivity() {
@@ -17,44 +18,34 @@ class StudyEndActivity : AppCompatActivity() {
     var bundle: Bundle? = null
     var subjectname: String? = null
     var studytime: Int? = null
+    private lateinit var subject : kr.co.gooroomeelite.entity.Subject
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudyEndBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firestore = FirebaseFirestore.getInstance()
-
-
         // 측정된 공부시간 데이터 추출
         val nowstudytime = intent.getLongExtra(STUDY_TIME, 0L)
         // 가져온 데이터 (공부진행시간 제대로 가져왔는지 보여주기 Test)
         textView12.append("공부진행시간 : ${nowstudytime}\n")
-        textView13.append("과목명 : ${nowstudytime}\n")
-        textView14.append("과목ID : ${nowstudytime}\n")
 
 
 //        bundle = intent.getBundleExtra("bundle")
-//        subjectname = bundle?.getString("subjectname")
 //        studytime = bundle?.getInt("studytime")
 //        val studytime = 20
 //        val subjectname = "과학"
 
         setting()
 
-
-
     }
+
 
 
     private fun setting() {
         firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener {
             val subject = it.toObject(ContentDTO::class.java)
             val studytime = 20
-            val subjectname = "과학"
-            Log.d("asdfasdf", "${subject}")
-            Log.d("asdfasdf", "${subject?.todaystudytime}")
-            Log.d("asdfasdf", "${subject?.studyTime}")
-            Log.d("asdfasdf", "${studytime}")
-            Log.d("asdfasdf", "${subjectname}")
+            val subjectname = intent.getSerializableExtra("subject") as kr.co.gooroomeelite.entity.Subject
             subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
             val today = subject?.todaystudytime!!
             val goal = subject?.studyTime!!
@@ -64,13 +55,11 @@ class StudyEndActivity : AppCompatActivity() {
             )
             binding.tvStudyendStudytotal.text = subject.todaystudytime.toString()
             binding.tvStudygoal.text = subject.studyTime.toString()
-
+            binding.tvStudyendSubject.text = subjectname.name
             val percent: Int = (((today * 100 / (goal)) / 100.toFloat()) * 100).toInt()
-
-            Log.d("asdfasdf", "${percent}")
             if (percent >= 100) {
                 binding.tvStudyendSecond.text = "100%"
-                binding.seekBar.progress = percent.toInt()
+                binding.seekBar.progress = percent
             } else {
                 binding.tvStudyendSecond.text = "${percent}%"
                 binding.tvStudyendStudytotal.text =
@@ -79,7 +68,7 @@ class StudyEndActivity : AppCompatActivity() {
                             60
                         )
                     ) + "분"
-                binding.seekBar.progress = percent.toInt()
+                binding.seekBar.progress = percent
             }
         }
     }
