@@ -34,20 +34,27 @@ class TimersettingActivity : AppCompatActivity() {
 
         // 일반모드 설정
         btn_nomelmode.setOnClickListener {
-            btn_nomelmode.isChecked = true // 기본 선택 항목 설정
-
+            visibility()
         }
 
 
         // 뽀모도르 설정
         btn_pomodoromode.setOnClickListener {
-
-           /* // 뽀모도르 라디오 버튼 선택시 시간설정 활성화
+            visibility()
+            /* // 뽀모도르 라디오 버튼 선택시 시간설정 활성화
             isLoading.observe(this) {
                 binding.RadioButton.visibility = if (it) View.VISIBLE else View.GONE
             }*/
         }
 
+    }
+
+    fun visibility() {
+        if (btn_pomodoromode.isChecked) {
+            Pomolayout.visibility = View.VISIBLE
+        } else {
+            Pomolayout.visibility = View.GONE
         }
     }
+}
 

@@ -8,6 +8,20 @@
     tools:context=".views.home.TimersettingActivity">
 
     <!-- 뒤로가기 -->
+
+    <View
+        android:id="@+id/view9"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/divide2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
     <ImageView
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
@@ -84,43 +98,46 @@
 
 
     <!-- 뽀모도로 설정 문구-->
-    <TextView
-        android:id="@+id/text_pomodorosetting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="272dp"
-        android:layout_marginEnd="16dp"
-        android:text="뽀모도로 설정"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#999999"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
 
 
     <!-- 뽀모도로 설정 항목 -->
     <!-- android:visibility="gone"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/Pomolayout"
         android:layout_width="match_parent"
-        android:layout_height="810dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/text_pomodorosetting"
-        >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view9">
 
         <!-- 뽀모도로_집중 시간 -->
+        <TextView
+            android:id="@+id/text_pomodorosetting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="뽀모도로 설정"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#999999"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/text_focus"
             android:layout_width="100dp"
             android:layout_height="19dp"
+            android:layout_marginTop="30dp"
             android:text="집중 시간"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_pomodorosetting" />
 
         <TextView
             android:id="@+id/text_focustime"
@@ -128,10 +145,10 @@
             android:layout_height="19dp"
             android:layout_marginEnd="16dp"
             android:text="5분"
-            android:textSize="14sp"
             android:textColor="#9E9E9E"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/btn_resettime"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_focus" />
 
 
         <ImageView
@@ -142,7 +159,7 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_focustime" />
 
 
         <!-- 뽀모도로_휴식 시간-->
@@ -150,35 +167,34 @@
             android:id="@+id/text_rest"
             android:layout_width="100dp"
             android:layout_height="19dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="40dp"
             android:text="휴식 시간"
             android:textColor="#333333"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/text_focus" />
 
         <TextView
             android:id="@+id/text_resttime"
             android:layout_width="35dp"
             android:layout_height="19dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="16dp"
             android:text="5분"
-            android:textSize="14sp"
             android:textColor="#9E9E9E"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/btn_resettime"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_rest" />
 
 
         <ImageView
             android:id="@+id/btn_resettime"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_resttime" />
 
         <!-- 뽀모도로_장기 휴식 시간-->
 
@@ -186,34 +202,32 @@
             android:id="@+id/text_longreset"
             android:layout_width="100dp"
             android:layout_height="19dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="40dp"
             android:text="장기 휴식 시간"
             android:textColor="#333333"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/text_rest" />
 
         <TextView
             android:id="@+id/text_longresettime"
             android:layout_width="35dp"
             android:layout_height="19dp"
-            android:layout_marginTop="120dp"
             android:layout_marginEnd="16dp"
             android:text="20분"
-            android:textSize="14sp"
             android:textColor="#9E9E9E"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/btn_longresettime"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_longreset" />
 
         <ImageView
             android:id="@+id/btn_longresettime"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:layout_marginTop="124dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_longresettime" />
 
 
         <!-- 뽀모도로_반복 세트 -->
@@ -221,34 +235,32 @@
             android:id="@+id/text_set"
             android:layout_width="100dp"
             android:layout_height="19dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="40dp"
             android:text="세트"
             android:textColor="#333333"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/text_longreset" />
 
         <TextView
             android:id="@+id/text_settime"
             android:layout_width="35dp"
             android:layout_height="19dp"
-            android:layout_marginTop="180dp"
             android:layout_marginEnd="16dp"
             android:text="3회"
-            android:textSize="14sp"
             android:textColor="#9E9E9E"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/btn_settime"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_set" />
 
         <ImageView
             android:id="@+id/btn_settime"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:layout_marginTop="184dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/text_settime" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
