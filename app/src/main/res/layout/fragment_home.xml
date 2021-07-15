@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name = "home"
+            type ="kr.co.gooroomeelite.views.home.HomeFragment"/>
+
+    </data>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -10,11 +21,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="460dp"
+        android:layout_height="420dp"
         android:background="@color/white"
+
+
         android:fitsSystemWindows="true">
 
-<!--        app:contentScrim="?attr/colorPrimary"-->
+        <!--        app:contentScrim="?attr/colorPrimary"-->
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -37,9 +50,9 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_marginTop="22dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -59,14 +72,15 @@
                 </LinearLayout>
 
                 <TextView
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:text="오늘 총 공부시간" />
+                    android:background="@null"
+                    android:text="오늘 공부시간"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -74,65 +88,65 @@
 
                     <TextView
                         android:id="@+id/hour"
-                        android:textSize="44sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="2dp"
+                        android:text="00"
+                        android:textColor="@color/white"
+                        android:textSize="44sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/hourText"
                         app:layout_constraintHorizontal_chainStyle="packed"
-                        android:layout_marginEnd="2dp"
-                        android:text="00" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/hourText"
-                        android:textSize="17sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/hour"
-                        app:layout_constraintEnd_toStartOf="@id/minute"
-                        app:layout_constraintBaseline_toBaselineOf="@id/hour"
                         android:layout_marginEnd="12dp"
-                        android:text="시간" />
+                        android:text="시간"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        app:layout_constraintBaseline_toBaselineOf="@id/hour"
+                        app:layout_constraintEnd_toStartOf="@id/minute"
+                        app:layout_constraintStart_toEndOf="@id/hour" />
 
                     <TextView
                         android:id="@+id/minute"
-                        android:textSize="44sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/hourText"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginEnd="2dp"
+                        android:text="30"
+                        android:textColor="@color/white"
+                        android:textSize="44sp"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/minuteText"
-                        android:layout_marginEnd="2dp"
-                        android:text="30" />
+                        app:layout_constraintStart_toEndOf="@id/hourText"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/minuteText"
-                        android:textSize="17sp"
-                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/minute"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="분"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
                         app:layout_constraintBaseline_toBaselineOf="@id/minute"
-                        android:text="분" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/minute" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginBottom="8dp"
                     app:cardCornerRadius="8dp"
 
@@ -140,34 +154,41 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="22dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="22dp"
-                        android:layout_marginBottom="20dp">
+                        android:layout_height="wrap_content"
+                        android:paddingStart="22dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="20dp">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/set_studytime_btn2"
+                            android:layout_width="90dp"
+                            android:layout_height="45dp"
+                            android:background="@null"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
+                            android:id="@+id/linearLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginEnd="14dp"
                             android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="· 일일 목표"
-                                android:textStyle="bold"
-                                android:textColor="#444444"
-                                android:textSize="13sp" />
+                                android:layout_width="60dp"
+                                android:layout_height="25dp"
+                                android:background="@drawable/btn_purpose_of_today"
+                                android:gravity="center"
+                                android:text="일일 목표"
+                                android:textColor="#118AFF"
+                                android:textSize="11sp"
+                                android:textStyle="bold" />
 
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="15dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="8dp"
-                                android:background="#E5E5E5" />
 
                             <TextView
                                 android:id="@+id/studytime"
@@ -188,21 +209,20 @@
                                 android:id="@+id/set_studytime_btn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:orientation="vertical"
                                 android:layout_marginStart="12dp"
-                                >
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:textSize="12sp"
-                                    android:textColor="#7E7E7E"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="목표 변경" />
+                                    android:text="목표 변경"
+                                    android:textColor="#7E7E7E"
+                                    android:textSize="12sp" />
 
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
-                                    android:background="#7E7E7E"/>
+                                    android:background="#7E7E7E" />
 
                             </LinearLayout>
 
@@ -216,66 +236,65 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent">
 
-                            <ImageView
-                                android:id="@+id/ing"
-                                android:layout_width="46dp"
-                                android:layout_height="46dp"
-                                android:src="@drawable/ic_ing"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent" />
+                            <!--                            <ImageView-->
+                            <!--                                android:id="@+id/ing"-->
+                            <!--                                android:layout_width="46dp"-->
+                            <!--                                android:layout_height="46dp"-->
+                            <!--                                android:src="@drawable/ic_ing"-->
+                            <!--                                app:layout_constraintStart_toStartOf="parent"-->
+                            <!--                                app:layout_constraintEnd_toEndOf="parent"-->
+                            <!--                                app:layout_constraintTop_toTopOf="parent"-->
+                            <!--                                app:layout_constraintBottom_toBottomOf="parent" />-->
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <ProgressBar
                             android:id="@+id/seekBar"
                             style="?android:attr/progressBarStyleHorizontal"
-                            android:maxWidth="280dp"
                             android:layout_width="280dp"
                             android:layout_height="12dp"
-                            android:max="10"
-                            android:progress="2"
-                            android:progressDrawable="@drawable/background_seekbar"
+                            android:layout_marginTop="10dp"
                             android:background="@drawable/img_progressbar"
-                            app:layout_constraintBottom_toTopOf="@id/layout_percent"
+                            android:max="100"
+                            android:maxWidth="280dp"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/background_seekbar"
+                            android:thumb="@null"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:layout_marginBottom="6dp"
-                            android:thumb="@null"
-                            />
+                            app:layout_constraintTop_toBottomOf="@+id/set_studytime_btn2" />
 
                         <LinearLayout
                             android:id="@+id/layout_percent"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/seekBar">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="12sp"
                                 android:text="0%"
-                                android:textColor="#9C9C9C" />
+                                android:textColor="#9C9C9C"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:textSize="12sp"
                                 android:text=" 50%"
-                                android:textColor="#9C9C9C" />
+                                android:textColor="#9C9C9C"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="100%"
-                                android:textSize="12sp"
-                                android:textColor="#9C9C9C" />
+                                android:textColor="#9C9C9C"
+                                android:textSize="12sp" />
 
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -332,76 +351,76 @@
     <!--    <include layout="@layout/fragment_home" />-->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/subject_example"
-                android:background="@drawable/ic_subject_dotted_line"
                 android:layout_width="match_parent"
                 android:layout_height="66dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp">
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/ic_subject_dotted_line">
 
-                    <ImageView
-                        android:id="@+id/img_example"
-                        android:layout_marginStart="22dp"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:background="@drawable/ic_rounded_gray_square"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/img_example"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="22dp"
+                    android:background="@drawable/ic_rounded_gray_square"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/subject_title"
-                        android:textColor="#444444"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:text="ex.한국사"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/img_example"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/subject_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="ex.한국사"
+                    android:textColor="#444444"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/img_example"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:textColor="#666666"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00분"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/img_start"
-                        android:layout_marginEnd="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="00분"
+                    android:textColor="#666666"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/img_start"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/img_start"
-                        android:layout_width="6dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/ic_study_go"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginEnd="18dp"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/img_start"
+                    android:layout_width="6dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="18dp"
+                    android:src="@drawable/ic_study_go"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:clipToPadding="false"
-            android:paddingBottom="12dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="12dp" />
 
         </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

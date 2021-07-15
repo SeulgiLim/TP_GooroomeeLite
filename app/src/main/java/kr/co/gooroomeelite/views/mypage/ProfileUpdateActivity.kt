@@ -11,17 +11,15 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
-import com.firebase.ui.auth.AuthUI
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -29,10 +27,7 @@ import com.google.firebase.storage.StorageReference
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityProfileUpdateBinding
 import kr.co.gooroomeelite.model.ContentDTO
-import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
-import kr.co.gooroomeelite.views.common.MainActivity
-import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
 class ProfileUpdateActivity : AppCompatActivity() {
@@ -40,18 +35,20 @@ class ProfileUpdateActivity : AppCompatActivity() {
     var storage: FirebaseStorage? = null
     var photoUri: Uri? = null
     var firestore: FirebaseFirestore? = null
-    var auth : FirebaseAuth?=null
-    var email : String?= null
-    var check : String?=null
+    var auth: FirebaseAuth? = null
+    var email: String? = null
+    var imm: InputMethodManager? = null
+    private val maxlength = 6
     private val isLoading = MutableLiveData<Boolean>()
 
     private var storageRef: StorageReference? = null
-    private lateinit var binding : ActivityProfileUpdateBinding
+    private lateinit var binding: ActivityProfileUpdateBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileUpdateBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         email = auth?.currentUser?.email
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
@@ -81,6 +78,31 @@ class ProfileUpdateActivity : AppCompatActivity() {
             binding.edittext.text.clear()
         }
 
+        binding.edittext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.edittext.apply {
+                    if (this.isFocusable && s.toString() != "") {
+                        val string: String = s.toString()
+                        val len = string.length
+                        if (len > maxlength) {
+                            this.setText(string.substring(0, maxlength))
+                            this.setSelection(maxlength)
+                        } else {
+                            binding.textCount.text = "$len / $maxlength"
+                        }
+                    } else {
+                        binding.textCount.text = "0 / $maxlength"
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
         binding.imageView2.setOnClickListener {
 
             val mAlbumView =
@@ -103,20 +125,10 @@ class ProfileUpdateActivity : AppCompatActivity() {
             defaultButton.setOnClickListener {
                 //기본값
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
-                check = "default"
-                contentUploadandDelete()
-                Log.e("TEST","2")
-                mAlertDialog.dismiss()
+                contentUploadDefault()
             }
         }
 
-
-
-//            //앨범 열기
-//            val photoPickerIntent = Intent(Intent.ACTION_PICK)
-//            photoPickerIntent.type = "image/*"
-//            startActivityForResult(photoPickerIntent, PICK_IMAGE_FROM_ALBUM)
-//        }
 
         //클릭시 업로드 메소드 수행
         binding.btnModifyOk.setOnClickListener {
@@ -128,6 +140,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
             binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
+
     private fun contentUploadandDelete() {
         val num: String = getUid()!!
         val filename = "profile$num.jpg"
@@ -141,9 +154,9 @@ class ProfileUpdateActivity : AppCompatActivity() {
                     contentDTO.profileImageUrl = uri.toString()
                     //닉네임
                     contentDTO.nickname = binding.edittext.text.toString()
-                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
+                    firestore?.collection("users")?.whereEqualTo("userId", email)?.get()
                         ?.addOnSuccessListener {
-                            var data = hashMapOf<String,Any>()
+                            var data = hashMapOf<String, Any>()
                             data["profileImageUrl"] = contentDTO.profileImageUrl!!
                             data["nickname"] = contentDTO.nickname!!
                             firestore?.collection("users")!!.document(getUid()!!).update(data)
@@ -154,51 +167,45 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 }
                 setResult(Activity.RESULT_OK)
             }
-        }
-
-
-
-        else {
-            if (check == "default"){
-                Log.e("TEST","3")
-                storageRef?.downloadUrl?.addOnSuccessListener { uri ->
-                    val contentDTO = ContentDTO()
-                    //닉네임
-                    contentDTO.nickname = binding.edittext.text.toString()
-                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()
-                        ?.addOnSuccessListener {
-                            var data = hashMapOf<String,Any>()
-                            data["profileImageUrl"] == null
-                            Log.e("TEST","4")
-                            data["nickname"] = contentDTO.nickname!!
-                            firestore?.collection("users")!!.document(getUid()!!).update(data)
-                        }
-
-                    isLoading.value = false
-                    Log.e("TEST","5")
-                    finish()
-                }
-                setResult(Activity.RESULT_OK)
-
-
-            }else{
-                storageRef!!.downloadUrl.addOnSuccessListener { uri ->
-                    val contentDTO = ContentDTO()
-                    contentDTO.nickname = binding.edittext.text.toString()
-                    firestore?.collection("users")?.whereEqualTo("userId",email)?.get()?.addOnSuccessListener {
+        } else {
+            storageRef!!.downloadUrl.addOnSuccessListener { uri ->
+                val contentDTO = ContentDTO()
+                contentDTO.nickname = binding.edittext.text.toString()
+                firestore?.collection("users")?.whereEqualTo("userId", email)?.get()
+                    ?.addOnSuccessListener {
                         val data = hashMapOf<String, Any>()
                         data["nickname"] = contentDTO.nickname!!
 
                         firestore?.collection("users")?.document(getUid()!!)?.update(data)
                     }
-                    isLoading.value = false
-                    finish()
-                }
-                setResult(Activity.RESULT_OK)
+                isLoading.value = false
+                finish()
             }
-
+            setResult(Activity.RESULT_OK)
         }
     }
+    private fun contentUploadDefault() {
+        val num: String = getUid()!!
+        val filename = "profile$num.jpg"
+        val storageRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
+
+            storageRef!!.downloadUrl.addOnSuccessListener { uri ->
+                storageRef.delete()
+                val contentDTO = ContentDTO()
+                contentDTO.profileImageUrl = null
+                firestore?.collection("users")?.whereEqualTo("userId", email)?.get()
+                    ?.addOnSuccessListener {
+                        val data = hashMapOf<String, Any?>()
+                        data["profileImageUrl"] = contentDTO.profileImageUrl
+
+                        firestore?.collection("users")?.document(getUid()!!)?.update(data)
+                    }
+                isLoading.value = false
+                finish()
+            }
+            setResult(Activity.RESULT_OK)
+        }
+
 
     //갤러리에서 꺼낸 이미지를 세팅해주기.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -216,7 +223,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
     }
 
     //이미지를 세팅하기.
-    private fun getImage(num:String) {
+    private fun getImage(num: String) {
         val num = getUid()!!
         val file: File? = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES + "/profile_img")
         if (file?.isDirectory == null) {
@@ -225,7 +232,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
             downloadImgNickname(num)
     }
 
-    private fun downloadImgNickname(num:String) {
+    private fun downloadImgNickname(num: String) {
         val num = getUid()!!
         val filename = "profile$num.jpg"
 
@@ -237,12 +244,11 @@ class ProfileUpdateActivity : AppCompatActivity() {
                     .child(filename).downloadUrl.addOnSuccessListener {
                         Glide.with(this).load(it).into(binding.imageView2)
                     }
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "다운로드 되었습니다.", Toast.LENGTH_LONG).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
-                    }
             }
     }
+
+    fun hideKeyboard(v: View) {
+        imm?.hideSoftInputFromWindow(v.windowToken, 0)
+    }
+
 }

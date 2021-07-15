@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.login.LoginEmailActivity">
+    tools:context=".views.login.LoginEmailActivity"
+    android:onClick="hideKeyboard">
 
     <ImageView
         android:id="@+id/ic_back"
@@ -63,6 +64,7 @@
         android:ems="10"
         android:hint="@string/newpassword_hint2"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"
         android:paddingStart="12dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black3"

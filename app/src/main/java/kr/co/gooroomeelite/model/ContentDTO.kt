@@ -11,5 +11,6 @@ data class ContentDTO(
     var nickname : String? = null,
     var userId : String? = null,
     var studyTime : Int = 0,
-    var google : Boolean = false
+    var google : Boolean = false,
+    var todaystudytime : Int? = 0
 )

@@ -9,15 +9,21 @@ package kr.co.gooroomeelite.views.mypage
 
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
+import android.content.pm.PackageManager
+import android.graphics.Outline
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -33,6 +39,7 @@ import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
+import kr.co.gooroomeelite.views.common.MainActivity
 import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
@@ -114,10 +121,11 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
         //구루미 플레이스토어 이동
 
+
+
         binding.btnGooroomee.setOnClickListener {
-            val intent = Intent(ACTION_VIEW)
-            intent.setData(Uri.parse("market://details?id=com.gooroomee.meet"))
-            startActivity(intent)
+
+            playgooroomee()
         }
 
 
@@ -125,7 +133,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
 
         //화면이동
-        binding.btnProfileAccount.setOnClickListener {
+        binding.btnProfileAccount2.setOnClickListener {
             var uid = FirebaseAuth.getInstance().currentUser?.uid
             val intent01 = Intent(owner,ProfileAccountActivity::class.java)
             intent01.putExtra("destinationUid",uid)
@@ -151,10 +159,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
         }
-        binding.toolbar2.setOnClickListener {
-            val intent06 = Intent(owner,TestActivity::class.java)
-            startActivity(intent06)
-        }
     }
 
     private fun getImageNickName(){
@@ -171,7 +175,12 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         storage = FirebaseStorage.getInstance()
         storageRef = storage!!.reference
         storageRef!!.child("profile_img/$filename").child(filename).downloadUrl.addOnSuccessListener{
-            Glide.with(owner).load(it).into(binding.imageView)
+            if (it!=null){
+                Glide.with(owner).load(it).into(binding.imageView)
+            }
+            else{
+                binding.imageView.setBackgroundResource(R.drawable.ic_gooroomee_logo)
+            }
         }
 
     }
@@ -184,6 +193,21 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
                 binding.emailaddress.text=email
                 binding.nickname.text=nickname
             }
+        }
+    }
+
+
+    private fun playgooroomee(){
+        val packageName = "com.nhn.android.search"
+        val pm = requireContext().packageManager
+        val launchintent = pm.getLaunchIntentForPackage(packageName)
+        if (launchintent == null){
+            val intent = Intent(ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=com.gooroomee.meet")
+            startActivity(intent)
+        }
+        else{
+            startActivity(launchintent)
         }
     }
 }

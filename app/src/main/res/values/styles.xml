@@ -3,10 +3,12 @@
 
     <style name="Theme.Gooroomeelite" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorAccent">@color/skyBlue</item>
         <item name="android:colorEdgeEffect">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/divide2</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -34,6 +36,10 @@
     <style name="EditTextSelectHandle">
         <item name="android:textSelectHandle" >@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
 </resources>

@@ -1,12 +1,13 @@
 package kr.co.gooroomeelite.views.common
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.login.LoginActivity
@@ -15,6 +16,7 @@ import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 
 class MainActivity : AppCompatActivity() {
     var mBackWait : Long = 0
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,16 +27,28 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(homeFragment)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-
-        bottomNavigationView.setOnNavigationItemSelectedListener{
-            when(it.itemId){
-                R.id.home -> replaceFragment(homeFragment)
-                R.id.statistics-> replaceFragment(statisticsFragment)
-                R.id.mypage-> replaceFragment(mypageFragment)
+//        bottomNavigationView.setOnNavigationItemSelectedListener{
+//            when(it.itemId){
+//                R.id.home -> replaceFragment(homeFragment)
+//                R.id.statistics-> replaceFragment(statisticsFragment)
+//                R.id.mypage-> replaceFragment(mypageFragment)
+//            }
+//            true
+//        }
+        fun setView() {
+            with(bottomNavigationView) {
+                selectedItemId = R.id.home
+                setOnNavigationItemSelectedListener {
+                    when (it.itemId) {
+                        R.id.home -> replaceFragment(homeFragment)
+                        R.id.statistics -> replaceFragment(statisticsFragment)
+                        R.id.mypage -> replaceFragment(mypageFragment)
+                    }
+                    true
+                }
             }
-            true
         }
+        setView()
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -55,4 +69,5 @@ class MainActivity : AppCompatActivity() {
         //액티비티 종료
         }
     }
+
 }

@@ -20,7 +20,7 @@
     <color name="white_87">#ddffffff</color>
     <color name="white_93">#edf8f8f8</color>
     <color name="Blue">#2B67DF</color>
-    <color name="skyBlue">#339BFF</color>
+    <color name="skyBlue">#51A9FE</color>
     <color name="yellow">#FBC02D</color>
     <color name="orange">#F95849</color>
     <color name="base">#EDEDED</color>
@@ -29,12 +29,17 @@
     <color name="title">#999999</color>
     <color name="title2">#333333</color>
     <color name="title3">#D8D8D8</color>
+    <color name="title4">#666666</color>
     <color name="green">#44C851</color>
+
+    <color name="musictext">#444444</color>
 
 
     <color name="button">#feeeeb</color>
     <color name="divide">#F5F5F5</color>
     <color name="divide2">#EEEEEE</color>
+    <color name="button10">#F7F7F7</color>
+    <color name="btntoday">#E5F2FF</color>
     <color name="transparent">#1A000000</color>
     <color name="transparentcolor">#FFFFFF</color>
     <color name="dot_edge">#707070</color>
@@ -47,5 +52,8 @@
     <color name="lightGredy">#ACA8A8</color>
     <color name="light_blue">#C2DCF6</color>
     <color name="groomColor">#449EF6</color>
+    <color name="bottomon">#0FA7FD</color>
+    <color name="bottomoff">#4D0000</color>
+    <color name="bottomtitle">#C4C4C4</color>
 
 </resources>

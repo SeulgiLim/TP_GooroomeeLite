@@ -5,21 +5,18 @@ package kr.co.gooroomeelite.views.login
  * @created 2021-06-21
  * @desc
  */
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginnicknameBinding
-import kr.co.gooroomeelite.model.ContentDTO
-import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 
 class LoginNicknameActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginnicknameBinding
@@ -29,6 +26,8 @@ class LoginNicknameActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
+    private val maxlength = 6
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginnicknameBinding.inflate(layoutInflater)
@@ -38,6 +37,7 @@ class LoginNicknameActivity : AppCompatActivity() {
         bundle = intent.getBundleExtra("bundle")
         email = bundle?.getString("email")
         password= bundle?.getString("password")
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         setContentView(binding.root)
 
 
@@ -60,12 +60,28 @@ class LoginNicknameActivity : AppCompatActivity() {
 
         changecolor()
 
+
+
         binding.editTextNickname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.editTextNickname.setBackgroundResource(R.drawable.btn_skyblue)
+                binding.editTextNickname.apply {
+                    if (this.isFocusable && s.toString() != "") {
+                        val string: String = s.toString()
+                        val len = string.length
+                        if (len > maxlength) {
+                            this.setText(string.substring(0, maxlength))
+                            this.setSelection(maxlength)
+                        } else {
+                            binding.textCount.text = "$len / $maxlength"
+                        }
+                    } else {
+                        binding.textCount.text = "0 / $maxlength"
+                    }
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -112,6 +128,11 @@ class LoginNicknameActivity : AppCompatActivity() {
                 true -> v.setBackgroundResource(R.drawable.btn_skyblue)
                 false -> v.setBackgroundResource(R.drawable.btn_white)
             }
+        }
+    }
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
         }
     }
 }

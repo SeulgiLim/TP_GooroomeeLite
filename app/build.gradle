@@ -37,10 +37,6 @@ android {
         dataBinding = true
         viewBinding = true
     }
-
-    viewBinding{
-        enabled = true
-    }
 }
 
 dependencies {
@@ -88,9 +84,6 @@ dependencies {
 
     //color picker
     implementation 'com.github.dhaval2404:colorpicker:2.0'
-    //애니메이션
-    implementation 'com.airbnb.android:lottie:3.7.0'
-
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
 

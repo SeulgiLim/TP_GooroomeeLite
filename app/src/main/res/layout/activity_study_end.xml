@@ -1,32 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name = "studyend"
+            type ="kr.co.gooroomeelite.views.home.StudyEndActivity"/>
+    </data>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".views.home.StudyEndActivity">
 
     <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_studyend_subject"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text=" "
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:layout_marginTop="28dp"
+        android:text="컴퓨터활용능력"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text=" "
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_studyend_subject">
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="44sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/hourText"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/hourText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="시간"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/hour"
+            app:layout_constraintEnd_toStartOf="@id/minute"
+            app:layout_constraintStart_toEndOf="@id/hour" />
+
+        <TextView
+            android:id="@+id/minuteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/minute"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/minute" />
+
+        <TextView
+            android:id="@+id/minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:text="30"
+            android:textColor="@color/black"
+            android:textSize="44sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/minuteText"
+            app:layout_constraintStart_toEndOf="@id/hourText"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView" />
-</LinearLayout>
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_studyend_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="목표 공부시간을"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_studyend_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="20%"
+                    android:textColor="@color/skyBlue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_studyend_first" />
+
+                <TextView
+                    android:id="@+id/tv_studyend_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="달성했어요!"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/tv_studyend_second"
+                    app:layout_constraintTop_toTopOf="@+id/tv_studyend_second" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view8"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="20dp"
+                android:background="#E5E5E5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+            <TextView
+                android:id="@+id/tv_studyend_fourth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="22dp"
+                android:text="오늘 공부시간"
+                android:textColor="@color/title4"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+            <TextView
+                android:id="@+id/tv_studyend_studytotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="8시간 32분"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv_studygoal"
+                app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+            <TextView
+                android:id="@+id/tv_studygoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="22dp"
+                android:text="/ 12시 20분"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_studyend_studytotal" />
+
+            <ProgressBar
+                android:id="@+id/seekBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/img_progressbar"
+                android:max="100"
+                android:maxWidth="280dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/background_seekbar"
+                android:thumb="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_studyend"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="28dp"
+        android:text="홈으로"
+        android:textColor="@color/white"
+
+        android:textSize="15sp"
+        android:background="@drawable/btn_login"
+        android:backgroundTint="@null"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="?android:attr/borderlessButtonStyle"/>
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="82dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_studyend" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
