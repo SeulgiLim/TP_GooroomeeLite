@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.home.StopwatchActivity">
+
+    <!-- 뒤로가기 -->
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="43.5dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_btn_back" />
+
+
+    <!-- 화면명(공부기록) -->
+    <TextView
+        android:id="@+id/mode_name"
+        android:layout_width="64dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="160dp"
+        android:gravity="center"
+        android:text="공부 기록"
+        android:textColor="@color/black"
+        android:textSize="12.5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 화이트 노이즈 실행버튼-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_noise"
+        android:layout_width="36dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="60dp"
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_noise"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 타이머 설정-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_timermode"
+        android:layout_width="36dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_btn_timermode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Gooroomeelite.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.Gooroomeelite.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_stopwatch" />
+
+    -->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

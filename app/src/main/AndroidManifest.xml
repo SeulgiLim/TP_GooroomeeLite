@@ -17,14 +17,26 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.home.TimersettingActivity"></activity>
+        <activity android:name=".views.home.AsmrActivity"></activity>
+        <activity android:name=".views.home.StudyEndActivity" />
+        <activity android:name=".views.home.PomoRestFragment" />
+        <activity android:name=".views.home.PomoFocustFragment" />
+        <activity android:name=".views.home.PomoFocusDialog" />
+        <activity
+            android:name=".views.home.StopwatchActivity"
+            android:label="@string/title_activity_stopwatch"
+            android:theme="@style/Theme.Gooroomeelite.NoActionBar" />
+        <activity android:name=".views.home.TimersettingActivity" />
 
         <service
             android:name=".utils.MusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
-        <activity android:name=".views.home.StudyActivity" />
+        <activity
+            android:name=".views.home.StudyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".views.mypage.TestActivity"
             android:screenOrientation="portrait" />

@@ -3,6 +3,7 @@ package kr.co.gooroomeelite.views.home
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.activity_study.*
 import kotlinx.android.synthetic.main.activity_timersetting.*
 import kotlinx.android.synthetic.main.activity_timersetting.btn_back
@@ -15,6 +16,16 @@ class TimersettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timersetting)
+
+        /*binding.btnTimermode.setOnClickListener {
+            val StopwatchFragment: StopwatchFragment = StopwatchFragment()
+            val fragmentManager: FragmentManager = supportFragmentManager
+
+
+            val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
+            fragmentTransaction.replace(R.id.container, StopwatchFragment)            // 할 일
+            fragmentTransaction.commit()                                        // 끝
+        }*/
 
         // TimersettingActivity에서 StudyActivity로 이동
         btn_back.setOnClickListener {

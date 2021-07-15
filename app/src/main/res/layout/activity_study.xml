@@ -11,71 +11,172 @@
     <!-- 뒤로가기 -->
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="43.5dp"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrowleft" />
+        app:srcCompat="@drawable/ic_btn_back" />
 
 
-    <!-- 화면명 -->
+    <!-- 화면명(공부기록) -->
     <TextView
         android:id="@+id/mode_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="123dp"
+        android:layout_height="20dp"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:layout_marginEnd="160dp"
         android:gravity="center"
-        android:text="일반모드"
+        android:text=""
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 타이머 설정-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_timesetting"
-        android:layout_width="50dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_stopwatch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 시간화면 전환 -->
     <FrameLayout
         android:id="@+id/container"
-        android:layout_width="400dp"
-        android:layout_height="416dp"
-        android:layout_margin="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_sc"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" >
-    </FrameLayout>
-
-    <!-- 과목명-->
-    <TextView
-        android:id="@+id/subject_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginTop="530dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="410dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+    </FrameLayout>
 
-    <!-- 타이머 작동 버튼 -->
+
+    <!-- ASMR (백색소음) 버튼 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_noise"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_noise"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_timermode" />
+
+
+    <!-- 스톱워치 변경 버튼 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_timermode"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_timermode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_noise"
+        app:layout_constraintRight_toLeftOf="@id/btn_studynow" />
+
+    <!-- 공부 현황 버튼 -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_studynow"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_studynow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_timermode"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_noise"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_timermode"
+        app:layout_constraintHorizontal_chainStyle="spread"
+
+
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_noise"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="610dp" />
+        ASMR (백색소음) 버튼 -->
+
+    <!--
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_timermode"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@id/btn_noise"
+
+
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_timermode" />
+        스톱워치 변경 버튼 -->
+
+
+    <!--
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_studynow"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="72dp"
+        android:layout_height="114dp"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+
+        android:background="@color/white"
+        android:drawableBottom="@drawable/ic_btn_studynow"
+        tools:layout_editor_absoluteX="291dp"
+        tools:layout_editor_absoluteY="610dp" />
+        공부 현황 버튼 -->
+
+
+    <!--
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_timermode"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginEnd="16dp"
+    android:background="#FFFFFF"
+    android:stateListAnimator="@null"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+    타이머 설정 -->
+
+    <!--
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_bottomdown"
+        android:layout_width="360dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="650dp"
+        android:background="@drawable/ic_btn_bottomdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />공부시간 현황 -->
+
+    <!--
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_studystart"
         style="?android:attr/borderlessButtonStyle"
@@ -87,34 +188,44 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        타이머 작동 버튼 -->
 
-    <!-- 과목 변경 버튼-->
+    <!--
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_noise"
+    android:layout_width="36dp"
+    android:layout_height="56dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginEnd="60dp"
+    android:background="@color/white"
+    android:drawableBottom="@drawable/ic_btn_noise"
+    style="?android:attr/borderlessButtonStyle"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+    화이트 노이즈 실행버튼-->
+
+    <!--
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_sc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@color/white"
-        android:drawableBottom="@drawable/ic_subjectchangebtn"
-        style="?android:attr/borderlessButtonStyle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_wn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <!-- 화이트 노이즈 실행버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_wn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@color/white"
-        android:drawableBottom="@drawable/ic_wnbtn"
-        style="?android:attr/borderlessButtonStyle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/btn_timermode"
+        android:layout_width="36dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ic_btn_timermode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_sc" />
+        app:layout_constraintTop_toTopOf="parent" />
+        타이머 설정-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--
+<androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_noise"
+    android:layout_width="60dp"
+    android:layout_height="94dp"
+    android:layout_marginTop="424dp"
+    android:layout_marginEnd="60dp"
+    android:background="@color/white"
+    android:drawableBottom="@drawable/ic_btn_noise"
+    style="?android:attr/borderlessButtonStyle"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+    화이트 노이즈 실행버튼-->
