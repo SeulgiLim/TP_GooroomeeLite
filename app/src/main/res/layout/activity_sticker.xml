@@ -5,131 +5,173 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/stickerActivity"
     tools:context=".views.statistics.share.StickerActivity"
     tools:ignore="MissingConstraints">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/share_toolbar"
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/share_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:background="@color/white"-->
+<!--        android:elevation="5dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:title="공유하기"-->
+<!--        app:titleTextColor="@color/black"/>-->
+
+     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:background="@color/white"
-        android:elevation="5dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="공유하기"
-        app:titleTextColor="@color/black">
+        android:orientation="horizontal">
 
-    </androidx.appcompat.widget.Toolbar>
+        <Button
+            android:id="@+id/share_cancel"
+            android:text="취소"
+            android:textColor="@color/share_delete"
+            android:background="#00ff0000"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="공유"
+            android:textColor="@color/share_picture"
+            android:textSize="15dp"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/share_complete"
+            android:text="완료"
+            android:background="#00ff0000"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="@color/share_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-
+    </LinearLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        android:background="@drawable/background_share_image_sheet"
+        >
 
+        <!--  카메라 사진    -->
         <FrameLayout
             android:id="@+id/previewStickerImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_share_image_sheet"
             android:layout_gravity="center">
 
+            <!-- 이미지 찍힌 거 -->
             <ImageView
                 android:id="@+id/imageCapture"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/black"
-                android:scaleType="fitXY" />
-
+                android:scaleType="fitXY"
+                android:background="@drawable/background_share_image_sheet" />
+            <!-- 구루미 스티커    -->
             <FrameLayout
+                android:background="@drawable/background_share_image_sheet"
                 android:id="@+id/sticker_container"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:layout_gravity="center">
+                android:layout_height="match_parent">
+
+<!--                <ImageView-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_gravity="right|top"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:src="@drawable/ic_group" />-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="left|bottom"-->
+<!--                    android:layout_marginLeft="10dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/study_time_image"-->
+<!--                        android:layout_width="34dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:src="@drawable/ic_baseline_timelapse_24" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/study_time"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:text="10:23"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center_horizontal|bottom"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <ImageView-->
+<!--                        android:id="@+id/now_time_image"-->
+<!--                        android:layout_width="34dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:src="@drawable/ic_baseline_access_time_24" />-->
 
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right|top"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_group" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|bottom"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/study_time_image"
-                        android:layout_width="34dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/ic_baseline_timelapse_24" />
-
-                    <TextView
-                        android:id="@+id/study_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="10:23"
-                        android:textColor="@color/white"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/now_time_image"
-                        android:layout_width="34dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/ic_baseline_access_time_24" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/now_time"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:textStyle="bold" />-->
+<!--                </LinearLayout>-->
 
 
-                    <TextView
-                        android:id="@+id/now_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="@color/white"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="right|bottom"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:orientation="horizontal">-->
 
+<!--                    <ImageView-->
+<!--                        android:id="@+id/start_end_time_image"-->
+<!--                        android:layout_width="34dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:src="@drawable/ic_baseline_timeline_24" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
+<!--                    <TextView-->
+<!--                        android:id="@+id/start_end_time"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:text="8:20"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <ImageView
-                        android:id="@+id/start_end_time_image"
-                        android:layout_width="34dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/ic_baseline_timeline_24" />
-
-                    <TextView
-                        android:id="@+id/start_end_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="8:20"
-                        android:textColor="@color/white"
-                        android:textSize="25dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
             </FrameLayout>
         </FrameLayout>
@@ -143,26 +185,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/exit_buttons"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="취소하기"
-            android:textColor="#767676"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/share_buttons"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="28dp"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:text="공유하기"
-            android:textColor="#767676"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:textStyle="bold"
+            android:background="@drawable/background_share_sheeet"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 

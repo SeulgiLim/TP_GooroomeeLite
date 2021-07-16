@@ -13,7 +13,7 @@ import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.mypage.MypageFragment
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
-
+@RequiresApi(Build.VERSION_CODES.Q)
 class MainActivity : AppCompatActivity() {
     var mBackWait : Long = 0
     @RequiresApi(Build.VERSION_CODES.Q)

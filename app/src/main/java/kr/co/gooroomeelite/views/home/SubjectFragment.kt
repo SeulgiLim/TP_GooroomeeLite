@@ -36,7 +36,7 @@ class SubjectFragment : BottomSheetDialogFragment() {
         fun delete(position: Int)
         fun edit(position: Int, subjectName: String, color: String)
     }
-    private lateinit var dataPassListener : onDataPassListener
+    private lateinit var dataPassListener : onDataPassListener //lateinit를 통해 나중에 초기화
     private val colorList = listOf(
             "#F2A6A0", "#F5BF9E", "#F9D69D", "#FBE0C2", "#FCE8E1",
             "#FCEAA1", "#EEE9AB", "#DEE88E", "#CCE99E", "#D8EBD8",
@@ -51,7 +51,7 @@ class SubjectFragment : BottomSheetDialogFragment() {
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         if(activity is EditSubjectsActivity) {
-            dataPassListener = activity
+            dataPassListener = activity //dataPassListener를 acitivity로 형 변환
         }
     }
 

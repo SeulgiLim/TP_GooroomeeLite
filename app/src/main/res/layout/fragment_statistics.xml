@@ -1,232 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:id="@+id/statistics"
     tools:context=".views.statistics.StatisticsFragment">
 
     <LinearLayout
-        android:id="@+id/graph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@drawable/color_tablayout_text"
-            app:tabIconTint="@drawable/color_tablayout_text"
-           app:tabSelectedTextColor="@color/groomColor"
-            >
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일간" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="주간" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="월간" />
-
-        </com.google.android.material.tabs.TabLayout>
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/share_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_below="@+id/graph"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/share_icon"
-                android:textColor="@color/grey" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/chart_container"
+            android:id="@+id/graph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tabs" />
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@drawable/color_tablayout_text"
+                app:tabIconTint="@drawable/color_tablayout_text"
+                app:tabSelectedTextColor="@color/groomColor"
+                >
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일간" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주간" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="월간" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <FrameLayout
+                android:id="@+id/chart_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tabs" />
+
+        </LinearLayout>
 
     </LinearLayout>
+</ScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/graph"
-        android:orientation="vertical"
-        android:background="@color/light_blue"
-        >
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/graph"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:background="@color/light_blue"-->
+    <!--            >-->
 
-        <TextView
-            android:id="@+id/title_highlite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="하이라이트"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.01999998"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp" />
+    <!--            <TextView-->
+    <!--                android:id="@+id/title_highlite"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginBottom="20dp"-->
+    <!--                android:text="하이라이트"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="25dp"-->
+    <!--                android:textStyle="bold"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:layout_constraintVertical_bias="0.01999998"-->
+    <!--                tools:ignore="MissingConstraints"-->
+    <!--                tools:layout_editor_absoluteX="20dp" />-->
 
-        <LinearLayout
-            android:id="@+id/highlite_container"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_highlite"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/title_highlite"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="10dp"
-            >
+    <!--            <LinearLayout-->
+    <!--                android:id="@+id/highlite_container"-->
+    <!--                android:layout_width="fill_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:background="@drawable/background_highlite"-->
+    <!--                android:orientation="vertical"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/title_highlite"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                android:layout_margin="10dp"-->
+    <!--                >-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/title_highlite">
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginTop="10dp"-->
+    <!--                    android:layout_marginBottom="10dp"-->
+    <!--                    app:layout_constraintTop_toBottomOf="@+id/title_highlite">-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/ic_baseline_local_fire_department_24"
-                    />
+    <!--                    <ImageView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginLeft="20dp"-->
+    <!--                        android:src="@drawable/ic_baseline_local_fire_department_24"-->
+    <!--                        />-->
 
-                <TextView
-                    android:id="@+id/name_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="시간" />
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/name_time"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:text="시간" />-->
 
+    <!--                    <ImageView-->
+    <!--                        android:id="@+id/color"-->
+    <!--                        android:layout_width="30dp"-->
+    <!--                        android:layout_height="30dp"-->
+    <!--                        android:layout_marginLeft="30dp" />-->
+    <!--                </LinearLayout>-->
 
-                <ImageView
-                    android:id="@+id/color"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="30dp" />
-            </LinearLayout>
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginLeft="20dp"-->
+    <!--                    android:layout_marginBottom="10dp"-->
+    <!--                    android:text="이번 주 공부시간이 저번 주보다 줄었습니다."-->
+    <!--                    android:textStyle="bold"-->
+    <!--                    android:textColor="@color/black"-->
+    <!--                    />-->
 
+    <!--                <View-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="0.3dp"-->
+    <!--                    android:layout_marginLeft="16dp"-->
+    <!--                    android:layout_marginRight="16dp"-->
+    <!--                    android:layout_marginBottom="10dp"-->
+    <!--                    android:background="@color/grey" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="이번 주 공부시간이 저번 주보다 줄었습니다."
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    />
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:orientation="vertical">-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/grey" />
+    <!--                    <LinearLayout-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content">-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    <!--                        <TextView-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginLeft="20dp"-->
+    <!--                            android:layout_marginBottom="10dp"-->
+    <!--                            android:text="4,716"-->
+    <!--                            android:textSize="20dp"-->
+    <!--                            android:textStyle="bold" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+    <!--                        <TextView-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:text=" 시간/일" />-->
+    <!--                    </LinearLayout>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="4,716"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+    <!--                </LinearLayout>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" 시간/일" />
-                </LinearLayout>
+    <!--                <com.github.mikephil.charting.charts.HorizontalBarChart-->
+    <!--                    android:id="@+id/highligte_today_Bar_Chart"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginLeft="20dp"/>-->
 
-            </LinearLayout>
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginTop="20dp"-->
+    <!--                    android:orientation="vertical">-->
 
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:id="@+id/highligte_today_Bar_Chart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"/>
+    <!--                    <LinearLayout-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content">-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/before_Time"-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:layout_marginLeft="20dp"-->
+    <!--                            android:layout_marginBottom="10dp"-->
+    <!--                            android:text="5,646"-->
+    <!--                            android:textSize="20dp"-->
+    <!--                            android:textStyle="bold" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+    <!--                        <TextView-->
+    <!--                            android:id="@+id/before_Time_title"-->
+    <!--                            android:layout_width="wrap_content"-->
+    <!--                            android:layout_height="wrap_content"-->
+    <!--                            android:text=" 시간/일" />-->
+    <!--                    </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/before_Time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="5,646"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+    <!--                </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/before_Time_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" 시간/일" />
-                </LinearLayout>
+    <!--                <com.github.mikephil.charting.charts.HorizontalBarChart-->
+    <!--                    android:id="@+id/highligte_before_Bar_Chart"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="100dp"-->
+    <!--                    android:layout_marginBottom="20dp"-->
+    <!--                    android:layout_marginLeft="20dp"/>-->
 
-            </LinearLayout>
+    <!--            </LinearLayout>-->
 
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:id="@+id/highligte_before_Bar_Chart"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"/>
+    <!--            <View-->
+    <!--                android:layout_width="fill_parent"-->
+    <!--                android:layout_height="fill_parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/highlite_container"-->
+    <!--                tools:ignore="MissingConstraints" />-->
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            app:layout_constraintTop_toBottomOf="@+id/highlite_container"
-            tools:ignore="MissingConstraints" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->

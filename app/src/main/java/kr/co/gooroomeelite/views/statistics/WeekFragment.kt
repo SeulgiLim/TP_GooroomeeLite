@@ -1,34 +1,47 @@
 package kr.co.gooroomeelite.views.statistics
 
+import android.Manifest
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
-import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
+import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DecimalFormat
+import java.time.DayOfWeek
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAdjusters
+import java.time.temporal.TemporalField
 import java.util.*
 import kotlin.collections.ArrayList
 
-
+@RequiresApi(Build.VERSION_CODES.O)
 class WeekFragment : Fragment() {
     private lateinit var binding : FragmentWeekBinding
     private val viewModel: SubjectViewModel by viewModels()
@@ -50,94 +63,106 @@ class WeekFragment : Fragment() {
 //        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
 //    }
 
+    // 현재 날짜/시간 가져오기
+    val dateNow: LocalDateTime = LocalDateTime.now()
+    //     LocalDate 문자열로 포맷
+    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E")
+//    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M/d")
+
+
+
+    private val listData by lazy {
+        mutableListOf(  
+            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
+            ChartDatas("화", arrayListOf(2.1f)),                 //5
+            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
+            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
+            ChartDatas("금", arrayListOf(6.1f,10.1f,8.5f)),      //3
+            ChartDatas("토", arrayListOf(5f,8.1f,5.5f)),              //3
+            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        binding = FragmentWeekBinding.inflate(inflater,container,false)
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_week,container,false)
-        val view = inflater.inflate(R.layout.fragment_month, container, false)
-
+        val view = inflater.inflate(R.layout.fragment_week, container, false)
 
         //바 차트
         chart = view.findViewById(R.id.week_bar_chart)
         chart.setNoDataText("")
         initChart(chart)
+        //차트가 7개만 보이게 세
+        chart.setVisibleXRangeMaximum(7f)
+//        chart.setVisibleXRangeMinimum(7f)팅//스크롤 중지??
+        //현재 창의 왼쪽을 지정된 x 축 위치로 이동합니다.
+//        chart.moveViewToX(-10f)
+        chart.moveViewTo(100f,0f, YAxis.AxisDependency.LEFT)
+        val shareButton: Button = view.findViewById(R.id.share_button)
+        shareButton.setOnClickListener {
+            requestPermission()
+        }
+
+//        setting()
+        var calendarMonday : TextView = view.findViewById(R.id.calendar_Monday)
+        var calendarSunday : TextView = view.findViewById(R.id.calendar_Sunday)
+        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
+        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
+        moveCalendarByWeek(calendarMonday,calendarSunday,calRightBtn,calLeftBtn)
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        setting()
-    }
+    private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton){
+        val calendarWeekNow : LocalDateTime = LocalDateTime.now()
+        val monday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
+        val sunday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
 
-    private lateinit var subjects : List<DocumentSnapshot>
-    private val studyTime = MutableLiveData<Int>()
+        val textformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        var count: Int = 0
 
-    private fun setting(){
-        FirebaseFirestore.getInstance().collection("users").document(getUid()!!).get()
-            .addOnSuccessListener {
-            if (it["studyTime"]!=null){
-//                val subjectDTO = it.toObject(SubjectDTO::class.java)
-//                val studytime = subjectDTO!!.studytime
-//                val userid = subjectDTO!!.userId
-//                binding.emailaddress.text=email
-                if(it["studyTime"] == null) {
-                    return@addOnSuccessListener
-                }
-                studyTime.value = it["studyTime"].toString().toInt()
-                binding.name.text = "반가워요, ${it["nickname"]}님"
+        monDay.text = monday.format(textformatter)
+        sunDay.text = sunday.format(textformatter)
 
-
-
-                Log.d("studyTime",studytime.toString())
-            }
+        rBtn.setOnClickListener{
+            count++
+            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
+            monDay.text = mondayValue.format(textformatter).toString()
+            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
+            sunDay.text = sundayValue.format(textformatter).toString()
         }
+
+        lBtn.setOnClickListener{
+            count--
+            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
+            sunDay.text = sundayValue.format(textformatter).toString()
+            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
+            monDay.text = mondayValue.format(textformatter).toString()
+        }
+
     }
 
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        myStudyTime.observe(viewLifecycleOwner){
-//            binding.dayStudyTime.text = "%02d".format(myStudyTime.value?.div(60)) + "시간" +
-//                    "%02d".format(myStudyTime.value?.rem(60))+"분"
-//        }
-//    }
+    private fun requestPermission(): Boolean {
+        var permissions = false
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    permissions = true      //p0=response(응답)
+                    val shareIntent = Intent(context, ShareActivity::class.java)
+                    startActivity(shareIntent)
+//                    finish()
+                }
 
-//    val db: FirebaseFirestore
-//    private lateinit var subjects : List<DocumentSnapshot>
-//
-//    init {
-//        db = FirebaseFirestore.getInstance()
-//        uid = LoginUtils.currentUser()!!.uid
-//        setting()
-//    }
-//    private fun setting(){
-//        db.collection("subject")
-//            .whereEqualTo("uid", uid)
-//            .addSnapshotListener{  value, error ->
-//                if (error != null) {
-//                    return@addSnapshotListener
-//                }
-//                if(value != null){
-//                    if(value.documents.isEmpty()){
-//                        return@addSnapshotListener
-//                    }
-//                    var fit : Int = -1
-//                    val subject = subjects[fit]
-//                    val studtytime =  subject["studytime"] as Long
-////                    binding.dayStudyTime.text = studtytime.toString()
-//                    binding.name.text = subject["name"] as String
-//
-//                    Log.d("studtytime",studtytime.toString())
-//                }
-//            }
-//
-//    }
-//    val subject = ds.toObject(Subject::class.java)
-//    val studytime = subject!!.studytime
-//    Log.d("studytime",studytime.toString())
-//    val color = subject!!.color
-////                binding.dayStudyTime.text = studytime.toString()
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    permissions = false
+                }
+
+            })
+            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
+            .setPermissions(Manifest.permission.CAMERA)
+            .check()
+        return permissions
+    }
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
@@ -157,18 +182,6 @@ class WeekFragment : Fragment() {
             renderer = barChartRender
         }
         setData(listData)
-//        setData()
-    }
-    private val listData by lazy {
-        mutableListOf(
-            ChartDatas("월", arrayListOf(1.5f,6.1f,3.3f,4.4f)), //5
-            ChartDatas("화", arrayListOf(2.1f)),                 //5
-            ChartDatas("수", arrayListOf(3.0f,5.5f,6.6f)),        //4
-            ChartDatas("목", arrayListOf(3f,5.1f,3.5f)),             //3
-            ChartDatas("금", arrayListOf(6.1f,4.5f,10.1f,8.5f)),      //3
-            ChartDatas("토", arrayListOf(5f,7.1f,5.5f)),              //3
-            ChartDatas("일", arrayListOf(8.1f,6.5f)),                //2
-        )
     }
 
     private fun setData(barData: List<ChartDatas>) {
@@ -287,3 +300,29 @@ class WeekFragment : Fragment() {
     }
 
 }
+
+//    val uid :String
+
+//    init{
+//        uid = currentUser()!!.uid
+//    }
+//
+//
+//    private fun setting() {
+//        FirebaseFirestore.getInstance().collection("subject")
+//             .whereEqualTo("uid",uid)
+//            .addSnapshotListener{ value,error ->
+//            if(error != null){
+//                return@addSnapshotListener
+//            }
+//                if (value != null) {
+//                    value.documents.forEach {
+//                        val tmp = hashMapOf<String,DocumentSnapshot>()
+//                        if(it["studyTime"] as String? != null) {
+//                            Log.d("cccaa", it.toString())
+//                        }
+//                    }
+//                }
+//
+//        }
+//    }

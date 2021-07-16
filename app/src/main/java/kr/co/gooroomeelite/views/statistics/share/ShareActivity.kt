@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -75,10 +76,19 @@ class ShareActivity : AppCompatActivity() {
         binding = ActivityShareBinding.inflate(layoutInflater)
         root = binding.root
         setContentView(binding.root)
-        initToolBar()
-
+//        initToolBar()
+        binding.picturePrevious.setOnClickListener{
+            finish()
+        }
+        binding.pictureNext.setOnClickListener{
+            val nextIntent = Intent(this, StickerActivity::class.java)
+            startActivity(nextIntent)
+        }
         binding.showImage.setOnClickListener{ openGallery() }
-        binding.converterCamera.setOnClickListener{ swicthCamera() }
+        binding.rotateBtn.setOnClickListener{
+            swicthCamera()
+        }
+//        binding.converterCamera.setOnClickListener{ swicthCamera() }
         startCamera(binding.viewFinder)
     }
 
@@ -92,12 +102,17 @@ class ShareActivity : AppCompatActivity() {
 //        startCamera(binding.viewFinder)
         bindCameraUseCase()
     }
+//      툴바 뒤로가기
+//    private fun initToolBar() {
+//        val toolbar = binding.pictureToolbar
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)//뒤로 버튼
+//    }
 
-    private fun initToolBar() {
-        val toolbar = binding.pictureToolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.,menu)
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -148,7 +163,6 @@ class ShareActivity : AppCompatActivity() {
 
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
-//        private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
         val rotation = viewFinder.display.rotation
 
         cameraProviderFuture.addListener({

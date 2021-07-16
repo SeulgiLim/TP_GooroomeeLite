@@ -87,6 +87,7 @@ class EditSubjectViewModel : ViewModel() {
 //        db.collection("subject").document(item.id).delete()
     }
 
+    //과목 수정
     fun editSubject(position: Int, subjectName: String, color: String) {
         subjectList.value!![position].apply {
             editedSubjects.add(this)
@@ -94,7 +95,7 @@ class EditSubjectViewModel : ViewModel() {
             subject.name = subjectName
         }
     }
-
+    //완료 버튼 클릭 시 파이어베이스에 저장
     fun saveToFirebase() =
         //transaction은 읽기/쓰기, runBatch는 쓰기만
         db.runBatch { writeBatch ->

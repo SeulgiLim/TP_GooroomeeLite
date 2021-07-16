@@ -1,23 +1,37 @@
 package kr.co.gooroomeelite.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.entity.Subjects
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import java.util.LinkedList
 
+//데이터를 activity가 아니라 viewModel이 관리하게 할 것
+// 데이터의 변경사항을 알려주는 라이브 데이터를 가지는 뷰모델
 class SubjectViewModel : ViewModel() {
     val db: FirebaseFirestore
     val subjectList = MutableLiveData<LinkedList<DocumentSnapshot>>()
     val uid: String
+    //통계 페이지에서 사용
+    // 변경가능한 Mutable 타입의 LiveData
+    val subjectsList = MutableLiveData<DocumentSnapshot>()
+    val readSubejcts = MutableLiveData<ReadSubejct>()
+    val readSubejctss = MutableLiveData<Subjects>()
+
+//    val subjects = MutableLiveData<Subject>()
 
     init {
         db = FirebaseFirestore.getInstance()
         subjectList.value = LinkedList()
         uid = currentUser()!!.uid
         fetchSubjectList()
+        getsubjectList()
     }
 
     //과목별 전체
@@ -28,15 +42,15 @@ class SubjectViewModel : ViewModel() {
                 if (error != null) {
                     return@addSnapshotListener
                 }
-
                 if (value != null) {
-                    if(value.documents.isEmpty()) {
+                    if(value.documents.isEmpty()) {//문서
                         subjectList.value = LinkedList()
                         return@addSnapshotListener
                     }
                     val tmp = hashMapOf<String, DocumentSnapshot>()
                     var current: DocumentSnapshot? = null
                     value.documents.forEach {
+                        Log.d("mmm",value.toString())
                         if (it["prevDocumentId"] as String? == null) {
                             current = it
                         }
@@ -60,6 +74,74 @@ class SubjectViewModel : ViewModel() {
             }
     }
 
+    private fun getsubjectList(){
+        db.collection("subject")
+            .whereEqualTo("uid", uid)
+            .get() //값이 변경 시 바로 값이 변경된다.
+            .addOnSuccessListener { docs ->
+//                val tmp = hashMapOf<String, ReadSubejct>()
+                lateinit var readSubject: ReadSubejct
+                lateinit var subjects: Subjects
+                if (!docs.isEmpty) {
+                    docs.documents.forEach{
+                        readSubject = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
+//                        tmp.put(it.id, ReadSubejct(it.toObject(Subjects::class.java)!!,it))
+                        subjects = readSubject.subject
+                        Log.d("zzzcc", readSubject.subject.name.toString())
+                    }
+//                    readSubejcts.value = readSubject
+                    docs.documents.forEach {
+                        Log.d("zcz",readSubejcts.value.toString())
+                    }
+                }
+
+
+//                val name : String = readSubejcts.value!!.subject.name.toString()
+//                for(i in name)
+//                {
+//                    Log.d("czc",i.toString())
+//                }
+//                for(i in readSubejcts.value.toString()) {
+//                    Log.d("zzz", i.toString())
+//                }
+            }
+//        db.collection("subject")
+//            .whereEqualTo("uid", uid)
+//            .addSnapshotListener { documents, error ->
+//                if (documents != null) {
+////                    documents.forEach{
+////                        subjectsList.value = it
+////                        Log.d("bbb", subjectsList.value.toString())
+////                    }
+//                    for(document in documents){
+////                      Log.d("ccvvbb","${document.id} => ${document.data}")
+////                        Log.d("ccvvbb","${document.data}")
+//                        readSubejcts.forEach{
+//                            it.studytime = document.get("studytime")
+//                        }
+//                        readSubejcts.clear()
+////                        Log.d("ccvvbb","${document.get("studytime")}")
+////                        Log.d("ccvvbb","${document.get("color")}")
+////                        Log.d("ccvvbb","${document.get("timestamp")}")
+//                    }
+//                }
+//            }
+    }
+    //        db.collection("subject")
+//            .document(getUid()!!).get()?.addOnSuccessListener { value ->
+//                val subjectValue = value.toObject(Subject::class.java)
+//                val timestamp = subjectValue!!.timestamp
+//                Log.d("vvv",timestamp.toString())
+//            }
+//        readSubejcts.forEach{
+////                        }
+//            subjectsList.value = document
+//            Log.d("bbb", subjectsList.value.toString())
+//    for(document in result){
+//                    Log.d("ccc","${document.id} => ${document.data}")
+//                    document.data["text"] as String
+//                    document.data["isDone"] as Boolean
+
     fun addSubject(item: Subject) {
         var prevSubject: DocumentSnapshot? = null
         if (subjectList.value!!.size > 0) {
@@ -81,6 +163,7 @@ class SubjectViewModel : ViewModel() {
                 }
             }
     }
+
 
 //    fun deleteSubject(item: DocumentSnapshot) {
 //        deletedSubjects.add(item)

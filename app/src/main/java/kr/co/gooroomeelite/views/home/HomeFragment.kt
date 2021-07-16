@@ -75,7 +75,8 @@ class HomeFragment : Fragment() {
         ) { resultKey, bundle ->
             if (viewModel.subjectList.value!!.size <= 20) {
                 Toast.makeText(mainActivityContext, "과목을 등록하였습니다.", Toast.LENGTH_SHORT).show()
-                val subject = bundle.getSerializable("subject") as Subject
+                 // 여기서 문자열을 사용하지만 번들에 넣을 수있는 모든 유형이 지원된다.
+                val subject = bundle.getSerializable("subject") as Subject //bundle로 받기
                 viewModel.addSubject(subject)
             } else {
                 Toast.makeText(

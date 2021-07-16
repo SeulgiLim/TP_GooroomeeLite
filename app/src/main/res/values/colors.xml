@@ -56,4 +56,14 @@
     <color name="bottomoff">#4D0000</color>
     <color name="bottomtitle">#C4C4C4</color>
 
+    <color name="studytime_record_share">#FFDDF3FF</color>
+    <color name="studytime_record_text_share">#FF0FA9FF</color>
+    <color name="share_delete">#444444</color>
+    <color name="share_picture">#223322</color>
+    <color name="share_next">#51A9FE</color>
+
+    <color name="share_btn">#449EF6</color>
+
+
+
 </resources>
