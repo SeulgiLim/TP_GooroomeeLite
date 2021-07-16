@@ -296,6 +296,7 @@ class DayFragment : Fragment() {
             }
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
             axisRight.apply {
+                //수정중
                 textColor = whiteColor
                 setDrawAxisLine(false) //격자(일자선
                 gridColor = transparentBlackColor
