@@ -46,6 +46,7 @@ class StatisticsFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val position = tab!!.position
 
+
                 var selected: Fragment? = null
                 if (position == 0) {
                     selected = dayFragment

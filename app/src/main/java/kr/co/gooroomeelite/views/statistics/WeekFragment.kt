@@ -277,8 +277,8 @@ class WeekFragment : Fragment() {
         val textformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         var count: Int = 0
 
-        monDay.text = monday.format(textformatter)
-        sunDay.text = sunday.format(textformatter)
+        monDay.text = monday.format(textformatter)+" "
+        sunDay.text = "~ " + sunday.format(textformatter)
 
         rBtn.setOnClickListener{
             count++

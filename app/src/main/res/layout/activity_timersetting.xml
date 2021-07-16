@@ -43,9 +43,9 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="160dp"
         android:gravity="center"
-        android:text="타이머 설정"
+        android:text="스톱워치"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,16 +55,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="16dp"
-        android:text="타이머 모드"
-        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:text="스톱워치 모드"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#999999"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_back" />
 
 
     <RadioGroup
@@ -72,10 +72,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
+        android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,25 +86,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="일반 모드"
             android:paddingStart="12px"
-            android:textSize="14sp" />
+            android:text="일반 모드"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
 
         <View
-            android:id="@+id/view10"
+            android:id="@+id/view115"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/divide2"
+            android:layout_marginTop="8dp"
+            android:background="@color/divide"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <RadioButton
             android:id="@+id/btn_pomodoromode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="뽀모도로 모드"
+            android:layout_marginTop="9dp"
             android:paddingStart="3dp"
-            android:layout_marginTop="24dp"
+            android:text="뽀모도로 모드"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
     </RadioGroup>
@@ -121,7 +123,7 @@
         android:id="@+id/Pomolayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:visibility="visible"
@@ -137,7 +139,7 @@
             android:text="뽀모도로 설정"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#999999"
-            android:textSize="16sp"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -146,7 +148,7 @@
             android:id="@+id/text_focus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="20dp"
             android:text="집중 시간"
             android:textColor="#333333"
             android:textSize="14sp"
@@ -174,19 +176,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_focustime" />
 
-        <!-- 실선 -->
-        <View
-            android:id="@+id/view10"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/divide2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
-
 
         <!-- 뽀모도로_휴식 시간-->
         <View
@@ -194,7 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
-            android:background="@color/divide2"
+            android:background="@color/divide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -240,7 +229,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
-            android:background="@color/divide2"
+            android:background="@color/divide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -282,7 +271,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
-            android:background="@color/divide2"
+            android:background="@color/divide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -327,7 +316,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
-            android:background="@color/divide2"
+            android:background="@color/divide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

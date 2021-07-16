@@ -24,6 +24,9 @@ class MusicActivity : AppCompatActivity() {
         binding.textView6.setOnClickListener{
             startActivity(Intent(this,StudyEndActivity::class.java))
         }
+        binding.icBack.setOnClickListener {
+            onBackPressed()
+        }
     }
     private fun musicData(): MutableList<MusicItem> {
         val musicList = mutableListOf<MusicItem>()

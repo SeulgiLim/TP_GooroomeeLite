@@ -21,13 +21,13 @@
 
     <TextView
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="@string/service2"
-        android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textColor="@color/musictext"
+        android:textSize="16sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

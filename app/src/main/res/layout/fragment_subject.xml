@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="과목 추가"
+            android:textColor="@color/share_delete"
             />
 
         <Space
@@ -388,13 +389,24 @@
 
     </TableLayout>
 
-    <Button
-        android:shadowRadius="0"
+<!--    <Button-->
+<!--        android:shadowRadius="0"-->
+<!--        android:id="@+id/enroll_btn"-->
+<!--        android:text="완료"-->
+<!--        android:textSize="15sp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        />-->
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/enroll_btn"
-        android:text="완료"
-        android:textSize="15sp"
-        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        />
+        android:layout_marginTop="40dp"
+        android:background="@drawable/btn_login"
+        android:backgroundTint="@null"
+        android:text="완료"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        style="?android:attr/borderlessButtonStyle"/>
 </LinearLayout>

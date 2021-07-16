@@ -81,13 +81,13 @@ class StopwatchFragment : Fragment() {
 
 
         // 현재 타이머 값 표시 (stopwatch 포멧 문자 타입으로 변환)
-        stopwatch?.setFormat("00:%s")
+        stopwatch?.setFormat(" 00 : %s")
         stopwatch?.setOnChronometerTickListener { stopwatch ->
             val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
             if (elapsedMillis > 3600000L) {
-                stopwatch.format = "0%s"
+                stopwatch.format = " 0 %s"
             } else {
-                stopwatch.format = "00 : %s"
+                stopwatch.format = " 00 : %s"
             }
         }
 

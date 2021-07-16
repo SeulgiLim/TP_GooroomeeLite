@@ -22,13 +22,11 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="160dp"
         android:gravity="center"
         android:text="@string/withdrawal"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="32dp"
         android:text="@string/withdrawal4"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -53,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
+        android:lineHeight="20dp"
         android:text="@string/withdrawal5"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +63,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5">
@@ -73,7 +71,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/divide2">
+            android:background="@color/divide3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
 
 
             <TextView
@@ -83,7 +84,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/withdrawal1"
-                android:textColor="@color/black"
+                android:textColor="@color/title4"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +95,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/withdrawal2"
-                android:textColor="@color/black"
+                android:textColor="@color/title4"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -134,12 +135,12 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/checkbefore"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:background="@color/divide2"
             android:clickable="false"
             android:text="@string/withdrawal"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textColor="@color/title"
+            android:textSize="15sp"
             android:visibility="visible"
             app:backgroundTint="@null" />
 

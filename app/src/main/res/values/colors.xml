@@ -31,6 +31,7 @@
     <color name="title3">#D8D8D8</color>
     <color name="title4">#666666</color>
     <color name="green">#44C851</color>
+    <color name="title5">#DBF2FF</color>
 
     <color name="musictext">#444444</color>
 
@@ -38,17 +39,21 @@
     <color name="button">#feeeeb</color>
     <color name="deam">#88000000</color>
     <color name="divide">#F5F5F5</color>
+    <color name="divide3">#CCF5F5F5</color>
     <color name="divide2">#EEEEEE</color>
     <color name="button10">#F7F7F7</color>
     <color name="btntoday">#E5F2FF</color>
     <color name="transparent">#1A000000</color>
     <color name="transparentcolor">#FFFFFF</color>
+    <color name="transparentcolor2">#80FFFFFF</color>
     <color name="dot_edge">#707070</color>
     <color name="black_gradient">#80000000</color>
     <color name="icon_small_color">#707070</color>
     <color name="blue">#0D47A1</color>
     <color name="grey">#8E8C8C</color>
     <color name="black_24">#3D000000</color>
+    <color name="black_26">#888888</color>
+    <color name="black_6">#393939</color>
 
     <color name="lightGredy">#ACA8A8</color>
     <color name="light_blue">#C2DCF6</color>
@@ -56,14 +61,17 @@
     <color name="bottomon">#0FA7FD</color>
     <color name="bottomoff">#4D0000</color>
     <color name="bottomtitle">#C4C4C4</color>
+    <color name="editsubjecttitle">#F1F2F3</color>
 
     <color name="studytime_record_share">#FFDDF3FF</color>
     <color name="studytime_record_text_share">#FF0FA9FF</color>
+    <color name="studytime_text">#0F8CFF</color>
     <color name="share_delete">#444444</color>
     <color name="share_picture">#223322</color>
     <color name="share_next">#51A9FE</color>
 
     <color name="share_btn">#449EF6</color>
+    <color name="stopwatch_pause">#323232</color>
 
     <color name="week_bar_color">#339BFF</color>
     <color name="splashcolor">#0FA9FF</color>

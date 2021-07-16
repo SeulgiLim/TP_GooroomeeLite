@@ -10,10 +10,13 @@
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="취소"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +36,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="과목 편집"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/save_btn"
@@ -42,10 +45,20 @@
             android:layout_gravity="center_vertical"
             android:text="완료"
             android:textColor="#51A9FE"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/view10"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/editsubjecttitle"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#F7F8F9"
@@ -63,22 +76,25 @@
                 android:id="@+id/img"
                 android:layout_width="52dp"
                 android:layout_height="44dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_empty_edit_subjects"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.4"
-                android:src="@drawable/ic_empty_edit_subjects" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.4" />
 
             <TextView
-                android:layout_marginTop="24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="과목을 추가해서\n공부를 시작해 보세요!"
+                android:layout_marginTop="24dp"
                 android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
+                android:text="과목을 추가해서\n공부를 시작해 보세요!"
+                android:textSize="16sp"
+                android:textColor="@color/title"
+                android:lineHeight="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp" />
     </FrameLayout>
 
     <ProgressBar

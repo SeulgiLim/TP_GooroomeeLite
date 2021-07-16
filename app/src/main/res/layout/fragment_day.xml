@@ -28,7 +28,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
 
                     <ImageButton
                         android:id="@+id/cal_left_btn"
@@ -48,9 +50,8 @@
                     <TextView
                         android:id="@+id/calendar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
-                        android:paddingTop="21dp"
                         android:text=""
                         android:textColor="@color/black"
                         android:textSize="14dp"
@@ -72,10 +73,17 @@
                         android:src="@drawable/ic_statistics_rignt_btn" />
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/view17"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#FFF2F4F6" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:id="@+id/title_one_line"
@@ -98,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="4dp"
                             android:text="00시간 00분"
                             android:textColor="#FF0F8CFF"
                             android:textSize="22dp"
@@ -108,7 +116,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="4dp"
                             android:text="공부했어요!"
                             android:textColor="@color/black"
                             android:textSize="22dp"
@@ -157,15 +165,13 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/share_button"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_height="52dp"
                     android:background="@drawable/background_share_btn"
                     android:gravity="center"
                     android:stateListAnimator="@null"
+                    android:textStyle="bold"
                     android:text="공부 기록 공유하기"
-                    android:textColor="@color/studytime_record_text_share"></androidx.appcompat.widget.AppCompatButton>
-
+                    android:textColor="@color/studytime_text"/>
 
                 <View
                     android:layout_width="match_parent"
