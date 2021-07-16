@@ -31,7 +31,7 @@ class SubjectViewModel : ViewModel() {
         subjectList.value = LinkedList()
         uid = currentUser()!!.uid
         fetchSubjectList()
-        getsubjectList()
+//        getsubjectList()
     }
 
     //과목별 전체
@@ -74,59 +74,59 @@ class SubjectViewModel : ViewModel() {
             }
     }
 
-    private fun getsubjectList(){
-        db.collection("subject")
-            .whereEqualTo("uid", uid)
-            .get() //값이 변경 시 바로 값이 변경된다.
-            .addOnSuccessListener { docs ->
-//                val tmp = hashMapOf<String, ReadSubejct>()
-                lateinit var readSubject: ReadSubejct
-                lateinit var subjects: Subjects
-                if (!docs.isEmpty) {
-                    docs.documents.forEach{
-                        readSubject = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
-//                        tmp.put(it.id, ReadSubejct(it.toObject(Subjects::class.java)!!,it))
-                        subjects = readSubject.subject
-                        Log.d("zzzcc", readSubject.subject.name.toString())
-                    }
-//                    readSubejcts.value = readSubject
-                    docs.documents.forEach {
-                        Log.d("zcz",readSubejcts.value.toString())
-                    }
-                }
-
-
-//                val name : String = readSubejcts.value!!.subject.name.toString()
-//                for(i in name)
-//                {
-//                    Log.d("czc",i.toString())
-//                }
-//                for(i in readSubejcts.value.toString()) {
-//                    Log.d("zzz", i.toString())
-//                }
-            }
+//    private fun getsubjectList(){
 //        db.collection("subject")
 //            .whereEqualTo("uid", uid)
-//            .addSnapshotListener { documents, error ->
-//                if (documents != null) {
-////                    documents.forEach{
-////                        subjectsList.value = it
-////                        Log.d("bbb", subjectsList.value.toString())
-////                    }
-//                    for(document in documents){
-////                      Log.d("ccvvbb","${document.id} => ${document.data}")
-////                        Log.d("ccvvbb","${document.data}")
-//                        readSubejcts.forEach{
-//                            it.studytime = document.get("studytime")
-//                        }
-//                        readSubejcts.clear()
-////                        Log.d("ccvvbb","${document.get("studytime")}")
-////                        Log.d("ccvvbb","${document.get("color")}")
-////                        Log.d("ccvvbb","${document.get("timestamp")}")
+//            .get() //값이 변경 시 바로 값이 변경된다.
+//            .addOnSuccessListener { docs ->
+////                val tmp = hashMapOf<String, ReadSubejct>()
+//                lateinit var readSubject: ReadSubejct
+//                lateinit var subjects: Subjects
+//                if (!docs.isEmpty) {
+//                    docs.documents.forEach{
+//                        readSubject = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
+////                        tmp.put(it.id, ReadSubejct(it.toObject(Subjects::class.java)!!,it))
+//                        subjects = readSubject.subject
+//                        Log.d("zzzcc", readSubject.subject.name.toString())
+//                    }
+////                    readSubejcts.value = readSubject
+//                    docs.documents.forEach {
+//                        Log.d("zcz",readSubejcts.value.toString())
 //                    }
 //                }
+//
+//
+////                val name : String = readSubejcts.value!!.subject.name.toString()
+////                for(i in name)
+////                {
+////                    Log.d("czc",i.toString())
+////                }
+////                for(i in readSubejcts.value.toString()) {
+////                    Log.d("zzz", i.toString())
+////                }
 //            }
-    }
+////        db.collection("subject")
+////            .whereEqualTo("uid", uid)
+////            .addSnapshotListener { documents, error ->
+////                if (documents != null) {
+//////                    documents.forEach{
+//////                        subjectsList.value = it
+//////                        Log.d("bbb", subjectsList.value.toString())
+//////                    }
+////                    for(document in documents){
+//////                      Log.d("ccvvbb","${document.id} => ${document.data}")
+//////                        Log.d("ccvvbb","${document.data}")
+////                        readSubejcts.forEach{
+////                            it.studytime = document.get("studytime")
+////                        }
+////                        readSubejcts.clear()
+//////                        Log.d("ccvvbb","${document.get("studytime")}")
+//////                        Log.d("ccvvbb","${document.get("color")}")
+//////                        Log.d("ccvvbb","${document.get("timestamp")}")
+////                    }
+////                }
+////            }
+//    }
     //        db.collection("subject")
 //            .document(getUid()!!).get()?.addOnSuccessListener { value ->
 //                val subjectValue = value.toObject(Subject::class.java)

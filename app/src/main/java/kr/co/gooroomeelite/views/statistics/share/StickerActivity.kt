@@ -1,5 +1,6 @@
 package kr.co.gooroomeelite.views.statistics.share
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,18 +10,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
 import kotlinx.android.synthetic.main.fragment_statistics.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
+import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import java.io.OutputStream
@@ -37,6 +45,7 @@ class StickerActivity : AppCompatActivity() {
     private lateinit var statisticsFragment: StatisticsFragment
 
     private val shareButtonViewImage: Boolean = false
+
 
     // 현재 날짜/시간 가져오기
     val dateNow: LocalDateTime = LocalDateTime.now()
@@ -68,27 +77,50 @@ class StickerActivity : AppCompatActivity() {
 
         binding.shareCancel.setOnClickListener{finish()}
 
-        //통계페이지로 이동
-        binding.shareComplete.setOnClickListener {
-            //방법1 (앱이 닫힘)
-            supportFragmentManager.beginTransaction().replace(R.id.stickerActivity, StatisticsFragment()).commit()
-            //방법2 (앱이 닫힘)
-            val nextIntent = Intent(this, MainActivity::class.java)
-            startActivity(nextIntent)
-            //방법3(아예오류남)
+        //통계 프래그먼트 페이지로 이동
+        binding.close.setOnClickListener {
+            finish()
+//            startActivity(Intent(this, MainActivity::class.java))
 //            statisticsFragment = StatisticsFragment()
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.scrollview_mypage, walkTimeFramgnet)
-//                .addToBackStack(MainActivity)
-//                .commit()
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragmentContainer,statisticsFragment).commit()
+//            replaceFragment(this.startActivityFromFragment())
         }
         //공유하기
         binding.shareButtons.setOnClickListener{ takeAndShareScreenShot(pictures.toString()) }
 
         //현재시간
 //        binding.nowTime.setText(textformatterString)
+        getTotalStudy()
     }
 
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainer, fragment)
+            commit()
+        }
+    }
+
+    fun getTotalStudy() {
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", getUid())
+            .get()
+            .addOnSuccessListener {
+                val subject = it.toObjects(Subject::class.java)
+                var studytimetodaylist = mutableListOf<Int>()
+                for (i in 0..subject.size - 1) {
+                    studytimetodaylist.add(subject[i].studytime)
+                }
+                val todayStudySum : Int = studytimetodaylist.sum()
+                Log.d("sum",todayStudySum.toString())
+                binding.hourStudytime.text = (todayStudySum/60).toString() + "h"
+                binding.minuteStudytime.text = (todayStudySum%60).toString() + "m"
+//                ${studytime / 60}시간 ${studytime % 60}분"
+//                todayStudyTime.value = studytimetodaylist.sum()
+//                FirebaseFirestore.getInstance().collection("users").document(getUid()!!).update("todaystudytime",todayStudyTime.value)
+            }
+    }
 
 
 

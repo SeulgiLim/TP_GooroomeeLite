@@ -37,21 +37,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="공유"
             android:textColor="@color/share_picture"
             android:textSize="15dp"
             android:gravity="center"
             android:layout_gravity="center"/>
-        <Button
-            android:id="@+id/share_complete"
-            android:text="완료"
-            android:background="#00ff0000"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            android:textColor="@color/share_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+         <ImageView
+             android:id="@+id/close"
+             android:layout_gravity="center"
+             android:layout_marginRight="16dp"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:src="@drawable/ic_close"/>
 
     </LinearLayout>
 
@@ -89,13 +87,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="50dp"-->
-<!--                    android:layout_height="50dp"-->
-<!--                    android:layout_gravity="right|top"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:src="@drawable/ic_group" />-->
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/ic_group" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/hour_studytime"
+                        android:layout_gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="12h"
+                        android:textSize="36dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/minute_studytime"
+                        android:layout_gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="23m"
+                        android:textColor="@color/white"
+                        android:textSize="36dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
 
 <!--                <LinearLayout-->
 <!--                    android:layout_width="wrap_content"-->
