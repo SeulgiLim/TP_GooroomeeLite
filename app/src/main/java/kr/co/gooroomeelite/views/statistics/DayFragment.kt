@@ -234,9 +234,9 @@ class DayFragment : Fragment() {
             calendarDay.text = minusDay.format(textformatter).toString()
             title.text = minusDay.format(titleformatter).toString()
         }
-        if(dateNow == ){
-            title.text = "오늘"
-        }
+//        if(dateNow == ){
+//            title.text = "오늘"
+//        }
 
     }
 

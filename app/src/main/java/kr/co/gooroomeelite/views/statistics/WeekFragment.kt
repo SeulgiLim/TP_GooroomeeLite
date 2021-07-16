@@ -82,20 +82,13 @@ class WeekFragment : Fragment() {
 
     private val listData by lazy {
         mutableListOf(
-            ChartData("월", (24.1f)),
-            ChartData("화", (9.5f)),
-            ChartData("수", (3.5f)),
-            ChartData("목", (7.5f)),
-            ChartData("금", (5.5f)),
-            ChartData("토", (12.5f)),
-            ChartData("일", (19.5f)),
-            ChartData("월", (24.1f)),
-            ChartData("화", (9.5f)),
-            ChartData("수", (3.5f)),
-            ChartData("목", (7.5f)),
-            ChartData("금", (5.5f)),
-            ChartData("토", (12.5f)),
-            ChartData("일", (19.5f))
+            ChartData("월", 24.1f),
+            ChartData("화", 9.5f),
+            ChartData("수", 3.5f),
+            ChartData("목", 7.5f),
+            ChartData("금", 5.5f),
+            ChartData("토", 12.5f),
+            ChartData("일", 19.5f),
         )
     }
 
