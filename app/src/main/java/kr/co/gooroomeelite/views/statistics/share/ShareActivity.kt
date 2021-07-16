@@ -279,6 +279,7 @@ class ShareActivity : AppCompatActivity() {
                 stickerIntent.putExtra("picture",contentUri.toString())
                 Log.d("aaaa",contentUri.toString())
                 startActivity(stickerIntent)
+                finish()
 //                flashLight(false)
                 false
             }catch (e: Exception){
