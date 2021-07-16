@@ -1,96 +1,181 @@
 package kr.co.gooroomeelite.views.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.replace
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.internal.ContextUtils.getActivity
 import kotlinx.android.synthetic.main.activity_study.*
-import kotlinx.android.synthetic.main.activity_withdrawal.*
-import kotlinx.android.synthetic.main.fragment_pomodoro.*
-import kotlinx.android.synthetic.main.fragment_stopwatch.*
+import kotlinx.android.synthetic.main.activity_study_end.*
+import kotlinx.android.synthetic.main.fragment_week.*
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.databinding.ActivityStudyBinding
 import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.views.login.LoginActivity
 
-//전역변수 선언
-// private lateinit var subject : Subject
-// private lateinit var documentId : String
-// private lateinit var 오늘공부시간 : Int
 
-class StudyActivity : AppCompatActivity() {
+
+class  StudyActivity : AppCompatActivity() {
+
+    private lateinit var subject : Subject
+    private lateinit var documentId : String
+    // private lateinit var nowstudytime : Int
+    private lateinit var binding: ActivityStudyBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_study)
+        //setContentView(R.layout.activity_study)
 
+        binding = ActivityStudyBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // HomeFragment에서 과목, 문서 ID 받아오기, 전역변수 지정하여, 과목 정보 받기 * 전역변수 :  메서드 밖, 즉 클래스 안에서 선언된 변수를 가져다 쓰는 변수
-        // val subject = intent.getSerializableExtra("subject") as Subject
-        // val documentId = intent.getSerializableExtra("documentId") as String  // 서버에 시간 데이터 저장시 필요함 (저장 방법 결정 필요)
-        // 오늘공부시간 = subject.studytime
+        // HomeFragment에서 과목, 문서 ID 받아오기, 전역변수 지정하여, 과목 정보 받기 * 전역변수 : 메서드 밖, 즉 클래스 안에서 선언된 변수를 가져다 쓰는 변수
+        val subject = intent.getSerializableExtra("subject") as Subject
+        val documentId = intent.getSerializableExtra("documentId") as String  // 서버에 시간 데이터 저장시 필요함 (저장 방법 결정 필요)
 
-        // Log.d("subject", subject.toString())
-        // Log.d("documentId", documentId)
+        // StudyActivity 내 Fragment 영역에 StopwatchFragment 같이 보여주기
+        if(savedInstanceState == null) {
+            val stopwatchFragment = StopwatchFragment()
+            val bundle = Bundle()
+            bundle.putSerializable("subject", subject)
+            bundle.putString("documentId", documentId)
+            stopwatchFragment.arguments = bundle
 
-
-        // 스탑워치 버튼
-
-
-        // 스탑워치 화면 전환 버튼 -> 과목변경 버튼으로 변경예정
-        btnST.setOnClickListener {
-            val StopwatchFragment : StopwatchFragment = StopwatchFragment()
-            val fragmentManager : FragmentManager = supportFragmentManager
-
-
-            val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
-            fragmentTransaction.replace(R.id.container, StopwatchFragment)            // 할 일
-            // addToBackStack(null)
-            fragmentTransaction.commit()                                        // 끝
-
-            // textview로 데이터를 보낸다고?
-            // 공부시간 데이터 보내기 (putExtra 넣기)
-           // val intent = Intent(this@StudyActivity, HomeFragment::class.java)
-            // intent.putExtra("pauseOffset", pauseOffset.text.toString())
-           // startActivity(intent)
-
-
+            supportFragmentManager.beginTransaction().add(R.id.container, stopwatchFragment).commit()
         }
 
-        // 뽀모도로 화면 전환 버튼 -> 화이트 노이즈 버튼로 변경예정
-        btnPM.setOnClickListener {
+        // 뒤로가기 (StudyActivity -> HomeFragment로 이동)
+        // 일반 - 10. Study Actitity에서 뒤로가기 두번 클릭해야 HomeFragmet로 이동함
+        Log.d("aaa1","btnBack111")
+        binding.btnBack.setOnClickListener{
+            finish()
+        }
+        Log.d("aaa1","btnBack222")
 
-            // 공부시간 데이터 보내기 (intent (putExtra 넣기) : Activity/Fragment -> Activity)
+        // nowstudytime = subject.studytime
 
-            // 공부시간 데이터 보내기 (Bundle : Activity/Fragment -> Fragment)
-            // 1) 이동할 Fragment 객체 생성
-            // 2) Bundle 객체 생성 및 데이터 저장 -> bundle.putXXXX (name, value)
-            // 3) Fragment 객체.argument = Bundle 객체
-
-            val HomeFragment = HomeFragment()
-            val bundle = Bundle()
-            bundle.putInt("pauseOffset",0)
-            HomeFragment.arguments = bundle     // fragment의 arguments에 담은 bundle을 넘겨줌
-
-           // StudyActivity.supportFragmentManger!!.beginTransaction()
-            //        .replace(R.id.fragment_phone, HomeFragment)
-            //        .commit()
-
-            // val intent = Intent(this@StudyActivity, HomeFragment::class.java)
-            // intent.putExtra("text_view_pomodoro", text_view_pomodoro?.text?.toString())
-            //startActivity(intent)
-
-            val PomodoroFragment : PomodoroFragment = PomodoroFragment()
-            val fragmentManager : FragmentManager = supportFragmentManager
+        Log.e("[TEST]", "${intent.getSerializableExtra("subject") as Subject}")
 
 
-            val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
-            fragmentTransaction.replace(R.id.container, PomodoroFragment)            // 할 일
-            fragmentTransaction.commit()                                        // 끝
+        // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
+        mode_name.append("${subject.name}\n")
+
+
+        // StudyActivity -> TimerFragment로 데이터 넘기기
+        /*val bundle = Bundle()
+        bundle.putSerializable("subject", subject)
+        bundle.putString("documentId", documentId)
+
+        val StopwatchFragment = StopwatchFragment()
+        StopwatchFragment.arguments = bundle*/
+
+        //프래그먼트에서 액티비티로 넘어온 데이터 받기
+        //fragment 클래스의 onCreateView
+
+
+        // 하단 ASMR, 스톱워치 모드 변경, 공부 시간 현황 버튼
+        // ASMR 실행 버튼 (태수님 작업본 연결예정)
+        binding.btnNoise.setOnClickListener {
+            val intent = Intent(this, AsmrActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 스톱워치 모드 변경 버튼
+        binding.btnTimermode.setOnClickListener {
+            val intent = Intent(this, TimersettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        // 공부 시간 현황 버튼
+        binding.btnStudynow.setOnClickListener {
+
         }
 
     }
 
-    // HomeFragment에 공부시간 데이터 전달
+
+    /*
+* */
+
+    /*// 스탑워치 버튼
+    binding.btnTimermode.setOnClickListener {
+        val StopwatchFragment: StopwatchFragment = StopwatchFragment()
+        val fragmentManager: FragmentManager = supportFragmentManager
+
+
+        val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
+        fragmentTransaction.replace(R.id.container, StopwatchFragment)            // 할 일
+        fragmentTransaction.commit()                                        // 끝
+    }*/
+
+
+
+    // 화이트 노이즈 버튼
+    /*btn_wn.setOnClickListener {
+
+        // 공부시간 데이터 보내기 (intent (putExtra 넣기) : Activity/Fragment -> Activity)
+
+        // 공부시간 데이터 보내기 (Bundle : Activity/Fragment -> Fragment)
+        // 1) 이동할 Fragment 객체 생성
+        // 2) Bundle 객체 생성 및 데이터 저장 -> bundle.putXXXX (name, value)
+        // 3) Fragment 객체.argument = Bundle 객체
+
+        // val HomeFragment = HomeFragment()
+        // val bundle = Bundle()
+        // bundle.putInt("pauseOffset",0)
+        // HomeFragment.arguments = bundle     // fragment의 arguments에 담은 bundle을 넘겨줌
+
+
+        val PomodoroFragment : PomodoroFragment = PomodoroFragment()
+        val fragmentManager : FragmentManager = supportFragmentManager
+
+
+        val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
+        fragmentTransaction.replace(R.id.container, PomodoroFragment)            // 할 일
+        fragmentTransaction.commit() // 끝
+
+        Log.d("Study 3",subject.toString())
+    }*/
+
+    /*override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+        return super.onCreateView(name, context, attrs)
+
+        // 뒤로가기 (StudyActivity -> HomeFragment로 이동)
+        // 일반 - 10. Study Actitity에서 뒤로가기 두번 클릭해야 HomeFragmet로 이동함 -> StudyActivity 내 Fragment 영역에 StopwatchFragment 같이 보여주기 선언 안함
+        binding.btnBack.setOnClickListener{
+            finish()
+        }
+    }*/
+
+    /*override fun onBackPressed() {
+        // 뒤로가기 버튼 클릭
+        startActivity(Intent(this, HomeFragment::class.java))
+        //super.onBackPressed()
+        finish()
+    }*/
+
+
+    /*override fun onPause() {
+        super.onPause()
+        binding.btnBack.setOnClickListener{
+            //onBackPressed()
+            startActivity(Intent(this, HomeFragment::class.java))
+            finish()
+        }
+    }*/
+}
+
+
+
+// HomeFragment에 공부시간 데이터 전달
     /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
@@ -117,4 +202,39 @@ class StudyActivity : AppCompatActivity() {
             }
         }
     }*/
-}
+
+
+/*val tx: FragmentTransaction = fragmentManager.beginTransation()
+tx.replace(R.id.fragment, MyFragment()).addToBackStack("tag").commit()*/
+
+/*btn_back.setOnClickListener{
+    onBackPressed()
+}*/
+
+//        binding.btnBack.setOnClickListener{
+//            val HomeFragment: HomeFragment = HomeFragment()
+//            val fragmentManager: FragmentManager = supportFragmentManager
+//
+//
+//            val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
+//            fragmentTransaction.replace(R.id.container, HomeFragment).addToBackStack("tag").commit()        // 할 일
+//
+//        }
+
+
+// 타이머설정 버튼 클릭시 타이머 설정 화면으로 이동
+/*binding.btnTimermode.setOnClickListener {
+    val intent = Intent(this, TimersettingActivity::class.java)
+    startActivity(intent)
+}*/
+
+
+/*binding.btnBack.setOnClickListener {
+    if(getFragmentManager().getBackStackEntryCount() > 0) {
+        getFragmentManager().popBackStack()
+    }
+    else {
+        super.onBackPressed()
+    }
+    finish()
+}*/

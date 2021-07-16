@@ -5,6 +5,15 @@
     <string name="title2">Lite</string>
     <string name="title3">로그인 시 <u>개인정보처리방침</u> 및 <u>서비스이용약관</u>에\n 동의하게 됩니다.</string>
 
+    //music //
+    <string name="music1">화이트 노이즈</string>
+    <string name="music2">모닥불 소리</string>
+    <string name="music3">카페</string>
+    <string name="music4">도서관</string>
+    <string name="music5">파도 소리</string>
+    <string name="music6">빗소리</string>
+
+
     //login //
     <string name="email_id">이메일로 시작하기</string>
     <string name="google_id">구글로 시작하기</string>
@@ -71,6 +80,70 @@
     <string name="flash">플래시</string>
     <string name="app_content_path">Android/media/kr.co.gooroomeelite/gooroomeelite</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_stopwatch">StopwatchActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="service_first">제 1조</string>
+    <string name="service_second">제 2조</string>
+    <string name="service_third">제 3조</string>
+    <string name="service_fourth">제 4조</string>
+    <string name="service_fifth">제 5조</string>
+    <string name="service_sixth">제 6조</string>
+    <string name="service_seventh">제 7조</string>
+    <string name="service_eighth">제 8조</string>
+    <string name="service_nineth">제 9조</string>
+    <string name="service_tenth">제 10조</string>
+
+    <string name="service_firstcontent">이 약관은 “주식회사 구루미(이하 “회사”)”이 제공하는 “구루미 라이트”와 관련하여 회사와 이용자 간의 권리와 의무 및 필요한 사항을 정하는데 그 목적이 있습니다.</string>
+    <string name="service_secondcontent">1. 이 약관에서 사용하는 용어의 정의는 다음과 같습니다.\n\t1) “구루미캠스터디(이하 “서비스”)”란 PC와 모바일에서 카메라를 통해 서로의 공부하는 영상을 공유하고 강의를 준비하는 선생님과 수업을 듣는 학생이 학습할 수 있도록 제공하는 미디어 플랫폼입니다.\n\t2) “이용자“란 본 약관에 동의하고 회사가 제공하는 서비스 이용 자격을 부여 받은 자를 의미합니다.\n\t3) “방장”이란 스터디를 개설하고 운영하는 이용자를 의미합니다.\n\t4) “결제 사업자“란 서비스를 설치하고 결제할 수 있도록 제공하는 전자상거래 제공자 일체(서비스내 결제를 제공하는 사업자 포함)를 말합니다. (예. 이니시스, 구글 플레이스토어, 앱스토어, 카카오페이, 네이버페이, Toss 등)\n\t5) “구룸”이란 이용자가 서비스내 아이템을 구매할 수 있는 서비스내 재화를 의미합니다.\n\t6) “구룸샵”이란 구룸을 통해 이용자가 아이템을 구매할 수 있는 서비스의 기능을 의미합니다.\n7\t) “충전”이란 이용자가 구룸샵의 아이템을 구매하기 위해 회사에서 제공하는 결제수단으로 현금을 구룸으로 전환하는 행위를 말합니다.\n\t8) “환불”이란 이용자가 충전한 구룸을 현금으로 되돌려 받는 것을 말합니다.\n\t9) “탈퇴”란 이용자가 서비스 이용 계약을 종료하는 의사표시를 말합니다.\n2. 이 약관에서 사용하는 용어의 정의는 제1항에서 정하는 것을 제외하고는 관계 법령에서 정하는 바를 따릅니다.</string>
+    <string name="service_thirdcontent">1. 회사는 서비스의 초기화면에 이 약관을 명시합니다.\n2. 이 약관은 이용자가 서비스를 이용함과 동시에 효력이 발생하며, 이 약관에 동의하지 않을 경우 이용자는 서비스 이용계약을 철회할 수 있습니다.\n3. 회사는 이 약관을 관련 법령에 위배되지 않는 범위에서 변경할 수 있습니다.\n4. 변경된 약관은 적용일 및 변경내용, 변경사유 등을 명시하여 적용일 15일 이전(다만, 이용자에게 불리한 약관의 개정의 경우에는 적용일 30일 이전)부터 적용일 전일까지 서비스에 고지한 후 적용일부터 효력이 발생됩니다.\n5. 이용자는 변경된 약관에 동의하지 않을 권리가 있으며, 변경된 약관에 동의하지 않을 경우에는 서비스 이용을 중단하고 탈퇴할 수 있습니다.\n6. 변경된 약관 공지 시 이용자가 회사에 명시적으로 "거부"의 의사표시를 하지 않거나 또는 이용자가 변경된 이용약관의 적용일 이후에도 서비스를 계속 사용하는 경우에는 변경된 약관에 동의한 것으로 간주합니다.</string>
+    <string name="service_fourthcontent">1. 서비스 이용계약은 서비스를 이용하려는 자가 본 약관에 동의하고 서비스를 이용함으로써 성립됩니다.\n2. 청소년(만 19세 미만인 자)이나 피한정후견인, 피성년후견인이 서비스를 이용하려면 법정대리인의 동의를 얻어야 합니다. 또한 연령에 따라 일부 서비스에 대하여 이용이 제한될 수 있습니다.</string>
+    <string name="service_fifthcontent">1. 이용자는 회사가 제공하는 방식을 통해 서비스에 가입할 수 있습니다.\n2. 회사는 서비스에 가입한 이용자에게 닉네임, 고유아이디가 포함된 계정을 제공합니다.\n3. 회사는 계정 정보를 통해 미성년자 여부 확인 등의 이용자 관리업무를 수행합니다.\n4. 이용자는 자신의 계정을 성실히 관리하여야 합니다. 이용자가 본인의 계정을 소홀히 관리하거나 제3자에게 이용을 승낙함으로써 발생하는 손해에 대하여는 이용자에게 책임이 있습니다.</string>
+    <string name="service_sixthcontent">1. 회사는 관계 법령을 준수하고, 이 약관에서 정하는 권리의 행사와 의무의 이행을 신의에 따라 성실하게 수행합니다.\n2. 회사는 계속적이고 안정적인 서비스의 제공을 위하여 최선의 노력을 다합니다.\n3. 회사는 이용자들이 서비스를 편리하게 이용할 수 있도록 최선의 노력을 다합니다.\n4. 회사는 이용자가 제기한 의견이나 불만이 정당하다고 객관적으로 인정될 경우에는 합리적인 기간 내에 신속하게 처리하기 위해 노력합니다.</string>
+    <string name="service_seventhcontent">1. 이용자는 서비스를 본래의 이용 목적 이외의 용도로 사용하거나 다음 각 호에 해당하는 행위를 해서는 안되며, 아래의 항을 위반하는 것으로 의심되는 이용자를 발견할 시 이메일, ‘신고하기’ 등을 통해 신고를 접수하여야 합니다.\n\t1) 다른 이용자의 계정 혹은 타인의 결제 정보를 도용하거나 회사의 관리자를 사칭하는 행위\n\t2) 서비스 이용 중 허위 사실을 기재하여 서비스 운영을 방해하는 행위\n\t3) 회사가 제공한 계정을 타인에게 양도하는 행위\n\t4) 회사의 서비스를 이용하여 얻은 정보를 회사의 사전 승낙없이 복제, 유통하여 상업적으로 이용하는 행위\n\t5) 사기성, 음란성, 사행성, 혐오성 메시지 혹은 음성 등이 담긴 콘텐츠를 방송하거나 게시하는 행위\n\t6) 타인의 명예를 훼손하거나 사이버 불링, 폭력적인 행위를 하는 등 이용자의 정상적인 서비스 이용을 방해하는 행위\n\t7) 저작권을 포함한 지적재산권, 초상권 등 회사 및 제 3자의 기타 권리를 침해하는 행위\n\t8) 타인의 개인정보를 동의없이 수집, 저장, 유포, 게시하는 행위\n\t9) 일반적이지 않은 방식으로 데이터를 조작하여 회사의 서비스 운영을 방해하는 행위\n\t10) 컴퓨터 소프트웨어, 하드웨어, 전기 통신 장비의 정상적인 가동을 방해, 파괴할 목적으로 고안된 소프트웨어 바이러스, 기타 다른 컴퓨터 코드, 파일, 프로그램을 포함하고 있는 자료를 전송, 게시, 유포, 사용하는 행위\n\t11) 서버 해킹, 데이터 유출, 버그 등을 통해 서비스를 변경하거나 회사가 정하지 않은 방식으로 서비스를 이용하는 행위\n\t12) 관계 법령, 서비스이용약관, 운영정책, 공지사항을 위배하는 행위\n\t13) 기타 공공질서 및 미풍양속을 위반하거나 불법적, 부당한 방식의 행동을 하는 행위\n2. 회사는 이용자가 제 1항에 정한 서비스 이용 제한 기준을 위반하여 회사의 서비스에 지장을 초래한 경우, 사전 통보 없이 기간을 정하여 서비스 이용을 제한할 수 있습니다.\n3. 회사는 이용자의 이용 제한이 정당한 경우 이로 인하여 이용자가 입은 손해에 대해 배상하지 않습니다.</string>
+    <string name="service_eighthcontent">1. 이용자가 서비스 내에 게시한 콘텐츠의 저작권은 이용자 본인에게 있습니다.\n2. 서비스 이용 시 다른 이용자 또는 제 3자의 저작권 등 기타 권리를 침해하는 행위는 금지됩니다. 서비스 이용 중 저작권과 관련하여 발생하는 분쟁에 대한 모든 책임은 이용자에게 있습니다.\n3. 회사는 이용자가 게시한 콘텐츠를 국내외에서 제공하는 관련 서비스(홍보 등) 목적으로 사용할 수 있습니다.\n4. 제 3항의 사용범위는 이용자가 서비스 내에 게시한 콘텐츠의 복제, 수정, 전시, 전송, 배포, 출판 및 2차 저작물과 편집 저작물 작성을 포함합니다.\n5. 이용자가 게시한 콘텐츠를 상업적 혹은 제 3항에서 정하지 않은 방식으로 사용할 경우, 회사는 전화, 팩스, 전자 우편 등의 방식으로 이용자에게 동의를 얻을 수 있으며, 별도의 보상을 할 수 있습니다.</string>
+    <string name="service_ninethcontent">1. 회사는 업무상 또는 기술상 특별한 지장이 없는 한 연중무휴 1일 24시간 서비스를 제공합니다.\n2. 회사는 시스템 정기점검 등 서비스 운영상 필요한 경우, 일정기간 동안 서비스를 일시 중지시킬 수 있으며, 이러한 경우 회사는 그 내용 및 시간을 서비스 내에 공지합니다. 다만, 회사가 사전에 통지할 수 없는 부득이한 사유가 있는 경우 사후에 통지할 수 있습니다.\n3. 회사는 새로운 서비스, 각종 버그 패치 등 서비스 운영 또는 기술상 필요한 경우에는 제공하고 있는 서비스의 전부 또는 일부를 수정, 추가, 폐지 등 변경할 수 있습니다. 변경될 서비스의 내용 및 일자 등에 대해서는 서비스 내에 공지함으로써 이용자에 대한 통지를 대체합니다.\n4. 회사는 서비스의 기획이나 운영상 또는 회사의 긴박한 상황 등에 의해 서비스 전부를 중단할 필요가 있는 경우 서비스 내에 이를 공지하고 서비스의 제공을 중단할 수 있습니다. 단, 회사가 통제할 수 없는 사유로 인한 경우 공지없이 서비스가 중단될 수 있습니다.</string>
+    <string name="service_tenthcontent">회사는 본 서비스를 유지하기 위하여 서비스 내에 광고를 게재할 수 있습니다.\n서비스에 게재되는 제3자가 주체인 광고에 이용자가 참여하거나 거래함으로써 발생하는 손실과 손해에 대해서 회사는 어떠한 책임도 부담하지 않습니다.</string>
+
+    <string name="privacy_firstcontent">(주)구루미는 다음의 목적을 위하여 개인정보를 처리하고 있으며, 다음의 목적 이외의 용도로는 이용하지 않습니다.\n\n- 고객 가입의사 확인, 고객에 대한 서비스 제공에 따른 본인 식별․인증, 회원자격 유지․관리, 물품 또는 서비스 공급에 따른 금액 결제, 물품 또는 서비스의 공급․배송 등</string>
+    <string name="privacy_secondcontent">① (주)구루미는 정보주체로부터 개인정보를 수집할 때 동의받은 개인정보 보유․이용기간 또는 법령에 따른 개인정보 보유․이용기간 내에서 개인정보를 처리․보유합니다.\n② 구체적인 개인정보 처리 및 보유 기간은 다음과 같습니다.\n\t- 고객 가입 및 관리 : 서비스 이용계약 또는 회원가입 해지시까지, 다만 채권․채무관계 잔존시에는 해당 채권․채무관계 정산시까지\n\t- 전자상거래에서의 계약․청약철회, 대금결제, 재화 등 공급기록 : 5년</string>
+    <string name="privacy_thirdcontent">(주)구루미는 정보주체의 별도 동의, 법률의 특별한 규정 등 개인정보 보호법 제17조에 해당하는 경우 외에는 개인정보를 제3자에게 제공하지 않습니다.</string>
+    <string name="privacy_fourthcontent">1. 개인정보 열람요구\n2. 개인정보에 오류 등이 있을 경우 정정 요구\n3. 삭제요구\n4. 처리정지 요구\n5. 처리하는 개인정보 항목 (주)구루미는 다음의 개인정보 항목을 처리하고 있습니다.\n- 성명, 생년월일, 이메일 주소\n\t\t6. 개인정보의 파기\n\t\t① (주)구루미는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.\n\t\t② (주)구루미는 다음의 방법으로 개인정보를 파기합니다.\n\t\t- 전자적 파일 : 파일 삭제 및 디스크 등 저장매체 포맷\n\t\t- 수기(手記) 문서 : 분쇄하거나 소각\n7. 개인정보의 안전성 확보조치 (주)구루미는 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.\n\t\t- 관리적 조치 : 내부관리계획 수립․시행, 직원․종업원 등에 대한 정기적 교육\n\t\t- 기술적 조치 : 개인정보처리시스템(또는 개인정보가 저장된 컴퓨터)의 비밀번호 설정 등 접근권한 관리, 백신소프트웨어 등 보안프로그램 설치, 개인정보가 저장된 파일의 암호화\n\t\t- 물리적 조치 : 개인정보가 저장․보관된 장소의 시건, 출입통제 등\n8. 개인정보 자동 수집 장치의 설치∙운영 및 거부에 관한 사항\n\t\t① (주)구루미는 이용자에게 개별적인 맞춤서비스를 제공하기 위해 이용정보를 저장하고 수시로 불러오는 ‘쿠기(cookie)’를 사용합니다.\n\t\t② 쿠키는 웹사이트를 운영하는데 이용되는 서버(http)가 이용자의 컴퓨터 브라우저에게 보내는 소량의 정보이며 이용자들의 PC 컴퓨터내의 하드디스크에 저장되기도 합니다.\n\t\t가. 쿠키의 사용목적: 이용자가 방문한 각 서비스와 웹 사이트들에 대한 방문 및 이용형태, 인기 검색어, 보안접속 여부, 등을 파악하여 이용자에게 최적화된 정보 제공을 위해 사용됩니다.\n\t\t나. 쿠키의 설치∙운영 및 거부 : 웹브라우저 상단의 도구>인터넷 옵션>개인정보 메뉴의 옵션 설정을 통해 쿠키 저장을 거부 할 수 있습니다.\n\t\t다. 쿠키 저장을 거부할 경우 맞춤형 서비스 이용에 어려움이 발생할 수 있습니다.\n\t\t9. 개인정보 보호책임자 (주)구루미는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제를 처리하기 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</string>
+
+
+    <string name="opensource_start">This application is Copyright © Gooroomee All rights reserved.</string>
+
+    <string name="opensource_first">Glide</string>
+    <string name="opensource_second">Firebase</string>
+    <string name="opensource_third">Core</string>
+    <string name="opensource_fourth">Material-components-android</string>
+    <string name="opensource_fifth">TedPermission</string>
+    <string name="opensource_sixth">ColorPicker</string>
+    <string name="opensource_seventh">MPAndroidChart</string>
+    <string name="opensource_eighth">Glide-transformations</string>
+    <string name="opensource_nineth">CircleIndicator</string>
+    <string name="opensource_tenth">Instacapture</string>
+    <string name="opensource_eleventh">Dexter</string>
+
+
+    <string name="opensource_firstcontent">https://github.com/bumptech/glide</string>
+    <string name="opensource_secondcontent">https://firebase.google.com/docs/android/setup?hl=ko</string>
+    <string name="opensource_thirdcontent">https://developer.android.com/jetpack/androidx/releases/core?hl=ko</string>
+    <string name="opensource_fourthcontent">https://github.com/material-components/material-components-android/releases</string>
+    <string name="opensource_fifthcontent">https://github.com/ParkSangGwon/TedPermission</string>
+    <string name="opensource_sixthcontent">https://github.com/Dhaval2404/ColorPicker</string>
+    <string name="opensource_seventhcontent">https://github.com/PhilJay/MPAndroidChart</string>
+    <string name="opensource_eighthcontent">https://github.com/wasabeef/glide-transformations</string>
+    <string name="opensource_ninethcontent">https://github.com/ongakuer/CircleIndicator</string>
+    <string name="opensource_tenthcontent">https://github.com/tarek360/Instacapture</string>
+    <string name="opensource_eleventhcontent">https://github.com/Karumi/Dexter</string>
 
 
 </resources>

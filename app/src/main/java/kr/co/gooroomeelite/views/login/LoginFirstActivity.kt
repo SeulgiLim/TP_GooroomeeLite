@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -24,14 +26,22 @@ class LoginFirstActivity : AppCompatActivity() {
     var email: String? = null
     var firestore: FirebaseFirestore? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginfirstBinding.inflate(layoutInflater)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        val passRule = Regex("^[A-Za-z0-9]{8,20}$")
+        val passRule2 = Regex("^(?=.*[A-Za-z])(?=.*[0-9]).{8,20}.$")
+
         setContentView(binding.root)
         email = intent.getStringExtra("email")
+
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         //백버튼 활성화
         binding.icBack.setOnClickListener {
@@ -88,38 +98,46 @@ class LoginFirstActivity : AppCompatActivity() {
 
         binding.btnLoginNext.setOnClickListener {
 
-            if (binding.editTextNewPassword.text.toString() != binding.editTextNewPassword2.text.toString()) {
-                if(binding.editTextNewPassword.text.toString().length <8){
-                    binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
+
+            if (binding.editTextNewPassword.text.matches(passRule2)){
+                if (binding.editTextNewPassword.text.toString() != binding.editTextNewPassword2.text.toString()) {
+                    if(binding.editTextNewPassword.text.toString().length <8){
+                        binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
+                        binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
+                        binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+                        binding.editTextNewPassword.hasFocus()
+                        binding.editTextNewPassword2.clearFocus()
+                    }else{
+                        binding.tvError.text = "비밀번호가 일치하지 않습니다."
+                        binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                    }
+                }
+                else if (binding.editTextNewPassword.text.toString().isEmpty() or binding.editTextNewPassword2.text.toString().isEmpty()){
+                    binding.tvError.text = "비밀번호를 입력해주세요."
                     binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
-                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
-                    binding.editTextNewPassword.hasFocus()
-                    binding.editTextNewPassword2.clearFocus()
-                }else{
-                    binding.tvError.text = "비밀번호가 일치하지 않습니다."
-                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_red)
+                }
+                else {
+                    if(binding.editTextNewPassword.text.toString().length <8){
+                        binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
+                        binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
+                    }
+                    else{
+                        binding.tvError.text = ""
+                        binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
+                        val intent = Intent(this, LoginNicknameActivity::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("email",email)
+                        bundle.putString("password",binding.editTextNewPassword2.text.toString())
+                        intent.putExtra("bundle",bundle)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
             }
-            else if (binding.editTextNewPassword.text.toString().isEmpty() or binding.editTextNewPassword2.text.toString().isEmpty()){
-                binding.tvError.text = "비밀번호를 입력해주세요."
+            else{
                 binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
-            }
-            else {
-                if(binding.editTextNewPassword.text.toString().length <8){
-                    binding.tvError.text = "비밀번호는 최소 8자리 이상입니다."
-                    binding.editTextNewPassword.setBackgroundResource(R.drawable.btn_red)
-                }
-                else{
-                    binding.tvError.text = ""
-                    binding.editTextNewPassword2.setBackgroundResource(R.drawable.btn_white)
-                    val intent = Intent(this, LoginNicknameActivity::class.java)
-                    val bundle = Bundle()
-                    bundle.putString("email",email)
-                    bundle.putString("password",binding.editTextNewPassword2.text.toString())
-                    intent.putExtra("bundle",bundle)
-                    startActivity(intent)
-                    finish()
-                }
+                binding.tvError.text = "비밀번호 양식을 확인해 주세요."
+                binding.editTextNewPassword2.clearFocus()
             }
         }
     }
@@ -139,6 +157,12 @@ class LoginFirstActivity : AppCompatActivity() {
 
                 false -> v.setBackgroundResource(R.drawable.btn_white)
             }
+        }
+    }
+
+    fun hideKeyboard(v: View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
         }
     }
 }

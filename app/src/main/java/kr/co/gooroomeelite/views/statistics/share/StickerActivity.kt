@@ -90,6 +90,8 @@ class StickerActivity : AppCompatActivity() {
         //공유하기
         binding.shareButtons.setOnClickListener{ takeAndShareScreenShot(pictures.toString()) }
 
+
+
         //현재시간
 //        binding.nowTime.setText(textformatterString)
         getTotalStudy()
@@ -197,8 +199,7 @@ class StickerActivity : AppCompatActivity() {
         startActivity(Intent.createChooser(shareIntent, "Send to"))
         return shareButtonViewImage
     }
-
-
+    
     override fun onBackPressed() {
         // 뒤로가기 버튼 클릭
         startActivity(Intent(this, ShareActivity::class.java))

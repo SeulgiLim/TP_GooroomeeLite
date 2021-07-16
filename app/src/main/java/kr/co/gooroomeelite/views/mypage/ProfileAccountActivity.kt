@@ -8,15 +8,9 @@ package kr.co.gooroomeelite.views.mypage
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -76,7 +70,7 @@ class ProfileAccountActivity : AppCompatActivity() {
             val contentDTO = ds.toObject(ContentDTO::class.java)
             val nickname = contentDTO!!.nickname
             val profileImageUrl = contentDTO!!.profileImageUrl
-            binding.edittext.setText(nickname)
+            binding.edittext.text = nickname
             if (profileImageUrl != null) {
                 Glide.with(this).load(profileImageUrl).into(binding.imageView2)
             } else {
@@ -105,12 +99,6 @@ class ProfileAccountActivity : AppCompatActivity() {
                     .child(filename).downloadUrl.addOnSuccessListener {
                         Glide.with(this).load(it).into(binding.imageView2)
                     }
-                    .addOnSuccessListener {
-                        Toast.makeText(this, "다운로드 되었습니다.", Toast.LENGTH_LONG).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "다운로드실패 되었습니다.", Toast.LENGTH_LONG).show()
-                    }
             }
     }
     private fun setting() {
@@ -118,7 +106,7 @@ class ProfileAccountActivity : AppCompatActivity() {
             val contentDTO = ds.toObject(ContentDTO::class.java)
             val check = contentDTO!!.google
             if (check) {
-                binding.imageView.setImageResource(R.drawable.ic_google)
+                binding.imageView.setImageResource(R.drawable.ic_google2)
             } else {
                 binding.imageView.setImageResource(R.drawable.ic_gooroomee_logo)
             }

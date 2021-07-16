@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ic_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="29dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
         android:clickable="true"
@@ -36,46 +36,57 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
         android:layout_marginTop="36dp"
+        app:cardBackgroundColor="#EEEEEE"
         app:cardCornerRadius="100dp"
+        app:cardElevation="0dp"
+        android:padding="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="100dp">
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:clickable="false"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_gooroomee_logo" />
+
+    </androidx.cardview.widget.CardView>
+
     </androidx.cardview.widget.CardView>
 
 
-        <EditText
+        <TextView
             android:id="@+id/edittext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="닉네임"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:textAlignment="center"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView4"
-            android:cursorVisible="false"
             android:enabled="false"/>
 
         <TextView
             android:id="@+id/btn_modify_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:text="수정"
             android:textColor="@color/skyBlue"
             app:layout_constraintEnd_toEndOf="parent"
@@ -102,6 +113,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="내 계정"
+            android:textStyle="bold"
+            android:textSize="12sp"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -126,22 +139,17 @@
                 android:gravity="center_vertical"
                 android:layout_marginTop="3dp"
                 android:text=""
-                android:textSize="19sp"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 android:textColor="@color/black" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="100dp">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_gooroomee_logo" />
-            </androidx.cardview.widget.CardView>
+                    app:srcCompat="@drawable/ic_gooroomee_logo2" />
 
         </LinearLayout>
 

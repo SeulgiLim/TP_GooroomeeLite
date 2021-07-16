@@ -6,13 +6,18 @@ package kr.co.gooroomeelite.views.login
  * @desc
  */
 import android.content.Intent
+import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_loginemail.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginemailBinding
 
@@ -20,11 +25,14 @@ class LoginEmailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginemailBinding
     var auth: FirebaseAuth? = null
     var storage: FirebaseStorage? = null
+    var imm : InputMethodManager? = null
     private var firestore: FirebaseFirestore? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginemailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        imm = getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as InputMethodManager?
 
         // Firebase Database
         firestore = FirebaseFirestore.getInstance()
@@ -37,6 +45,7 @@ class LoginEmailActivity : AppCompatActivity() {
         binding.icBack.setOnClickListener {
             onBackPressed()
         }
+
 
         binding.editTextTextEmailAddress.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {
@@ -54,6 +63,7 @@ class LoginEmailActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+
         binding.btnLoginNext.setOnClickListener {
             val email = binding.editTextTextEmailAddress.text.toString()
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.editTextTextEmailAddress.text.toString())
@@ -82,9 +92,15 @@ class LoginEmailActivity : AppCompatActivity() {
                     }
                 }
             }
-
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        keyboard()
+
+    }
+
     private fun changecolor() {
         binding.editTextTextEmailAddress.setOnFocusChangeListener { v, hasFocus ->
             when (hasFocus) {
@@ -92,6 +108,22 @@ class LoginEmailActivity : AppCompatActivity() {
 
                 false -> v.setBackgroundResource(R.drawable.btn_white)
             }
+        }
+    }
+
+    fun keyboard() {
+        with(binding) {
+            editTextTextEmailAddress.apply {
+                setOnEditorActionListener { v, actionId, event ->
+                    val inputManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputManager.hideSoftInputFromWindow(binding.editTextTextEmailAddress.windowToken,0)
+                }
+            }
+        }
+    }
+    fun hideKeyboard(v:View){
+        if (v!=null){
+            imm?.hideSoftInputFromWindow(v.windowToken,0)
         }
     }
 }

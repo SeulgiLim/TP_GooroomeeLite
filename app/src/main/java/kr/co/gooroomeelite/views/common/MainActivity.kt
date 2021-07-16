@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.login.LoginActivity
@@ -19,6 +20,7 @@ import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 @RequiresApi(Build.VERSION_CODES.Q)
 class MainActivity : AppCompatActivity() {
     var mBackWait : Long = 0
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,17 +31,28 @@ class MainActivity : AppCompatActivity() {
 
         replaceFragment(homeFragment)
 
-        val bottomNavigationView
-        = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-
-        bottomNavigationView.setOnNavigationItemSelectedListener{
-            when(it.itemId){
-                R.id.home -> replaceFragment(homeFragment)
-                R.id.statistics-> replaceFragment(statisticsFragment)
-                R.id.mypage-> replaceFragment(mypageFragment)
+//        bottomNavigationView.setOnNavigationItemSelectedListener{
+//            when(it.itemId){
+//                R.id.home -> replaceFragment(homeFragment)
+//                R.id.statistics-> replaceFragment(statisticsFragment)
+//                R.id.mypage-> replaceFragment(mypageFragment)
+//            }
+//            true
+//        }
+        fun setView() {
+            with(bottomNavigationView) {
+                selectedItemId = R.id.home
+                setOnNavigationItemSelectedListener {
+                    when (it.itemId) {
+                        R.id.home -> replaceFragment(homeFragment)
+                        R.id.statistics -> replaceFragment(statisticsFragment)
+                        R.id.mypage -> replaceFragment(mypageFragment)
+                    }
+                    true
+                }
             }
-            true
         }
+        setView()
     }
 
     private fun replaceFragment(fragment: Fragment) {
