@@ -26,14 +26,12 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/share_cancel"
-            android:text="취소"
-            android:textColor="@color/share_delete"
-            android:background="#00ff0000"
-            android:textSize="14dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+         <ImageView
+             android:layout_gravity="center"
+             android:layout_marginLeft="16dp"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

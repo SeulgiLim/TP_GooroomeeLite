@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -195,5 +196,12 @@ class StickerActivity : AppCompatActivity() {
         }
         startActivity(Intent.createChooser(shareIntent, "Send to"))
         return shareButtonViewImage
+    }
+
+
+    override fun onBackPressed() {
+        // 뒤로가기 버튼 클릭
+        startActivity(Intent(this, ShareActivity::class.java))
+        finish()
     }
 }
