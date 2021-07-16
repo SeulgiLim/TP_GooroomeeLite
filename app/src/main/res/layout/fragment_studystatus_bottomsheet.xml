@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="430dp"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <!-- 바텀시트 이름 (공부 시간 현황) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/ic_view_study"
+        />
+
+
+    <!--
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:layout_marginLeft="21dp"
+        android:gravity="center"
+        android:text="공부 시간 현황 "
+        android:textColor="#444444"
+        android:textSize="14dp"
+        android:fontFamily="@font/karlofont"
+        />
+
+    <Button
+        android:id="@+id/btn_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample button"
+        android:layout_margin="20dp" />
+
+    <Button
+        android:id="@+id/btn_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample button2"
+        android:layout_margin="20dp"
+        />
+
+    -->
+
+</LinearLayout>

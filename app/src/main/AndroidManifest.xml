@@ -31,6 +31,7 @@
             android:name=".views.home.StudyActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
         <service
             android:name=".utils.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>

@@ -12,10 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Chronometer
-import androidx.annotation.NonNull
+import android.widget.Chronometer.OnChronometerTickListener
 import androidx.annotation.Nullable
-import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.adapters.ViewBindingAdapter.setOnClick
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
@@ -89,9 +87,19 @@ class StopwatchFragment : Fragment() {
             if (elapsedMillis > 3600000L) {
                 stopwatch.format = "0%s"
             } else {
-                stopwatch.format = "00:%s"
+                stopwatch.format = "00 : %s"
             }
         }
+
+        /*stopwatch?.setText("00 : 00 : 00")
+        stopwatch?.setOnChronometerTickListener(OnChronometerTickListener { chronometer ->
+            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
+            if (elapsedMillis.length == 5) {
+                chronometer.text = "00 : $elapsedMillis"
+            } else if (elapsedMillis.length == 7) {
+                chronometer.text = "0 $elapsedMillis"
+            }
+        })*/
 
         /*// buttonStartPause 클릭시 상세동작
         buttonStartPause?.setOnClickListener(View.OnClickListener {                                     // buttonStartPause 클릭시
@@ -497,4 +505,3 @@ class StopwatchFragment : Fragment() {
 }
 
  */
-
