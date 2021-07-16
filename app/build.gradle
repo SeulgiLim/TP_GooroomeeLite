@@ -126,6 +126,8 @@ dependencies {
 
     //LocalDataTime
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.9")
+    //calendar
+    implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
 
 
     testImplementation 'junit:junit:4.+'

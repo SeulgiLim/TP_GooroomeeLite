@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,14 +30,14 @@
          <ImageView
              android:layout_gravity="center"
              android:layout_marginLeft="16dp"
-             android:layout_width="wrap_content"
-             android:layout_height="match_parent"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
              />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="공유"
+            android:text="사진 공유"
             android:textColor="@color/share_picture"
             android:textSize="15dp"
             android:gravity="center"
@@ -45,160 +46,185 @@
              android:id="@+id/close"
              android:layout_gravity="center"
              android:layout_marginRight="16dp"
-             android:layout_width="wrap_content"
-             android:layout_height="match_parent"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
              android:src="@drawable/ic_close"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintDimensionRatio="1"
-        android:background="@drawable/background_share_image_sheet"
-        >
+        app:layout_constraintVertical_bias="0.47000003">
+
+        <!--    <FrameLayout-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="0dp"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintDimensionRatio="1"-->
+        <!--        android:layout_marginLeft="20dp"-->
+        <!--        android:layout_marginRight="20dp"-->
+        <!--        android:background="@drawable/background_share_image_sheet">-->
 
         <!--  카메라 사진    -->
         <FrameLayout
             android:id="@+id/previewStickerImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_share_image_sheet"
-            android:layout_gravity="center">
+            android:layout_height="match_parent">
 
             <!-- 이미지 찍힌 거 -->
             <ImageView
                 android:id="@+id/imageCapture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:scaleType="fitXY"
-                android:background="@drawable/background_share_image_sheet" />
+                android:scaleType="fitXY" />
+
+<!--            android:background = "@color/red"-->
+<!--                android:background="@drawable/background_share_image_sheet"/>-->
+
             <!-- 구루미 스티커    -->
             <FrameLayout
-                android:background="@drawable/background_share_image_sheet"
                 android:id="@+id/sticker_container"
+                android:background="@drawable/background_share_image_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <ImageView
-                    android:layout_width="34dp"
-                    android:layout_height="20dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="18dp"
-                    android:src="@drawable/ic_group" />
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="21dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="18dp"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="8"
+                        android:shadowColor="#40000000"
+                        android:src="@drawable/ic_group" />
+
+                    <TextView
+                        android:id="@+id/localTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|top"
+                        android:layout_marginTop="13dp"
+                        android:fontFamily="@font/helveticaneueltpro65md"
+                        android:text="2021.7.15. THU"
+                        android:textColor="@color/white"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="8"
+                        android:shadowColor="#40000000"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right|bottom"
-                    android:layout_marginRight="14dp"
+                    android:layout_gravity="center|bottom"
                     android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/hour_studytime"
-                        android:layout_gravity="right"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:text="오늘 총 공부 시간"
                         android:textColor="@color/white"
-                        android:text="12h"
-                        android:textSize="36dp"
+                        android:textSize="14dp"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="8"
+                        android:shadowColor="#40000000"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/minute_studytime"
-                        android:layout_gravity="right"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="23m"
-                        android:textColor="@color/white"
-                        android:textSize="36dp"
-                        android:textStyle="bold" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/hour_studytime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/helveticaneueltpro65md"
+                            android:text="12"
+                            android:textColor="@color/white"
+                            android:textSize="44dp"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="8"
+                            android:shadowColor="#40000000"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="2dp"
+                            android:fontFamily="@font/helveticaneueltpro45ligte"
+                            android:text="시간   "
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="8"
+                            android:shadowColor="#40000000"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/minute_studytime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:fontFamily="@font/helveticaneueltpro65md"
+                            android:text="34"
+                            android:textColor="@color/white"
+                            android:textSize="44dp"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="8"
+                            android:shadowColor="#40000000"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="2dp"
+                            android:fontFamily="@font/helveticaneueltpro45ligte"
+                            android:text="분"
+                            android:shadowDx="0"
+                            android:shadowDy="0"
+                            android:shadowRadius="8"
+                            android:shadowColor="#40000000"
+                            android:textColor="@color/white"
+                            android:textSize="24dp" />
+                    </LinearLayout>
                 </LinearLayout>
-
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="left|bottom"-->
-<!--                    android:layout_marginLeft="10dp"-->
-<!--                    android:layout_marginBottom="20dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/study_time_image"-->
-<!--                        android:layout_width="34dp"-->
-<!--                        android:layout_height="35dp"-->
-<!--                        android:src="@drawable/ic_baseline_timelapse_24" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/study_time"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:text="10:23"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="25dp"-->
-<!--                        android:textStyle="bold" />-->
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center_horizontal|bottom"-->
-<!--                    android:layout_marginBottom="20dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/now_time_image"-->
-<!--                        android:layout_width="34dp"-->
-<!--                        android:layout_height="35dp"-->
-<!--                        android:src="@drawable/ic_baseline_access_time_24" />-->
-
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/now_time"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="25dp"-->
-<!--                        android:textStyle="bold" />-->
-<!--                </LinearLayout>-->
-
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="right|bottom"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    android:layout_marginBottom="20dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/start_end_time_image"-->
-<!--                        android:layout_width="34dp"-->
-<!--                        android:layout_height="35dp"-->
-<!--                        android:src="@drawable/ic_baseline_timeline_24" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/start_end_time"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="5dp"-->
-<!--                        android:text="8:20"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="25dp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                </LinearLayout>-->
-
             </FrameLayout>
         </FrameLayout>
     </FrameLayout>
@@ -210,8 +236,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/share_buttons"

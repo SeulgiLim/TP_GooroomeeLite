@@ -146,7 +146,7 @@ class DayFragment : Fragment() {
                 }
             }
 
-        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn)
+        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleOneLine)
 
         binding.recyclerViewDay.apply {
             layoutManager = LinearLayoutManager(
@@ -208,28 +208,36 @@ class DayFragment : Fragment() {
     private fun moveCalendarByDay(
         calendarDay: TextView,
         calRightBtn: ImageButton,
-        calLeftBtn: ImageButton
+        calLeftBtn: ImageButton,
+        title : TextView
     ) {
-
         // 현재 날짜/시간 가져오기
         val dateNow: LocalDateTime = LocalDateTime.now()
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val titleformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M"+"월 "+"dd"+"일에")
 
         var count: Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
 
-        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
+        title.text = "오늘"
+       dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
             count++
             val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = dayPlus.format(textformatter).toString()
+            title.text = dayPlus.format(titleformatter).toString()
         }
 
         calLeftBtn.setOnClickListener {
             count--
             val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = minusDay.format(textformatter).toString()
+            title.text = minusDay.format(titleformatter).toString()
         }
+        if(dateNow == ){
+            title.text = "오늘"
+        }
+
     }
 
     private fun initChart(chart: BarChart) {
@@ -328,7 +336,7 @@ class DayFragment : Fragment() {
                     valueFormatter = object : ValueFormatter() {
                         private val mFormat: DecimalFormat = DecimalFormat("###")
                         override fun getFormattedValue(value: Float): String {
-                            return mFormat.format(value) + "tlrks"
+                            return mFormat.format(value) + ""
                         }
                     }
                 }
