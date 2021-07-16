@@ -68,8 +68,11 @@ class ProfileUpdateActivity : AppCompatActivity() {
             binding.edittext.setText(nickname)
             if (profileImageUrl != null) {
                 Glide.with(this).load(profileImageUrl).into(binding.imageView2)
+
+                binding.imageView2.setColorFilter(R.color.deam)
             } else {
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
+                binding.imageView2.setColorFilter(R.color.deam)
             }
         }
 
@@ -125,6 +128,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
             defaultButton.setOnClickListener {
                 //기본값
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
+                binding.imageView2.setColorFilter(R.color.deam)
                 contentUploadDefault()
             }
         }
@@ -215,6 +219,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 //This is path to the selected image
                 photoUri = data?.data
                 binding.imageView2.setImageURI(photoUri)
+                binding.imageView2.setColorFilter(R.color.deam)
             } else {
                 //Exit the addPhotoActivity if you leave the album without selecting it
                 finish()
@@ -243,6 +248,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 storageRef!!.child("profile_img/$filename")
                     .child(filename).downloadUrl.addOnSuccessListener {
                         Glide.with(this).load(it).into(binding.imageView2)
+                        binding.imageView2.setColorFilter(R.color.deam)
                     }
             }
     }

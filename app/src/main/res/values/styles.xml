@@ -42,4 +42,10 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/splashcolor</item>
+        <item name="titleTextColor">@color/transparent</item>
+    </style>
+
 </resources>

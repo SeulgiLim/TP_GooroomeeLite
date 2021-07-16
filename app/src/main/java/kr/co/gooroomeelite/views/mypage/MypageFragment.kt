@@ -46,7 +46,6 @@ import java.io.File
 class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
     private lateinit var binding : FragmentMypageBinding
-
     var storage : FirebaseStorage? = null
     var auth : FirebaseAuth? = null
     var storageRef : StorageReference? = null
@@ -67,7 +66,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentMypageBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mypage,container,false)
         binding.my = this
@@ -75,10 +73,8 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         auth = FirebaseAuth.getInstance()
         uid = auth?.currentUser?.uid
         email = auth!!.currentUser?.email
-
         return binding.root
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -88,7 +84,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         //로그아웃하기
         binding.btnLogout.setOnClickListener {
             val mLogoutView =
@@ -99,8 +94,6 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             }
             val okButton = mLogoutView.findViewById<Button>(R.id.btn_logout_ok)
             val cancelButton = mLogoutView.findViewById<Button>(R.id.btn_logout_no)
-
-
             okButton.setOnClickListener {
                 //로그아웃
                 if(LoginUtils.isLogin()){
@@ -118,17 +111,10 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
                 mAlertDialog.dismiss()
             }
         }
-
         //구루미 플레이스토어 이동
-
-
-
         binding.btnGooroomee.setOnClickListener {
-
             playgooroomee()
         }
-
-
         //최신버전 비교하기
 
 
@@ -139,22 +125,18 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             intent01.putExtra("destinationUid",uid)
             startActivity(intent01)
         }
-
         binding.btnTermsOfService.setOnClickListener {
             val intent02 = Intent(owner,TermsOfServiceActivity::class.java)
             startActivity(intent02)
         }
-
         binding.btnPrivacyPolicy.setOnClickListener {
             val intent03 = Intent(owner,PrivacyPolicyActivity::class.java)
             startActivity(intent03)
         }
-
         binding.btnOpenSource.setOnClickListener {
             val intent04 = Intent(owner,OpenSourceActivity::class.java)
             startActivity(intent04)
         }
-
         binding.btnWithdrawal.setOnClickListener {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
@@ -169,6 +151,7 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         else
         downloadImgNickName()
     }
+
     private fun downloadImgNickName(){
         val num = uid
         var filename = "profile$num.jpg"
@@ -178,12 +161,11 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
             if (it!=null){
                 Glide.with(owner).load(it).into(binding.imageView)
             }
-            else{
-                binding.imageView.setBackgroundResource(R.drawable.ic_gooroomee_logo)
-            }
+        }.addOnFailureListener {
+            binding.imageView.setBackgroundResource(R.drawable.ic_gooroomee_logo)
         }
-
     }
+
     private fun setting(){
         firestore!!.collection("users").document(getUid()!!).get().addOnSuccessListener { ds ->
             if (ds!=null){
@@ -192,10 +174,11 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
                 val email = contentDTO!!.userId
                 binding.emailaddress.text=email
                 binding.nickname.text=nickname
+                binding.nickname.background=null
+                binding.emailaddress.background=null
             }
         }
     }
-
 
     private fun playgooroomee(){
         val packageName = "com.nhn.android.search"

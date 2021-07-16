@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.common.SplashActivity">
+    tools:context=".views.common.SplashActivity"
+    android:background="@color/splashcolor">
 
     <ImageView
         android:id="@+id/imageView5"
@@ -14,5 +15,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_gooroomee_logo" />
+        app:srcCompat="@drawable/ic_splash" />
 </androidx.constraintlayout.widget.ConstraintLayout>

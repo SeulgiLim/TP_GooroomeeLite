@@ -17,9 +17,12 @@ import androidx.annotation.Nullable
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.adapters.ViewBindingAdapter.setOnClick
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.model.ContentDTO
+import kr.co.gooroomeelite.utils.LoginUtils
 import kotlin.math.truncate
 
 
@@ -44,6 +47,7 @@ class StopwatchFragment : Fragment() {
     private var running = false                                                                     // 스탑워치 실행중
     private var curTime: Long = 0                                                                   // 공부 진행시간
 
+    var firestore : FirebaseFirestore? = null
     val intent = Intent()
 
     @SuppressLint("ClickableViewAccessibility")
@@ -56,6 +60,7 @@ class StopwatchFragment : Fragment() {
         val v = inflater.inflate(R.layout.fragment_stopwatch, container, false)
         val subject = arguments?.getSerializable("subject")
         val documentId = arguments?.getString("documentId")
+        val firestore = FirebaseFirestore.getInstance()
         stopwatch = v.findViewById((R.id.stopwatch))
         stopwatch?.setBase(SystemClock.elapsedRealtime())
 
@@ -152,14 +157,16 @@ class StopwatchFragment : Fragment() {
         })
 
         buttonEnd.setOnClickListener(View.OnClickListener {
+            studytimeupdate()
             //기록 종료를 눌렀을 때 해야하는 이벤트 처리
-            Log.e("[TEST23]", "${subject.toString()} ${documentId}")
             val intent = Intent(requireContext(), StudyEndActivity::class.java)
             intent.putExtra(STUDY_TIME, curTime)
             intent.putExtra("subject", subject)
             startActivity(intent)
-
             resetStopwatch()
+            //파이어베이스에 현재 공부한 시간 업데이트
+            activity?.finish()
+
         })
         // }
 
@@ -295,6 +302,16 @@ class StopwatchFragment : Fragment() {
         // 어떤 클래스의 모든 인스턴스가 공유하는 객체를 만들고 싶을 때 사용 (java - static 효과)
         private const val SW_PREFS = "sWPrefs"
         private const val CUR_TIME = "curTime"
+    }
+
+    private fun studytimeupdate() {
+        firestore?.collection("users")?.document(LoginUtils.getUid()!!)?.get()
+            ?.addOnSuccessListener {
+                val subject = it.toObject(ContentDTO::class.java)
+                val studytime = curTime.toInt()
+                subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
+                firestore!!.collection("users").document(LoginUtils.getUid()!!).update("todaystudytime",subject?.todaystudytime)
+            }
     }
 }
 

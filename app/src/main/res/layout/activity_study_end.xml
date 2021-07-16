@@ -183,6 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
                 android:text="8시간 32분"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -191,12 +192,22 @@
                 app:layout_constraintTop_toBottomOf="@+id/view8" />
 
             <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_studygoal"
+                app:layout_constraintStart_toEndOf="@+id/tv_studyend_studytotal"
+                app:layout_constraintTop_toTopOf="@+id/tv_studyend_studytotal" />
+
+            <TextView
                 android:id="@+id/tv_studygoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="3dp"
                 android:layout_marginEnd="22dp"
-                android:text="/ 12시 20분"
+                android:text="12시 20분"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_studyend_studytotal" />
@@ -250,14 +261,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_studyend" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

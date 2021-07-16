@@ -25,9 +25,10 @@ class StudyEndActivity : AppCompatActivity() {
         setContentView(binding.root)
         firestore = FirebaseFirestore.getInstance()
         // 측정된 공부시간 데이터 추출
-        val nowstudytime = intent.getLongExtra(STUDY_TIME, 0L)
-        // 가져온 데이터 (공부진행시간 제대로 가져왔는지 보여주기 Test)
-        textView12.append("공부진행시간 : ${nowstudytime}\n")
+        val nowstudytime = intent.getLongExtra(STUDY_TIME, 0L).toInt()
+        binding.btnStudyend.setOnClickListener{
+            finish()
+        }
 
 
 //        bundle = intent.getBundleExtra("bundle")
@@ -44,22 +45,33 @@ class StudyEndActivity : AppCompatActivity() {
     private fun setting() {
         firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener {
             val subject = it.toObject(ContentDTO::class.java)
-            val studytime = 20
+//            val studytime = 20
             val subjectname = intent.getSerializableExtra("subject") as kr.co.gooroomeelite.entity.Subject
-            subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
+//            subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
             val today = subject?.todaystudytime!!
             val goal = subject?.studyTime!!
-            firestore!!.collection("users").document(getUid()!!).update(
-                "todaystudytime",
-                subject?.todaystudytime
-            )
+//            firestore!!.collection("users").document(getUid()!!).update(
+//                "todaystudytime",
+//                subject?.todaystudytime
+//            )
             binding.tvStudyendStudytotal.text = subject.todaystudytime.toString()
-            binding.tvStudygoal.text = subject.studyTime.toString()
+            binding.tvStudygoal.text =
+                "%02d".format(goal.div(60)) + "시간 " + "%02d".format(
+                    goal.rem(
+                        60
+                    )
+                ) + "분"
             binding.tvStudyendSubject.text = subjectname.name
             val percent: Int = (((today * 100 / (goal)) / 100.toFloat()) * 100).toInt()
             if (percent >= 100) {
                 binding.tvStudyendSecond.text = "100%"
                 binding.seekBar.progress = percent
+                binding.tvStudyendStudytotal.text =
+                    "%02d".format(today.div(60)) + "시간 " + "%02d".format(
+                        today.rem(
+                            60
+                        )
+                    ) + "분"
             } else {
                 binding.tvStudyendSecond.text = "${percent}%"
                 binding.tvStudyendStudytotal.text =

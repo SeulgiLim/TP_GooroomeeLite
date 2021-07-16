@@ -51,13 +51,20 @@
         android:layout_height="65dp"
         android:layout_gravity="center"
         app:cardCornerRadius="100dp">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_gooroomee_logo" />
+                android:src="@drawable/ic_gooroomee_logo" />
+        <ImageView
+            android:id="@+id/ic_camera"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_camera" />
         </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>

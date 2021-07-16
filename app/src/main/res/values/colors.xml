@@ -36,6 +36,7 @@
 
 
     <color name="button">#feeeeb</color>
+    <color name="deam">#88000000</color>
     <color name="divide">#F5F5F5</color>
     <color name="divide2">#EEEEEE</color>
     <color name="button10">#F7F7F7</color>
@@ -65,6 +66,7 @@
     <color name="share_btn">#449EF6</color>
 
     <color name="week_bar_color">#339BFF</color>
+    <color name="splashcolor">#0FA9FF</color>
 
 
 

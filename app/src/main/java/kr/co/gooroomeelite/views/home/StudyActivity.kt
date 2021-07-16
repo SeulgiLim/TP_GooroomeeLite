@@ -20,7 +20,7 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStudyBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.views.login.LoginActivity
-
+import kr.co.gooroomeelite.views.mypage.MusicActivity
 
 
 class  StudyActivity : AppCompatActivity() {
@@ -84,7 +84,7 @@ class  StudyActivity : AppCompatActivity() {
         // 하단 ASMR, 스톱워치 모드 변경, 공부 시간 현황 버튼
         // ASMR 실행 버튼 (태수님 작업본 연결예정)
         binding.btnNoise.setOnClickListener {
-            val intent = Intent(this, AsmrActivity::class.java)
+            val intent = Intent(this, MusicActivity::class.java)
             startActivity(intent)
         }
 
