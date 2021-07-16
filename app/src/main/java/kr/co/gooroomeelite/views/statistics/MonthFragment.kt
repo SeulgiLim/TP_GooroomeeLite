@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+//import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentMonthBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
@@ -45,8 +45,8 @@ class MonthFragment : Fragment() {
     private lateinit var binding: FragmentMonthBinding
     private val viewModel: SubjectViewModel by viewModels()
 
-//    private lateinit var chart: BarChart
-    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+    private lateinit var chart: BarChart
+//    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
 
     //db값 저장
@@ -151,30 +151,52 @@ class MonthFragment : Fragment() {
 //        var calendarMonth : TextView = view.findViewById(R.id.calendar_month)
 //        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
 //        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
-        binding.recyclerViewMonth.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            adapter = dailySubjectAdapter
-        }
+//        binding.recyclerViewMonth.apply {
+//            layoutManager = LinearLayoutManager(
+//                requireContext(),
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//            adapter = dailySubjectAdapter
+//        }
 
-        moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn)
+        moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn,binding.titleMonth)
         return binding.root
     }
 
-    //adapter에 데이터 추가
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.subjectList.observe(viewLifecycleOwner) {
-            dailySubjectAdapter.setData(it)
+    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,title:TextView){
+        // 현재 날짜/시간 가져오기
+        val dateNow: LocalDate = LocalDate.now()
+        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM")
+
+        var count : Int = 0
+        calendarMonth.text = dateNow.format(textformatter) //하루 2021.07.08
+
+        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
+        calRightBtn.setOnClickListener {
+            count++
+            val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
+            calendarMonth.text =  dayPlus.format(textformatter).toString()
+        }
+
+        calLeftBtn.setOnClickListener {
+            count--
+            val minusDay: LocalDate = dateNow.plusMonths(count.toLong())
+            calendarMonth.text =  minusDay.format(textformatter).toString()
         }
     }
 
+//    //adapter에 데이터 추가
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewModel.subjectList.observe(viewLifecycleOwner) {
+//            dailySubjectAdapter.setData(it)
+//        }
+//    }
+
     private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
         pieChart.setUsePercentValues(true)
-        Log.d("qwqwqwqwqw",subjects.studytime.toString())
-        Log.d("qwqwqwqwqw",subjects.color.toString())
+//        Log.d("qwqwqwqwqw",subjects.studytime.toString())
+//        Log.d("qwqwqwqwqw",subjects.color.toString())
         Log.d("aqaqAllList", list.size.toString())
 
         val values = mutableListOf<PieEntry>()
@@ -211,27 +233,6 @@ class MonthFragment : Fragment() {
     }
 
 
-    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton){
-        // 현재 날짜/시간 가져오기
-        val dateNow: LocalDate = LocalDate.now()
-        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM")
-
-        var count : Int = 0
-        calendarMonth.text = dateNow.format(textformatter) //하루 2021.07.08
-
-        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
-        calRightBtn.setOnClickListener {
-            count++
-            val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
-            calendarMonth.text =  dayPlus.format(textformatter).toString()
-        }
-
-        calLeftBtn.setOnClickListener {
-            count--
-            val minusDay: LocalDate = dateNow.plusMonths(count.toLong())
-            calendarMonth.text =  minusDay.format(textformatter).toString()
-        }
-    }
 
     private fun requestPermission(): Boolean {
         var permissions = false

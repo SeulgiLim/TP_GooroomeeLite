@@ -33,8 +33,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.adapter.DailySubjectAdapter
-import kr.co.gooroomeelite.adapter.SubjectAdapter
+//import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+//import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentDayBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
@@ -59,7 +59,7 @@ class DayFragment : Fragment() {
     //    private lateinit var chart: BarChart
     private val viewModel: SubjectViewModel by viewModels()
 
-    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+//    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
     //db값 저장
     private lateinit var subjects: Subjects
@@ -146,25 +146,25 @@ class DayFragment : Fragment() {
                 }
             }
 
-        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleOneLine)
+        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleDay)
 
-        binding.recyclerViewDay.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            adapter = dailySubjectAdapter
-        }
+//        binding.recyclerViewDay.apply {
+//            layoutManager = LinearLayoutManager(
+//                requireContext(),
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//            adapter = dailySubjectAdapter
+//        }
         return binding.root
     }
-
-    //adapter에 데이터 추가
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.subjectList.observe(viewLifecycleOwner) {
-            dailySubjectAdapter.setData(it)
-        }
-    }
+//
+//    //adapter에 데이터 추가
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewModel.subjectList.observe(viewLifecycleOwner) {
+//            dailySubjectAdapter.setData(it)
+//        }
+//    }
 
     private fun dailySubjectPieChart(pieChart: PieChart, list: MutableList<Subjects>) {
         pieChart.setUsePercentValues(true)
@@ -219,32 +219,40 @@ class DayFragment : Fragment() {
         var count: Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
 
-        title.text = "오늘"
-       dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
+//        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
             count++
             val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = dayPlus.format(textformatter).toString()
             title.text = dayPlus.format(titleformatter).toString()
+            if(count==0){
+                title.text = "오늘"
+            }
+            if(count==-1){
+                title.text = "어제"
+            }
         }
+
 
         calLeftBtn.setOnClickListener {
             count--
             val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = minusDay.format(textformatter).toString()
             title.text = minusDay.format(titleformatter).toString()
+             if(count==0) {
+                 title.text = "오늘"
+             }
+            if(count==-1){
+                title.text = "어제"
+            }
         }
-//        if(dateNow == ){
-//            title.text = "오늘"
-//        }
-
     }
 
     private fun initChart(chart: BarChart) {
         customMarkerView.chartView = chart
         with(chart) {
             marker = customMarkerView
-            description.isEnabled = false
+            description.isEnabled = false 
             legend.isEnabled = false
             isDoubleTapToZoomEnabled = false
 

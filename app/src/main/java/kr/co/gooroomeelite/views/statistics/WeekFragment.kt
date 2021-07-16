@@ -30,7 +30,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+//import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subject
@@ -38,8 +38,11 @@ import kr.co.gooroomeelite.entity.Subjects
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -51,7 +54,7 @@ class WeekFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
     private val myStudyTime = MutableLiveData<Int>()
 
-    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+//    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
 
     //db값 저장
@@ -123,10 +126,66 @@ class WeekFragment : Fragment() {
             requestPermission()
         }
 
-        pieChartRecyclerView()
+//        pieChartRecyclerView()
         //주간별 시간 캘린더 이동 버튼 화면
-        moveCalendarByWeek(binding.calendarMonday,binding.calendarSunday,binding.calRightBtn,binding.calLeftBtn)
+        moveCalendarByWeek(binding.calendarMonday,binding.calendarSunday,binding.calRightBtn,binding.calLeftBtn,binding.titleWeek)
         return binding.root
+    }
+
+
+    private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton,title: TextView){
+        val calendarWeekNow : LocalDateTime = LocalDateTime.now()
+        val monday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
+        val sunday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
+
+
+        val cal = Calendar.getInstance()
+        cal.get(Calendar.WEEK_OF_MONTH)
+//        val month : String = cal.get(Calendar.ALIGNED_WEEK_OF_MONTH).toString()//3주차
+//        binding.a.text = month
+        val weeks : String = cal.get(Calendar.MONTH).plus(7).toString()  //7월달(+1)
+//        binding.s.text = weeks
+//        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//        cal.time = df.parse("2019-07-04")
+
+        val textformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val weektextformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("M월 d째주")
+        var count: Int = 0
+
+        monDay.text = monday.format(textformatter)
+        sunDay.text = sunday.format(textformatter)
+
+//        title.text = dayPlus.format(titleformatter).toString()\
+//        title.text = minusDay.format(titleformatter).toString()
+        rBtn.setOnClickListener{
+            count++
+            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
+            monDay.text = mondayValue.format(textformatter).toString()
+            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
+            sunDay.text = sundayValue.format(textformatter).toString()
+            if(count==0) {
+                title.text = "이번 주"
+            }else if(count ==-1){
+                title.text = "지난 주"
+            }else{
+                title.text = "aa"
+            }
+        }
+
+        lBtn.setOnClickListener{
+            count--
+            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
+            sunDay.text = sundayValue.format(textformatter).toString()
+            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
+            monDay.text = mondayValue.format(textformatter).toString()
+            if(count==0){
+                title.text = "이번 주"
+            }
+            if(count==-1){
+                title.text = "지난 주"
+            }
+        }
+
     }
 
 
@@ -269,34 +328,6 @@ class WeekFragment : Fragment() {
 //        Log.d("localDataTime",subjects.timestamp.toString())
 //    }
 
-    private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton){
-        val calendarWeekNow : LocalDateTime = LocalDateTime.now()
-        val monday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
-        val sunday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
-
-        val textformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        var count: Int = 0
-
-        monDay.text = monday.format(textformatter)
-        sunDay.text = sunday.format(textformatter)
-
-        rBtn.setOnClickListener{
-            count++
-            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
-            monDay.text = mondayValue.format(textformatter).toString()
-            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
-            sunDay.text = sundayValue.format(textformatter).toString()
-        }
-
-        lBtn.setOnClickListener{
-            count--
-            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
-            sunDay.text = sundayValue.format(textformatter).toString()
-            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
-            monDay.text = mondayValue.format(textformatter).toString()
-        }
-
-    }
 
     //주간별 원 차트
     private fun weeklySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
@@ -337,22 +368,22 @@ class WeekFragment : Fragment() {
         }
 
     }
-    private fun pieChartRecyclerView(){
-        binding.recyclerViewWeek.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            adapter = dailySubjectAdapter
-        }
-    }
+//    private fun pieChartRecyclerView(){
+//        binding.recyclerViewWeek.apply {
+//            layoutManager = LinearLayoutManager(
+//                requireContext(),
+//                LinearLayoutManager.VERTICAL,
+//                false
+//            )
+//            adapter = dailySubjectAdapter
+//        }
+//    }
     //adapter에 데이터 추가
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.subjectList.observe(viewLifecycleOwner) {
-            dailySubjectAdapter.setData(it)
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        viewModel.subjectList.observe(viewLifecycleOwner) {
+//            dailySubjectAdapter.setData(it)
+//        }
+//    }
 
     private fun requestPermission(): Boolean {
         var permissions = false
