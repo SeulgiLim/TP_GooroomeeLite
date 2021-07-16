@@ -15,16 +15,26 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+import kr.co.gooroomeelite.databinding.FragmentMonthBinding
+import kr.co.gooroomeelite.entity.ReadSubejct
+import kr.co.gooroomeelite.entity.Subjects
+import kr.co.gooroomeelite.utils.LoginUtils
+import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DecimalFormat
 import java.time.LocalDate
@@ -32,60 +42,57 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 class MonthFragment : Fragment() {
+    private lateinit var binding: FragmentMonthBinding
+    private val viewModel: SubjectViewModel by viewModels()
 
-    private lateinit var chart: BarChart
+//    private lateinit var chart: BarChart
+    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
-    //     현재 날짜/시간 가져오기
-    val dateNow: LocalDateTime = LocalDateTime.now()
+
+    //db값 저장
+    private lateinit var subjects: Subjects
+    private var list: MutableList<Subjects> = mutableListOf()
+
 
 //     LocalDate 문자열로 포맷
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
-//
+//    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
+
 
     private val listData by lazy {
         mutableListOf(
-            ChartDatas("", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)),
-            ChartDatas("", arrayListOf(3f,5.1f,3.5f)),
-            ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)),
-            ChartDatas("", arrayListOf(5.1F)),
-            ChartDatas("", arrayListOf(5.1F,9.1f)),
-            ChartDatas("", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)),
-            ChartDatas("", arrayListOf(3f,5.1f,3.5f)),
-            ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)),
-            ChartDatas("", arrayListOf(5.1F)),
-            ChartDatas("", arrayListOf(5.1F,9.1f)),
-            ChartDatas("15일", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)),
-            ChartDatas("", arrayListOf(3f,5.1f,3.5f)),
-            ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)),
-            ChartDatas("", arrayListOf(5.1F)),
-            ChartDatas("", arrayListOf(5.1F,9.1f)),
-            ChartDatas("", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("",arrayListOf(3.0f,5.5f,6.6f)),
-            ChartDatas("", arrayListOf(3f,5.1f,3.5f)),
-            ChartDatas("", arrayListOf(6.1f,4.5f,10.1f,8.5f)),
-            ChartDatas("", arrayListOf(5.1F)),
-            ChartDatas("", arrayListOf(5.1F,9.1f)),
-            ChartDatas("29일", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("", arrayListOf(3.0f,5.5f,6.6f))
-            ,ChartDatas("1일", arrayListOf(1.5f,6.1f,3.3f,4.4f)),
-            ChartDatas("",  arrayListOf(2.1f)),
-            ChartDatas("", arrayListOf(3.0f,5.5f,6.6f)),
-            ChartDatas("", arrayListOf(3f,5.1f,3.5f)),
-            ChartDatas(dateNow.minusDays(2).format(formatter).toString(), arrayListOf(6.1f,4.5f,10.1f,8.5f)),
-            ChartDatas(dateNow.minusDays(1).format(formatter).toString(), arrayListOf(5.1F)),
-            ChartDatas(dateNow.format(formatter).toString(), arrayListOf(5.1F,9.1f))
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(5.5f)),
+            ChartDatas("", arrayListOf(7.5f)),
+            ChartDatas("", arrayListOf(8.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(10.5f)),
+            ChartDatas("", arrayListOf(18.5f)),
+            ChartDatas("", arrayListOf(5.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(1.5f)),
+            ChartDatas("", arrayListOf(6.5f)),
+            ChartDatas("", arrayListOf(19.5f)),
+            ChartDatas("", arrayListOf(5.5f)),
+            ChartDatas("", arrayListOf(9.5f)),
+            ChartDatas("", arrayListOf(3.5f)),
+            ChartDatas("", arrayListOf(16.5f)),
+            ChartDatas("", arrayListOf(3.5f)),
+            ChartDatas("", arrayListOf(12.5f)),
+            ChartDatas("", arrayListOf(14.5f)),
+            ChartDatas("", arrayListOf(15.5f)),
+            ChartDatas("", arrayListOf(16.5f)),
+            ChartDatas("", arrayListOf(17.5f)),
+            ChartDatas("", arrayListOf(18.5f)),
+            ChartDatas("", arrayListOf(12.5f))
         )
     }
-
-
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -106,25 +113,103 @@ class MonthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_month, container, false)
 
-        val shareButton: Button = view.findViewById(R.id.share_button)
-        shareButton.setOnClickListener {
+        binding = FragmentMonthBinding.inflate(inflater,container,false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_month,container,false)
+        binding.month = this
+//        val view = inflater.inflate(R.layout.fragment_month, container, false)
+
+//        val shareButton: Button = view.findViewById(R.id.share_button)/
+        binding.shareButton.setOnClickListener {
             requestPermission()
         }
         //바 차트
-        chart = view.findViewById(R.id.month_bar_chart)
-        chart.setNoDataText("")
-        initChart(chart)
-        chart.setVisibleXRangeMaximum(30f)
-        chart.moveViewToX(30f)
+//        chart = view.findViewById(R.id.month_bar_chart)
+        binding.monthBarChart.setNoDataText("")
+        initChart(binding.monthBarChart)
+        binding.monthBarChart.setVisibleXRangeMaximum(30f)
+        binding.monthBarChart.moveViewToX(30f)
 
-        var calendarMonth : TextView = view.findViewById(R.id.calendar_month)
-        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
-        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
-        moveCalendarByDay(calendarMonth,calRightBtn,calLeftBtn)
-        return view
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", LoginUtils.getUid()!!)
+            .get() //값이 변경 시 바로 값이 변경된다.
+            .addOnSuccessListener { docs ->
+                if(docs != null) {
+                    lateinit var subjectValue: ReadSubejct
+                    docs.documents.forEach {
+                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
+                        subjects = it.toObject(Subjects::class.java)!!
+                        list.add(subjects)
+                        monthlySubjectPieChart(binding.weeklyPieChart,list)
+                        Log.d("aqaqList", list.size.toString())
+                        //일간 공부 시간
+                    }
+                }
+            }
+
+//        var calendarMonth : TextView = view.findViewById(R.id.calendar_month)
+//        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
+//        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
+        binding.recyclerViewMonth.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = dailySubjectAdapter
+        }
+
+        moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn)
+        return binding.root
     }
+
+    //adapter에 데이터 추가
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.subjectList.observe(viewLifecycleOwner) {
+            dailySubjectAdapter.setData(it)
+        }
+    }
+
+    private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
+        pieChart.setUsePercentValues(true)
+        Log.d("qwqwqwqwqw",subjects.studytime.toString())
+        Log.d("qwqwqwqwqw",subjects.color.toString())
+        Log.d("aqaqAllList", list.size.toString())
+
+        val values = mutableListOf<PieEntry>()
+        val colorItems = mutableListOf<Int>()
+        list.forEachIndexed{ index, _ ->
+            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
+            colorItems.add(index,Color.parseColor(list[index].color))
+        }
+
+        val pieDataSet = PieDataSet(values,"")
+        pieDataSet.colors = colorItems
+        pieDataSet.apply {
+//            valueTextColor = Color.BLACK
+            setDrawValues(false) //차트에 표시되는 값 지우기
+            valueTextSize = 16f
+        }
+        //% : 퍼센트 수치 색상과 사이즈 지정
+        val pieData = PieData(pieDataSet)
+        pieChart.apply {
+            data = pieData
+            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
+//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
+            isEnabled = false
+            legend.isEnabled = false //범례 지우기
+            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+            holeRadius = 50f //흰색을 증앙에 꽉 채우기
+            setDrawEntryLabels(false) //차트에 있는 이름 지우
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+    }
+
 
     private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton){
         // 현재 날짜/시간 가져오기
@@ -183,7 +268,7 @@ class MonthFragment : Fragment() {
             setDrawValueAboveBar(false)
             //둥근 모서리 색상
             val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
-                setRadius(10)
+//                setRadius(10)
             }
             renderer = barChartRender
         }
@@ -217,7 +302,7 @@ class MonthFragment : Fragment() {
             barWidth = 0.5F
         }
         //애니메이션 효과 0.1초
-        with(chart) {
+        with(binding.monthBarChart) {
             animateY(100)
 
             xAxis.apply {

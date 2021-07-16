@@ -2,17 +2,20 @@ package kr.co.gooroomeelite.views.common
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.views.home.HomeFragment
 import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.mypage.MypageFragment
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
+
+
 @RequiresApi(Build.VERSION_CODES.Q)
 class MainActivity : AppCompatActivity() {
     var mBackWait : Long = 0
@@ -54,8 +57,15 @@ class MainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainer, fragment)
+            addToBackStack(null) //backStack저장
             commit()
         }
+
+//        FragmentTransaction.
+//        val transaction: FragmentTransaction =
+//            SupportFragmentManager().beginTransaction()
+//                .add(R.id.main_container, movieInfoFragment)
+
     }
 
     override fun onBackPressed() {

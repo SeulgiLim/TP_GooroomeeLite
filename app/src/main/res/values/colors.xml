@@ -64,6 +64,8 @@
 
     <color name="share_btn">#449EF6</color>
 
+    <color name="week_bar_color">#339BFF</color>
+
 
 
 </resources>

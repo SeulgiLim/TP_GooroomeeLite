@@ -1,40 +1,21 @@
 package kr.co.gooroomeelite.views.statistics
 
-import android.Manifest
-import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import com.github.mikephil.charting.charts.BarChart
+import androidx.fragment.app.FragmentTransaction
 import com.github.mikephil.charting.charts.HorizontalBarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.tabs.TabLayout
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_home.*
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.databinding.FragmentMypageBinding
-import kr.co.gooroomeelite.databinding.FragmentStatisticsBinding
-import kr.co.gooroomeelite.utils.LoginUtils
-import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,7 +24,6 @@ class StatisticsFragment : Fragment() {
 
     private lateinit var horizontalChart: HorizontalBarChart
     private lateinit var horizontal2Chart: HorizontalBarChart
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +37,10 @@ class StatisticsFragment : Fragment() {
         val weekFragment = WeekFragment()
         val monthFragment = MonthFragment()
 
-        parentFragmentManager.beginTransaction().add(R.id.chart_container, dayFragment).commit()
+        parentFragmentManager
+            .beginTransaction()
+            .add(R.id.chart_container, dayFragment)
+            .commit()
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

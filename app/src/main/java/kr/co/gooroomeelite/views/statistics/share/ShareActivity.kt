@@ -24,6 +24,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
+import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -80,12 +81,9 @@ class ShareActivity : AppCompatActivity() {
         binding.picturePrevious.setOnClickListener{
             finish()
         }
-        binding.pictureNext.setOnClickListener{
-            val nextIntent = Intent(this, StickerActivity::class.java)
-            startActivity(nextIntent)
-        }
+
         binding.showImage.setOnClickListener{ openGallery() }
-        binding.rotateBtn.setOnClickListener{
+        binding.converterCamera.setOnClickListener{
             swicthCamera()
         }
 //        binding.converterCamera.setOnClickListener{ swicthCamera() }
@@ -161,6 +159,7 @@ class ShareActivity : AppCompatActivity() {
         },10)
     }
 
+    //캡처 버튼 리스너 등록
     private fun bindCameraUseCase() = with(binding){
         //화면 회전에 대해 체크
         val rotation = viewFinder.display.rotation
@@ -236,6 +235,7 @@ class ShareActivity : AppCompatActivity() {
 
 
     private var contentUri : Uri? = null
+    //사진 촬영 및 저장 콜백 구현
     private fun captureCamera(){
         if(::imageCapture.isInitialized.not()) return
         val photoFile = File(
@@ -268,6 +268,7 @@ class ShareActivity : AppCompatActivity() {
 //        }
 //    }
 
+    //이미지 저장 후 다른 갤러리를 볼 수 있게 설정
     private fun updateSavedImageContent() {
         contentUri?.let{
             isCapturing = try{
