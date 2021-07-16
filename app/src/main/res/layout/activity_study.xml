@@ -8,42 +8,48 @@
     android:orientation="vertical"
     tools:context=".views.home.StudyActivity">
 
-    <!-- 뒤로가기 -->
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="43.5dp"
-        android:clickable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_btn_back" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!-- 화면명(공부기록) -->
+        <TextView
+            android:id="@+id/mode_name"
+            android:layout_width="115dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="90dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
 
-    <!-- 화면명(공부기록) -->
-    <TextView
-        android:id="@+id/mode_name"
-        android:layout_width="123dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="160dp"
-        android:gravity="center"
-        android:text=""
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- 뒤로가기 -->
+        <ImageView
+            android:id="@+id/btn_backwatch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="41dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_btn_backwatch" />
+    </LinearLayout>
+
 
 
     <!-- 시간화면 전환 -->
     <FrameLayout
         android:id="@+id/container"
-        android:layout_width="410dp"
-        android:layout_height="450dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="100dp"
+        android:layout_marginBottom="82dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_timermode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,10 +63,25 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="64dp"
         android:background="@color/white"
         android:drawableBottom="@drawable/ic_btn_noise"
+        android:layout_marginLeft="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_timermode" />
+
+    <!-- ASMR (백색소움) 버튼 명-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="54dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="110dp"
+        android:text="ASMR"
+        android:textSize="12sp"
+        android:textColor="#888888"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_timermode" />
@@ -72,28 +93,173 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="64dp"
         android:background="@color/white"
         android:drawableBottom="@drawable/ic_btn_timermode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/btn_noise"
         app:layout_constraintRight_toLeftOf="@id/btn_studynow" />
 
-    <!-- 공부 현황 버튼 -->
+
+    <!-- 스톱워치 버튼 명 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="54dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="55dp"
+        android:text="스톱워치"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_noise"
+        app:layout_constraintRight_toLeftOf="@id/btn_studynow" />
+
+
+
+    <!-- 공부현황 버튼-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_studynow"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="54dp"
+        android:layout_marginBottom="64dp"
         android:background="@color/white"
         android:drawableBottom="@drawable/ic_btn_studynow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_timermode"
         app:layout_constraintRight_toRightOf="parent" />
 
 
+    <!-- 공부현황 버튼 명 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="54dp"
+        android:layout_marginBottom="40dp"
+        android:text="공부현황"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/btn_timermode"
+        app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- 공부 현황 버튼
+<androidx.appcompat.widget.AppCompatButton
+android:id="@+id/btn_studynow"
+style="?android:attr/borderlessButtonStyle"
+android:layout_width="59dp"
+android:layout_height="118dp"
+android:layout_marginRight="54dp"
+android:layout_marginBottom="40dp"
+android:background="@color/white"
+android:drawableBottom="@drawable/"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintLeft_toRightOf="@id/btn_timermode"
+app:layout_constraintRight_toRightOf="parent" /> -->
+
+
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:orientation="horizontal">-->
+
+<!--&lt;!&ndash; 화면명(공부기록) &ndash;&gt;-->
+<!--<TextView-->
+<!--    android:id="@+id/mode_name"-->
+<!--    android:layout_width="115dp"-->
+<!--    android:layout_height="25dp"-->
+<!--    android:layout_marginStart="160dp"-->
+<!--    android:layout_marginTop="45dp"-->
+<!--    android:layout_marginEnd="160dp"-->
+<!--    android:gravity="center"-->
+<!--    android:text=""-->
+<!--    android:textColor="@color/black"-->
+<!--    android:textSize="15sp" />-->
+
+<!--&lt;!&ndash; 뒤로가기 &ndash;&gt;-->
+<!--<ImageView-->
+<!--    android:id="@+id/btn_backwatch"-->
+<!--    android:layout_width="29dp"-->
+<!--    android:layout_height="34dp"-->
+<!--    android:layout_marginStart="1dp"-->
+<!--    android:layout_marginTop="44dp"-->
+<!--    android:clickable="true"-->
+<!--    app:srcCompat="@drawable/ic_btn_backwatch" />-->
+<!--</LinearLayout>-->
+
+
+<!--    &lt;!&ndash; 뒤로가기 &ndash;&gt;-->
+<!--<ImageView-->
+<!--android:id="@+id/btn_backwatch"-->
+<!--android:layout_width="32dp"-->
+<!--android:layout_height="32dp"-->
+<!--android:layout_marginLeft="335dp"-->
+<!--android:layout_marginTop="45dp"-->
+<!--android:clickable="true"-->
+<!--app:layout_constraintLeft_toRightOf="@id/mode_name"-->
+<!--app:layout_constraintRight_toRightOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--app:srcCompat="@drawable/ic_btn_backwatch" />-->
+
+
+<!--    &lt;!&ndash; 화면명(공부기록) &ndash;&gt;-->
+<!--<TextView-->
+<!--android:id="@+id/mode_name"-->
+<!--android:layout_width="115dp"-->
+<!--android:layout_height="25dp"-->
+<!--android:layout_marginStart="160dp"-->
+<!--android:layout_marginTop="45dp"-->
+<!--android:layout_marginEnd="160dp"-->
+<!--android:gravity="center"-->
+<!--android:text=""-->
+<!--android:textColor="@color/black"-->
+<!--android:textSize="15sp"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent" />-->
+<!--&ndash;&gt;-->
+
+    <!--<LinearLayout-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:orientation="horizontal"-->
+    <!--    android:layout_marginTop="45dp"-->
+    <!--    app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--    <TextView-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_weight="1"-->
+    <!--        />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/mode_name"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="25dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="컴퓨터활용능력"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textSize="15sp" />-->
+
+    <!--    &lt;!&ndash; 뒤로가기 &ndash;&gt;-->
+    <!--    &lt;!&ndash; 화면명(공부기록) &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/btn_backwatch"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="32dp"-->
+    <!--        android:layout_marginLeft="85dp"-->
+    <!--        android:clickable="true"-->
+    <!--        android:gravity="right"-->
+    <!--        app:srcCompat="@drawable/ic_btn_backwatch" />-->
+    <!--</LinearLayout>-->
+
 
     <!--
     <androidx.appcompat.widget.AppCompatButton

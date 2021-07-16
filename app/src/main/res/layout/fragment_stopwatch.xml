@@ -13,18 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:format="00:00:00"
-        android:textColor="@android:color/black"
-        android:textSize="60sp"  />
+        android:layout_marginTop="150dp"
+        android:format="00 : 00 : 00"
+        android:textColor="#232323"
+        android:textSize="56sp"
+        android:fontFamily="@font/helvetica_stopwatch"/>
 
+
+    <!-- 현재 집중 시간 문구-->
     <TextView
         android:id="@+id/text_focustime"
         android:layout_width="wrap_content"
         android:layout_height="15dp"
         android:layout_below="@+id/stopwatch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/ic_text_focustime"
         />
 
@@ -35,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stopwatch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="129dp"
         android:background="@drawable/ic_btn_start" />
 
     <!-- 스탑워치 일시정지 버튼-->
@@ -45,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stopwatch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="129dp"
         android:background="@drawable/ic_btn_finish" />
 
 
@@ -59,8 +62,8 @@
         android:layout_below="@+id/stopwatch"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="129dp"
         android:layout_toRightOf="@id/btn_end"
         android:background="@drawable/ic_btn_restart" />
 
@@ -72,8 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stopwatch"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="130dp"
-        android:layout_marginRight="55dp"
+        android:layout_marginTop="129dp"
+        android:layout_marginRight="80dp"
         android:background="@drawable/ic_btn_end" />
 
 
@@ -81,12 +84,94 @@
     <!-- 화면 하단 3개 버튼 설정 (Study Activity에 배치) -->
 
 
+    <!-- 21.07.14 -->
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--    <RelativeLayout-->
+<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:tools="http://schemas.android.com/tools"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        tools:context=".views.home.StopwatchFragment">-->
+
+<!--        &lt;!&ndash; 스탑워치 시간&ndash;&gt;-->
+<!--        <Chronometer-->
+<!--            android:id="@+id/stopwatch"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:format="00:00:00"-->
+<!--            android:textColor="@android:color/black"-->
+<!--            android:textSize="60sp"-->
+<!--            android:fontFamily="@font/karlofont"/>-->
+
+
+<!--        &lt;!&ndash; 현재 집중 시간 문구&ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/text_focustime"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="15dp"-->
+<!--            android:layout_below="@+id/stopwatch"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="24dp"-->
+<!--            android:background="@drawable/ic_text_focustime"-->
+<!--            />-->
+
+<!--        &lt;!&ndash; 스탑워치 시작 버튼&ndash;&gt;-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btn_start"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/stopwatch"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="130dp"-->
+<!--            android:background="@drawable/ic_btn_start" />-->
+
+<!--        &lt;!&ndash; 스탑워치 일시정지 버튼&ndash;&gt;-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btn_finish"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/stopwatch"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="130dp"-->
+<!--            android:background="@drawable/ic_btn_finish" />-->
 
 
 
+<!--        &lt;!&ndash; 스탑워치 완료, 다시시작 (계속) 버튼 같이 세트!!! &ndash;&gt;-->
+<!--        &lt;!&ndash; 스탑워치 다시시작 버튼&ndash;&gt;-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btn_restart"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/stopwatch"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginLeft="80dp"-->
+<!--            android:layout_marginTop="130dp"-->
+<!--            android:layout_toRightOf="@id/btn_end"-->
+<!--            android:background="@drawable/ic_btn_restart" />-->
+
+
+<!--        &lt;!&ndash; 스탑워치 기록종료 버튼&ndash;&gt;-->
+<!--        <androidx.appcompat.widget.AppCompatButton-->
+<!--            android:id="@+id/btn_end"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/stopwatch"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_marginTop="130dp"-->
+<!--            android:layout_marginRight="80dp"-->
+<!--            android:background="@drawable/ic_btn_end" />-->
 
 
 
+<!--        &lt;!&ndash; 화면 하단 3개 버튼 설정 (Study Activity에 배치) &ndash;&gt;-->
+
+<!-- 7월 -->
     <!--
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_noise"

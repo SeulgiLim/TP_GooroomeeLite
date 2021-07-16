@@ -27,9 +27,9 @@ class StudyEndActivity : AppCompatActivity() {
         // 측정된 공부시간 데이터 추출
         val nowstudytime = intent.getLongExtra(STUDY_TIME, 0L)
         // 가져온 데이터 (공부진행시간 제대로 가져왔는지 보여주기 Test)
-        textView12.append("공부진행시간 : ${nowstudytime}\n")
-        textView13.append("과목명 : ${nowstudytime}\n")
-        textView14.append("과목ID : ${nowstudytime}\n")
+      //  textView12.append("공부진행시간 : ${nowstudytime}\n")
+      //  textView13.append("과목명 : ${nowstudytime}\n")
+      //  textView14.append("과목ID : ${nowstudytime}\n")
 
 
 //        bundle = intent.getBundleExtra("bundle")

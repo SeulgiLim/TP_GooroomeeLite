@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".views.home.TimersettingActivity">
 
-    <!-- 뒤로가기 -->
 
+    <!-- 실선 -->
     <View
         android:id="@+id/view9"
         android:layout_width="0dp"
@@ -22,10 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
+    <!-- 뒤로가기 -->
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
         android:clickable="true"
@@ -50,7 +51,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 타이머 모드 문구구-->    <TextView
+    <!-- 타이머 모드 문구-->
+    <TextView
         android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,7 +113,7 @@
         android:layout_marginTop="32dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9">
@@ -160,6 +162,19 @@
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_focustime" />
+
+        <!-- 실선 -->
+        <View
+            android:id="@+id/view10"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/divide2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
 
 
         <!-- 뽀모도로_휴식 시간-->

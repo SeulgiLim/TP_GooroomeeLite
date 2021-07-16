@@ -39,7 +39,9 @@ class  StudyActivity : AppCompatActivity() {
 
         // HomeFragment에서 과목, 문서 ID 받아오기, 전역변수 지정하여, 과목 정보 받기 * 전역변수 : 메서드 밖, 즉 클래스 안에서 선언된 변수를 가져다 쓰는 변수
         val subject = intent.getSerializableExtra("subject") as Subject
-        val documentId = intent.getSerializableExtra("documentId") as String  // 서버에 시간 데이터 저장시 필요함 (저장 방법 결정 필요)
+        val documentId = intent.getSerializableExtra("documentId") as String                  // 서버에 시간 데이터 저장시 필요함 (저장 방법 결정 필요)
+
+        val bottomsheetFragment = StudystatusBottomsheetFragment()                                  // 공부현황 Btn
 
         // StudyActivity 내 Fragment 영역에 StopwatchFragment 같이 보여주기
         if(savedInstanceState == null) {
@@ -55,7 +57,7 @@ class  StudyActivity : AppCompatActivity() {
         // 뒤로가기 (StudyActivity -> HomeFragment로 이동)
         // 일반 - 10. Study Actitity에서 뒤로가기 두번 클릭해야 HomeFragmet로 이동함
         Log.d("aaa1","btnBack111")
-        binding.btnBack.setOnClickListener{
+        binding.btnBackwatch.setOnClickListener{
             finish()
         }
         Log.d("aaa1","btnBack222")
@@ -97,6 +99,8 @@ class  StudyActivity : AppCompatActivity() {
         // 공부 시간 현황 버튼
         binding.btnStudynow.setOnClickListener {
 
+            // BottomSheet 연결
+            bottomsheetFragment.show(supportFragmentManager, "BottomSheetDialog")
         }
 
     }
