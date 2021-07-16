@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -32,8 +33,11 @@ import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import java.io.OutputStream
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -75,16 +79,9 @@ class StickerActivity : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
-        binding.shareCancel.setOnClickListener{finish()}
-
         //통계 프래그먼트 페이지로 이동
         binding.close.setOnClickListener {
             finish()
-//            startActivity(Intent(this, MainActivity::class.java))
-//            statisticsFragment = StatisticsFragment()
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragmentContainer,statisticsFragment).commit()
-//            replaceFragment(this.startActivityFromFragment())
         }
         //공유하기
         binding.shareButtons.setOnClickListener{ takeAndShareScreenShot(pictures.toString()) }
@@ -104,6 +101,20 @@ class StickerActivity : AppCompatActivity() {
     }
 
     fun getTotalStudy() {
+//        val dateNow: LocalDateTime = LocalDateTime.now()
+//        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd.EEE")
+//        var count: Int = 0
+//        binding.localTime.text =  dateNow.format(textformatter)
+
+        val dateNow: LocalDateTime = LocalDateTime.now()
+
+        val cal = Calendar.getInstance()
+        cal.time = Date()
+        val formatter: DateFormat = SimpleDateFormat("yyyy. MM. dd. EEE", Locale.ENGLISH)
+        binding.localTime.text = formatter.format(cal.time)
+
+
+
         FirebaseFirestore.getInstance()
             .collection("subject")
             .whereEqualTo("uid", getUid())
@@ -116,8 +127,8 @@ class StickerActivity : AppCompatActivity() {
                 }
                 val todayStudySum : Int = studytimetodaylist.sum()
                 Log.d("sum",todayStudySum.toString())
-                binding.hourStudytime.text = (todayStudySum/60).toString() + "h"
-                binding.minuteStudytime.text = (todayStudySum%60).toString() + "m"
+                binding.hourStudytime.text = (todayStudySum/60).toString()
+                binding.minuteStudytime.text = (todayStudySum%60).toString()
 //                ${studytime / 60}시간 ${studytime % 60}분"
 //                todayStudyTime.value = studytimetodaylist.sum()
 //                FirebaseFirestore.getInstance().collection("users").document(getUid()!!).update("todaystudytime",todayStudyTime.value)
@@ -198,9 +209,10 @@ class StickerActivity : AppCompatActivity() {
         startActivity(Intent.createChooser(shareIntent, "Send to"))
         return shareButtonViewImage
     }
-
+    
     override fun onBackPressed() {
-        startActivity(Intent(this,ShareActivity::class.java))
-        finish()
+        // 뒤로가기 버튼 클릭
+        startActivity(Intent(this, ShareActivity::class.java))
+//        finish()
     }
 }
