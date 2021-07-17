@@ -21,18 +21,18 @@ class MyJobService : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
 
-        firestore = FirebaseFirestore.getInstance()
+//        firestore = FirebaseFirestore.getInstance()
         Log.d("asdfasdf", "1234")
         Log.d("asdfasdf", "${getUid()}")
 
-        val batch = firestore!!.batch()
-        val subjectRef = firestore!!.collection("subject").document()
-        batch.update(subjectRef,"studytime",0)
-        batch.commit().addOnCompleteListener {
-            Log.d("asdfasdf","1111")
-        }.addOnFailureListener {
-            Log.d("asdfasdf","3333")
-        }
+//        val batch = firestore!!.batch()
+//        val subjectRef = firestore!!.collection("subject").document()
+//        batch.update(subjectRef,"studytime",0)
+//        batch.commit().addOnCompleteListener {
+//            Log.d("asdfasdf","1111")
+//        }.addOnFailureListener {
+//            Log.d("asdfasdf","3333")
+//        }
     return false
     }
 
