@@ -85,9 +85,9 @@ class StopwatchFragment : Fragment() {
         stopwatch?.setOnChronometerTickListener { stopwatch ->
             val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
             if (elapsedMillis > 3600000L) {
-                stopwatch.format = " 0 %s"
+                stopwatch.format = " 00: %s"
             } else {
-                stopwatch.format = " 00 : %s"
+                stopwatch.format = " 00: %s"
             }
         }
 

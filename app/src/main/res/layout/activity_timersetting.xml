@@ -37,11 +37,9 @@
     <!-- 화면명 -->
     <TextView
         android:id="@+id/mode_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="160dp"
         android:gravity="center"
         android:text="스톱워치"
         android:textColor="@color/black"
@@ -89,7 +87,9 @@
             android:paddingStart="12px"
             android:text="일반 모드"
             android:textSize="14sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:button="@drawable/btn_checkboxcustom"
+            />
 
         <View
             android:id="@+id/view115"
@@ -107,7 +107,9 @@
             android:paddingStart="3dp"
             android:text="뽀모도로 모드"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:button="@drawable/btn_checkboxcustom"
+            />
 
     </RadioGroup>
 
@@ -126,7 +128,7 @@
         android:layout_marginTop="48dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view9">
