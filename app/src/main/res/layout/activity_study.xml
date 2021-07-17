@@ -9,38 +9,32 @@
     tools:context=".views.home.StudyActivity">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
         <!-- 화면명(공부기록) -->
-        <TextView
-            android:id="@+id/mode_name"
-            android:layout_width="115dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="90dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/mode_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
         <!-- 뒤로가기 -->
-        <ImageView
-            android:id="@+id/btn_backwatch"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="41dp"
-            android:clickable="true"
-            app:srcCompat="@drawable/ic_btn_backwatch" />
-    </LinearLayout>
-
-
+    <ImageView
+        android:id="@+id/btn_backwatch"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_btn_backwatch" />
 
     <!-- 시간화면 전환 -->
     <FrameLayout
