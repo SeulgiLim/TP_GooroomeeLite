@@ -20,45 +20,31 @@
 <!--        app:title="공유하기"-->
 <!--        app:titleTextColor="@color/black"/>-->
 
-     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
-
-         <ImageView
-             android:layout_gravity="center"
-             android:layout_marginLeft="16dp"
-             android:layout_width="32dp"
-             android:layout_height="32dp"
-             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
             android:layout_weight="2"
+            android:gravity="center"
             android:text="사진 공유"
             android:textColor="@color/share_picture"
-            android:textSize="15dp"
-            android:gravity="center"
-            android:layout_gravity="center"/>
-         <ImageView
-             android:id="@+id/close"
-             android:layout_gravity="center"
-             android:layout_marginRight="16dp"
-             android:layout_width="32dp"
-             android:layout_height="32dp"
-             android:src="@drawable/ic_close"/>
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

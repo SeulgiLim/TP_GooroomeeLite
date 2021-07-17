@@ -100,7 +100,7 @@ class DayFragment : Fragment() {
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
+        ContextCompat.getColor(this.requireContext(), R.color.black_26)
     }
 
     //그래프 가로 축,선 (점선으로 변경)

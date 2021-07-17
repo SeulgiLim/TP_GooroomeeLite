@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_bottom_sheet"
-    style="@style/BottomSheetDialogTheme"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_bottom_sheet"
     android:orientation="vertical"
-    tools:context=".views.home.SubjectFragment"
     android:paddingStart="20dp"
-    android:paddingEnd="20dp"
     android:paddingTop="32dp"
-    android:paddingBottom="30dp">
+    android:paddingEnd="20dp"
+    android:paddingBottom="30dp"
+    tools:context=".views.home.SubjectFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,18 +18,17 @@
 
         <TextView
             android:id="@+id/title"
-            android:textSize="14sp"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="과목 추가"
             android:textColor="@color/share_delete"
-            />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <LinearLayout
             android:id="@+id/delete_btn"
@@ -39,18 +37,18 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:src="@drawable/ic_delete"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_delete" />
 
             <TextView
-                android:textSize="14sp"
-                android:textColor="#F95849"
-                android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="삭제" />
+                android:layout_marginStart="4dp"
+                android:text="삭제"
+                android:textColor="#F95849"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -58,37 +56,37 @@
 
     <EditText
         android:id="@+id/subject_name"
+        style="@style/EditTextSelectHandle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="20sp"
-        android:hint="과목 이름을 입력해 주세요."
-        android:textColorHint="#DCDCDC"
-        android:textColor="#333333"
-        android:textColorHighlight="@color/colorPrimary"
-        android:paddingBottom="15dp"
-        android:textStyle="bold"
-        android:maxLength="20"
         android:layout_marginTop="10dp"
         android:backgroundTint="#F2F4F6"
+        android:ems="10"
+        android:hint="과목 이름을 입력해 주세요."
+        android:inputType="textPersonName"
+        android:maxLength="20"
+        android:paddingBottom="15dp"
+        android:textColor="#333333"
+        android:textColorHighlight="@color/colorPrimary"
+        android:textColorHint="#DCDCDC"
         android:textCursorDrawable="@drawable/color_cursor"
-        style="@style/EditTextSelectHandle"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:textColor="#B6B6B6"
+        android:text="0 / 10"
         android:textAlignment="viewEnd"
-        android:text="0 / 10" />
+        android:textColor="#B6B6B6"
+        android:textSize="13sp" />
 
     <TableLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="ContentDescription" >
+        android:layout_marginTop="30dp"
+        tools:ignore="ContentDescription">
 
         <TableRow
             android:layout_width="match_parent"
@@ -102,15 +100,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"
-                    />
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -122,14 +119,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -141,14 +138,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -160,14 +157,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -178,21 +175,21 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
             </FrameLayout>
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
 
             <FrameLayout
                 android:id="@+id/color6"
@@ -202,14 +199,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -221,14 +218,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -240,14 +237,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -259,14 +256,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -277,21 +274,21 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
             </FrameLayout>
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp">
 
             <FrameLayout
                 android:id="@+id/color11"
@@ -301,14 +298,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -320,14 +317,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -339,14 +336,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -358,14 +355,14 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
 
             </FrameLayout>
 
@@ -376,37 +373,35 @@
 
                 <kr.co.gooroomeelite.customview.RoundedSquare
                     android:layout_width="36dp"
-                    android:layout_height="36dp"/>
+                    android:layout_height="36dp" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="12dp"
                     android:layout_height="9dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_checked"/>
+                    android:src="@drawable/ic_checked" />
             </FrameLayout>
         </TableRow>
 
     </TableLayout>
 
-<!--    <Button-->
-<!--        android:shadowRadius="0"-->
-<!--        android:id="@+id/enroll_btn"-->
-<!--        android:text="완료"-->
-<!--        android:textSize="15sp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="56dp"-->
-<!--        />-->
+    <!--    <Button-->
+    <!--        android:shadowRadius="0"-->
+    <!--        android:id="@+id/enroll_btn"-->
+    <!--        android:text="완료"-->
+    <!--        android:textSize="15sp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="56dp"-->
+    <!--        />-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/enroll_btn"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/btn_login"
-        android:backgroundTint="@null"
         android:text="완료"
         android:textColor="@color/white"
-        android:textSize="15sp"
-        style="?android:attr/borderlessButtonStyle"/>
+        android:textSize="15sp" />
 </LinearLayout>

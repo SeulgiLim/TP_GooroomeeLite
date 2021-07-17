@@ -50,9 +50,8 @@
                     <TextView
                         android:id="@+id/calendar_Monday"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:gravity="center"
-                        android:paddingTop="21dp"
                         android:text=""
                         android:textColor="@color/black"
                         android:textSize="14dp"
@@ -181,7 +180,10 @@
                     android:id="@+id/week_bar_chart"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:layout_margin="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="28dp"
                     tools:ignore="MissingClass" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -193,7 +195,10 @@
                     android:stateListAnimator="@null"
                     android:text="공부 기록 공유하기"
                     android:textStyle="bold"
-                    android:textColor="@color/studytime_text"/>
+                    android:textSize="14sp"
+                    android:textColor="@color/studytime_text"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -208,7 +213,7 @@
                     android:layout_marginTop="30dp"
                     android:text="과목별 공부 시간"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
