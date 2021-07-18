@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_bottom_sheet"
     android:orientation="vertical"
     android:paddingStart="20dp"
@@ -395,13 +396,20 @@
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="56dp"-->
     <!--        />-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/enroll_btn"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/btn_login"
-        android:text="완료"
-        android:textColor="@color/white"
-        android:textSize="15sp" />
+        app:cardCornerRadius="6dp"
+        android:layout_marginTop="40dp"
+        app:cardElevation="0dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/enroll_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/skyBlue"
+            android:text="완료"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -48,9 +48,7 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.btnService.setOnClickListener {
             startActivity(Intent(this,TermsOfServiceActivity::class.java))
-
         }
-
         binding.startEmail.setOnClickListener {
             //이메일로 시작
             startActivity(Intent(this, LoginEmailActivity::class.java))
@@ -58,53 +56,77 @@ class LoginActivity : AppCompatActivity() {
         binding.startGoogle.setOnClickListener {
             //구글로 시작
             googleLogin()
+            Log.e("TEST,","1")
         }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+        Log.e("TEST,","2")
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        Log.e("TEST,","3")
     }
 
     fun googleLogin() {
         var signInIntent = googleSignInClient?.signInIntent
+
+        Log.e("TEST,","4")
         startActivityForResult(signInIntent, GOOGLE_LOGIN_CODE)
+
+        Log.e("TEST,","5")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_LOGIN_CODE) {
+
+            Log.e("TEST,","6")
             var result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
             if (result!!.isSuccess) {
+
+                Log.e("TEST,","7")
                 var account = result.signInAccount
                 //Second step
+
+                Log.e("TEST,","8")
                 firebaseAuthWithGoogle(account)
+
+                Log.e("TEST,","9")
             }
         }
     }
 
     fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+
+        Log.e("TEST,","10")
         var credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth?.signInWithCredential(credential)?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
+
+                Log.e("TEST,","11")
                 //Login
 
                 val email = account?.email
                 val check = firestore!!.collection("users")
+                Log.e("TEST,","12")
 
                 check.whereEqualTo("userId", email).get().addOnSuccessListener {
                     //신규유저
                     if (it.isEmpty) {
+                        Log.e("TEST,","13")
                         val intent = Intent(this, LoginNicknameActivity::class.java)
                         val bundle = Bundle()
                         bundle.putString("email",account?.email)
                         intent.putExtra("bundle",bundle)
+                        Log.e("TEST,","14")
                         startActivity(intent)
                         finish()
                     }
                     //이미 있는 이메일일경우
                     else {
+                        Log.e("TEST,","15")
                         val intent1 = Intent(this, MainActivity::class.java)
+                        Log.e("TEST,","16")
                         startActivity(intent1)
                     }
                 }

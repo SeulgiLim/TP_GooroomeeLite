@@ -135,7 +135,7 @@ class HomeFragment : Fragment() {
                         60
                     )
                 ) + "분"
-            seekbar()
+//            seekbar()
         }
         binding.subjectEdit.setOnClickListener {
             startActivity(Intent(mainActivityContext, EditSubjectsActivity::class.java))
@@ -145,8 +145,7 @@ class HomeFragment : Fragment() {
                 "%02d".format(todayStudyTime.value?.div(60))
             binding.minute.text =
                 "%02d".format(todayStudyTime.value?.rem(60))
-            getTotalStudy()
-            seekbar()
+//            getTotalStudy()
         }
 
     }
@@ -217,6 +216,7 @@ class HomeFragment : Fragment() {
                 todayStudyTime.value = studytimetodaylist.sum()
                 FirebaseFirestore.getInstance().collection("users").document(getUid()!!).update("todaystudytime",todayStudyTime.value)
             }
+        Log.e("TEST,","111")
     }
 
     fun seekbar() : Int {
@@ -232,6 +232,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        return Log.e("e","Error")
+        return Log.e("TEST,","222")
     }
 }
