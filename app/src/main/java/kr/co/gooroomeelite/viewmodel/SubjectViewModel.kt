@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.entity.Subjects
+import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import java.util.LinkedList
@@ -19,13 +20,33 @@ class SubjectViewModel : ViewModel() {
     val subjectList = MutableLiveData<LinkedList<DocumentSnapshot>>()
     val uid: String
     //통계 페이지에서 사용
-
+    val list = MutableLiveData<MutableList<Subject>>()
+    private var subjectListValue: MutableList<Subject> = mutableListOf()
+    var subject: Subject? = null
 
     init {
         db = FirebaseFirestore.getInstance()
         subjectList.value = LinkedList()
         uid = currentUser()!!.uid
+        listSubject()
         fetchSubjectList()
+    }
+
+    fun listSubject(){
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", LoginUtils.getUid()!!)
+            .get() //값이 변경 시 바로 값이 변경된다.
+            .addOnSuccessListener { docs ->
+                if(docs != null) {
+//                    val tmp = mutableListOf<Subject>()
+                    docs.documents.forEach {
+                        subject = it.toObject(Subject::class.java)!!
+                        subjectListValue.add(subject!!)
+                    }
+                    list.value = subjectListValue
+                }
+            }
     }
 
     //과목별 전체
@@ -90,6 +111,7 @@ class SubjectViewModel : ViewModel() {
                 }
             }
     }
+
 
 
 //    fun deleteSubject(item: DocumentSnapshot) {

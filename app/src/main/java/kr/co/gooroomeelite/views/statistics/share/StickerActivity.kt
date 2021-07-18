@@ -95,13 +95,7 @@ class StickerActivity : AppCompatActivity() {
     }
 
     fun getTotalStudy() {
-//        val dateNow: LocalDateTime = LocalDateTime.now()
-//        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd.EEE")
-//        var count: Int = 0
-//        binding.localTime.text =  dateNow.format(textformatter)
-
         val dateNow: LocalDateTime = LocalDateTime.now()
-
         val cal = Calendar.getInstance()
         cal.time = Date()
         val formatter: DateFormat = SimpleDateFormat("yyyy. MM. dd. EEE", Locale.ENGLISH)
@@ -123,9 +117,6 @@ class StickerActivity : AppCompatActivity() {
                 Log.d("sum",todayStudySum.toString())
                 binding.hourStudytime.text = (todayStudySum/60).toString()
                 binding.minuteStudytime.text = (todayStudySum%60).toString()
-//                ${studytime / 60}시간 ${studytime % 60}분"
-//                todayStudyTime.value = studytimetodaylist.sum()
-//                FirebaseFirestore.getInstance().collection("users").document(getUid()!!).update("todaystudytime",todayStudyTime.value)
             }
     }
 

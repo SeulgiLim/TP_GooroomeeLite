@@ -29,7 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-//import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentMonthBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
@@ -46,7 +46,7 @@ class MonthFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
 
     private lateinit var chart: BarChart
-//    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
 
     //db값 저장
@@ -148,112 +148,24 @@ class MonthFragment : Fragment() {
                 }
             }
 
-//        var calendarMonth : TextView = view.findViewById(R.id.calendar_month)
-//        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
-//        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
-//        binding.recyclerViewMonth.apply {
-//            layoutManager = LinearLayoutManager(
-//                requireContext(),
-//                LinearLayoutManager.VERTICAL,
-//                false
-//            )
-//            adapter = dailySubjectAdapter
-//        }
+        binding.recyclerViewMonth.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = dailySubjectAdapter
+        }
 
         moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn,binding.titleMonth)
         return binding.root
     }
 
-    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,title:TextView){
-        // 현재 날짜/시간 가져오기
-        val dateNow: LocalDate = LocalDate.now()
-        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM")
-
-        var count : Int = 0
-        calendarMonth.text = dateNow.format(textformatter) //하루 2021.07.08
-
-        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
-        calRightBtn.setOnClickListener {
-            count++
-            val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
-            calendarMonth.text =  dayPlus.format(textformatter).toString()
+    //adapter에 데이터 추가
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.subjectList.observe(viewLifecycleOwner) {
+            dailySubjectAdapter.setData(it)
         }
-
-        calLeftBtn.setOnClickListener {
-            count--
-            val minusDay: LocalDate = dateNow.plusMonths(count.toLong())
-            calendarMonth.text =  minusDay.format(textformatter).toString()
-        }
-    }
-
-//    //adapter에 데이터 추가
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewModel.subjectList.observe(viewLifecycleOwner) {
-//            dailySubjectAdapter.setData(it)
-//        }
-//    }
-
-    private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
-        pieChart.setUsePercentValues(true)
-//        Log.d("qwqwqwqwqw",subjects.studytime.toString())
-//        Log.d("qwqwqwqwqw",subjects.color.toString())
-        Log.d("aqaqAllList", list.size.toString())
-
-        val values = mutableListOf<PieEntry>()
-        val colorItems = mutableListOf<Int>()
-        list.forEachIndexed{ index, _ ->
-            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
-            colorItems.add(index,Color.parseColor(list[index].color))
-        }
-
-        val pieDataSet = PieDataSet(values,"")
-        pieDataSet.colors = colorItems
-        pieDataSet.apply {
-//            valueTextColor = Color.BLACK
-            setDrawValues(false) //차트에 표시되는 값 지우기
-            valueTextSize = 16f
-        }
-        //% : 퍼센트 수치 색상과 사이즈 지정
-        val pieData = PieData(pieDataSet)
-        pieChart.apply {
-            data = pieData
-            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
-            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
-//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
-//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
-            isEnabled = false
-            legend.isEnabled = false //범례 지우기
-            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
-            holeRadius = 50f //흰색을 증앙에 꽉 채우기
-            setDrawEntryLabels(false) //차트에 있는 이름 지우
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
-    }
-
-
-
-    private fun requestPermission(): Boolean {
-        var permissions = false
-        TedPermission.with(context)
-            .setPermissionListener(object : PermissionListener {
-                override fun onPermissionGranted() {
-                    permissions = true      //p0=response(응답)
-                    val shareIntent = Intent(context, ShareActivity::class.java)
-                    startActivity(shareIntent)
-//                    finish()
-                }
-
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    permissions = false
-                }
-
-            })
-            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
-            .setPermissions(Manifest.permission.CAMERA)
-            .check()
-        return permissions
     }
 
     private fun initChart(chart: BarChart) {
@@ -289,7 +201,6 @@ class MonthFragment : Fragment() {
         val barDataSet = BarDataSet(values, "").apply {
             //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
             setDrawValues(false)
-
             val colors = ArrayList<Int>()
             colors.add(Color.argb(100,68,158,246))
             setColors(colors)
@@ -393,6 +304,104 @@ class MonthFragment : Fragment() {
             this.data = data
             invalidate()
         }
+    }
+
+    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,title:TextView){
+        // 현재 날짜/시간 가져오기
+        val dateNow: LocalDate = LocalDate.now()
+        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM")
+        val titleformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월달에")
+
+        var count : Int = 0
+        calendarMonth.text = dateNow.format(textformatter) //하루 2021.07.08
+
+        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
+        calRightBtn.setOnClickListener {
+            count++
+            val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
+            calendarMonth.text =  dayPlus.format(textformatter).toString()
+            if (count == 0) {
+                title.text = "이번 달에"
+            } else if (count == -1) {
+                title.text = "지난 달에"
+            } else {
+                title.text = dayPlus.format(titleformatter).toString()
+            }
+        }
+
+        calLeftBtn.setOnClickListener {
+            count--
+            val minusDay: LocalDate = dateNow.plusMonths(count.toLong())
+            calendarMonth.text =  minusDay.format(textformatter).toString()
+            if (count == 0) {
+                title.text = "이번 달에"
+            } else if (count == -1) {
+                title.text = "지난 달에"
+            } else {
+                title.text =   minusDay.format(titleformatter   ).toString()
+            }
+        }
+    }
+
+    private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
+        pieChart.setUsePercentValues(true)
+//        Log.d("qwqwqwqwqw",subjects.studytime.toString())
+//        Log.d("qwqwqwqwqw",subjects.color.toString())
+        Log.d("aqaqAllList", list.size.toString())
+
+        val values = mutableListOf<PieEntry>()
+        val colorItems = mutableListOf<Int>()
+        list.forEachIndexed{ index, _ ->
+            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
+            colorItems.add(index,Color.parseColor(list[index].color))
+        }
+
+        val pieDataSet = PieDataSet(values,"")
+        pieDataSet.colors = colorItems
+        pieDataSet.apply {
+//            valueTextColor = Color.BLACK
+            setDrawValues(false) //차트에 표시되는 값 지우기
+            valueTextSize = 16f
+        }
+        //% : 퍼센트 수치 색상과 사이즈 지정
+        val pieData = PieData(pieDataSet)
+        pieChart.apply {
+            data = pieData
+            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
+//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
+            isEnabled = false
+            legend.isEnabled = false //범례 지우기
+            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+            holeRadius = 50f //흰색을 증앙에 꽉 채우기
+            setDrawEntryLabels(false) //차트에 있는 이름 지우
+            animateY(1400, Easing.EaseInOutQuad)
+            animate()
+        }
+
+    }
+
+    private fun requestPermission(): Boolean {
+        var permissions = false
+        TedPermission.with(context)
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    permissions = true      //p0=response(응답)
+                    val shareIntent = Intent(context, ShareActivity::class.java)
+                    startActivity(shareIntent)
+//                    finish()
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    permissions = false
+                }
+
+            })
+            .setDeniedMessage("앱을 실행하려면 권한을 허가하셔야합니다.")
+            .setPermissions(Manifest.permission.CAMERA)
+            .check()
+        return permissions
     }
 }
 //    private fun listDataValue(){

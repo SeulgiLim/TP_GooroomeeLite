@@ -33,8 +33,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-//import kr.co.gooroomeelite.adapter.DailySubjectAdapter
-//import kr.co.gooroomeelite.adapter.SubjectAdapter
+import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentDayBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
@@ -59,7 +59,7 @@ class DayFragment : Fragment() {
     //    private lateinit var chart: BarChart
     private val viewModel: SubjectViewModel by viewModels()
 
-//    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
     //db값 저장
     private lateinit var subjects: Subjects
@@ -148,23 +148,23 @@ class DayFragment : Fragment() {
 
         moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleDay)
 
-//        binding.recyclerViewDay.apply {
-//            layoutManager = LinearLayoutManager(
-//                requireContext(),
-//                LinearLayoutManager.VERTICAL,
-//                false
-//            )
-//            adapter = dailySubjectAdapter
-//        }
+        binding.recyclerViewDay.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = dailySubjectAdapter
+        }
         return binding.root
     }
-//
-//    //adapter에 데이터 추가
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewModel.subjectList.observe(viewLifecycleOwner) {
-//            dailySubjectAdapter.setData(it)
-//        }
-//    }
+
+    //adapter에 데이터 추가
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.subjectList.observe(viewLifecycleOwner) {
+            dailySubjectAdapter.setData(it)
+        }
+    }
 
     private fun dailySubjectPieChart(pieChart: PieChart, list: MutableList<Subjects>) {
         pieChart.setUsePercentValues(true)
