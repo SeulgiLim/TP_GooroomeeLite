@@ -49,11 +49,6 @@ class MonthFragment : Fragment() {
     private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
 
-    //db값 저장
-    private lateinit var subjects: Subjects
-    private var list: MutableList<Subjects> = mutableListOf()
-
-
 //     LocalDate 문자열로 포맷
 //    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
 
@@ -113,7 +108,6 @@ class MonthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentMonthBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_month,container,false)
         binding.month = this
@@ -130,24 +124,7 @@ class MonthFragment : Fragment() {
         binding.monthBarChart.setVisibleXRangeMaximum(30f)
         binding.monthBarChart.moveViewToX(30f)
 
-        FirebaseFirestore.getInstance()
-            .collection("subject")
-            .whereEqualTo("uid", LoginUtils.getUid()!!)
-            .get() //값이 변경 시 바로 값이 변경된다.
-            .addOnSuccessListener { docs ->
-                if(docs != null) {
-                    lateinit var subjectValue: ReadSubejct
-                    docs.documents.forEach {
-                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
-                        subjects = it.toObject(Subjects::class.java)!!
-                        list.add(subjects)
-                        monthlySubjectPieChart(binding.weeklyPieChart,list)
-                        Log.d("aqaqList", list.size.toString())
-                        //일간 공부 시간
-                    }
-                }
-            }
-
+        monthlySubjectPieChart()
         binding.recyclerViewMonth.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -343,41 +320,42 @@ class MonthFragment : Fragment() {
         }
     }
 
-    private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
-        pieChart.setUsePercentValues(true)
-//        Log.d("qwqwqwqwqw",subjects.studytime.toString())
-//        Log.d("qwqwqwqwqw",subjects.color.toString())
-        Log.d("aqaqAllList", list.size.toString())
+    private fun monthlySubjectPieChart(){
+        viewModel.list.observe(viewLifecycleOwner) {
+            val pieChart: PieChart = binding.monthlyPieChart
+            pieChart.setUsePercentValues(true)
+            val values = mutableListOf<PieEntry>()
+            val colorItems = mutableListOf<Int>()
+            it.forEach{
+                values.add(PieEntry(it.studytime.toFloat(),it.name.toString()))
+            }
+            it.forEachIndexed { index, subject ->
+                colorItems.add(index,Color.parseColor(subject.color))
+            }
 
-        val values = mutableListOf<PieEntry>()
-        val colorItems = mutableListOf<Int>()
-        list.forEachIndexed{ index, _ ->
-            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
-            colorItems.add(index,Color.parseColor(list[index].color))
-        }
-
-        val pieDataSet = PieDataSet(values,"")
-        pieDataSet.colors = colorItems
-        pieDataSet.apply {
+            val pieDataSet = PieDataSet(values, "")
+            pieDataSet.colors = colorItems
+            pieDataSet.apply {
 //            valueTextColor = Color.BLACK
-            setDrawValues(false) //차트에 표시되는 값 지우기
-            valueTextSize = 16f
-        }
-        //% : 퍼센트 수치 색상과 사이즈 지정
-        val pieData = PieData(pieDataSet)
-        pieChart.apply {
-            data = pieData
-            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
-            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+                setDrawValues(false) //차트에 표시되는 값 지우기
+                valueTextSize = 16f
+            }
+            //% : 퍼센트 수치 색상과 사이즈 지정
+            val pieData = PieData(pieDataSet)
+            pieChart.apply {
+                data = pieData
+                description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+                isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
 //            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
 //            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
-            isEnabled = false
-            legend.isEnabled = false //범례 지우기
-            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
-            holeRadius = 50f //흰색을 증앙에 꽉 채우기
-            setDrawEntryLabels(false) //차트에 있는 이름 지우
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
+                isEnabled = false
+                legend.isEnabled = false //범례 지우기
+                isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+                holeRadius = 50f //흰색을 증앙에 꽉 채우기
+                setDrawEntryLabels(false) //차트에 있는 이름 지우
+                animateY(1400, Easing.EaseInOutQuad)
+                animate()
+            }
         }
 
     }

@@ -43,6 +43,7 @@ class SubjectViewModel : ViewModel() {
                     docs.documents.forEach {
                         subject = it.toObject(Subject::class.java)!!
                         subjectListValue.add(subject!!)
+//                        list.value = subjectListValue
                     }
                     list.value = subjectListValue
                 }

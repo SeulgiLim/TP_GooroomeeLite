@@ -32,6 +32,7 @@ import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
+import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.entity.Subjects
 import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
@@ -51,8 +52,8 @@ class WeekFragment : Fragment() {
 
 
     //db값 저장
-    private lateinit var subjects: Subjects
-    private var list: MutableList<Subjects> = mutableListOf()
+//    private lateinit var subjects: Subjects
+    private var list: MutableList<Subject> = mutableListOf()
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -133,6 +134,7 @@ class WeekFragment : Fragment() {
         moveCalendarByWeek(binding.calendarMonday,binding.calendarSunday,binding.calRightBtn,binding.calLeftBtn,binding.titleWeek,binding.titleWeekNext)
         return binding.root
     }
+
 
     private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton,title: TextView,titleNext: TextView) {
         val calendarWeekNow: LocalDateTime = LocalDateTime.now()
@@ -300,50 +302,46 @@ class WeekFragment : Fragment() {
 
         //주간별 원 차트
 //        private fun weeklySubjectPieChart(pieChart: PieChart, list: MutableList<Subjects>) {
-            private fun weeklySubjectPieChart() {
+        private fun weeklySubjectPieChart() {
            val pieChart : PieChart = binding.weeklyPieChart
             pieChart.setUsePercentValues(true)
-//            Log.d("qwqwqwqwqw", subjects.studytime.toString())
-//            Log.d("qwqwqwqwqw", subjects.color.toString())
-//            Log.d("aqaqAllList", list.size.toString())
-
             val values = mutableListOf<PieEntry>()
             val colorItems = mutableListOf<Int>()
             viewModel.list.observe(viewLifecycleOwner){
-                Log.d("zxcvzxcv",it.size.toString())
-                Log.d("zxcvzxcv",it.toString())
+                it.forEach{
+                    values.add(PieEntry(it.studytime.toFloat(),it.name.toString()))
+                }
+                it.forEachIndexed { index, subject ->
+                    colorItems.add(index,Color.parseColor(subject.color))
+                }
 
-
-            }
-//            list.forEachIndexed { index, _ ->
-//                values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
-//                colorItems.add(index, Color.parseColor(list[index].color))
-//            }
-
-            val pieDataSet = PieDataSet(values, "")
-            pieDataSet.colors = colorItems
-            pieDataSet.apply {
+                val pieDataSet = PieDataSet(values, "")
+                pieDataSet.colors = colorItems
+                pieDataSet.apply {
 //            valueTextColor = Color.BLACK
-                setDrawValues(false) //차트에 표시되는 값 지우기
-                valueTextSize = 16f
-            }
-            //% : 퍼센트 수치 색상과 사이즈 지정
-            val pieData = PieData(pieDataSet)
-            pieChart.apply {
-                data = pieData
-                description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
-                isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+                    setDrawValues(false) //차트에 표시되는 값 지우기
+                    valueTextSize = 16f
+                }
+                //% : 퍼센트 수치 색상과 사이즈 지정
+                val pieData = PieData(pieDataSet)
+                pieChart.apply {
+                    data = pieData
+                    description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+                    isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
 //            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
 //            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
-                isEnabled = false
-                legend.isEnabled = false //범례 지우기
-                isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
-                holeRadius = 50f //흰색을 증앙에 꽉 채우기
-                setDrawEntryLabels(false) //차트에 있는 이름 지우
-                animateY(1400, Easing.EaseInOutQuad)
-                animate()
-            }
+                    isEnabled = false
+                    legend.isEnabled = false //범례 지우기
+                    isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+                    holeRadius = 50f //흰색을 증앙에 꽉 채우기
+                    setDrawEntryLabels(false) //차트에 있는 이름 지우
+                    animateY(1400, Easing.EaseInOutQuad)
+                    animate()
+                }
 
+            }
+            Log.d("zxcvzxcvzzz",list.size.toString())
+            Log.d("zxcvzxcvzzz",list.toString())
         }
 
         private fun pieChartRecyclerView() {

@@ -191,7 +191,7 @@
                     android:gravity="center">
 
                     <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/weekly_pieChart"
+                        android:id="@+id/monthly_pieChart"
                         android:layout_width="140dp"
                         android:layout_height="140dp" />
                 </LinearLayout>
