@@ -1,20 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="430dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+
     >
 
     <!-- 바텀시트 이름 (공부 시간 현황) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공부 시간 현황"
+        android:textSize="14sp"
+        android:textColor="#444444"
+        android:textStyle="bold"
+        android:layout_gravity="left"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="29dp"
+        />
+
+    <!-- 집중 시간 버튼-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/ic_con_backgrand"
+        android:paddingVertical="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/con_focusname"
+        app:layout_constraintTop_toTopOf="@+id/con_focusname">
+
+        <!-- 집중시간 아이콘 -->
+        <ImageView
+            android:id="@+id/con_focusicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_con_focusicon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 집중시간 명-->
+        <TextView
+            android:id="@+id/con_focusname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:text="집중 시간"
+            android:textColor="#3C3C3C"
+            android:textSize="14sp"
+            android:layout_marginLeft="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 시간 (text Open Sans 설정) -->
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="5dp"
+            android:text="02 : 58 : 35"
+            android:textColor="#0082FF"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensans"
+            android:layout_marginLeft="260dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- 과목 총 공부시간 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/ic_con_backgrand2"
+        android:paddingVertical="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/con_focusname"
+        app:layout_constraintTop_toTopOf="@+id/con_focusname">
+
+        <!-- 과목 총 공부시간 아이콘 -->
+        <ImageView
+            android:id="@+id/con_subjecticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_con_subjecticon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 과목 총 공부시간 명-->
+        <TextView
+            android:id="@+id/con_subjectname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:text="과목 총 공부 시간"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:layout_marginLeft="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 시간 (text Open Sans 설정) -->
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="5dp"
+            android:text="08 : 56 : 24"
+            android:textColor="#3C3C3C"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensans"
+            android:layout_marginLeft="260dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <!-- 오늘 공부시간 버튼 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/ic_con_backgrand2"
+        android:paddingVertical="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/con_focusname"
+        app:layout_constraintTop_toTopOf="@+id/con_focusname">
+
+
+        <!-- 오늘 공부시간 아이콘 -->
+        <ImageView
+            android:id="@+id/con_totalstudyicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_con_totalstudyicon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 과목 총 공부시간 명-->
+        <TextView
+            android:id="@+id/con_totalstudyname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:text="오늘 공부시간"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:layout_marginLeft="68dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 시간 (text Open Sans 설정) -->
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="5dp"
+            android:text="12 : 34 : 56"
+            android:textColor="#3C3C3C"
+            android:textSize="18sp"
+            android:fontFamily="@font/opensans"
+            android:layout_marginLeft="260dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+
+
+<!-- app:layout_constraintLeft_toRightOf="@id/con_focusname" -->
+
+
+
+    <!--
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:background="@drawable/ic_view_study"
         />
-
+        바텀시트 이름 (공부 시간 현황) -->
 
     <!--
         <TextView
@@ -45,5 +233,3 @@
         />
 
     -->
-
-</LinearLayout>
