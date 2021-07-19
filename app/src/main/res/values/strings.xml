@@ -47,6 +47,7 @@
     <string name="studytime_login">하루 목표 공부 시간을 알려주세요!</string>
     <string name="studytime_login2">목표 공부 시간은 이후에 수정이 가능합니다</string>
     <string name="studytime_btn">시작</string>
+    <string name="onboarding_btn">시작하기</string>
 
 
     // mypage //
@@ -146,5 +147,5 @@
     <string name="opensource_eleventhcontent">https://github.com/Karumi/Dexter</string>
 
 
-    <string name = "image_preview">이미지 미리보기</string>
+    <string name="image_preview">이미지 미리보기</string>
 </resources>
