@@ -21,37 +21,40 @@
 <!--    </androidx.appcompat.widget.Toolbar>-->
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="64dp"
+        android:layout_weight="3"
+        android:background="@color/black1"
         android:orientation="horizontal"
-        android:layout_weight="3">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/picture_previous"
-            android:text="취소"
-            android:textColor="@color/share_delete"
-            android:background="#00ff0000"
-            android:textSize="16sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:background="@color/black1"
+            android:text="취소"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="사진"
-            android:textColor="@color/share_picture"
-            android:textSize="16sp"
+            android:background="@color/black1"
             android:gravity="center"
-            android:layout_gravity="center"/>
+            android:text="사진"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <Button
-            android:text=""
-            android:background="#00ff0000"
-            android:textSize="14dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:background="#00ff0000"
+            android:text=""
+            android:textSize="14dp" />
 
     </LinearLayout>
 
@@ -59,17 +62,17 @@
         android:id="@+id/viewFinderContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/controllerGuideline"
+        android:background="@color/black1"
+        app:layout_constraintBottom_toTopOf="@+id/controllerGuideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
 
         <androidx.camera.view.PreviewView
             android:id="@+id/viewFinder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="48dp"
             android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="h,4:3"
@@ -78,7 +81,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" >
+            app:layout_constraintVertical_bias="0.0">
 
 
         </androidx.camera.view.PreviewView>
@@ -86,45 +89,57 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/controllerGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="549dp" />
-
-    <ImageView
-        android:id="@+id/captureButton"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ic_camera_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/controllerGuideline3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="549dp"
+        android:background="@color/black1"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/controllerGuideline" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/controllerGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+        <ImageView
+            android:id="@+id/showImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:background="@drawable/button_round_corner_4_black_24"
+            android:contentDescription="@string/image_preview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/converter_camera"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_convertor_camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/captureButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginEnd="94dp"
+            android:src="@drawable/ic_camera_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/converter_camera"
+            app:layout_constraintStart_toEndOf="@+id/showImage"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- 이미지뷰 지정:  이 이미지뷰에 사진이 촬영이 되면 gooroomeliteApplication 에 반응이 된다. -->
-    <!--    android:src="@drawable/ic_baseline_image_24"-->
-
-    <ImageView
-        android:id="@+id/showImage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:src="@drawable/ic_baseline_image_24"
-        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/captureButton" />
-
-    <ImageView
-        android:id="@+id/converter_camera"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="28dp"
-        android:src="@drawable/ic_convertor_camera"
-        app:layout_constraintBottom_toBottomOf="@+id/captureButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/captureButton" />
 
     <!--    <com.google.android.material.switchmaterial.SwitchMaterial-->
     <!--        android:id="@+id/flashSwitch"-->

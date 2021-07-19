@@ -5,6 +5,7 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
     private val handler = Handler(Looper.getMainLooper())
+    private lateinit var prefs : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +31,8 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         handler.postDelayed({
-            startProcess()
-        }, 1000L)
+            checkFirstRun()
+                            }, 1000L)
         job()
     }
 
@@ -62,4 +64,20 @@ class SplashActivity : AppCompatActivity() {
         Log.e("TAG","Schedulded JobA")
     }
 
+    private fun moveToOnBoarding(){
+        finish()
+        startActivity(Intent(this,OnBoardingActivity::class.java))
+    }
+
+    private fun checkFirstRun(){
+        val prefs = getSharedPreferences("Prefs", MODE_PRIVATE)
+        val isfirst :Boolean = prefs.getBoolean("isFirstRun",true)
+        if (isfirst){
+            prefs.edit().putBoolean("isFirstRun",false).apply()
+            moveToOnBoarding()
+        }
+        else{
+            startProcess()
+        }
+    }
 }

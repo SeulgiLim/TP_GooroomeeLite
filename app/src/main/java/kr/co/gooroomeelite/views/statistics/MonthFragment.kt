@@ -23,6 +23,7 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,54 +46,13 @@ class MonthFragment : Fragment() {
     private lateinit var binding: FragmentMonthBinding
     private val viewModel: SubjectViewModel by viewModels()
 
-//    private lateinit var chart: BarChart
+    private lateinit var chart: BarChart
     private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
-
-
-    //db값 저장
-    private lateinit var subjects: Subjects
-    private var list: MutableList<Subjects> = mutableListOf()
 
 
 //     LocalDate 문자열로 포맷
 //    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
 
-
-    private val listData by lazy {
-        mutableListOf(
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(7.5f)),
-            ChartDatas("", arrayListOf(8.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(10.5f)),
-            ChartDatas("", arrayListOf(18.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(6.5f)),
-            ChartDatas("", arrayListOf(19.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(9.5f)),
-            ChartDatas("", arrayListOf(3.5f)),
-            ChartDatas("", arrayListOf(16.5f)),
-            ChartDatas("", arrayListOf(3.5f)),
-            ChartDatas("", arrayListOf(12.5f)),
-            ChartDatas("", arrayListOf(14.5f)),
-            ChartDatas("", arrayListOf(15.5f)),
-            ChartDatas("", arrayListOf(16.5f)),
-            ChartDatas("", arrayListOf(17.5f)),
-            ChartDatas("", arrayListOf(18.5f)),
-            ChartDatas("", arrayListOf(12.5f))
-        )
-    }
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -113,7 +73,6 @@ class MonthFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentMonthBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_month,container,false)
         binding.month = this
@@ -130,27 +89,7 @@ class MonthFragment : Fragment() {
         binding.monthBarChart.setVisibleXRangeMaximum(30f)
         binding.monthBarChart.moveViewToX(30f)
 
-        FirebaseFirestore.getInstance()
-            .collection("subject")
-            .whereEqualTo("uid", LoginUtils.getUid()!!)
-            .get() //값이 변경 시 바로 값이 변경된다.
-            .addOnSuccessListener { docs ->
-                if(docs != null) {
-                    lateinit var subjectValue: ReadSubejct
-                    docs.documents.forEach {
-                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
-                        subjects = it.toObject(Subjects::class.java)!!
-                        list.add(subjects)
-                        monthlySubjectPieChart(binding.weeklyPieChart,list)
-                        Log.d("aqaqList", list.size.toString())
-                        //일간 공부 시간
-                    }
-                }
-            }
-
-//        var calendarMonth : TextView = view.findViewById(R.id.calendar_month)
-//        var calRightBtn : ImageButton = view.findViewById(R.id.cal_right_btn)
-//        var calLeftBtn : ImageButton = view.findViewById(R.id.cal_left_btn)
+        monthlySubjectPieChart()
         binding.recyclerViewMonth.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
@@ -160,7 +99,7 @@ class MonthFragment : Fragment() {
             adapter = dailySubjectAdapter
         }
 
-        moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn)
+        moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn,binding.titleMonth)
         return binding.root
     }
 
@@ -171,50 +110,123 @@ class MonthFragment : Fragment() {
         }
     }
 
-    private fun monthlySubjectPieChart(pieChart : PieChart, list: MutableList<Subjects>){
-        pieChart.setUsePercentValues(true)
-        Log.d("qwqwqwqwqw",subjects.studytime.toString())
-        Log.d("qwqwqwqwqw",subjects.color.toString())
-        Log.d("aqaqAllList", list.size.toString())
+    private fun initChart(chart: BarChart) {
+//        customMarkerView.chartView = chart
+        with(chart) {
+//            marker = customMarkerView
+            description.isEnabled = false
+            legend.isEnabled = false
+            isDoubleTapToZoomEnabled = false
 
-        val values = mutableListOf<PieEntry>()
-        val colorItems = mutableListOf<Int>()
-        list.forEachIndexed{ index, _ ->
-            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
-            colorItems.add(index,Color.parseColor(list[index].color))
+            setPinchZoom(false)
+            setDrawBarShadow(false)
+            setDrawValueAboveBar(false)
+            //둥근 모서리 색상
+            val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
+//                setRadius(10)
+            }
+            renderer = barChartRender
         }
-
-        val pieDataSet = PieDataSet(values,"")
-        pieDataSet.colors = colorItems
-        pieDataSet.apply {
-//            valueTextColor = Color.BLACK
-            setDrawValues(false) //차트에 표시되는 값 지우기
-            valueTextSize = 16f
-        }
-        //% : 퍼센트 수치 색상과 사이즈 지정
-        val pieData = PieData(pieDataSet)
-        pieChart.apply {
-            data = pieData
-            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
-            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
-//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
-//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
-            isEnabled = false
-            legend.isEnabled = false //범례 지우기
-            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
-            holeRadius = 50f //흰색을 증앙에 꽉 채우기
-            setDrawEntryLabels(false) //차트에 있는 이름 지우
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
-        }
-
+        setDatas()
     }
 
+    private fun setDatas() {
+        val values = mutableListOf<BarEntry>()
+        values.add(BarEntry(0f, 60f))
+        values.add(BarEntry(1f, 56f))
+        values.add(BarEntry(2f, 107f))
+        values.add(BarEntry(3f, 48f))
+        values.add(BarEntry(4f, 109f))
 
-    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton){
+
+        //막대 그래프 색상 추가
+        val barDataSet = BarDataSet(values, "").apply {
+            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
+            setDrawValues(false)
+            val colors = ArrayList<Int>()
+            colors.add(Color.argb(100,68,158,246))
+            setColors(colors)
+            highLightAlpha = 0
+        }
+
+        //막대 그래프 너비 설정
+        val dataSets = mutableListOf(barDataSet)
+        val data = BarData(dataSets as List<IBarDataSet>?).apply {
+//            setValueTextSize(30F)
+            barWidth = 0.2F
+        }
+        //애니메이션 효과 0.1초
+        with(binding.monthBarChart) {
+            animateY(100)
+
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+//                setVisibleXRangeMaximum(20f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
+//                moveViewToX(60f)
+//                setVisibleXRangeMaximum(100f)
+                setDrawGridLines(false)
+                textColor = whiteColor
+                //첫째 주 ~ 다섯째 주
+                val xAxisLabels = listOf("첫째 주", "둘째 주", "셋째 주", "넷째 주", "다섯째 주")
+                valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+//                valueFormatter = object : ValueFormatter() {
+//                    override fun getFormattedValue(value: Float): String {
+//                        return barData[value.toInt()].date
+//                    }
+//                }
+            }
+
+            //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
+            axisRight.apply {
+                textColor = whiteColor
+                setDrawAxisLine(false) //격자
+                gridColor = transparentBlackColor
+                gridLineWidth = 0.5F
+                enableGridDashedLine(5f,5f,5f)
+
+                axisMaximum = 168F
+                granularity = 42F
+                axisMinimum = 0F
+                setLabelCount(4,true) //축 고정간격
+
+                //y축 제목 커스텀
+                valueFormatter = object : ValueFormatter() {
+                    private val mFormat: DecimalFormat = DecimalFormat("###")
+                    override fun getFormattedValue(value: Float): String {
+                        return mFormat.format(value) + "시간"
+                    }
+                }
+            }
+
+            //차트 오른쪽 축, Y방향 false처리
+            axisLeft.apply {
+                isEnabled = false
+                gridColor = transparentBlackColor
+                var count = 0
+                //차트데이터 값에서 가장 큰 값
+
+                axisMaximum = 168F
+                granularity = 42F
+                axisMinimum = 0F
+                setLabelCount(4,true) //축 고정간격
+
+            }
+
+            notifyDataSetChanged()  //chart의 값 변동을 감지함
+//            setVisibleXRangeMaximum(10f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
+//            moveViewToX(10f)
+//            setVisibleXRangeMaximum(10f)
+
+            this.data = data
+            invalidate()
+        }
+    }
+
+    private fun moveCalendarByDay(calendarMonth:TextView,calRightBtn:ImageButton,calLeftBtn:ImageButton,title:TextView){
         // 현재 날짜/시간 가져오기
         val dateNow: LocalDate = LocalDate.now()
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM")
+        val titleformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월달에")
 
         var count : Int = 0
         calendarMonth.text = dateNow.format(textformatter) //하루 2021.07.08
@@ -224,13 +236,67 @@ class MonthFragment : Fragment() {
             count++
             val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
             calendarMonth.text =  dayPlus.format(textformatter).toString()
+            if (count == 0) {
+                title.text = "이번 달에"
+            } else if (count == -1) {
+                title.text = "지난 달에"
+            } else {
+                title.text = dayPlus.format(titleformatter).toString()
+            }
         }
 
         calLeftBtn.setOnClickListener {
             count--
             val minusDay: LocalDate = dateNow.plusMonths(count.toLong())
             calendarMonth.text =  minusDay.format(textformatter).toString()
+            if (count == 0) {
+                title.text = "이번 달에"
+            } else if (count == -1) {
+                title.text = "지난 달에"
+            } else {
+                title.text =   minusDay.format(titleformatter).toString()
+            }
         }
+    }
+
+    private fun monthlySubjectPieChart(){
+        viewModel.list.observe(viewLifecycleOwner) {
+            val pieChart: PieChart = binding.monthlyPieChart
+            pieChart.setUsePercentValues(true)
+            val values = mutableListOf<PieEntry>()
+            val colorItems = mutableListOf<Int>()
+            it.forEach{
+                values.add(PieEntry(it.studytime.toFloat(),it.name.toString()))
+            }
+            it.forEachIndexed { index, subject ->
+                colorItems.add(index,Color.parseColor(subject.color))
+            }
+
+            val pieDataSet = PieDataSet(values, "")
+            pieDataSet.colors = colorItems
+            pieDataSet.apply {
+//            valueTextColor = Color.BLACK
+                setDrawValues(false) //차트에 표시되는 값 지우기
+                valueTextSize = 16f
+            }
+            //% : 퍼센트 수치 색상과 사이즈 지정
+            val pieData = PieData(pieDataSet)
+            pieChart.apply {
+                data = pieData
+                description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+                isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+//            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
+//            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
+                isEnabled = false
+                legend.isEnabled = false //범례 지우기
+                isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+                holeRadius = 50f //흰색을 증앙에 꽉 채우기
+                setDrawEntryLabels(false) //차트에 있는 이름 지우
+                animateY(1400, Easing.EaseInOutQuad)
+                animate()
+            }
+        }
+
     }
 
     private fun requestPermission(): Boolean {
@@ -253,145 +319,6 @@ class MonthFragment : Fragment() {
             .setPermissions(Manifest.permission.CAMERA)
             .check()
         return permissions
-    }
-
-    private fun initChart(chart: BarChart) {
-//        customMarkerView.chartView = chart
-        with(chart) {
-//            marker = customMarkerView
-            description.isEnabled = false
-            legend.isEnabled = false
-            isDoubleTapToZoomEnabled = false
-
-            setPinchZoom(false)
-            setDrawBarShadow(false)
-            setDrawValueAboveBar(false)
-            //둥근 모서리 색상
-            val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
-//                setRadius(10)
-            }
-            renderer = barChartRender
-        }
-        setData(listData)
-    }
-
-    private fun setData(barData: List<ChartDatas>) {
-        val values = mutableListOf<BarEntry>()
-        barData.forEachIndexed { index, chartData ->
-            //첫번째 인자 x , 두번째 인자 y
-            for(i in chartData.value){
-                values.add(BarEntry(index.toFloat(), i))
-            }
-        }
-
-        //막대 그래프 색상 추가
-        val barDataSet = BarDataSet(values, "").apply {
-            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
-            setDrawValues(false)
-
-            val colors = ArrayList<Int>()
-            colors.add(Color.argb(100,68,158,246))
-            setColors(colors)
-            highLightAlpha = 0
-        }
-
-        //막대 그래프 너비 설정
-        val dataSets = mutableListOf(barDataSet)
-        val data = BarData(dataSets as List<IBarDataSet>?).apply {
-//            setValueTextSize(30F)
-            barWidth = 0.5F
-        }
-        //애니메이션 효과 0.1초
-        with(binding.monthBarChart) {
-            animateY(100)
-
-            xAxis.apply {
-                position = XAxis.XAxisPosition.BOTTOM
-//                setVisibleXRangeMaximum(20f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
-//                moveViewToX(60f)
-//                setVisibleXRangeMaximum(100f)
-                setDrawGridLines(false)
-                textColor = whiteColor
-                //월 ~ 일
-                valueFormatter = object : ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return barData[value.toInt()].date
-                    }
-                }
-            }
-
-            //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
-            axisRight.apply {
-                textColor = whiteColor
-                setDrawAxisLine(false) //격자
-                gridColor = transparentBlackColor
-                gridLineWidth = 0.5F
-                enableGridDashedLine(5f,5f,5f)
-
-                var count = 0
-                //차트데이터 값에서 가장 큰 값
-                barData.forEachIndexed { index, chartData ->
-                    for (i in chartData.value) {
-//                        var chartDataMax = listData.maxBy { it -> it. }
-                        var maxValue = i
-                        Log.d("aaa", "$maxValue"+"maxValue값")
-                        barData.forEachIndexed { index, chartData ->
-                            while (i > axisMaximum) {
-                                count++
-                                if (i > axisMaximum) {
-                                    axisMaximum = maxValue
-                                } else {
-                                    axisMaximum = 9F
-                                }
-                            }
-                        }
-                    }
-                }
-                axisMinimum = 0F
-//                axisMaximum = 9F
-                granularity  = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
-                //y축 제목 커스텀
-                valueFormatter = object : ValueFormatter() {
-                    private val mFormat: DecimalFormat = DecimalFormat("###")
-                    override fun getFormattedValue(value: Float): String {
-                        return mFormat.format(value) + "시"
-                    }
-                }
-            }
-
-            //차트 오른쪽 축, Y방향 false처리
-            axisLeft.apply {
-                isEnabled = false
-                gridColor = transparentBlackColor
-                var count = 0
-                //차트데이터 값에서 가장 큰 값
-                barData.forEachIndexed { index, chartData ->
-                    for (i in chartData.value) {
-//                        var chartDataMax = listData.maxBy { it -> it. }
-                        var maxValue = i
-                        Log.d("aaa", "$maxValue")
-                        while (i > axisMaximum) {
-                            count++
-                            if (i > axisMaximum) {
-                                axisMaximum = maxValue
-                            } else {
-                                axisMaximum = 9F
-                            }
-                        }
-                    }
-                }
-                axisMinimum = 3F
-//                axisMaximum = 9F
-            }
-
-            notifyDataSetChanged()  //chart의 값 변동을 감지함
-//            setVisibleXRangeMaximum(10f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
-//            moveViewToX(10f)
-//            setVisibleXRangeMaximum(10f)
-
-            this.data = data
-            invalidate()
-        }
     }
 }
 //    private fun listDataValue(){

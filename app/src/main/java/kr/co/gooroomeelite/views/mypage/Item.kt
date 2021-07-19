@@ -26,3 +26,9 @@ data class OpenSourceItem (
 data class MusicItem(val tvmusic: String,
                      val music: Int
 )
+
+data class OnBoardingItem(
+    val tvonboarding: String,
+    val ivonboarding : Int,
+    val ivindicator : Int
+)

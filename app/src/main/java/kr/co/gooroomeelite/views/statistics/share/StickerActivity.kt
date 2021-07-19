@@ -1,6 +1,5 @@
 package kr.co.gooroomeelite.views.statistics.share
 
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
@@ -15,21 +14,16 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tarek360.instacapture.Instacapture
 import com.tarek360.instacapture.listener.SimpleScreenCapturingListener
-import kotlinx.android.synthetic.main.fragment_statistics.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStickerBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
-import kr.co.gooroomeelite.views.common.MainActivity
-import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.statistics.StatisticsFragment
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
 import java.io.OutputStream
@@ -101,19 +95,11 @@ class StickerActivity : AppCompatActivity() {
     }
 
     fun getTotalStudy() {
-//        val dateNow: LocalDateTime = LocalDateTime.now()
-//        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd.EEE")
-//        var count: Int = 0
-//        binding.localTime.text =  dateNow.format(textformatter)
-
         val dateNow: LocalDateTime = LocalDateTime.now()
-
         val cal = Calendar.getInstance()
         cal.time = Date()
         val formatter: DateFormat = SimpleDateFormat("yyyy. MM. dd. EEE", Locale.ENGLISH)
         binding.localTime.text = formatter.format(cal.time)
-
-
 
         FirebaseFirestore.getInstance()
             .collection("subject")
@@ -129,9 +115,6 @@ class StickerActivity : AppCompatActivity() {
                 Log.d("sum",todayStudySum.toString())
                 binding.hourStudytime.text = (todayStudySum/60).toString()
                 binding.minuteStudytime.text = (todayStudySum%60).toString()
-//                ${studytime / 60}시간 ${studytime % 60}분"
-//                todayStudyTime.value = studytimetodaylist.sum()
-//                FirebaseFirestore.getInstance().collection("users").document(getUid()!!).update("todaystudytime",todayStudyTime.value)
             }
     }
 

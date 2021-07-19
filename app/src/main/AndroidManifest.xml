@@ -14,19 +14,18 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
+        <activity android:name=".views.common.OnBoardingActivity">
 
-        <activity android:name=".views.home.AsmrActivity"
+
+        </activity>
+        <activity
+            android:name=".views.home.PomoFocusDialog"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
-
-        <activity android:name=".views.home.PomoFocusDialog"
+        <activity
+            android:name=".views.home.TimersettingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
-
-        <activity android:name=".views.home.TimersettingActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
-
         <activity
             android:name=".views.home.StudyActivity"
             android:launchMode="singleTask"
@@ -34,10 +33,13 @@
 
         <service
             android:name=".utils.MyJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <activity android:name=".views.mypage.MusicActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".views.home.StudyEndActivity"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".views.mypage.MusicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.home.StudyEndActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
         <activity

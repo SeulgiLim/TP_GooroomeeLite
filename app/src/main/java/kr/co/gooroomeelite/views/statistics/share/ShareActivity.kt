@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -24,7 +23,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
-import kr.co.gooroomeelite.views.statistics.StatisticsFragment
+import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
+import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCropp
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -53,8 +53,8 @@ class ShareActivity : AppCompatActivity() {
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
 
-//    private var cameraSelector = CameraSelector.Builder().requireLensFacing(LENS_BACK).build()
-//    private var mCameraID = LENS_BACK
+    private var uriList = mutableListOf<Uri>()
+
 
     private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -100,17 +100,7 @@ class ShareActivity : AppCompatActivity() {
 //        startCamera(binding.viewFinder)
         bindCameraUseCase()
     }
-//      툴바 뒤로가기
-//    private fun initToolBar() {
-//        val toolbar = binding.pictureToolbar
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)//뒤로 버튼
-//    }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.,menu)
-//        return true
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -140,7 +130,7 @@ class ShareActivity : AppCompatActivity() {
                     Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
                     galleryIntent.putExtra("gallery",currentImageUrl.toString())
                     startActivity(galleryIntent)
-//                    binding.showImageView.setImageBitmap(bitmap)
+                    binding.showImage.setImageBitmap(bitmap)
                 }catch(e: Exception){
                     e.printStackTrace()
                 }
@@ -184,6 +174,7 @@ class ShareActivity : AppCompatActivity() {
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
+//                bindCameraUseCase() //------
 //                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
@@ -219,22 +210,9 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-//    private fun initFlashAndAddListener() = with(binding){
-//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-//        flashSwitch.isGone = hasFlash.not()
-//        if(hasFlash){
-//            flashSwitch.setOnCheckedChangeListener { _, isChecked ->
-//                isFlashEnabled = isChecked
-//            }
-//        }else{
-//            isFlashEnabled = false
-//            flashSwitch.setOnClickListener(null)
-//        }
-//    }
-
-
 
     private var contentUri : Uri? = null
+
     //사진 촬영 및 저장 콜백 구현
     private fun captureCamera(){
         if(::imageCapture.isInitialized.not()) return
@@ -261,12 +239,6 @@ class ShareActivity : AppCompatActivity() {
 
         })
     }
-//    private fun flashLight(light:Boolean){
-//        val hasFlash = camera?.cameraInfo?.hasFlashUnit() ?: false
-//        if(hasFlash){
-//            camera?.cameraControl?.enableTorch(light)
-//        }
-//    }
 
     //이미지 저장 후 다른 갤러리를 볼 수 있게 설정
     private fun updateSavedImageContent() {
@@ -274,14 +246,18 @@ class ShareActivity : AppCompatActivity() {
             isCapturing = try{
                 val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException())
                 MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpeg"),null)
+                Handler(Looper.getMainLooper()).post {
+                    binding.showImage.loadCenterCropp(url = it.toString(),corner = 4f)
+                }
 
                 val stickerIntent = Intent(this@ShareActivity,StickerActivity::class.java)
-                stickerIntent.putExtra("picture",contentUri.toString())
-                Log.d("aaaa",contentUri.toString())
+                stickerIntent.putExtra("picture",it.toString())
+                Log.d("aaaa",it.toString())
                 startActivity(stickerIntent)
                 finish()
 //                flashLight(false)
                 false
+
             }catch (e: Exception){
                 e.printStackTrace()
                 Toast.makeText(this,"파일이 존재하지 않습니다.",Toast.LENGTH_SHORT).show()

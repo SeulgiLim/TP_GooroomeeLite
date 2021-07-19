@@ -40,6 +40,7 @@ class MusicAdapter(private val owner : AppCompatActivity,
                 holderView = this@ViewHolder
             }
         }
+
         fun onClick(v: View) {
             if (selectedItems[layoutPosition]) {    //클릭시 닫힌다 -> 이벤트 동작한 포지션의 아이템뷰가 selectedItems에 추가
                 selectedItems.delete(layoutPosition)
@@ -84,7 +85,8 @@ class MusicAdapter(private val owner : AppCompatActivity,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicAdapter.ViewHolder {
-        val binding = ItemRecyclerviewMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRecyclerviewMusicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -95,7 +97,6 @@ class MusicAdapter(private val owner : AppCompatActivity,
             changemusic(selectedItems[position])
             tvmusic.text =musicdata.tvmusic
         }
-
     }
 
     override fun getItemCount(): Int {
