@@ -40,6 +40,7 @@ import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.isLogin
 import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.common.OnBoardingActivity
 import kr.co.gooroomeelite.views.login.LoginActivity
 import java.io.File
 
@@ -140,6 +141,10 @@ class MypageFragment(val owner:AppCompatActivity) : Fragment() {
         binding.btnWithdrawal.setOnClickListener {
             val intent05 = Intent(owner,WithdrawalActivity::class.java)
             startActivity(intent05)
+        }
+        binding.toolbar2.setOnClickListener{
+            val intent06 = Intent(owner,OnBoardingActivity::class.java)
+            startActivity(intent06)
         }
     }
 

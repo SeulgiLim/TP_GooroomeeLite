@@ -10,11 +10,14 @@
     android:layout_marginTop="12dp"
     android:id="@+id/start_btn"
     app:cardElevation="1.5dp"
+    android:outlineSpotShadowColor="#444444"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_cardview"
+        >
 
         <kr.co.gooroomeelite.customview.SmallRoundedSquare
             android:id="@+id/subject_color"

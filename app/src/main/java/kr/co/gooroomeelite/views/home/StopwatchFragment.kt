@@ -89,22 +89,22 @@ class StopwatchFragment : Fragment() {
             } else {
                 stopwatch.format = " 00: %s"
             }
-        }*/
-
-
-        // 현재 타이머 값 표시 (시, 분, 초 사이 공백 넣기)
-        stopwatch?.setOnChronometerTickListener{ stopwatch ->
-            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
-            val h = (elapsedMillis / 3600000).toInt()
-            val m = (elapsedMillis - h * 3600000).toInt() / 60000
-            val s = (elapsedMillis - h * 3600000 - m * 60000).toInt() / 1000
-            val hh = if (h < 10) "0$h" else h.toString() + ""
-            val mm = if (m < 10) "0$m" else m.toString() + ""
-            val ss = if (s < 10) "0$s" else s.toString() + ""
-            stopwatch.format = "$hh : $mm : $ss"
         }
-        stopwatch!!.base = SystemClock.elapsedRealtime()
-        stopwatch!!.start()
+
+
+//        // 현재 타이머 값 표시 (시, 분, 초 사이 공백 넣기)
+//        stopwatch?.setOnChronometerTickListener{ stopwatch ->
+//            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
+//            val h = (elapsedMillis / 3600000).toInt()
+//            val m = (elapsedMillis - h * 3600000).toInt() / 60000
+//            val s = (elapsedMillis - h * 3600000 - m * 60000).toInt() / 1000
+//            val hh = if (h < 10) "0$h" else h.toString() + ""
+//            val mm = if (m < 10) "0$m" else m.toString() + ""
+//            val ss = if (s < 10) "0$s" else s.toString() + ""
+//            stopwatch.format = "$hh : $mm : $ss"
+//        }
+//        stopwatch!!.base = SystemClock.elapsedRealtime()
+//        stopwatch!!.start()
 
 
 

@@ -130,7 +130,7 @@ class ShareActivity : AppCompatActivity() {
                     Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
                     galleryIntent.putExtra("gallery",currentImageUrl.toString())
                     startActivity(galleryIntent)
-//                    binding.showImageView.setImageBitmap(bitmap)
+                    binding.showImage.setImageBitmap(bitmap)
                 }catch(e: Exception){
                     e.printStackTrace()
                 }
