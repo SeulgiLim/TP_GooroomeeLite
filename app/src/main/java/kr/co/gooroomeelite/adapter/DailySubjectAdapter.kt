@@ -1,5 +1,4 @@
 package kr.co.gooroomeelite.adapter
-
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
@@ -13,6 +12,7 @@ import kr.co.gooroomeelite.databinding.ItemSubjectBinding
 import kr.co.gooroomeelite.databinding.ItemSubjectDailyBinding
 import java.util.*
 
+@RequiresApi(Build.VERSION_CODES.Q)
 class DailySubjectAdapter(
     private var subjects: List<DocumentSnapshot>
 ) : RecyclerView.Adapter<DailySubjectAdapter.SubjectViewHolder>() {
@@ -27,7 +27,6 @@ class DailySubjectAdapter(
         return SubjectViewHolder(ItemSubjectDailyBinding.bind(view))
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val subject = subjects[position]
         holder.binding.subjectColor.paint.color = Color.parseColor(subject["color"] as String)

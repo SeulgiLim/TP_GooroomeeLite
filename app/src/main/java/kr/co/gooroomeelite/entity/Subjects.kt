@@ -14,8 +14,8 @@ data class Subjects(
 
     @ServerTimestamp
     val timestamp: Date? = null,
-//    @ServerTimestamp
-//    val studyStartTime : Date? = null,
-//    @ServerTimestamp
-//    val studyEndTime : Date? = null
+    @ServerTimestamp
+    val studyStartTime : Date? = null,
+    @ServerTimestamp
+    val studyEndTime : Date? = null
 )

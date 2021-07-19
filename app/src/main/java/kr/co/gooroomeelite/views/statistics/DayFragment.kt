@@ -61,10 +61,6 @@ class DayFragment : Fragment() {
 
     private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
-    //db값 저장
-    private lateinit var subjects: Subjects
-    private var list: MutableList<Subjects> = mutableListOf()
-
     private val listData by lazy {
         mutableListOf(
             ChartDatas("오전 12시", arrayListOf(0F)),
@@ -127,26 +123,9 @@ class DayFragment : Fragment() {
         //일간 차트
         initChart(binding.dayBarChart)
 
-        FirebaseFirestore.getInstance()
-            .collection("subject")
-            .whereEqualTo("uid", getUid()!!)
-            .get() //값이 변경 시 바로 값이 변경된다.
-            .addOnSuccessListener { docs ->
-                if (docs != null) {
-                    lateinit var subjectValue: ReadSubejct
-                    docs.documents.forEach {
-//                        subjectValue = ReadSubejct(it.toObject(Subjects::class.java)!!,it)
-//                        subjectsList.add(subjectValue)
-                        subjects = it.toObject(Subjects::class.java)!!
-                        list.add(subjects)
-                        dailySubjectPieChart(binding.dailyPieChart, list)
-                        Log.d("aqaqList", list.size.toString())
-                        //일간 공부 시간
-                    }
-                }
-            }
+        dailySubjectPieChart()
 
-        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleOneLine)
+        moveCalendarByDay(binding.calendar, binding.calRightBtn, binding.calLeftBtn,binding.titleDay)
 
         binding.recyclerViewDay.apply {
             layoutManager = LinearLayoutManager(
@@ -166,41 +145,43 @@ class DayFragment : Fragment() {
         }
     }
 
-    private fun dailySubjectPieChart(pieChart: PieChart, list: MutableList<Subjects>) {
+    private fun dailySubjectPieChart() {
+        val pieChart : PieChart = binding.dailyPieChart
         pieChart.setUsePercentValues(true)
-        Log.d("qwqwqwqwqw", subjects.studytime.toString())
-        Log.d("qwqwqwqwqw", subjects.color.toString())
-        Log.d("aqaqAllList", list.size.toString())
 
-        val values = mutableListOf<PieEntry>()
-        val colorItems = mutableListOf<Int>()
-        list.forEachIndexed { index, _ ->
-            values.add(PieEntry(list[index].studytime.toFloat(), list[index].name))
-            colorItems.add(index, Color.parseColor(list[index].color))
-        }
+        viewModel.list.observe(viewLifecycleOwner) {
+            val values = mutableListOf<PieEntry>()
+            val colorItems = mutableListOf<Int>()
+              it.forEach{
+                    values.add(PieEntry(it.studytime.toFloat(),it.name.toString()))
+                }
+                it.forEachIndexed { index, subject ->
+                    colorItems.add(index,Color.parseColor(subject.color))
+                }
 
-        val pieDataSet = PieDataSet(values, "")
-        pieDataSet.colors = colorItems
-        pieDataSet.apply {
+            val pieDataSet = PieDataSet(values, "")
+            pieDataSet.colors = colorItems
+            pieDataSet.apply {
 //            valueTextColor = Color.BLACK
-            setDrawValues(false) //차트에 표시되는 값 지우기
-            valueTextSize = 16f
-        }
-        //% : 퍼센트 수치 색상과 사이즈 지정
-        val pieData = PieData(pieDataSet)
-        pieChart.apply {
-            data = pieData
-            description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
-            isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
+                setDrawValues(false) //차트에 표시되는 값 지우기
+                valueTextSize = 16f
+            }
+            //% : 퍼센트 수치 색상과 사이즈 지정
+            val pieData = PieData(pieDataSet)
+            pieChart.apply {
+                data = pieData
+                description.isEnabled = false //해당 그래프 오른쪽 아래 그래프의 이름을 표시한다.
+                isRotationEnabled = false //그래프를 회전판처럼 돌릴 수 있다
 //            centerText = "this is color" //그래프 한 가운데 들어갈 텍스트
 //            setEntryLabelColor(Color.RED) //그래프 아이템의 이름의 색 지정
-            isEnabled = false
-            legend.isEnabled = false //범례 지우기
-            isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
-            holeRadius = 50f //흰색을 증앙에 꽉 채우기
-            setDrawEntryLabels(false) //차트에 있는 이름 지우
-            animateY(1400, Easing.EaseInOutQuad)
-            animate()
+                isEnabled = false
+                legend.isEnabled = false //범례 지우기
+                isDrawHoleEnabled = true //중앙의 흰색 테두리 제거
+                holeRadius = 50f //흰색을 증앙에 꽉 채우기
+                setDrawEntryLabels(false) //차트에 있는 이름 지우
+                animateY(1400, Easing.EaseInOutQuad)
+                animate()
+            }
         }
 
     }
@@ -219,32 +200,40 @@ class DayFragment : Fragment() {
         var count: Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
 
-        title.text = "오늘"
-       dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
+//        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
             count++
             val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = dayPlus.format(textformatter).toString()
             title.text = dayPlus.format(titleformatter).toString()
+            if(count==0){
+                title.text = "오늘"
+            }
+            if(count==-1){
+                title.text = "어제"
+            }
         }
+
 
         calLeftBtn.setOnClickListener {
             count--
             val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
             calendarDay.text = minusDay.format(textformatter).toString()
             title.text = minusDay.format(titleformatter).toString()
+             if(count==0) {
+                 title.text = "오늘"
+             }
+            if(count==-1){
+                title.text = "어제"
+            }
         }
-//        if(dateNow == ){
-//            title.text = "오늘"
-//        }
-
     }
 
     private fun initChart(chart: BarChart) {
         customMarkerView.chartView = chart
         with(chart) {
             marker = customMarkerView
-            description.isEnabled = false
+            description.isEnabled = false 
             legend.isEnabled = false
             isDoubleTapToZoomEnabled = false
 
