@@ -43,6 +43,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
+import java.util.*
+import kotlin.collections.ArrayList
 
 @RequiresApi(Build.VERSION_CODES.O)
 class WeekFragment : Fragment() {
@@ -76,25 +78,6 @@ class WeekFragment : Fragment() {
 //    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M/d")
 
 
-
-//    private val listData by lazy {
-//        mutableListOf(
-//            ChartData("월", 24.1f),
-//            ChartData("화", 9.5f),
-//            ChartData("수", 3.5f),
-//            ChartData("목", 7.5f),
-//            ChartData("금", 5.5f),
-//            ChartData("토", 12.5f),
-//            ChartData("일", 19.5f),
-//            ChartData("", 19.5f),
-//            ChartData("", 19.5f),
-//            ChartData("", 19.5f),
-//            ChartData("", 19.5f),
-//            ChartData("", 19.5f),
-//            ChartData("", 19.5f),
-//        )
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -106,23 +89,6 @@ class WeekFragment : Fragment() {
         binding.weekBarChart.setNoDataText("")
 
         initChart()
-//        binding.weekBarChart.setVisibleXRangeMinimum(7f)
-//        binding.weekBarChart.moveViewToX(-10f)
-
-//        FirebaseFirestore.getInstance()
-//            .collection("subject")
-//            .whereEqualTo("uid", LoginUtils.getUid()!!)
-//            .get() //값이 변경 시 바로 값이 변경된다.
-//            .addOnSuccessListener { docs ->
-//                if(docs != null) {
-//                    docs.documents.forEach {
-//                        subjects = it.toObject(Subjects::class.java)!!
-//                        list.add(subjects)
-//                        weeklySubjectPieChart(binding.weeklyPieChart,list)
-////                        weelkyTotalHourTitle(list,subjects)
-//                    }
-//                }
-//            }
 
         weeklySubjectPieChart()
         binding.shareButton.setOnClickListener {
@@ -138,21 +104,24 @@ class WeekFragment : Fragment() {
 
     private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton,title: TextView,titleNext: TextView) {
         val calendarWeekNow: LocalDateTime = LocalDateTime.now()
+
+        val cal = Calendar.getInstance()
+        val weeks : Int = cal.get(Calendar.WEEK_OF_MONTH)
+//        val weeks : String = cal.get(Calendar.MONTH).plus(7).toString()  //7월달(+1)
         val monday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
         val sunday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
 
 
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         val weektextformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월") //7월
-        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH) //몇째주
+//        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH)//몇째주
 
         var count: Int = 0
 
         monDay.text = monday.format(textformatter)
         sunDay.text = sunday.format(textformatter)
 
-//        title.text = dayPlus.format(titleformatter).toString()\
-//        title.text = minusDay.format(titleformatter).toString()
+
         rBtn.setOnClickListener {
             count++
             val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
@@ -167,7 +136,7 @@ class WeekFragment : Fragment() {
                 titleNext.text = "주에"
             } else {
                 title.text = calendarWeekNow.format(weektextformatter)
-                titleNext.text = weekend.plus(count.toLong()).toString()
+                titleNext.text = monday.plusWeeks(count.toLong()).get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
 
             }
         }
@@ -186,10 +155,8 @@ class WeekFragment : Fragment() {
                 titleNext.text = "주에"
             } else {
                 title.text = calendarWeekNow.format(weektextformatter)
-                titleNext.text = weekend.plus(count.toLong()).toString()
-
+                titleNext.text = mondayValue.plusWeeks(count.toLong()).get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
             }
-
         }
     }
 
@@ -238,7 +205,7 @@ class WeekFragment : Fragment() {
             val dataSets = mutableListOf(barDataSet)
             val data = BarData(dataSets as List<IBarDataSet>?).apply {
 //            setValueTextSize(30F)
-                barWidth = 0.3F
+                barWidth = 0.2F
             }
 
             //애니메이션 효과 0.1초
@@ -266,15 +233,15 @@ class WeekFragment : Fragment() {
                     gridLineWidth = 0.5F
                     enableGridDashedLine(5f, 5f, 5f)
 
-//                axisMaximum = 24F //최대값
-//                granularity  = 6F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
-//                setLabelCount(6,true) //축 고정간격
-//                axisMinimum = 3F //최소값
+                    axisMaximum = 24F //최대값
+                    granularity = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
+                    axisMinimum = 0F //최소값
+                    setLabelCount(4, true) //축 고정간격
                     //y축 제목 커스텀
                     valueFormatter = object : ValueFormatter() {
                         private val mFormat: DecimalFormat = DecimalFormat("###")
                         override fun getFormattedValue(value: Float): String {
-                            return mFormat.format(value) + "시"
+                            return mFormat.format(value) + "시간"
                         }
                     }
                 }
@@ -284,47 +251,11 @@ class WeekFragment : Fragment() {
                     isEnabled = false
                     gridColor = transparentBlackColor
 
-                    setLabelCount(6, true) //축 고정간격
                     axisMaximum = 24F //최대값
-                    granularity = 6F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
-                    axisMinimum = 3F //최소값
-//
-
-            }
-            notifyDataSetChanged()
-            this.data = data
-            invalidate()
-        }
-    }
-
-//    private fun  weelkyTotalHourTitle(list:MutableList<Subjects>,subjects: Subjects){
-//        val calendarWeekNow : LocalDateTime = LocalDateTime.now()
-//        val monday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
-//        val sunday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
-//        Log.d("localDataTime",monday.toString())
-//        Log.d("localDataTime",sunday.toString())
-//        Log.d("localDataTime",list.get(5).toString())
-//        Log.d("localDataTime",subjects.timestamp.toString())
-//    }
-
-    private fun moveCalendarByWeek(monDay:TextView,sunDay:TextView,rBtn:ImageButton,lBtn:ImageButton){
-        val calendarWeekNow : LocalDateTime = LocalDateTime.now()
-        val monday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
-        val sunday : LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
-
-        val textformatter : DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        var count: Int = 0
-
-        monDay.text = monday.format(textformatter)+" "
-        sunDay.text = "~ " + sunday.format(textformatter)
-
-        rBtn.setOnClickListener{
-            count++
-            val mondayValue : LocalDateTime = monday.plusWeeks(count.toLong())
-            monDay.text = mondayValue.format(textformatter).toString()
-            val sundayValue : LocalDateTime = sunday.plusWeeks(count.toLong())
-            sunDay.text = sundayValue.format(textformatter).toString()
-        }
+                    granularity = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
+                    axisMinimum = 0F //최소값
+                    setLabelCount(4, true) //축 고정간격
+                }
 
                 notifyDataSetChanged()
                 this.data = data
