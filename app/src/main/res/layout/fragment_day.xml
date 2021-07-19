@@ -95,11 +95,21 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/hour_studytime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="00시간 00분"
+                            android:text="00시간 "
+                            android:textColor="#FF0F8CFF"
+                            android:textSize="22dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/minute_studytime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="00분"
                             android:textColor="#FF0F8CFF"
                             android:textSize="22dp"
                             android:textStyle="bold" />

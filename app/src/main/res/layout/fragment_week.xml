@@ -109,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="이번"
+                            android:text="이번 "
                             android:textColor="@color/black"
                             android:textSize="22dp"
                             android:textStyle="bold" />
@@ -118,7 +118,6 @@
                             android:id="@+id/title_week_next"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
                             android:text="주에"
                             android:textColor="@color/black"

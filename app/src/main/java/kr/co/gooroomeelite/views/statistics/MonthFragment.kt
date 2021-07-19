@@ -23,6 +23,7 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,42 +53,6 @@ class MonthFragment : Fragment() {
 //     LocalDate 문자열로 포맷
 //    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d")
 
-
-    private val listData by lazy {
-        mutableListOf(
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(7.5f)),
-            ChartDatas("", arrayListOf(8.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(10.5f)),
-            ChartDatas("", arrayListOf(18.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(1.5f)),
-            ChartDatas("", arrayListOf(6.5f)),
-            ChartDatas("", arrayListOf(19.5f)),
-            ChartDatas("", arrayListOf(5.5f)),
-            ChartDatas("", arrayListOf(9.5f)),
-            ChartDatas("", arrayListOf(3.5f)),
-            ChartDatas("", arrayListOf(16.5f)),
-            ChartDatas("", arrayListOf(3.5f)),
-            ChartDatas("", arrayListOf(12.5f)),
-            ChartDatas("", arrayListOf(14.5f)),
-            ChartDatas("", arrayListOf(15.5f)),
-            ChartDatas("", arrayListOf(16.5f)),
-            ChartDatas("", arrayListOf(17.5f)),
-            ChartDatas("", arrayListOf(18.5f)),
-            ChartDatas("", arrayListOf(12.5f))
-        )
-    }
 
     //아래,왼쪽 제목 이름
     private val whiteColor by lazy {
@@ -162,17 +127,17 @@ class MonthFragment : Fragment() {
             }
             renderer = barChartRender
         }
-        setData(listData)
+        setDatas()
     }
 
-    private fun setData(barData: List<ChartDatas>) {
+    private fun setDatas() {
         val values = mutableListOf<BarEntry>()
-        barData.forEachIndexed { index, chartData ->
-            //첫번째 인자 x , 두번째 인자 y
-            for(i in chartData.value){
-                values.add(BarEntry(index.toFloat(), i))
-            }
-        }
+        values.add(BarEntry(0f, 60f))
+        values.add(BarEntry(1f, 56f))
+        values.add(BarEntry(2f, 107f))
+        values.add(BarEntry(3f, 48f))
+        values.add(BarEntry(4f, 109f))
+
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
@@ -188,7 +153,7 @@ class MonthFragment : Fragment() {
         val dataSets = mutableListOf(barDataSet)
         val data = BarData(dataSets as List<IBarDataSet>?).apply {
 //            setValueTextSize(30F)
-            barWidth = 0.5F
+            barWidth = 0.2F
         }
         //애니메이션 효과 0.1초
         with(binding.monthBarChart) {
@@ -201,12 +166,14 @@ class MonthFragment : Fragment() {
 //                setVisibleXRangeMaximum(100f)
                 setDrawGridLines(false)
                 textColor = whiteColor
-                //월 ~ 일
-                valueFormatter = object : ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return barData[value.toInt()].date
-                    }
-                }
+                //첫째 주 ~ 다섯째 주
+                val xAxisLabels = listOf("첫째 주", "둘째 주", "셋째 주", "넷째 주", "다섯째 주")
+                valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+//                valueFormatter = object : ValueFormatter() {
+//                    override fun getFormattedValue(value: Float): String {
+//                        return barData[value.toInt()].date
+//                    }
+//                }
             }
 
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
@@ -217,33 +184,16 @@ class MonthFragment : Fragment() {
                 gridLineWidth = 0.5F
                 enableGridDashedLine(5f,5f,5f)
 
-                var count = 0
-                //차트데이터 값에서 가장 큰 값
-                barData.forEachIndexed { index, chartData ->
-                    for (i in chartData.value) {
-//                        var chartDataMax = listData.maxBy { it -> it. }
-                        var maxValue = i
-                        Log.d("aaa", "$maxValue"+"maxValue값")
-                        barData.forEachIndexed { index, chartData ->
-                            while (i > axisMaximum) {
-                                count++
-                                if (i > axisMaximum) {
-                                    axisMaximum = maxValue
-                                } else {
-                                    axisMaximum = 9F
-                                }
-                            }
-                        }
-                    }
-                }
+                axisMaximum = 168F
+                granularity = 42F
                 axisMinimum = 0F
-//                axisMaximum = 9F
-                granularity  = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
+                setLabelCount(4,true) //축 고정간격
+
                 //y축 제목 커스텀
                 valueFormatter = object : ValueFormatter() {
                     private val mFormat: DecimalFormat = DecimalFormat("###")
                     override fun getFormattedValue(value: Float): String {
-                        return mFormat.format(value) + "시"
+                        return mFormat.format(value) + "시간"
                     }
                 }
             }
@@ -254,23 +204,12 @@ class MonthFragment : Fragment() {
                 gridColor = transparentBlackColor
                 var count = 0
                 //차트데이터 값에서 가장 큰 값
-                barData.forEachIndexed { index, chartData ->
-                    for (i in chartData.value) {
-//                        var chartDataMax = listData.maxBy { it -> it. }
-                        var maxValue = i
-                        Log.d("aaa", "$maxValue")
-                        while (i > axisMaximum) {
-                            count++
-                            if (i > axisMaximum) {
-                                axisMaximum = maxValue
-                            } else {
-                                axisMaximum = 9F
-                            }
-                        }
-                    }
-                }
-                axisMinimum = 3F
-//                axisMaximum = 9F
+
+                axisMaximum = 168F
+                granularity = 42F
+                axisMinimum = 0F
+                setLabelCount(4,true) //축 고정간격
+
             }
 
             notifyDataSetChanged()  //chart의 값 변동을 감지함
@@ -315,7 +254,7 @@ class MonthFragment : Fragment() {
             } else if (count == -1) {
                 title.text = "지난 달에"
             } else {
-                title.text =   minusDay.format(titleformatter   ).toString()
+                title.text =   minusDay.format(titleformatter).toString()
             }
         }
     }

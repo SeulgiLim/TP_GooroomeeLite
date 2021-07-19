@@ -43,7 +43,9 @@ import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.home.EditSubjectsActivity
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -135,6 +137,8 @@ class DayFragment : Fragment() {
             )
             adapter = dailySubjectAdapter
         }
+
+        getTotalStudy()
         return binding.root
     }
 
@@ -184,6 +188,24 @@ class DayFragment : Fragment() {
             }
         }
 
+    }
+
+    fun getTotalStudy() {
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", getUid())
+            .get()
+            .addOnSuccessListener {
+                val subject = it.toObjects(kr.co.gooroomeelite.entity.Subject::class.java)
+                var studytimetodaylist = mutableListOf<Int>()
+                for (i in 0..subject.size - 1) {
+                    studytimetodaylist.add(subject[i].studytime)
+                }
+                val todayStudySum : Int = studytimetodaylist.sum()
+                Log.d("sum",todayStudySum.toString())
+                binding.hourStudytime.text = (todayStudySum/60).toString() + "시간 "
+                binding.minuteStudytime.text = (todayStudySum%60).toString() + "분"
+            }
     }
 
     private fun moveCalendarByDay(
@@ -242,7 +264,7 @@ class DayFragment : Fragment() {
             setDrawValueAboveBar(false)
             //둥근 모서리 색상
             val barChartRender = CustomBarChartRender(this, animator, viewPortHandler).apply {
-                setRadius(10)
+//                setRadius(10)
             }
             renderer = barChartRender
         }

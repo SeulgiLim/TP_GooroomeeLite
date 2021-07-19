@@ -101,8 +101,6 @@ class StickerActivity : AppCompatActivity() {
         val formatter: DateFormat = SimpleDateFormat("yyyy. MM. dd. EEE", Locale.ENGLISH)
         binding.localTime.text = formatter.format(cal.time)
 
-
-
         FirebaseFirestore.getInstance()
             .collection("subject")
             .whereEqualTo("uid", getUid())
