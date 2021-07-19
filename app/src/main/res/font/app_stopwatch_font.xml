@@ -3,5 +3,7 @@
 
         <font android:font="@font/helvetica_stopwatch"
             />
+        <font android:font="@font/opensans"
+            />
 
 </font-family>
