@@ -21,6 +21,7 @@ class SubjectViewModel : ViewModel() {
     val uid: String
     //통계 페이지에서 사용
     val list = MutableLiveData<MutableList<Subject>>()
+
     private var subjectListValue: MutableList<Subject> = mutableListOf()
     var subject: Subject? = null
 
@@ -43,7 +44,6 @@ class SubjectViewModel : ViewModel() {
                     docs.documents.forEach {
                         subject = it.toObject(Subject::class.java)!!
                         subjectListValue.add(subject!!)
-//                        list.value = subjectListValue
                     }
                     list.value = subjectListValue
                 }

@@ -139,6 +139,7 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <!-- 이미지뷰 지정:  이 이미지뷰에 사진이 촬영이 되면 gooroomeliteApplication 에 반응이 된다. -->
 
     <!--    <com.google.android.material.switchmaterial.SwitchMaterial-->

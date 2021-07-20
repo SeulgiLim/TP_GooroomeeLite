@@ -24,18 +24,6 @@ internal fun ImageView.loadCenterCrop(url: String, corner : Float = 0f) {
         .into(this)
 }
 
-internal fun ImageView.loadCenterCropp(url: String, corner : Float = 0f) {
-    Glide.with(this)
-        .load(url)
-        .transition(DrawableTransitionOptions.withCrossFade(factory))
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .apply {
-            if (corner > 0) transforms(CenterCrop(), RoundedCorners(corner.fromDpToPx()))
-        }
-        .into(this)
-}
-
-
 //.apply {
 //    if (corner > 0) transforms(CenterCrop(), RoundedCorners(corner.fromDpToPx()))
 //}

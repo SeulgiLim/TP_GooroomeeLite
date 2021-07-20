@@ -64,7 +64,7 @@ class StickerActivity : AppCompatActivity() {
         //갤러리 이미지
         val gallery = intent.getStringExtra("gallery")
         if (gallery != null) {
-            binding.imageCapture.loadCenterCrop(url = gallery)
+            binding.imageCapture.loadCenterCrop(url = gallery,corner = 4f)
         }
 
         //취소하기
@@ -80,10 +80,6 @@ class StickerActivity : AppCompatActivity() {
         //공유하기
         binding.shareButtons.setOnClickListener{ takeAndShareScreenShot(pictures.toString()) }
 
-
-
-        //현재시간
-//        binding.nowTime.setText(textformatterString)
         getTotalStudy()
     }
 
@@ -95,7 +91,6 @@ class StickerActivity : AppCompatActivity() {
     }
 
     fun getTotalStudy() {
-        val dateNow: LocalDateTime = LocalDateTime.now()
         val cal = Calendar.getInstance()
         cal.time = Date()
         val formatter: DateFormat = SimpleDateFormat("yyyy. MM. dd. EEE", Locale.ENGLISH)
@@ -118,13 +113,6 @@ class StickerActivity : AppCompatActivity() {
             }
     }
 
-
-
-//    private fun initToolBar() {
-//        val toolbar = binding.shareToolbar
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//    }
     //뒤로가기 눌렀을 때 작동
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -137,7 +125,7 @@ class StickerActivity : AppCompatActivity() {
 
     private fun imageContent(pictures: String) {
         Handler(Looper.getMainLooper()).post {
-            binding.imageCapture.loadCenterCrop(url = pictures)
+            binding.imageCapture.loadCenterCrop(url = pictures,corner = 4f)
         }
     }
 
@@ -153,7 +141,6 @@ class StickerActivity : AppCompatActivity() {
             }
         }, buttonView)
     }
-
 
     private fun saveImageExternal(image: Bitmap): Uri? {
         val filename = "gooroomeelite_${System.currentTimeMillis()}.jpg"
@@ -196,6 +183,6 @@ class StickerActivity : AppCompatActivity() {
     override fun onBackPressed() {
         // 뒤로가기 버튼 클릭
         startActivity(Intent(this, ShareActivity::class.java))
-//        finish()
+        finish()
     }
 }
