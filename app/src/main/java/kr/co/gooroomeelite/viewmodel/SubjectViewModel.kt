@@ -51,7 +51,7 @@ class SubjectViewModel : ViewModel() {
     }
 
     //과목별 전체
-    private fun fetchSubjectList() {
+    private fun fetchSubjectList() { //주제 목록 가져오기
         db.collection("subject")
             .whereEqualTo("uid", uid)
             .addSnapshotListener { value, error ->
