@@ -224,7 +224,7 @@
                 android:max="100"
                 android:maxWidth="280dp"
                 android:progress="0"
-                android:progressDrawable="@drawable/background_seekbar"
+                android:progressDrawable="@drawable/background_seekbar3"
                 android:thumb="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

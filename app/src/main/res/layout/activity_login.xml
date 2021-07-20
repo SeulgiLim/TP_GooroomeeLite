@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="@string/email_id"
             android:textColor="@color/black"
@@ -87,7 +87,7 @@
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="105dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:text="@string/google_id"
             android:textColor="@color/black"
