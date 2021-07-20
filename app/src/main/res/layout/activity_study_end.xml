@@ -44,7 +44,7 @@
             android:layout_marginEnd="2dp"
             android:text="00"
             android:textColor="@color/black"
-            android:textSize="44sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/hourText"
@@ -59,10 +59,12 @@
             android:layout_marginEnd="12dp"
             android:text="시간"
             android:textColor="@color/black"
-            android:textSize="17sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/hour"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/minute"
-            app:layout_constraintStart_toEndOf="@id/hour" />
+            app:layout_constraintStart_toEndOf="@id/hour"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/minuteText"
@@ -70,24 +72,26 @@
             android:layout_height="wrap_content"
             android:text="분"
             android:textColor="@color/black"
-            android:textSize="17sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/minute"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/minute" />
+            app:layout_constraintStart_toEndOf="@id/minute"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/minute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
-            android:text="30"
+            android:text="00"
             android:textColor="@color/black"
-            android:textSize="44sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/minuteText"
             app:layout_constraintStart_toEndOf="@id/hourText"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/hour" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -186,7 +190,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="8시간 32분"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tv_studygoal"
                 app:layout_constraintTop_toBottomOf="@+id/view8" />
@@ -196,7 +200,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/"
-                android:textSize="16sp"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tv_studygoal"
                 app:layout_constraintStart_toEndOf="@+id/tv_studyend_studytotal"
                 app:layout_constraintTop_toTopOf="@+id/tv_studyend_studytotal" />
@@ -205,27 +211,30 @@
                 android:id="@+id/tv_studygoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
                 android:layout_marginEnd="22dp"
                 android:text="12시 20분"
-                android:textSize="12sp"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_studyend_studytotal" />
 
-            <ProgressBar
+            <SeekBar
                 android:id="@+id/seekBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="12dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/img_progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="0dp"
+                android:clickable="false"
+                android:focusable="false"
                 android:max="100"
                 android:maxWidth="280dp"
-                android:progress="0"
-                android:progressDrawable="@drawable/background_seekbar3"
-                android:thumb="@null"
+                android:maxHeight="12dp"
+                android:progress="20"
+                android:progressDrawable="@drawable/background_seekbar"
+                android:splitTrack="false"
+                android:thumb="@drawable/ic_thumb"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />

@@ -64,6 +64,7 @@
     <color name="bottomoff">#4D0000</color>
     <color name="bottomtitle">#C4C4C4</color>
     <color name="editsubjecttitle">#F1F2F3</color>
+    <color name="playstore">#F6F6F6</color>
 
     <color name="studytime_record_share">#FFDDF3FF</color>
     <color name="studytime_record_text_share">#FF0FA9FF</color>
