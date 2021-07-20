@@ -335,14 +335,6 @@ class StopwatchFragment : Fragment() {
 
 
 
-
-
-
-
-
-
-
-
 // 1순위 해결!!!!!!!!!!
 // 경과시간 완료 화면으로 보내기
 /*private fun stopStopWatch(){
