@@ -214,7 +214,7 @@ class WeekFragment : Fragment() {
                 lineWidth = 1f
                 textColor = Color.BLACK
                 textSize = 12f
-                labelPosition = LimitLine.LimitLabelPosition.LEFT_TOP
+                labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
                 enableDashedLine(5f,5f,15f)
             }
             animateY(100)

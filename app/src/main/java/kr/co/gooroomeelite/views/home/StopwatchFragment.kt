@@ -21,6 +21,7 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
+import java.util.*
 import kotlin.math.truncate
 
 
@@ -59,8 +60,10 @@ class StopwatchFragment : Fragment() {
         val subject = arguments?.getSerializable("subject")
         val documentId = arguments?.getString("documentId")
         val firestore = FirebaseFirestore.getInstance()
+
+        Log.d("TTTTTT","${subject}")
         stopwatch = v.findViewById((R.id.stopwatch))
-        stopwatch?.setBase(SystemClock.elapsedRealtime())
+        stopwatch?.base = SystemClock.elapsedRealtime()
 
         buttonStartPause = v.findViewById(R.id.btn_start)   //시작
         buttonEnd = v.findViewById(R.id.btn_end)    //종료
@@ -81,7 +84,7 @@ class StopwatchFragment : Fragment() {
 
 
         // 현재 타이머 값 표시 (stopwatch 포멧 문자 타입으로 변환)
-        stopwatch?.setFormat(" 00 : %s")
+        stopwatch?.format = " 00 : %s"
         stopwatch?.setOnChronometerTickListener { stopwatch ->
             val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
             if (elapsedMillis > 3600000L) {
@@ -175,12 +178,15 @@ class StopwatchFragment : Fragment() {
 
         buttonEnd.setOnClickListener(View.OnClickListener {
             studytimeupdate()
+            timestamp()
             //기록 종료를 눌렀을 때 해야하는 이벤트 처리
             val intent = Intent(requireContext(), StudyEndActivity::class.java)
+
             intent.putExtra(STUDY_TIME, curTime)
             intent.putExtra("subject", subject)
             startActivity(intent)
             resetStopwatch()
+
             //파이어베이스에 현재 공부한 시간 업데이트
             activity?.finish()
 
@@ -263,7 +269,6 @@ class StopwatchFragment : Fragment() {
 
             //buttonStartPause!!.setBackgroundDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_btn_restart))   //XML Selector 사용
         }
-        val d = Log.d("aaa2", pauseOffset.toString())
     }
 
 
@@ -297,7 +302,6 @@ class StopwatchFragment : Fragment() {
 
         if (stopwatch != null) {
         }
-        Log.d("aaa3", curTime.toString())
     }
 
 
@@ -324,11 +328,26 @@ class StopwatchFragment : Fragment() {
     private fun studytimeupdate() {
         firestore?.collection("users")?.document(LoginUtils.getUid()!!)?.get()
             ?.addOnSuccessListener {
-                val subject = it.toObject(ContentDTO::class.java)
+                val todaystudy = it.toObject(ContentDTO::class.java)
                 val studytime = curTime.toInt()
-                subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
-                firestore!!.collection("users").document(LoginUtils.getUid()!!).update("todaystudytime",subject?.todaystudytime)
+                val totalstudy =  todaystudy?.todaystudytime?.plus(studytime)
+                Log.d("TTTTT","${totalstudy}")
+                firestore!!.collection("users").document(LoginUtils.getUid()!!).update("todaystudytime",totalstudy)
             }
+    }
+
+    private fun timestamp(){
+        val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
+        Log.d("Subject","1")
+        firestore?.collection("subject")?.whereEqualTo("name",subject.name)?.get()?.addOnSuccessListener {
+            Log.d("Subject","2")
+            val subjectstudytime = subject.studytime
+            val studytime = subjectstudytime.plus(curTime.toInt())
+            val daytime = System.currentTimeMillis()
+        }?.addOnFailureListener {
+            Log.d("Subject","3")
+
+        }
     }
 }
 

@@ -75,7 +75,7 @@ class DayFragment : Fragment() {
         mutableListOf( //REd, green, blue
             //am 5 ~ 12
             ChartDatas("05:00", arrayListOf(40F)),
-            ChartDatas("", arrayListOf(60F, 40f)),
+            ChartDatas("", arrayListOf(0F, 60F, 40f)),
             ChartDatas("", arrayListOf(0f, 60F, 0f)),
             ChartDatas("", arrayListOf(0f, 0f, 30F)),
             ChartDatas("", arrayListOf(0F,0f,10f)),
