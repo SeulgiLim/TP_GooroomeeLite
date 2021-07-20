@@ -31,11 +31,11 @@ class MusicActivity : AppCompatActivity() {
     private fun musicData(): MutableList<MusicItem> {
         val musicList = mutableListOf<MusicItem>()
         return musicList.apply {
-            add(MusicItem("모닥불소리",R.raw.firewood))
-            add(MusicItem("카페",R.raw.cafe))
-            add(MusicItem("도서관",R.raw.library))
-            add(MusicItem("파도 소리",R.raw.wave))
-            add(MusicItem("빗소리",R.raw.raindrop))
+            add(MusicItem(getText(R.string.music2).toString(),R.raw.firewood))
+            add(MusicItem(getText(R.string.music3).toString(),R.raw.cafe))
+            add(MusicItem(getText(R.string.music4).toString(),R.raw.library))
+            add(MusicItem(getText(R.string.music5).toString(),R.raw.wave))
+            add(MusicItem(getText(R.string.music6).toString(),R.raw.raindrop))
         }
     }
 

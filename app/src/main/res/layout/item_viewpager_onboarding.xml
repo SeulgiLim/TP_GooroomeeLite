@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
         android:gravity="center"
-        android:text="공부 기록\n구루미로 더 편리하게"
+        android:text="구루미로 더 편리하게\n공부 기록"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +22,8 @@
         android:id="@+id/iv_indicator"
         android:layout_width="48dp"
         android:layout_height="8dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/ic_indicator1"
-        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_onboarding" />
@@ -41,6 +41,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_onboarding"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="20dp"
@@ -48,16 +49,16 @@
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_login"
         android:backgroundTint="@null"
-        android:visibility="gone"
         android:clickable="false"
         android:text="@string/onboarding_btn"
         android:textColor="@color/white"
         android:textSize="15sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        style="?android:attr/borderlessButtonStyle" />
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

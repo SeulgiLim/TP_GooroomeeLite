@@ -26,9 +26,9 @@ class OnBoardingActivity : AppCompatActivity() {
     private fun onBoardingData(): MutableList<OnBoardingItem> {
         val onBoardingList = mutableListOf<OnBoardingItem>()
         return onBoardingList.apply {
-            add(OnBoardingItem("공부 기록\n구루미로 더 편리하게",R.drawable.background_indicator1,R.drawable.ic_indicator1))
-            add(OnBoardingItem("한눈에 보는\n내 공부 그래프",R.drawable.background_indicator2,R.drawable.ic_indicator2))
-            add(OnBoardingItem("오늘의 공부 시간\nSNS로 공유하세요.",R.drawable.background_indicator3,R.drawable.ic_indicator3))
+            add(OnBoardingItem(getText(R.string.onboarding_content1).toString(),R.drawable.background_indicator1,R.drawable.ic_indicator1))
+            add(OnBoardingItem(getText(R.string.onboarding_content2).toString(),R.drawable.background_indicator2,R.drawable.ic_indicator2))
+            add(OnBoardingItem(getText(R.string.onboarding_content3).toString(),R.drawable.background_indicator3,R.drawable.ic_indicator3))
         }
     }
 }
