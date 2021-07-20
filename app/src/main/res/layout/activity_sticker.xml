@@ -56,7 +56,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47000003">
+        app:layout_constraintVertical_bias="0.47000003"
+        android:clipToPadding="true"
+        android:background="@drawable/background_image_sheet">
+<!--        android:background="@drawable/button_round_corner_4_black_24"-->
 
         <!--    <FrameLayout-->
         <!--        android:layout_width="match_parent"-->
@@ -73,15 +76,18 @@
         <!--  카메라 사진    -->
         <FrameLayout
             android:id="@+id/previewStickerImageView"
+            android:background="@drawable/button_round_corner_4_black_24"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipToPadding="true">
 
             <!-- 이미지 찍힌 거 -->
             <ImageView
                 android:id="@+id/imageCapture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:background="@drawable/button_round_corner_4_black_24"/>
 
 <!--            android:background = "@color/red"-->
 <!--                android:background="@drawable/background_share_image_sheet"/>-->
@@ -89,6 +95,7 @@
             <!-- 구루미 스티커    -->
             <FrameLayout
                 android:id="@+id/sticker_container"
+                android:clipToPadding="true"
                 android:background="@drawable/background_share_image_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -97,7 +104,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/background_image_sheet">
 
                     <ImageView
                         android:layout_width="34dp"
@@ -128,6 +136,7 @@
 
 
                 <LinearLayout
+                    android:background="@drawable/background_image_sheet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"

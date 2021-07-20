@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
@@ -30,7 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.adapter.DailySubjectAdapter
+import kr.co.gooroomeelite.adapter.MonthlySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentMonthBinding
 import kr.co.gooroomeelite.entity.ReadSubejct
 import kr.co.gooroomeelite.entity.Subjects
@@ -47,7 +48,7 @@ class MonthFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
 
     private lateinit var chart: BarChart
-    private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
+    private val monthlySubjectAdapter: MonthlySubjectAdapter by lazy { MonthlySubjectAdapter(emptyList()) }
 
 
 //     LocalDate 문자열로 포맷
@@ -68,6 +69,16 @@ class MonthFragment : Fragment() {
 //        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
 //    }
 
+//    private val listData by lazy {
+//        mutableListOf(
+//            ChartData("첫째 주", 100.1f),
+//            ChartData("둘째 주", 140.5f),
+//            ChartData("셋째 주", 168.5F),
+//            ChartData("넷째 주", 160.5f),
+//            ChartData("다섯째 주", 90.5f)
+//        )
+//    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,14 +87,11 @@ class MonthFragment : Fragment() {
         binding = FragmentMonthBinding.inflate(inflater,container,false)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_month,container,false)
         binding.month = this
-//        val view = inflater.inflate(R.layout.fragment_month, container, false)
 
-//        val shareButton: Button = view.findViewById(R.id.share_button)/
         binding.shareButton.setOnClickListener {
             requestPermission()
         }
         //바 차트
-//        chart = view.findViewById(R.id.month_bar_chart)
         binding.monthBarChart.setNoDataText("")
         initChart(binding.monthBarChart)
         binding.monthBarChart.setVisibleXRangeMaximum(30f)
@@ -96,7 +104,7 @@ class MonthFragment : Fragment() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            adapter = dailySubjectAdapter
+            adapter = monthlySubjectAdapter
         }
 
         moveCalendarByDay(binding.calendarMonth,binding.calRightBtn,binding.calLeftBtn,binding.titleMonth)
@@ -106,7 +114,7 @@ class MonthFragment : Fragment() {
     //adapter에 데이터 추가
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.subjectList.observe(viewLifecycleOwner) {
-            dailySubjectAdapter.setData(it)
+            monthlySubjectAdapter.setData(it)
         }
     }
 
@@ -117,7 +125,8 @@ class MonthFragment : Fragment() {
             description.isEnabled = false
             legend.isEnabled = false
             isDoubleTapToZoomEnabled = false
-
+            
+//            setFitBars(true) //X축을 모든 막대에 정확히 맞춘다.
             setPinchZoom(false)
             setDrawBarShadow(false)
             setDrawValueAboveBar(false)
@@ -132,19 +141,24 @@ class MonthFragment : Fragment() {
 
     private fun setDatas() {
         val values = mutableListOf<BarEntry>()
-        values.add(BarEntry(0f, 60f))
-        values.add(BarEntry(1f, 56f))
-        values.add(BarEntry(2f, 107f))
-        values.add(BarEntry(3f, 48f))
-        values.add(BarEntry(4f, 109f))
-
+        values.add(BarEntry(0f,100f))
+        values.add(BarEntry(1f,150f))
+        values.add(BarEntry(2f,200f))
+        values.add(BarEntry(3f,155f))
+        values.add(BarEntry(4f,70f))
+//        values.add(BarEntry(5f,10f))
+//        barData.forEachIndexed { index, chartData ->
+////            //첫번째 인자 x , 두번째 인자 y
+//            values.add(BarEntry(index.toFloat(), chartData.value))
+//        }
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
             //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
             setDrawValues(false)
+
             val colors = ArrayList<Int>()
-            colors.add(Color.argb(100,68,158,246))
+            colors.add(Color.parseColor("#FF339BFF"))
             setColors(colors)
             highLightAlpha = 0
         }
@@ -153,22 +167,19 @@ class MonthFragment : Fragment() {
         val dataSets = mutableListOf(barDataSet)
         val data = BarData(dataSets as List<IBarDataSet>?).apply {
 //            setValueTextSize(30F)
-            barWidth = 0.2F
+            barWidth = 0.1F
         }
-        //애니메이션 효과 0.1초
         with(binding.monthBarChart) {
             animateY(100)
-
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-//                setVisibleXRangeMaximum(20f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
-//                moveViewToX(60f)
-//                setVisibleXRangeMaximum(100f)
                 setDrawGridLines(false)
                 textColor = whiteColor
-                //첫째 주 ~ 다섯째 주
-                val xAxisLabels = listOf("첫째 주", "둘째 주", "셋째 주", "넷째 주", "다섯째 주")
+//                //첫째 주 ~ 다섯째 주
+                val xAxisLabels = mutableListOf("첫째 주", "둘째 주", "셋째 주", "넷째 주", "다섯째 주")
                 valueFormatter = IndexAxisValueFormatter(xAxisLabels)
+                setCenterAxisLabels(true)//xlabels와 막대 차트 중앙 정렬
+                setLabelCount(5,true)
 //                valueFormatter = object : ValueFormatter() {
 //                    override fun getFormattedValue(value: Float): String {
 //                        return barData[value.toInt()].date
@@ -202,21 +213,14 @@ class MonthFragment : Fragment() {
             axisLeft.apply {
                 isEnabled = false
                 gridColor = transparentBlackColor
-                var count = 0
-                //차트데이터 값에서 가장 큰 값
 
                 axisMaximum = 168F
                 granularity = 42F
                 axisMinimum = 0F
                 setLabelCount(4,true) //축 고정간격
-
             }
 
             notifyDataSetChanged()  //chart의 값 변동을 감지함
-//            setVisibleXRangeMaximum(10f)    //최대 X좌표 기준으로 몇개의 데이터를 보여줄지 설정함
-//            moveViewToX(10f)
-//            setVisibleXRangeMaximum(10f)
-
             this.data = data
             invalidate()
         }
@@ -235,7 +239,7 @@ class MonthFragment : Fragment() {
         calRightBtn.setOnClickListener {
             count++
             val dayPlus: LocalDate = dateNow.plusMonths(count.toLong())
-            calendarMonth.text =  dayPlus.format(textformatter).toString()
+            calendarMonth.text = dayPlus.format(textformatter).toString()
             if (count == 0) {
                 title.text = "이번 달에"
             } else if (count == -1) {
@@ -254,7 +258,7 @@ class MonthFragment : Fragment() {
             } else if (count == -1) {
                 title.text = "지난 달에"
             } else {
-                title.text =   minusDay.format(titleformatter).toString()
+                title.text = minusDay.format(titleformatter).toString()
             }
         }
     }
@@ -321,15 +325,3 @@ class MonthFragment : Fragment() {
         return permissions
     }
 }
-//    private fun listDataValue(){
-//        var i : Int = 1
-//        while (i <= 31) {
-//            val name : String = ""
-//            mutableListOf(
-//
-//                ChartDatas(name,(Math.random()*16).toFloat())
-//            )
-//            i++
-//            return
-//        }
-//    }

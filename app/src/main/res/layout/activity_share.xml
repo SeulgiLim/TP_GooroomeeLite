@@ -103,6 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/controllerGuideline" />
 
+
     <!-- 이미지뷰 지정:  이 이미지뷰에 사진이 촬영이 되면 gooroomeliteApplication 에 반응이 된다. -->
     <ImageView
         android:id="@+id/showImage"
@@ -113,6 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/captureButton"
         android:contentDescription="@string/image_preview"
+        android:scaleType="fitXY"
         android:background="@drawable/button_round_corner_4_black_24"/>
 
     <ImageView

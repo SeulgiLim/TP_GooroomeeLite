@@ -135,7 +135,6 @@ class HomeFragment : Fragment() {
                         60
                     )
                 ) + "분"
-            seekbar()
         }
         binding.subjectEdit.setOnClickListener {
             startActivity(Intent(mainActivityContext, EditSubjectsActivity::class.java))
@@ -145,8 +144,6 @@ class HomeFragment : Fragment() {
                 "%02d".format(todayStudyTime.value?.div(60))
             binding.minute.text =
                 "%02d".format(todayStudyTime.value?.rem(60))
-            getTotalStudy()
-            seekbar()
         }
 
     }

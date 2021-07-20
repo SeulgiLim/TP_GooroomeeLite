@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text=""
+                        android:text=" ~ "
                         android:textColor="@color/black"
                         android:textSize="14dp"
                         android:textStyle="bold" />
@@ -115,7 +115,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:text="이번 "
+                            android:text="이번"
+                            android:layout_marginRight="7dp"
                             android:textColor="@color/black"
                             android:textSize="22dp"
                             android:textStyle="bold" />
@@ -177,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_polygon" />
+                            android:src="@drawable/ic_polygon2" />
 
                         <TextView
                             android:id="@+id/compare_week_time"
@@ -186,7 +187,7 @@
                             android:layout_marginLeft="6dp"
                             android:gravity="right"
                             android:text="4시간"
-                            android:textColor="@color/red"
+                            android:textColor="#FF0F8CFF"
                             android:textSize="14dp" />
 
                     </LinearLayout>

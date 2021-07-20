@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.hardware.camera2.*
 import android.hardware.display.DisplayManager
 import android.media.MediaScannerConnection
@@ -22,9 +23,14 @@ import androidx.camera.core.impl.ImageOutputConfig
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kr.co.gooroomeelite.databinding.ActivityShareBinding
+import kr.co.gooroomeelite.views.statistics.share.extensions.fromDpToPx
 import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCrop
-import kr.co.gooroomeelite.views.statistics.share.extensions.loadCenterCropp
 import kr.co.gooroomeelite.views.statistics.share.util.PathUtil
 import java.io.File
 import java.io.FileNotFoundException
@@ -47,14 +53,9 @@ class ShareActivity : AppCompatActivity() {
 
     private var isCapturing : Boolean = false
 
-//    private var isFlashEnabled: Boolean = false
-
     private val displayManager by lazy{
         getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
     }
-
-    private var uriList = mutableListOf<Uri>()
-
 
     private var lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -76,18 +77,20 @@ class ShareActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityShareBinding.inflate(layoutInflater)
         root = binding.root
+        startCamera(binding.viewFinder)
+
         setContentView(binding.root)
-//        initToolBar()
+        //취소하기
         binding.picturePrevious.setOnClickListener{
             finish()
         }
 
         binding.showImage.setOnClickListener{ openGallery() }
+        //카메라 회전
         binding.converterCamera.setOnClickListener{
             swicthCamera()
         }
-//        binding.converterCamera.setOnClickListener{ swicthCamera() }
-        startCamera(binding.viewFinder)
+        setLatestImage()
     }
 
     //카메라 전환(앞면/후면)
@@ -97,7 +100,6 @@ class ShareActivity : AppCompatActivity() {
         }else if(lensFacing == CameraSelector.DEFAULT_FRONT_CAMERA){
             lensFacing = CameraSelector.DEFAULT_BACK_CAMERA
         }
-//        startCamera(binding.viewFinder)
         bindCameraUseCase()
     }
 
@@ -130,7 +132,6 @@ class ShareActivity : AppCompatActivity() {
                     Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
                     galleryIntent.putExtra("gallery",currentImageUrl.toString())
                     startActivity(galleryIntent)
-//                    binding.showImageView.setImageBitmap(bitmap)
                 }catch(e: Exception){
                     e.printStackTrace()
                 }
@@ -174,7 +175,7 @@ class ShareActivity : AppCompatActivity() {
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
-//                bindCameraUseCase() //------
+//                bindCameraUseCase()
 //                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
@@ -210,7 +211,6 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-
     private var contentUri : Uri? = null
 
     //사진 촬영 및 저장 콜백 구현
@@ -223,7 +223,6 @@ class ShareActivity : AppCompatActivity() {
             ).format(System.currentTimeMillis()) + ".jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-//        if(isFlashEnabled) flashLight(true)
         imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
@@ -234,7 +233,6 @@ class ShareActivity : AppCompatActivity() {
             override fun onError(exception: ImageCaptureException) {
                 exception.printStackTrace()
                 isCapturing = false
-//                flashLight(false)
             }
 
         })
@@ -246,26 +244,43 @@ class ShareActivity : AppCompatActivity() {
             isCapturing = try{
                 val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException())
                 MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpeg"),null)
-                Handler(Looper.getMainLooper()).post {
-                    binding.showImage.loadCenterCropp(url = it.toString(),corner = 4f)
-                }
-
                 val stickerIntent = Intent(this@ShareActivity,StickerActivity::class.java)
+                stickerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 stickerIntent.putExtra("picture",it.toString())
                 Log.d("aaaa",it.toString())
                 startActivity(stickerIntent)
                 finish()
-//                flashLight(false)
                 false
 
             }catch (e: Exception){
                 e.printStackTrace()
                 Toast.makeText(this,"파일이 존재하지 않습니다.",Toast.LENGTH_SHORT).show()
-//                flashLight(false)
                 false
             }
         }
     }
+
+    //외부 저장소에서 가장 최근의 사진을 가져오기
+    private fun setLatestImage() {
+        var projection = arrayOf(
+            MediaStore.Images.ImageColumns._ID,
+            MediaStore.Images.ImageColumns.DATA,
+            MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME,
+            MediaStore.Images.ImageColumns.DATE_TAKEN,
+            MediaStore.Images.ImageColumns.MIME_TYPE
+        )
+        val cursor = baseContext.contentResolver
+            .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, null, null,
+                MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC")
+
+        if (cursor!!.moveToFirst()) {
+            var latestImageUri = cursor.getString(1)
+            Handler(Looper.getMainLooper()).post {
+                    binding.showImage.loadCenterCrop(url = latestImageUri.toString(),corner = 4f)
+            }
+        }
+    }
+
     companion object{
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     }
