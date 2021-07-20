@@ -346,7 +346,6 @@ class StopwatchFragment : Fragment() {
             val daytime = System.currentTimeMillis()
         }?.addOnFailureListener {
             Log.d("Subject","3")
-
         }
     }
 }
