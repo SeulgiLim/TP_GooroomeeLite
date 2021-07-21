@@ -129,7 +129,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="54dp"
+        android:layout_marginRight="45dp"
         android:layout_marginBottom="40dp"
         android:text="공부현황"
         android:textSize="12sp"

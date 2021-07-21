@@ -104,12 +104,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
+            android:button="@drawable/btn_checkboxcustom"
             android:paddingStart="3dp"
             android:text="뽀모도로 모드"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:button="@drawable/btn_checkboxcustom"
-            />
+            android:visibility="visible"
+            tools:visibility="visible" />
 
     </RadioGroup>
 
@@ -142,6 +143,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#999999"
             android:textSize="13sp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

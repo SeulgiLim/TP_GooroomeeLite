@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="203dp"
+    android:background="@drawable/common_popup_background"
+    android:orientation="vertical"
+    tools:context=".views.home.TimersettingActivity">
+
+</LinearLayout>
