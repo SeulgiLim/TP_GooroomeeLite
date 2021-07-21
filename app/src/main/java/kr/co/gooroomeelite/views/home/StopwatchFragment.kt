@@ -333,9 +333,12 @@ class StopwatchFragment : Fragment() {
                 val studytime = curTime.toInt()
                 val totalstudy =  todaystudy?.todaystudytime?.plus(studytime)
                 Log.d("TTTTT","${totalstudy}")
+                Log.d("TTTTTstudytime","${studytime}")
                 firestore!!.collection("users").document(LoginUtils.getUid()!!).update("todaystudytime",totalstudy)
             }
     }
+//    buttonStartPause = v.findViewById(R.id.btn_start)   //시작
+//    buttonEnd = v.findViewById(R.id.btn_end)    //기록 종료
 
     private fun timestamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject

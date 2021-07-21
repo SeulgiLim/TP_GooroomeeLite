@@ -260,7 +260,7 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    //외부 저장소에서 가장 최근의 사진을 가져오기
+    //외부 저장소에서 가장 최근의 사진을 가져오기 (수정 중)
     private fun setLatestImage() {
         var projection = arrayOf(
             MediaStore.Images.ImageColumns._ID,
