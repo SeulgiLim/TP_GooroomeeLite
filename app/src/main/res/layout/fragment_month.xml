@@ -41,7 +41,9 @@
                         android:background="@color/white"
                         android:paddingTop="19dp"
                         android:paddingBottom="19dp"
-                        android:src="@drawable/ic_statistics_left_btn" />
+                        android:src="@drawable/ic_statistics_left_btn"
+                        android:tint="@drawable/statistics_calendar_button"
+                        />
 
                     <View
                         android:layout_width="0dp"
@@ -71,7 +73,9 @@
                         android:background="@color/white"
                         android:paddingTop="19dp"
                         android:paddingBottom="19dp"
-                        android:src="@drawable/ic_statistics_rignt_btn" />
+                        android:src="@drawable/ic_statistics_rignt_btn"
+                        android:tint="@drawable/statistics_calendar_button"
+                        />
                 </LinearLayout>
 
                 <View
@@ -129,7 +133,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp">
+                        android:layout_marginLeft="20dp">
 
                         <TextView
                             android:layout_width="wrap_content"

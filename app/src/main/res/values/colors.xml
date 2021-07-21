@@ -78,6 +78,12 @@
     <color name="week_bar_color">#339BFF</color>
     <color name="splashcolor">#0FA9FF</color>
 
+    <color name="content_black">#888888</color>
+    <color name="transparent_black">#eeeeee</color>
+
+    <color name="state_true">#ababab</color>
+    <color name="state_false">#FF4D4D4D</color>
+
 
 
 </resources>

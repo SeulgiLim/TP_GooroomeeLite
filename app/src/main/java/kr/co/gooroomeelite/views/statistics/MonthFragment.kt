@@ -56,8 +56,8 @@ class MonthFragment : Fragment() {
 
 
     //아래,왼쪽 제목 이름
-    private val whiteColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
+    private val ContentColor by lazy {
+        ContextCompat.getColor(this.requireContext(), R.color.content_black)
     }
 
     //그래프 가로 축,선 (점선으로 변경)
@@ -174,12 +174,14 @@ class MonthFragment : Fragment() {
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false)
-                textColor = whiteColor
+                textColor = ContentColor
 //                //첫째 주 ~ 다섯째 주
                 val xAxisLabels = mutableListOf("첫째 주", "둘째 주", "셋째 주", "넷째 주", "다섯째 주")
                 valueFormatter = IndexAxisValueFormatter(xAxisLabels)
                 setCenterAxisLabels(true)//xlabels와 막대 차트 중앙 정렬
                 setLabelCount(5,true)
+//                axisMinimum = 100f
+//                axisMaximum = 0f
 //                valueFormatter = object : ValueFormatter() {
 //                    override fun getFormattedValue(value: Float): String {
 //                        return barData[value.toInt()].date
@@ -189,7 +191,7 @@ class MonthFragment : Fragment() {
 
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
             axisRight.apply {
-                textColor = whiteColor
+                textColor = ContentColor
                 setDrawAxisLine(false) //격자
                 gridColor = transparentBlackColor
                 gridLineWidth = 0.5F
@@ -242,6 +244,7 @@ class MonthFragment : Fragment() {
             calendarMonth.text = dayPlus.format(textformatter).toString()
             if (count == 0) {
                 title.text = "이번 달에"
+                calRightBtn.isEnabled = false
             } else if (count == -1) {
                 title.text = "지난 달에"
             } else {

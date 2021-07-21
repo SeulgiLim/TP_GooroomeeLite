@@ -44,15 +44,16 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-@RequiresApi(Build.VERSION_CODES.O)
+//@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 class WeekFragment : Fragment() {
     private lateinit var binding: FragmentWeekBinding
     private val viewModel: SubjectViewModel by viewModels()
     private val weeklySubjectAdapter: WeeklySubjectAdapter by lazy { WeeklySubjectAdapter(emptyList()) }
     private var list: MutableList<Subject> = mutableListOf()
     //아래,왼쪽 제목 이름
-    private val whiteColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
+    private val ContentColor by lazy {
+        ContextCompat.getColor(this.requireContext(), R.color.content_black)
     }
     //그래프 가로 축,선 (점선으로 변경)
     private val transparentBlackColor by lazy {
@@ -117,28 +118,35 @@ class WeekFragment : Fragment() {
         monDay.text = monday.format(textformatter)
         sunDay.text = sunday.format(textformatter)
 
+        if (count == 0 && count > 0) {
+            rBtn.isEnabled = false
+        } else {
+            rBtn.isEnabled = true
+            rBtn.setOnClickListener {
+                count++
+                //2021.07.19 ~ 2021.07.25 표시
+                val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
+                monDay.text = mondayValue.format(textformatter).toString()
+                val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
+                sunDay.text = sundayValue.format(textformatter).toString()
 
-        rBtn.setOnClickListener {
-            count++
-            //2021.07.19 ~ 2021.07.25 표시
-            val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
-            monDay.text = mondayValue.format(textformatter).toString()
-            val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
-            sunDay.text = sundayValue.format(textformatter).toString()
+                if (count == 0) {
+                    title.text = "이번"
+                    titleNext.text = "주에"
+//                    rBtn.isEnabled = false
+                } else if (count == -1) {
+                    title.text = "지난"
+                    titleNext.text = "주에"
+                    rBtn.isEnabled = true
+                } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
+                    titleNext.text =
+                        mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
+                    title.text = mondayValue.format(weektextformatter).toString()
+                }
 
-            if (count == 0) {
-                title.text = "이번"
-                titleNext.text = "주에"
-            } else if (count == -1) {
-                title.text = "지난"
-                titleNext.text = "주에"
-            } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
-                titleNext.text =
-                    mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
-                title.text = mondayValue.format(weektextformatter).toString()
             }
-
         }
+
 
 
         lBtn.setOnClickListener {
@@ -222,7 +230,8 @@ class WeekFragment : Fragment() {
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false) //축 점선
-                textColor = whiteColor
+                textColor = ContentColor
+                gridColor = transparentBlackColor
 
                 //월 ~ 일 (x축 label 이름)
                 val xAxisLabels = listOf("월", "화", "수", "목", "금", "토", "일")
@@ -233,7 +242,7 @@ class WeekFragment : Fragment() {
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
             axisRight.apply {
                 addLimitLine(ll)
-                textColor = whiteColor
+                textColor = ContentColor
                 setDrawAxisLine(false) //격자
                 gridColor = transparentBlackColor
                 gridLineWidth = 0.5F

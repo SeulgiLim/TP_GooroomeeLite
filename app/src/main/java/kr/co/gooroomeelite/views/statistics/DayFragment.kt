@@ -10,16 +10,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
@@ -29,32 +25,23 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.DailySubjectAdapter
-import kr.co.gooroomeelite.adapter.SubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentDayBinding
-import kr.co.gooroomeelite.entity.ReadSubejct
-import kr.co.gooroomeelite.entity.Subjects
-import kr.co.gooroomeelite.utils.LoginUtils.Companion.currentUser
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
-import kr.co.gooroomeelite.views.home.EditSubjectsActivity
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
-import java.text.DateFormat
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import javax.security.auth.Subject
 import kotlin.collections.ArrayList
 
-@RequiresApi(Build.VERSION_CODES.O)
+//@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.Q)
 class DayFragment : Fragment() {
 
     private lateinit var binding: FragmentDayBinding
@@ -62,12 +49,16 @@ class DayFragment : Fragment() {
     private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
     //아래,왼쪽 제목 이름
-    private val whiteColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black_26)
+    private val ContentColor by lazy {
+        ContextCompat.getColor(this.requireContext(), R.color.content_black)
     }
 
     //그래프 가로 축,선 (점선으로 변경)
     private val transparentBlackColor by lazy {
+        ContextCompat.getColor(this.requireContext(), R.color.black)
+    }
+
+    private val axisLineColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.black)
     }
 
@@ -142,6 +133,7 @@ class DayFragment : Fragment() {
         return binding.root
     }
     //adapter에 데이터 추가
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.subjectList.observe(viewLifecycleOwner) {
             dailySubjectAdapter.setData(it)
@@ -158,32 +150,34 @@ class DayFragment : Fragment() {
         var count: Int = 0
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
 
+        dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
             count++
-            val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
+            val dayPlus: LocalDateTime= dateNow.plusDays(count.toLong())
             calendarDay.text = dayPlus.format(textformatter).toString()
-            title.text = dayPlus.format(titleformatter).toString()
             if (count == 0) {
                 title.text = "오늘"
-            }
-            if (count == -1) {
+                calRightBtn.isEnabled = false
+            } else if (count == -1) {
                 title.text = "어제"
+            } else {
+                title.text = dayPlus.format(titleformatter).toString()
             }
         }
-
 
         calLeftBtn.setOnClickListener {
             count--
-            val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
-            calendarDay.text = minusDay.format(textformatter).toString()
-            title.text = minusDay.format(titleformatter).toString()
+            val minusDay: LocalDateTime= dateNow.plusDays(count.toLong())
+            calendarDay.text =  minusDay.format(textformatter).toString()
             if (count == 0) {
                 title.text = "오늘"
-            }
-            if (count == -1) {
+            } else if (count == -1) {
                 title.text = "어제"
+            } else {
+                title.text = minusDay.format(titleformatter).toString()
             }
         }
+
     }
 
     fun getTotalStudy() {
@@ -257,16 +251,19 @@ class DayFragment : Fragment() {
             animateY(100)
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-                setDrawGridLines(false)
-                textColor = whiteColor
+                setDrawGridLines(false) //세로선 제거
+                textColor = ContentColor
+                gridColor = transparentBlackColor
+                setAxisLineColor(axisLineColor)
+                enableGridDashedLine(5f,5f,5f)
                 //월 ~ 일
                 val xAxisLabels = listOf("05:00", "12:00", "18:00")
                 valueFormatter = IndexAxisValueFormatter(xAxisLabels)
-                setLabelCount(5, true) //x축 고정
+
             }
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
             axisRight.apply {
-                textColor = whiteColor
+                textColor = ContentColor
                 setDrawAxisLine(false) //격자(일자선
                 gridColor = transparentBlackColor
                 gridLineWidth = 0.5F
@@ -283,7 +280,7 @@ class DayFragment : Fragment() {
                     valueFormatter = object : ValueFormatter() {
                         private val mFormat: DecimalFormat = DecimalFormat("###")
                         override fun getFormattedValue(value: Float): String {
-                            return mFormat.format(value) + ""
+                            return mFormat.format(value) + "분"
                         }
                     }
 //                }
@@ -291,6 +288,7 @@ class DayFragment : Fragment() {
 
             //차트 오른쪽 축, Y방향 false처리
             axisLeft.apply {
+                textColor = ContentColor
                 isEnabled = false
                 gridColor = transparentBlackColor
 
@@ -374,3 +372,39 @@ class DayFragment : Fragment() {
     }
 }
 
+//        var value : Int = 0
+//        value = count
+//        calLeftBtn.setOnClickListener {
+//            count--
+//            Log.d("countcount--",count.toString())
+//            val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
+//            calendarDay.text = minusDay.format(textformatter).toString()
+//            title.text = minusDay.format(titleformatter).toString()
+//            if (count == 0) {
+//                title.text = "오늘"
+//            }else if (count == -1) {
+//                title.text = "어제"
+//            }else if(count < 0){
+//                calRightBtn.setOnClickListener {
+//                    count++ // -1
+//                    Log.d("countcount++",count.toString())
+//                    if(count == 0 || count < 0){
+//                        var dayPlus: LocalDateTime = dateNow.plusDays(count.toLong()) //0 count =0
+//                        Log.d("countcountdayPlus",dayPlus.toString())
+//                        calendarDay.text = dayPlus.format(textformatter).toString()
+//                        title.text = dayPlus.format(titleformatter).toString()
+//                        if(count == 0){
+//                            title.text = "오늘"
+//                        }else if(count == -1){
+//                            title.text = "어제"
+//                        }else{
+//                            if(count >= 0) {
+//                                val minusDay: LocalDateTime = dateNow.minusDays(count.toLong())
+//                                calendarDay.text = minusDay.format(textformatter).toString()
+//                                title.text = minusDay.format(titleformatter).toString()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
