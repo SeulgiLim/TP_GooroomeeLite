@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -40,8 +41,8 @@
                         android:background="@color/white"
                         android:paddingTop="19dp"
                         android:paddingBottom="19dp"
-                        android:tint="@drawable/statistics_calendar_button"
-                        android:src="@drawable/ic_statistics_left_btn" />
+                        android:src="@drawable/ic_statistics_left_btn"
+                        app:tint="@drawable/statistics_calendar_button" />
 
                     <View
                         android:layout_width="0dp"
@@ -91,8 +92,7 @@
                         android:paddingTop="19dp"
                         android:paddingBottom="19dp"
                         android:src="@drawable/ic_statistics_rignt_btn"
-                        android:tint="@drawable/statistics_calendar_button"
-                        />
+                        app:tint="@drawable/statistics_calendar_button" />
                 </LinearLayout>
 
                 <View

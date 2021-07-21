@@ -55,25 +55,22 @@ class DayFragment : Fragment() {
 
     //그래프 가로 축,선 (점선으로 변경)
     private val transparentBlackColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
-    }
-
-    private val axisLineColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
+        ContextCompat.getColor(this.requireContext(), R.color.transparent_black)
     }
 
     private val listData by lazy {
-        mutableListOf( //REd, green, blue
+        mutableListOf(
+            //REd, green, blue
             //am 5 ~ 12
             ChartDatas("05:00", arrayListOf(40F)),
             ChartDatas("", arrayListOf(0F, 60F, 40f)),
             ChartDatas("", arrayListOf(0f, 60F, 0f)),
             ChartDatas("", arrayListOf(0f, 0f, 30F)),
-            ChartDatas("", arrayListOf(0F,0f,10f)),
+            ChartDatas("", arrayListOf(0F, 0f, 10f)),
             ChartDatas("", arrayListOf(0F)),
-            ChartDatas(" ", arrayListOf(0f,40F)),
+            ChartDatas(" ", arrayListOf(0f, 40F)),
             //pm 12 ~ 6
-            ChartDatas("12:00", arrayListOf(0f,50F)),
+            ChartDatas("12:00", arrayListOf(0f, 50F)),
             ChartDatas("", arrayListOf(0f)),
             ChartDatas("", arrayListOf(0f)),
             ChartDatas("", arrayListOf(0f)),
@@ -94,9 +91,6 @@ class DayFragment : Fragment() {
             ChartDatas("", arrayListOf(0f)),
         )
     }
-//    private val customMarkerView by lazy {
-//        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
-//    }
 
 
     override fun onCreateView(
@@ -132,6 +126,7 @@ class DayFragment : Fragment() {
         }
         return binding.root
     }
+
     //adapter에 데이터 추가
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -140,45 +135,56 @@ class DayFragment : Fragment() {
         }
     }
 
-    private fun moveCalendarByDay(calendarDay: TextView, calRightBtn: ImageButton, calLeftBtn: ImageButton, title: TextView) {
+    private fun moveCalendarByDay(
+        calendarDay: TextView,
+        calRightBtn: ImageButton,
+        calLeftBtn: ImageButton,
+        title: TextView
+    ) {
         // 현재 날짜/시간 가져오기
         val dateNow: LocalDateTime = LocalDateTime.now()
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         val titleformatter: DateTimeFormatter =
             DateTimeFormatter.ofPattern("M" + "월 " + "dd" + "일에")
 
-        var count: Int = 0
+        var count: Int = -1
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
 
         dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
             count++
-            val dayPlus: LocalDateTime= dateNow.plusDays(count.toLong())
-            calendarDay.text = dayPlus.format(textformatter).toString()
-            if (count == 0) {
-                title.text = "오늘"
+            if(count == 1) {
                 calRightBtn.isEnabled = false
-            } else if (count == -1) {
-                title.text = "어제"
-            } else {
-                title.text = dayPlus.format(titleformatter).toString()
+            }else {
+                Log.d("countcountRight", count.toString())
+                val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
+                calendarDay.text = dayPlus.format(textformatter).toString()
+                if (count == 0) {
+                    title.text = "오늘"
+                } else if (count == -1) {
+                    calRightBtn.isEnabled = true
+                    title.text = "어제"
+                } else {
+                    title.text = dayPlus.format(titleformatter).toString()
+                }
             }
         }
 
         calLeftBtn.setOnClickListener {
             count--
-            val minusDay: LocalDateTime= dateNow.plusDays(count.toLong())
-            calendarDay.text =  minusDay.format(textformatter).toString()
+            Log.d("countcountLeft",count.toString())
+            val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
+            calendarDay.text = minusDay.format(textformatter).toString()
             if (count == 0) {
                 title.text = "오늘"
             } else if (count == -1) {
                 title.text = "어제"
+                calRightBtn.isEnabled = true
             } else {
-                title.text = minusDay.format(titleformatter).toString()
+                    title.text = minusDay.format(titleformatter).toString()
+                }
             }
         }
-
-    }
 
     fun getTotalStudy() {
         FirebaseFirestore.getInstance()
@@ -229,7 +235,7 @@ class DayFragment : Fragment() {
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
-        //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
+            //각 데이터의 값을 텍스트 형식으로 나타내지 않게  (y값 그리기가 활성화되어 있으면 true를 반환하고 그렇지 않으면 false를 반환한다.)
             setDrawValues(false)
 
             val colors = ArrayList<Int>()
@@ -248,14 +254,12 @@ class DayFragment : Fragment() {
 
         //애니메이션 효과 0.1초
         with(binding.dayBarChart) {
-            animateY(100)
+            animateY(1000)
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false) //세로선 제거
                 textColor = ContentColor
-                gridColor = transparentBlackColor
-                setAxisLineColor(axisLineColor)
-                enableGridDashedLine(5f,5f,5f)
+                enableGridDashedLine(5f, 5f, 5f)
                 //월 ~ 일
                 val xAxisLabels = listOf("05:00", "12:00", "18:00")
                 valueFormatter = IndexAxisValueFormatter(xAxisLabels)
@@ -265,38 +269,33 @@ class DayFragment : Fragment() {
             axisRight.apply {
                 textColor = ContentColor
                 setDrawAxisLine(false) //격자(일자선
+                gridLineWidth = 1F
                 gridColor = transparentBlackColor
-                gridLineWidth = 0.5F
+                axisLineColor = transparentBlackColor //축의 축선 색상
                 enableGridDashedLine(5f, 5f, 5f)
 
-                var count = 0
-                //차트데이터 값에서 가장 큰 값
-//                barData.forEachIndexed { index, chartData ->
-                    axisMaximum = 60F
-                    axisMinimum = 0F
-                    granularity = 20F
+                axisMaximum = 60F
+                axisMinimum = 0F
+                granularity = 20F
 
-                    //y축 제목 커스텀
-                    valueFormatter = object : ValueFormatter() {
-                        private val mFormat: DecimalFormat = DecimalFormat("###")
-                        override fun getFormattedValue(value: Float): String {
-                            return mFormat.format(value) + "분"
-                        }
+                //y축 제목 커스텀
+                valueFormatter = object : ValueFormatter() {
+                    private val mFormat: DecimalFormat = DecimalFormat("###")
+                    override fun getFormattedValue(value: Float): String {
+                        return mFormat.format(value) + "분"
                     }
-//                }
+                }
             }
 
             //차트 오른쪽 축, Y방향 false처리
             axisLeft.apply {
-                textColor = ContentColor
                 isEnabled = false
-                gridColor = transparentBlackColor
+                gridColor = ContentColor
 
-//                barData.forEachIndexed { index, chartData ->
-                    axisMaximum = 60F
-                    axisMinimum = 0F
-                    granularity = 20F
-//                }
+                axisMaximum = 60F
+                axisMinimum = 0F
+                granularity = 20F
+                setLabelCount(4, true) //축 고정간격
             }
 
             notifyDataSetChanged()

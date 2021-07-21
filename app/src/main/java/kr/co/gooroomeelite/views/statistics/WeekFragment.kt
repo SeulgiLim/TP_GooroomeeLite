@@ -51,13 +51,14 @@ class WeekFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
     private val weeklySubjectAdapter: WeeklySubjectAdapter by lazy { WeeklySubjectAdapter(emptyList()) }
     private var list: MutableList<Subject> = mutableListOf()
+
     //아래,왼쪽 제목 이름
     private val ContentColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.content_black)
     }
     //그래프 가로 축,선 (점선으로 변경)
     private val transparentBlackColor by lazy {
-        ContextCompat.getColor(this.requireContext(), R.color.black)
+        ContextCompat.getColor(this.requireContext(), R.color.transparent_black)
     }
 //    private val customMarkerView by lazy {
 //        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
@@ -96,80 +97,6 @@ class WeekFragment : Fragment() {
         )
         return binding.root
     }
-    private fun moveCalendarByWeek(monDay: TextView, sunDay: TextView, rBtn: ImageButton, lBtn: ImageButton, title: TextView, titleNext: TextView){
-        val dateNow: LocalDateTime = LocalDateTime.now()
-
-        val cal = Calendar.getInstance()
-        val monday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
-        val sunday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
-
-        val firstDayOfWeek: LocalDate = LocalDate.now() //현재 날짜
-        val fieek: Int = firstDayOfWeek.get(ChronoField.ALIGNED_WEEK_OF_MONTH) //현재 날짜의 주일
-        val firstDay: LocalDate = firstDayOfWeek.withDayOfMonth(1) //매월 첫 날
-        val endDay: LocalDate =
-            firstDayOfWeek.withDayOfMonth(firstDayOfWeek.lengthOfMonth())// 매월 마지막 날
-        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        val weektextformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월") //7월
-//        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH)//몇째주
-
-        var count: Int = 0
-        var countOfWeek: Int = 0
-
-        monDay.text = monday.format(textformatter)
-        sunDay.text = sunday.format(textformatter)
-
-        if (count == 0 && count > 0) {
-            rBtn.isEnabled = false
-        } else {
-            rBtn.isEnabled = true
-            rBtn.setOnClickListener {
-                count++
-                //2021.07.19 ~ 2021.07.25 표시
-                val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
-                monDay.text = mondayValue.format(textformatter).toString()
-                val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
-                sunDay.text = sundayValue.format(textformatter).toString()
-
-                if (count == 0) {
-                    title.text = "이번"
-                    titleNext.text = "주에"
-//                    rBtn.isEnabled = false
-                } else if (count == -1) {
-                    title.text = "지난"
-                    titleNext.text = "주에"
-                    rBtn.isEnabled = true
-                } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
-                    titleNext.text =
-                        mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
-                    title.text = mondayValue.format(weektextformatter).toString()
-                }
-
-            }
-        }
-
-
-
-        lBtn.setOnClickListener {
-            count--
-            //2021.07.19 ~ 2021.07.25 표시
-            val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
-            sunDay.text = sundayValue.format(textformatter).toString()
-            val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
-            monDay.text = mondayValue.format(textformatter).toString()
-
-            if (count == 0) {
-                title.text = "이번"
-                titleNext.text = "주에"
-            } else if (count == -1) {
-                title.text = "지난"
-                titleNext.text = "주에"
-            } else {
-                titleNext.text =
-                    mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
-                title.text = mondayValue.format(weektextformatter).toString()
-            }
-        }
-    }
     private fun initChart() {
 //        customMarkerView.chartView = chart
         with(binding.weekBarChart) {
@@ -191,13 +118,13 @@ class WeekFragment : Fragment() {
     }
     private fun setData() {
         val values = mutableListOf<BarEntry>()
-        values.add(BarEntry(0f, 17f))
-        values.add(BarEntry(1f, 19f))
-        values.add(BarEntry(2f, 19f))
-        values.add(BarEntry(3f, 17f))
-        values.add(BarEntry(4f, 18f))
-        values.add(BarEntry(5f, 18f))
-        values.add(BarEntry(6f, 19f))
+//        values.add(BarEntry(0f, 17f))
+//        values.add(BarEntry(1f, 19f))
+//        values.add(BarEntry(2f, 19f))
+//        values.add(BarEntry(3f, 17f))
+//        values.add(BarEntry(4f, 18f))
+//        values.add(BarEntry(5f, 18f))
+//        values.add(BarEntry(6f, 19f))
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
@@ -225,13 +152,13 @@ class WeekFragment : Fragment() {
                 labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
                 enableDashedLine(5f,5f,15f)
             }
-            animateY(100)
+            animateY(1000)
             //x축을 나타냄
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false) //축 점선
                 textColor = ContentColor
-                gridColor = transparentBlackColor
+//                gridColor = transparentBlackColor
 
                 //월 ~ 일 (x축 label 이름)
                 val xAxisLabels = listOf("월", "화", "수", "목", "금", "토", "일")
@@ -244,8 +171,9 @@ class WeekFragment : Fragment() {
                 addLimitLine(ll)
                 textColor = ContentColor
                 setDrawAxisLine(false) //격자
+                gridLineWidth = 1F
                 gridColor = transparentBlackColor
-                gridLineWidth = 0.5F
+                axisLineColor = transparentBlackColor //축의 축선 색상
                 enableGridDashedLine(5f, 5f, 5f)
 
                 axisMaximum = 24F //최대값
@@ -265,7 +193,10 @@ class WeekFragment : Fragment() {
             axisLeft.apply {
                 addLimitLine(ll)
                 isEnabled = false
-                gridColor = transparentBlackColor
+                setDrawAxisLine(false) //격자
+                gridLineWidth = 1F
+                gridColor = ContentColor
+                axisLineColor = transparentBlackColor
 
                 axisMaximum = 24F //최대값
                 granularity = 3F //30단위마다 선을 그리려고 granularity 설정을 해 주었음
@@ -278,6 +209,79 @@ class WeekFragment : Fragment() {
             invalidate()
         }
     }
+    private fun moveCalendarByWeek(monDay: TextView, sunDay: TextView, rBtn: ImageButton, lBtn: ImageButton, title: TextView, titleNext: TextView){
+        val dateNow: LocalDateTime = LocalDateTime.now()
+
+        val cal = Calendar.getInstance()
+        val monday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
+        val sunday: LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
+
+        val firstDayOfWeek: LocalDate = LocalDate.now() //현재 날짜
+        val fieek: Int = firstDayOfWeek.get(ChronoField.ALIGNED_WEEK_OF_MONTH) //현재 날짜의 주일
+        val firstDay: LocalDate = firstDayOfWeek.withDayOfMonth(1) //매월 첫 날
+        val endDay: LocalDate =
+            firstDayOfWeek.withDayOfMonth(firstDayOfWeek.lengthOfMonth())// 매월 마지막 날
+        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val weektextformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월") //7월
+//        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH)//몇째주
+
+        var count: Int = 0
+        var countOfWeek: Int = 0
+
+        monDay.text = monday.format(textformatter)
+        sunDay.text = sunday.format(textformatter)
+
+        rBtn.setOnClickListener {
+            count++
+            if (count == 1) {
+                rBtn.isEnabled = false
+            } else {
+                //2021.07.19 ~ 2021.07.25 표시
+                val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
+                monDay.text = mondayValue.format(textformatter).toString()
+                val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
+                sunDay.text = sundayValue.format(textformatter).toString()
+
+                if (count == 0) {
+                    title.text = "이번"
+                    titleNext.text = "주에"
+                } else if (count == -1) {
+                    rBtn.isEnabled = true
+                    title.text = "지난"
+                    titleNext.text = "주에"
+                } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
+                    titleNext.text =
+                        mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
+                    title.text = mondayValue.format(weektextformatter).toString()
+                }
+
+            }
+        }
+
+
+        lBtn.setOnClickListener {
+            count--
+            //2021.07.19 ~ 2021.07.25 표시
+            val sundayValue: LocalDateTime = sunday.plusWeeks(count.toLong())
+            sunDay.text = sundayValue.format(textformatter).toString()
+            val mondayValue: LocalDateTime = monday.plusWeeks(count.toLong())
+            monDay.text = mondayValue.format(textformatter).toString()
+
+            if (count == 0) {
+                title.text = "이번"
+                titleNext.text = "주에"
+            } else if (count == -1) {
+                title.text = "지난"
+                titleNext.text = "주에"
+                lBtn.isEnabled = true
+            } else {
+                titleNext.text =
+                    mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
+                title.text = mondayValue.format(weektextformatter).toString()
+            }
+        }
+    }
+
     //주간별 원 차트
     private fun weeklySubjectPieChart() {
         val pieChart: PieChart = binding.weeklyPieChart
