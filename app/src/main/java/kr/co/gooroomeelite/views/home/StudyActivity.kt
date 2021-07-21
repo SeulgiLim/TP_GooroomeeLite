@@ -7,6 +7,7 @@ import android.text.TextUtils.replace
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -33,6 +34,9 @@ class  StudyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_study)
+
+        //화면 꺼짐 방지 기능
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         binding = ActivityStudyBinding.inflate(layoutInflater)
         setContentView(binding.root)

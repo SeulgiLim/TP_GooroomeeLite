@@ -26,13 +26,12 @@
         android:id="@+id/btn_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="16dp"
         android:clickable="true"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrowleft" />
-
+        app:srcCompat="@drawable/ic_btn_backwatch" />
 
     <!-- 화면명 -->
     <TextView
@@ -84,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:paddingStart="12px"
+            android:paddingStart="12dp"
             android:text="일반 모드"
             android:textSize="14sp"
             android:textColor="@color/black"
@@ -105,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
             android:button="@drawable/btn_checkboxcustom"
-            android:paddingStart="3dp"
+            android:paddingStart="12dp"
             android:text="뽀모도로 모드"
             android:textColor="@color/black"
             android:textSize="14sp"
