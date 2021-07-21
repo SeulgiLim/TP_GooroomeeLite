@@ -41,6 +41,9 @@ class  StudyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_study)
 
+        //화면 꺼짐 방지 기능
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         binding = ActivityStudyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
