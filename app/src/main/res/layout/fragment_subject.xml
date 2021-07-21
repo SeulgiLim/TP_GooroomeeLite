@@ -6,9 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background_bottom_sheet"
     android:orientation="vertical"
-    android:paddingStart="20dp"
+    android:paddingStart="28dp"
     android:paddingTop="32dp"
-    android:paddingEnd="20dp"
+    android:paddingEnd="28dp"
     android:paddingBottom="30dp"
     tools:context=".views.home.SubjectFragment">
 
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#F2F4F6"
+        android:backgroundTint="@color/divide2"
         android:ems="10"
         android:hint="과목 이름을 입력해 주세요."
         android:inputType="textPersonName"
@@ -79,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0 / 10"
+        android:layout_marginBottom="30dp"
         android:textAlignment="viewEnd"
         android:textColor="#B6B6B6"
         android:textSize="13sp" />
@@ -401,6 +402,7 @@
         android:layout_height="56dp"
         app:cardCornerRadius="6dp"
         android:layout_marginTop="40dp"
+
         app:cardElevation="0dp">
 
         <androidx.appcompat.widget.AppCompatButton

@@ -53,4 +53,12 @@
         <item name="android:fontFamily">bold</item>
     </style>
 
+    <style name="numberPickerCustomSize">
+        <!--Display textSize-->
+        <item name="android:textSize">20sp</item>
+        <!--Display textColor-->
+        <item name="android:editTextColor">@color/share_delete</item>
+    </style>
+
+
 </resources>

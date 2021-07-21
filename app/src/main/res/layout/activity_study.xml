@@ -27,9 +27,9 @@
         <!-- 뒤로가기 -->
     <ImageView
         android:id="@+id/btn_backwatch"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,28 +57,25 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="54dp"
         android:layout_marginBottom="64dp"
         android:background="@color/white"
         android:drawableBottom="@drawable/ic_btn_noise"
-        android:layout_marginLeft="54dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_timermode" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <!-- ASMR (백색소움) 버튼 명-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="54dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="110dp"
+        android:layout_marginTop="12dp"
         android:text="ASMR"
-        android:textSize="12sp"
         android:textColor="#888888"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_timermode" />
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_noise"
+        app:layout_constraintStart_toStartOf="@+id/btn_noise"
+        app:layout_constraintTop_toBottomOf="@+id/btn_noise" />
 
 
     <!-- 스톱워치 변경 버튼 -->
@@ -99,15 +96,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="54dp"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="55dp"
+        android:layout_marginTop="12dp"
         android:text="스톱워치"
-        android:textSize="12sp"
         android:textColor="#888888"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_noise"
-        app:layout_constraintRight_toLeftOf="@id/btn_studynow" />
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_timermode"
+        app:layout_constraintStart_toStartOf="@+id/btn_timermode"
+        app:layout_constraintTop_toBottomOf="@+id/btn_timermode" />
 
 
 
@@ -129,14 +124,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="54dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="12dp"
         android:text="공부현황"
-        android:textSize="12sp"
         android:textColor="#888888"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_timermode"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_studynow"
+        app:layout_constraintStart_toStartOf="@+id/btn_studynow"
+        app:layout_constraintTop_toBottomOf="@+id/btn_studynow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
