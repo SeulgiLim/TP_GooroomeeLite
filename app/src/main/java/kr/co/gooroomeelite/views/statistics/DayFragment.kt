@@ -43,21 +43,17 @@ import kotlin.collections.ArrayList
 //@RequiresApi(Build.VERSION_CODES.O)
 @RequiresApi(Build.VERSION_CODES.Q)
 class DayFragment : Fragment() {
-
     private lateinit var binding: FragmentDayBinding
     private val viewModel: SubjectViewModel by viewModels()
     private val dailySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
-
     //아래,왼쪽 제목 이름
     private val ContentColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.content_black)
     }
-
     //그래프 가로 축,선 (점선으로 변경)
     private val transparentBlackColor by lazy {
         ContextCompat.getColor(this.requireContext(), R.color.transparent_black)
     }
-
     private val listData by lazy {
         mutableListOf(
             //REd, green, blue
@@ -91,8 +87,6 @@ class DayFragment : Fragment() {
             ChartDatas("", arrayListOf(0f)),
         )
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -126,7 +120,6 @@ class DayFragment : Fragment() {
         }
         return binding.root
     }
-
     //adapter에 데이터 추가
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -134,7 +127,6 @@ class DayFragment : Fragment() {
             dailySubjectAdapter.setData(it)
         }
     }
-
     private fun moveCalendarByDay(
         calendarDay: TextView,
         calRightBtn: ImageButton,
@@ -185,7 +177,6 @@ class DayFragment : Fragment() {
                 }
             }
         }
-
     fun getTotalStudy() {
         FirebaseFirestore.getInstance()
             .collection("subject")
@@ -203,7 +194,6 @@ class DayFragment : Fragment() {
                 binding.minuteStudytime.text = (todayStudySum % 60).toString() + "분"
             }
     }
-
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
         with(chart) {
@@ -223,7 +213,6 @@ class DayFragment : Fragment() {
         }
         setData(listData)
     }
-
     private fun setData(barData: List<ChartDatas>) {
         val values = mutableListOf<BarEntry>()
         barData.forEachIndexed { index, chartData ->
@@ -303,7 +292,6 @@ class DayFragment : Fragment() {
             invalidate()
         }
     }
-
     //원 차트
     private fun dailySubjectPieChart() {
         val pieChart: PieChart = binding.dailyPieChart

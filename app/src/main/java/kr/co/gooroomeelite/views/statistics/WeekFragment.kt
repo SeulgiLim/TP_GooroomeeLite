@@ -21,7 +21,6 @@ import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -34,7 +33,9 @@ import kr.co.gooroomeelite.databinding.FragmentWeekBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -95,8 +96,47 @@ class WeekFragment : Fragment() {
             binding.titleWeek,
             binding.titleWeekNext
         )
+        divideDataFromFirebase()
+
         return binding.root
     }
+
+    private fun divideDataFromFirebase(){
+        viewModel.list.observe(viewLifecycleOwner){
+            it.forEachIndexed{index,subject->
+                Log.d("divideDataFromFirebase",index.toString())
+                Log.d("divideDataFromFirebase",subject.toString())
+                Log.d("divideDataFromFirebase",subject.timestamp.toString())
+
+                val dateNow: LocalDateTime = LocalDateTime.now() //오늘
+                val monDay: LocalDateTime = dateNow.with(DayOfWeek.MONDAY)//해당 주차의 월
+                val tuesDay: LocalDateTime = dateNow.with(DayOfWeek.TUESDAY)//해당 주차의 화
+                val wednesDay: LocalDateTime = dateNow.with(DayOfWeek.WEDNESDAY)//해당 주차의 수
+
+                //서버에서 가져온 요일
+                val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val date = Date()
+                val serverDateFormat: String = dateFormat.format(subject.timestamp).toString()
+                //현재 요일
+                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val wednesthDayFormat : String = wednesDay.format(textformatter)
+
+                Log.d("divideDataFromFirebase",serverDateFormat + " : 서버에서 가져온 시간")
+                Log.d("divideDataFromFirebase",wednesthDayFormat + " : 오늘 시간 ")
+
+
+                val thursDay: LocalDateTime = dateNow.with(DayOfWeek.THURSDAY)//해당 주차의 목
+                val friDay: LocalDateTime = dateNow.with(DayOfWeek.FRIDAY)//해당 주차의 금
+                val saturDay: LocalDateTime = dateNow.with(DayOfWeek.SATURDAY)//해당 주차의 토
+                val sunday: LocalDateTime = dateNow.with(DayOfWeek.SUNDAY)//해당 주차의 일
+
+//                if(subject.timestamp == wednesthDay){
+//
+//                }
+            }
+        }
+    }
+
     private fun initChart() {
 //        customMarkerView.chartView = chart
         with(binding.weekBarChart) {
@@ -118,13 +158,13 @@ class WeekFragment : Fragment() {
     }
     private fun setData() {
         val values = mutableListOf<BarEntry>()
-//        values.add(BarEntry(0f, 17f))
-//        values.add(BarEntry(1f, 19f))
-//        values.add(BarEntry(2f, 19f))
-//        values.add(BarEntry(3f, 17f))
-//        values.add(BarEntry(4f, 18f))
-//        values.add(BarEntry(5f, 18f))
-//        values.add(BarEntry(6f, 19f))
+        values.add(BarEntry(0f, 17f))
+        values.add(BarEntry(1f, 19f))
+        values.add(BarEntry(2f, 19f))
+        values.add(BarEntry(3f, 17f))
+        values.add(BarEntry(4f, 18f))
+        values.add(BarEntry(5f, 18f))
+        values.add(BarEntry(6f, 19f))
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {

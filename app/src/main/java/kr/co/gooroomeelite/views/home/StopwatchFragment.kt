@@ -66,7 +66,8 @@ class StopwatchFragment : Fragment() {
         stopwatch?.base = SystemClock.elapsedRealtime()
 
         buttonStartPause = v.findViewById(R.id.btn_start)   //시작
-        buttonEnd = v.findViewById(R.id.btn_end)    //종료
+        buttonEnd = v.findViewById(R.id.btn_end)    //기록 종료
+
         buttonRestart = v.findViewById(R.id.btn_restart)    //다시시작
         buttonFinish = v.findViewById(R.id.btn_finish)  //일시정지
 
