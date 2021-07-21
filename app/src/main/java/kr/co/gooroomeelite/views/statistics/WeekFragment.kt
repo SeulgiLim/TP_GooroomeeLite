@@ -123,6 +123,8 @@ class WeekFragment : Fragment() {
 
                 Log.d("divideDataFromFirebase",serverDateFormat + " : 서버에서 가져온 시간")
                 Log.d("divideDataFromFirebase",wednesthDayFormat + " : 오늘 시간 ")
+                Log.d("divideDataFromFirebase",wednesthDayFormat + " : 오늘 시간 ")
+
 
 
                 val thursDay: LocalDateTime = dateNow.with(DayOfWeek.THURSDAY)//해당 주차의 목
