@@ -80,56 +80,57 @@ class  StudyActivity : AppCompatActivity() {
                 //화면이동
                 startActivity(Intent(this, MainActivity::class.java))
                 mAlertDialog.dismiss()
-            cancelButton.setOnClickListener {
-                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
-                mAlertDialog.dismiss()
+                cancelButton.setOnClickListener {
+                    Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
+                    mAlertDialog.dismiss()
+                }
+                finish()
             }
-            finish()
-        }
-        Log.d("aaa1", "btnBack222")
+            Log.d("aaa1", "btnBack222")
 
-        // nowstudytime = subject.studytime
+            // nowstudytime = subject.studytime
 
-        Log.e("[TEST]", "${intent.getSerializableExtra("subject") as Subject}")
+            Log.e("[TEST]", "${intent.getSerializableExtra("subject") as Subject}")
 
 
-        // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
-        mode_name.append("${subject.name}\n")
+            // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
+            mode_name.append("${subject.name}\n")
 
 
-        // StudyActivity -> TimerFragment로 데이터 넘기기
-        /*val bundle = Bundle()
+            // StudyActivity -> TimerFragment로 데이터 넘기기
+            /*val bundle = Bundle()
         bundle.putSerializable("subject", subject)
         bundle.putString("documentId", documentId)
 
         val StopwatchFragment = StopwatchFragment()
         StopwatchFragment.arguments = bundle*/
 
-        //프래그먼트에서 액티비티로 넘어온 데이터 받기
-        //fragment 클래스의 onCreateView
+            //프래그먼트에서 액티비티로 넘어온 데이터 받기
+            //fragment 클래스의 onCreateView
 
 
-        // 하단 ASMR, 스톱워치 모드 변경, 공부 시간 현황 버튼
-        // ASMR 실행 버튼 (태수님 작업본 연결예정)
-        binding.btnNoise.setOnClickListener {
-            val intent = Intent(this, MusicActivity::class.java)
-            startActivity(intent)
+            // 하단 ASMR, 스톱워치 모드 변경, 공부 시간 현황 버튼
+            // ASMR 실행 버튼 (태수님 작업본 연결예정)
+            binding.btnNoise.setOnClickListener {
+                val intent = Intent(this, MusicActivity::class.java)
+                startActivity(intent)
+            }
+
+            // 스톱워치 모드 변경 버튼
+            binding.btnTimermode.setOnClickListener {
+                val intent = Intent(this, TimersettingActivity::class.java)
+                startActivity(intent)
+            }
+
+            // 공부 시간 현황 버튼
+            binding.btnStudynow.setOnClickListener {
+
+                // BottomSheet 연결
+                bottomsheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+            }
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         }
-
-        // 스톱워치 모드 변경 버튼
-        binding.btnTimermode.setOnClickListener {
-            val intent = Intent(this, TimersettingActivity::class.java)
-            startActivity(intent)
-        }
-
-        // 공부 시간 현황 버튼
-        binding.btnStudynow.setOnClickListener {
-
-            // BottomSheet 연결
-            bottomsheetFragment.show(supportFragmentManager, "BottomSheetDialog")
-        }
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-
     }
 }
 
