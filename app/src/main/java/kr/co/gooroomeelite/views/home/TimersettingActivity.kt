@@ -90,7 +90,6 @@ class TimersettingActivity : AppCompatActivity() {
         // 뽀모도로 설정 - 집중시간 Btn
         btn_focustime.setOnClickListener {
 
-
             val view = View.inflate(this@TimersettingActivity, R.layout.activity_timersetting_focusttime_dialog, null)
 
             val builder = AlertDialog.Builder(this@TimersettingActivity)

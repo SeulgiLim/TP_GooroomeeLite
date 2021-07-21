@@ -98,7 +98,7 @@ class  StudyActivity : AppCompatActivity() {
 
             // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
             mode_name.append("${subject.name}\n")
-
+        }
 
             // StudyActivity -> TimerFragment로 데이터 넘기기
             /*val bundle = Bundle()
@@ -135,7 +135,7 @@ class  StudyActivity : AppCompatActivity() {
 
         }
     }
-}
+
 
     /*
 * */
