@@ -77,6 +77,7 @@ class  StudyActivity : AppCompatActivity() {
                 //화면이동
                 startActivity(Intent(this, MainActivity::class.java))
                 mAlertDialog.dismiss()
+
                 finish()
             }
             cancelButton.setOnClickListener {
