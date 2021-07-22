@@ -199,6 +199,8 @@ class StopwatchFragment : Fragment() {
 
             intent.putExtra(STUDY_TIME, curTime)
             intent.putExtra("subject", subject)
+            intent.putExtra("hour",hour)
+            intent.putExtra("minute",minute)
             startActivity(intent)
             resetStopwatch()
 

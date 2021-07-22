@@ -18,11 +18,20 @@ class StudyEndActivity : AppCompatActivity() {
     var bundle: Bundle? = null
     var subjectname: String? = null
     var studytime: Int? = null
+    var hour : Int? = null
+    var minute : Int? = null
     private lateinit var subject : kr.co.gooroomeelite.entity.Subject
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudyEndBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        hour = intent.getIntExtra("hour",0)
+        minute = intent.getIntExtra("minute",0)
+
+        binding.hour.text = hour.toString()
+        binding.minute.text = minute.toString()
+
         firestore = FirebaseFirestore.getInstance()
         // 측정된 공부시간 데이터 추출
         val nowstudytime = intent.getLongExtra(STUDY_TIME, 0L).toInt()
@@ -30,14 +39,8 @@ class StudyEndActivity : AppCompatActivity() {
             finish()
         }
 
-
-//        bundle = intent.getBundleExtra("bundle")
-//        studytime = bundle?.getInt("studytime")
-//        val studytime = 20
-//        val subjectname = "과학"
-
         setting()
-
+        settingtime()
     }
 
 
@@ -45,15 +48,9 @@ class StudyEndActivity : AppCompatActivity() {
     private fun setting() {
         firestore?.collection("users")?.document(getUid()!!)?.get()?.addOnSuccessListener {
             val subject = it.toObject(ContentDTO::class.java)
-//            val studytime = 20
             val subjectname = intent.getSerializableExtra("subject") as kr.co.gooroomeelite.entity.Subject
-//            subject?.todaystudytime = subject?.todaystudytime?.plus(studytime)
             val today = subject?.todaystudytime!!
             val goal = subject?.studyTime!!
-//            firestore!!.collection("users").document(getUid()!!).update(
-//                "todaystudytime",
-//                subject?.todaystudytime
-//            )
             binding.tvStudyendStudytotal.text = subject.todaystudytime.toString()
             binding.tvStudygoal.text =
                 "%02d".format(goal.div(60)) + "시간 " + "%02d".format(
@@ -82,6 +79,17 @@ class StudyEndActivity : AppCompatActivity() {
                     ) + "분"
                 binding.seekBar.progress = percent
             }
+        }
+    }
+
+    private fun settingtime(){
+        when (hour) {
+            in 0..9 -> binding.hour.text = "0" + hour.toString()
+            in 10..99 -> binding.hour.text = hour.toString()
+        }
+        when (minute){
+            in 0..9 -> binding.minute.text = "0"+ minute.toString()
+            in 10..59 -> binding.minute.text = minute.toString()
         }
     }
 }
