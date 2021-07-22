@@ -298,8 +298,8 @@ class StopwatchFragment : Fragment() {
 // 저장 파일 위치 : data/data/(package_name)/shared_prefs/SharedPreference
 // 다른 액티비티가 화면을 완전히 가리게 되면, 호출
 // 유저가 다시 해당 액티비티를 호출하면 데이터가 다시 복원될 수 있는 상태
-    override fun onStop() {
-        super.onStop() // onPause()
+    override fun onPause() {
+        super.onPause()
         val prefs = requireActivity().getSharedPreferences(                              // getPreference() 함수 : 자동으로 액티비티 이름의 파일 내에 저장함
                 SW_PREFS,
                 Context.MODE_PRIVATE                                              // Mode = 접근 권한, PRIVATE = 해당 앱에서만 접근 가능하게 해줌

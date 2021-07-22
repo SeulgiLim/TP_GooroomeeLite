@@ -83,10 +83,12 @@ class  StudyActivity : AppCompatActivity() {
                 //화면이동
                 startActivity(Intent(this, MainActivity::class.java))
                 mAlertDialog.dismiss()
-                cancelButton.setOnClickListener {
-                    Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
-                    mAlertDialog.dismiss()
+
                 }
+
+            cancelButton.setOnClickListener {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
                 finish()
             }
             Log.d("aaa1", "btnBack222")
