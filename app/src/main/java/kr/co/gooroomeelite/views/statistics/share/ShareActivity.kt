@@ -129,7 +129,7 @@ class ShareActivity : AppCompatActivity() {
                 try{
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImageUrl)
                     val galleryIntent = Intent(this@ShareActivity,StickerActivity::class.java)
-                    Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
+//                    Log.d("aaaacurrentImageUrl", currentImageUrl.toString())
                     galleryIntent.putExtra("gallery",currentImageUrl.toString())
                     startActivity(galleryIntent)
                 }catch(e: Exception){

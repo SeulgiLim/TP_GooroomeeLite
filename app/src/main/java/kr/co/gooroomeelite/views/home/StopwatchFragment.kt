@@ -4,6 +4,7 @@ package kr.co.gooroomeelite.views.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.Chronometer
 import android.widget.Chronometer.OnChronometerTickListener
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue
@@ -23,6 +25,7 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.math.truncate
 
@@ -361,6 +364,7 @@ class StopwatchFragment : Fragment() {
 //    buttonStartPause = v.findViewById(R.id.btn_start)   //시작
 //    buttonEnd = v.findViewById(R.id.btn_end)    //기록 종료
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun timestamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
 
@@ -374,7 +378,8 @@ class StopwatchFragment : Fragment() {
         Log.d("timetime",minute.toString())
         Log.d("timetime",second.toString())
 //        m- ((a/360000)*360000)-((a/360000)*360000/60000)*60000)/1000
-        val daytime = System.currentTimeMillis() //오늘 날짜,시간
+        val daytime: LocalDateTime = LocalDateTime.now()
+//        val daytime = System.currentTimeMillis() //오늘 날짜,시간
         val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
         Log.d("Subject", plusStudyTime.toString())
         Log.d("Subject", subject.name.toString())
