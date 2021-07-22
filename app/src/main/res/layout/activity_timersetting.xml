@@ -131,7 +131,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view9">
+        app:layout_constraintTop_toBottomOf="@+id/view9"
+        tools:visibility="visible">
 
         <!-- 뽀모도로_집중 시간 -->
         <TextView
@@ -166,12 +167,22 @@
             android:text="5분"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_resettime"
+            app:layout_constraintEnd_toStartOf="@id/btn_resettime2"
             app:layout_constraintTop_toTopOf="@+id/text_focus" />
 
 
-        <ImageView
+        <View
             android:id="@+id/btn_focustime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="200dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_focus"
+            app:layout_constraintTop_toBottomOf="@+id/text_pomodorosetting" />
+
+        <ImageView
+            android:id="@+id/btn_focustime2"
             android:layout_width="8dp"
             android:layout_height="16dp"
             android:layout_marginTop="2dp"
@@ -196,10 +207,10 @@
             android:id="@+id/text_rest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="휴식 시간"
             android:textColor="#333333"
             android:textSize="14sp"
-            android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view11" />
 
@@ -212,12 +223,12 @@
             android:text="5분"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_resettime"
+            app:layout_constraintEnd_toStartOf="@id/btn_resettime2"
             app:layout_constraintTop_toTopOf="@+id/text_rest" />
 
 
         <ImageView
-            android:id="@+id/btn_resettime"
+            android:id="@+id/btn_resettime2"
             android:layout_width="8dp"
             android:layout_height="16dp"
             android:layout_marginTop="2dp"
@@ -226,6 +237,16 @@
             app:layout_constraintTop_toTopOf="@+id/text_resttime" />
 
         <!-- 뽀모도로_장기 휴식 시간-->
+
+        <View
+            android:id="@+id/btn_resettime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/view12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_focus"
+            app:layout_constraintTop_toBottomOf="@+id/view11" />
 
         <View
             android:id="@+id/view12"
@@ -257,17 +278,27 @@
             android:text="20분"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_longresettime"
+            app:layout_constraintEnd_toStartOf="@id/btn_longresettime2"
             app:layout_constraintTop_toTopOf="@+id/text_longreset" />
 
         <ImageView
-            android:id="@+id/btn_longresettime"
+            android:id="@+id/btn_longresettime2"
             android:layout_width="8dp"
             android:layout_height="16dp"
             android:layout_marginTop="2dp"
             android:src="@drawable/ic_study_go"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_longresettime" />
+
+        <View
+            android:id="@+id/btn_longresettime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/view13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_focus"
+            app:layout_constraintTop_toBottomOf="@+id/view12" />
 
         <View
             android:id="@+id/view13"
@@ -301,11 +332,11 @@
             android:text="3회"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_settime"
+            app:layout_constraintEnd_toStartOf="@id/btn_settime2"
             app:layout_constraintTop_toTopOf="@+id/text_set" />
 
         <ImageView
-            android:id="@+id/btn_settime"
+            android:id="@+id/btn_settime2"
             android:layout_width="8dp"
             android:layout_height="16dp"
             android:layout_marginTop="2dp"
@@ -313,6 +344,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_settime" />
 
+
+        <View
+            android:id="@+id/btn_settime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="200dp"
+            app:layout_constraintBottom_toTopOf="@+id/view14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_focus"
+            app:layout_constraintTop_toBottomOf="@+id/view13" />
 
         <View
             android:id="@+id/view14"

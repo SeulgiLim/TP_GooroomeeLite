@@ -7,6 +7,7 @@ package kr.co.gooroomeelite.views.mypage
  */
 import android.app.Activity
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -73,7 +74,8 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 binding.imageView2.setColorFilter(R.color.deam)
             } else {
                 binding.imageView2.setImageResource(R.drawable.ic_gooroomee_logo)
-                binding.imageView2.setColorFilter(R.color.deam)
+                binding.imageView2.setColorFilter(R.color.orange, PorterDuff.Mode.SRC_ATOP);
+
             }
         }
 
@@ -220,7 +222,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 //This is path to the selected image
                 photoUri = data?.data
                 binding.imageView2.setImageURI(photoUri)
-                binding.imageView2.setColorFilter(R.color.deam)
+//                binding.imageView2.setColorFilter(R.color.orange)
             } else {
                 //Exit the addPhotoActivity if you leave the album without selecting it
                 finish()
@@ -249,7 +251,7 @@ class ProfileUpdateActivity : AppCompatActivity() {
                 storageRef!!.child("profile_img/$filename")
                     .child(filename).downloadUrl.addOnSuccessListener {
                         Glide.with(this).load(it).into(binding.imageView2)
-                        binding.imageView2.setColorFilter(R.color.deam)
+//                        binding.imageView2.setColorFilter(R.color.deam)
                     }
             }
     }

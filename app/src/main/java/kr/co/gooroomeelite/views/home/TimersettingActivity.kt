@@ -1,21 +1,28 @@
 package kr.co.gooroomeelite.views.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
+import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_study.*
 import kotlinx.android.synthetic.main.activity_timersetting.*
 import kotlinx.android.synthetic.main.activity_timersetting.btn_back
-import kotlinx.android.synthetic.main.activity_timersetting_focusttime_dialog.*
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityTimersettingBinding
+import kr.co.gooroomeelite.utils.LoginUtils
+import kr.co.gooroomeelite.views.login.LoginActivity
 
 
 // 타이머 상세설정 화면
-
 
 /*class PomoFocusDialog(private val owner:TimersettingActivity) : Dialog(owner.TimersettingActivity) { //
 
@@ -80,48 +87,31 @@ class TimersettingActivity : AppCompatActivity() {
         // 뽀모도르 설정
         btn_pomodoromode.setOnClickListener {
             visibility()
-            /* // 뽀모도르 라디오 버튼 선택시 시간설정 활성화
-            isLoading.observe(this) {
-                binding.RadioButton.visibility = if (it) View.VISIBLE else View.GONE
-            }*/
         }
 
-        // 뽀모도로 세부 설정
         // 뽀모도로 설정 - 집중시간 Btn
         btn_focustime.setOnClickListener {
+            val mfocustTimeView =
+                LayoutInflater.from(this).inflate(R.layout.fragment_dialog_focustime, null)
+            val mBuilder = AlertDialog.Builder(this).setView(mfocustTimeView)
+            val mAlertDialog = mBuilder.show().apply {
+                window?.setBackgroundDrawable(null)
+            }
+            var minutePciker : NumberPicker = mfocustTimeView.findViewById(R.id.minutepicker)
+            val okButton = mfocustTimeView.findViewById<TextView>(R.id.ok_btn)
+            val cancelButton = mfocustTimeView.findViewById<TextView>(R.id.cancel_btn)
 
-            val view = View.inflate(this@TimersettingActivity, R.layout.activity_timersetting_focusttime_dialog, null)
-
-            val builder = AlertDialog.Builder(this@TimersettingActivity)
-            builder.setView(view)
-
-            val dialog = builder.create()
-            dialog.show()
-            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-
-//
-//            val builder = AlertDialog.Builder(this)
-//
-//            val custom_view = layoutInflater.inflate(R.layout.activity_timersetting_focusttime_dialog, null)
-//            builder.setView(custom_view)
-//
-//            ok_btn.setOnClickListener {
-//                custom_view.run {
-//
-//                }
-//            }
-//
-//            cancel_btn.setOnNe
-
-//            binding.cancelBtn.setOnClickListener {
-//                dismiss()
-//            }
-//
-//            binding.okBtn.setOnClickListener {
-//
-//                dismiss()
-
+            minutePciker.minValue = 0
+            minutePciker.maxValue = 12//13개
+            minutePciker.displayedValues = arrayOf("00","05","10","15","20","25","30","35","40","45","50","55","60")
+            okButton.setOnClickListener {
+                //ok눌렀을때
+                mAlertDialog.dismiss()
+            }
+            cancelButton.setOnClickListener {
+                Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
+                mAlertDialog.dismiss()
+            }
         }
 
 
@@ -153,15 +143,3 @@ class TimersettingActivity : AppCompatActivity() {
     }
 
 }
-
-
-
-/*binding.btnTimermode.setOnClickListener {
-    val StopwatchFragment: StopwatchFragment = StopwatchFragment()
-    val fragmentManager: FragmentManager = supportFragmentManager
-
-
-    val fragmentTransaction = fragmentManager.beginTransaction()        // 시작
-    fragmentTransaction.replace(R.id.container, StopwatchFragment)            // 할 일
-    fragmentTransaction.commit()                                        // 끝
-}*/

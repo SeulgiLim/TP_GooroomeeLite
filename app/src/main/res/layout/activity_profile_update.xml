@@ -50,13 +50,12 @@
         android:layout_gravity="center"
         app:cardCornerRadius="100dp"
         >
-            <androidx.appcompat.widget.AppCompatImageView
+            <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
-
                 android:src="@drawable/ic_gooroomee_logo" />
         <ImageView
             android:id="@+id/ic_camera"
