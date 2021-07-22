@@ -41,6 +41,9 @@ class  StudyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_study)
 
+        //화면 꺼짐 방지 기능
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         binding = ActivityStudyBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -96,6 +99,9 @@ class  StudyActivity : AppCompatActivity() {
             // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
             mode_name.append("${subject.name}\n")
 
+        }
+
+        binding.modeName.text = subject.name
 
             // StudyActivity -> TimerFragment로 데이터 넘기기
             /*val bundle = Bundle()
@@ -128,11 +134,11 @@ class  StudyActivity : AppCompatActivity() {
                 // BottomSheet 연결
                 bottomsheetFragment.show(supportFragmentManager, "BottomSheetDialog")
             }
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         }
     }
-}
+
 
     /*
 * */

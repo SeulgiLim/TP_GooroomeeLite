@@ -85,18 +85,25 @@ class StopwatchFragment : Fragment() {
         buttonFinish.performClick()
 
 
-        // 현재 타이머 값 표시 (stopwatch 포멧 문자 타입으로 변환)
-        stopwatch?.format = " 00 : %s"
-        stopwatch?.setOnChronometerTickListener { stopwatch ->
+
+
+
+//        // 현재 타이머 값 표시 (시, 분, 초 사이 공백 넣기)
+        stopwatch?.setOnChronometerTickListener{ stopwatch ->
             val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
-            if (elapsedMillis > 3600000L) {
-                stopwatch.format = " 00: %s"
-            } else {
-                stopwatch.format = " 00: %s"
-            }
+            val h = (elapsedMillis / 3600000).toInt()
+            val m = (elapsedMillis - h * 3600000).toInt() / 60000
+            val s = (elapsedMillis - h * 3600000 - m * 60000).toInt() / 1000
+            val hh = if (h < 10) "0$h" else h.toString() + ""
+            val mm = if (m < 10) "0$m" else m.toString() + ""
+            val ss = if (s < 10) "0$s" else s.toString() + ""
+            stopwatch.format = "$hh : $mm : $ss"
         }
+        stopwatch!!.base = SystemClock.elapsedRealtime()
+        //stopwatch!!.start() // <- onCreateView 내에 좌측 코드 추가해서 자동시작, 2초 늦게 시작하는 문제 발생함
 
 
+//        // 시간이 1초 느림
 //        // 현재 타이머 값 표시 (시, 분, 초 사이 공백 넣기)
 //        stopwatch?.setOnChronometerTickListener{ stopwatch ->
 //            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
@@ -110,7 +117,6 @@ class StopwatchFragment : Fragment() {
 //        }
 //        stopwatch!!.base = SystemClock.elapsedRealtime()
 //        stopwatch!!.start()
-
 
 
 
@@ -193,6 +199,7 @@ class StopwatchFragment : Fragment() {
             activity?.finish()
 
         })
+
         // }
 
         //
@@ -291,7 +298,7 @@ class StopwatchFragment : Fragment() {
 // 다른 액티비티가 화면을 완전히 가리게 되면, 호출
 // 유저가 다시 해당 액티비티를 호출하면 데이터가 다시 복원될 수 있는 상태
     override fun onStop() {
-        super.onStop()
+        super.onStop() // onPause()
         val prefs = requireActivity().getSharedPreferences(                              // getPreference() 함수 : 자동으로 액티비티 이름의 파일 내에 저장함
                 SW_PREFS,
                 Context.MODE_PRIVATE                                              // Mode = 접근 권한, PRIVATE = 해당 앱에서만 접근 가능하게 해줌
@@ -365,6 +372,12 @@ class StopwatchFragment : Fragment() {
         Log.d("Subject", plusStudyTime.toString())
 //            firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.set(allStudyTime)?.addOnSuccessListener { Log.d("Subject", "DocumentSnapshot successfully written!") }?.addOnFailureListener { e -> Log.w("Subject", "Error writing document", e) }
             firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("plusStudyTime",plusStudyTime)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopwatch?.stop()
+
     }
 }
 
