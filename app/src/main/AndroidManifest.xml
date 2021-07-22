@@ -105,6 +105,17 @@
             android:name=".views.common.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="kr.co.gooroomeelite.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"/>
+        </provider>
+
     </application>
 
 </manifest>
