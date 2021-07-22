@@ -25,12 +25,14 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.WeeklySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentWeekBinding
 import kr.co.gooroomeelite.entity.Subject
+import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DateFormat
@@ -52,6 +54,8 @@ class WeekFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
     private val weeklySubjectAdapter: WeeklySubjectAdapter by lazy { WeeklySubjectAdapter(emptyList()) }
     private var list: MutableList<Subject> = mutableListOf()
+    var subject: Subject? = null
+
 
     //아래,왼쪽 제목 이름
     private val ContentColor by lazy {
@@ -67,6 +71,14 @@ class WeekFragment : Fragment() {
 
     //   LocalDate 문자열로 포맷
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E")
+    var monday : Float = 0f
+    var tuesday  : Float = 0f
+    var wednesday  : Float = 0f
+    var thursday  : Float = 0f
+    var friday : Float = 0f
+    var saturday : Float = 0f
+    var sunday : Float = 0f
+
 
     private var subjectListValue: MutableList<Subject> = mutableListOf()
     override fun onCreateView(
@@ -101,40 +113,98 @@ class WeekFragment : Fragment() {
         return binding.root
     }
 
-    private fun divideDataFromFirebase(){
-        viewModel.list.observe(viewLifecycleOwner){
-            it.forEachIndexed{index,subject->
-                Log.d("divideDataFromFirebase",index.toString())
-                Log.d("divideDataFromFirebase",subject.toString())
-                Log.d("divideDataFromFirebase",subject.timestamp.toString())
+    private fun divideDataFromFirebase() {
+//        viewModel.list.observe(viewLifecycleOwner){
+//            Log.d("divideDataFromFirebase",it.size.toString())
+//            it.forEachIndexed{index,subject->
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", LoginUtils.getUid()!!)
+            .get() //값이 변경 시 바로 값이 변경된다.
+            .addOnSuccessListener { docs ->
+                Log.d("divideDataFromFirebase", docs.size().toString())
+                docs.documents.forEach {
+                    subject = it.toObject(Subject::class.java)!!
+                    subjectListValue.add(subject!!)
+                }
+//                Log.d("divideDataFromFirebase", index.toString())
+//                Log.d("divideDataFromFirebase", subject.toString())
+//                Log.d("divideDataFromFirebase", subject.timestamp.toString())
+//                subjectListValue.add(index, subject)
 
                 val dateNow: LocalDateTime = LocalDateTime.now() //오늘
                 val monDay: LocalDateTime = dateNow.with(DayOfWeek.MONDAY)//해당 주차의 월
                 val tuesDay: LocalDateTime = dateNow.with(DayOfWeek.TUESDAY)//해당 주차의 화
                 val wednesDay: LocalDateTime = dateNow.with(DayOfWeek.WEDNESDAY)//해당 주차의 수
-
-                //서버에서 가져온 요일
-                val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val date = Date()
-                val serverDateFormat: String = dateFormat.format(subject.timestamp).toString()
-                //현재 요일
-                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val wednesthDayFormat : String = wednesDay.format(textformatter)
-
-                Log.d("divideDataFromFirebase",serverDateFormat + " : 서버에서 가져온 시간")
-                Log.d("divideDataFromFirebase",wednesthDayFormat + " : 오늘 시간 ")
-
                 val thursDay: LocalDateTime = dateNow.with(DayOfWeek.THURSDAY)//해당 주차의 목
                 val friDay: LocalDateTime = dateNow.with(DayOfWeek.FRIDAY)//해당 주차의 금
                 val saturDay: LocalDateTime = dateNow.with(DayOfWeek.SATURDAY)//해당 주차의 토
-                val sunday: LocalDateTime = dateNow.with(DayOfWeek.SUNDAY)//해당 주차의 일
+                val sunDay: LocalDateTime = dateNow.with(DayOfWeek.SUNDAY)//해당 주차의 일
 
-//                if(subject.timestamp == wednesthDay){
-//
+                //서버에서 가져온 요일
+                val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                val date = Date()
+//                val serverDateFormat: String = dateFormat.format(subject.timestamp).toString()
+
+                //현재 요일
+                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                val monDayFormat: String = monDay.format(textformatter)
+                val tuseDayFormat: String = tuesDay.format(textformatter)
+                val wednesDayFormat: String = wednesDay.format(textformatter)
+                val thursDayFormat: String = thursDay.format(textformatter)
+                val friDayFormat: String = friDay.format(textformatter)
+                val saturDayFormat: String = saturDay.format(textformatter)
+                val sunDayFormat: String = sunDay.format(textformatter)
+
+//                for (it in 0..it.size) {
+//                    if (monDayFormat == serverDateFormat) {
+//                        monday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", monday.toString() + "월")
+//                        break
+//                    }
+//                    if (tuseDayFormat == serverDateFormat) {
+//                        tuesday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", tuesday.toString() + "화")
+//                        break
+//                    }
+//                    if (wednesDayFormat == serverDateFormat) {
+//                        wednesday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", wednesday.toString() + "수")
+//                        break
+//                    }
+//                    if (thursDayFormat == serverDateFormat) {
+//                        thursday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", thursday.toString() + "목")
+//                        break
+//                    }
+//                    if (friDayFormat == serverDateFormat) {
+//                        friday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", friday.toString() + "금")
+//                        break
+//                    }
+//                    if (saturDayFormat == serverDateFormat) {
+//                        saturday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", saturday.toString() + "토")
+//                        break
+//                    }
+//                    if (sunDayFormat == serverDateFormat) {
+//                        sunday = (subject.studytimeCopy.toFloat() / 60)
+//                        Log.d("요일", sunday.toString() + "일")
+//                        break
+//                    }
 //                }
+
+
+//                Log.d("divideDataFromFirebase", serverDateFormat + " : 서버에서 가져온 시간")
+                Log.d("divideDataFromFirebase", wednesDayFormat + " : 오늘 시간 ")
+
+
             }
-        }
     }
+
+//        }
+
+
 
     private fun initChart() {
 //        customMarkerView.chartView = chart
@@ -248,6 +318,8 @@ class WeekFragment : Fragment() {
             invalidate()
         }
     }
+
+
     private fun moveCalendarByWeek(monDay: TextView, sunDay: TextView, rBtn: ImageButton, lBtn: ImageButton, title: TextView, titleNext: TextView){
         val dateNow: LocalDateTime = LocalDateTime.now()
 

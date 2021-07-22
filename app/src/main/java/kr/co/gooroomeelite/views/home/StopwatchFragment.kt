@@ -4,6 +4,7 @@ package kr.co.gooroomeelite.views.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -14,6 +15,7 @@ import android.widget.Button
 import android.widget.Chronometer
 import android.widget.Chronometer.OnChronometerTickListener
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue
@@ -23,6 +25,7 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.math.truncate
 
@@ -349,37 +352,26 @@ class StopwatchFragment : Fragment() {
         firestore?.collection("users")?.document(LoginUtils.getUid()!!)?.get()
             ?.addOnSuccessListener {
                 val todaystudy = it.toObject(ContentDTO::class.java)
-                Log.d("TTTTT", curTime.toString() + "돌아가고 있는 스톱워치 시간")
                 val studytime = curTime.toInt()
-                val totalstudy =  todaystudy?.todaystudytime?.plus(studytime)
-                Log.d("TTTTT","${totalstudy}")
-                Log.d("TTTTTstudytime","${studytime}")
+                val totalstudy = todaystudy?.todaystudytime?.plus(studytime)
                 val addStudyTime: Int = studytime
-                Log.d("TTTTTstudytime","${addStudyTime}")
-                firestore!!.collection("users").document(LoginUtils.getUid()!!).update("todaystudytime",totalstudy)
+                firestore!!.collection("users").document(LoginUtils.getUid()!!)
+                    .update("todaystudytime", totalstudy)
 //                firestore!!.collection("subject").document(LoginUtils.getUid()!!).update("addStudyTime",addStudyTime)
             }
     }
-//    buttonStartPause = v.findViewById(R.id.btn_start)   //시작
-//    buttonEnd = v.findViewById(R.id.btn_end)    //기록 종료
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun timestamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
-
-        Log.d("Subject","1")
         val subjectStudyTime = subject.studytime //총 공부시간
-//        hour = h
-//        minute = m
-//        second = s
-        val plusStudyTime : Int = subjectStudyTime.plus(minute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
+        val studytimeCopy : Int = subjectStudyTime.plus(minute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
         Log.d("timetime",hour.toString())
         Log.d("timetime",minute.toString())
         Log.d("timetime",second.toString())
-//        m- ((a/360000)*360000)-((a/360000)*360000/60000)*60000)/1000
-        val daytime = System.currentTimeMillis() //오늘 날짜,시간
-        val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
-        Log.d("Subject", plusStudyTime.toString())
-        Log.d("Subject", subject.name.toString())
+        val dayStartTime : LocalDateTime = LocalDateTime.now() //"시작하기" 시간
+        val dayEndtime : LocalDateTime = LocalDateTime.now() // "기록 종료" 시간
+//        val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
 
         FirebaseFirestore
             .getInstance()
@@ -387,28 +379,23 @@ class StopwatchFragment : Fragment() {
             .whereEqualTo("uid", LoginUtils.getUid())
             .whereEqualTo("name", subject.name.toString())
             .get().addOnSuccessListener {
-                Log.d("Subject", "2")
                 val subjectId = it.documents.get(0).id
                 val subject = it.toObjects(Subject::class.java)
-                Log.d("Subject",subject[0].name + " name")
-                Log.d("Subject",subject[0].color + " color")
-                Log.d("Subject","${subject}")
                 FirebaseFirestore
                     .getInstance()
                     .collection("subject")
                     .document(subjectId)
-                    .update("daytime",daytime)
+                    .update("dayEndtime",dayEndtime)
                 FirebaseFirestore
                     .getInstance()
                     .collection("subject")
                     .document(subjectId)
-                    .update("plusStudyTime",plusStudyTime.toInt())
+                    .update("studytimeCopy",studytimeCopy)
                 FirebaseFirestore
                     .getInstance()
                     .collection("subject")
                     .document(subjectId)
-                    .update("studytime",plusStudyTime.toInt())//30 + 50 + 125
-                Log.d("Subject",plusStudyTime.toString() + " studytime")
+                    .update("studytime",studytimeCopy)
             }
 
     //                    hashMapOf("plusStudyTime" to plusStudytime) as Map<String, Any>
