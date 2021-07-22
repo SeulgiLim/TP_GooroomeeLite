@@ -47,6 +47,9 @@ class StopwatchFragment : Fragment() {
     private var pauseOffset: Long = 0
     private var running = false                                                                     // 스탑워치 실행중
     private var curTime: Long = 0                                                                   // 공부 진행시간
+    var hour : Int = 0
+    var minute : Int = 0
+    var second : Int = 0
 
     var firestore : FirebaseFirestore? = null
     val intent = Intent()
@@ -99,6 +102,9 @@ class StopwatchFragment : Fragment() {
             val mm = if (m < 10) "0$m" else m.toString() + ""
             val ss = if (s < 10) "0$s" else s.toString() + ""
             stopwatch.format = "$hh : $mm : $ss"
+            hour = h
+            minute = m
+            second = s
         }
         stopwatch!!.base = SystemClock.elapsedRealtime()
         //stopwatch!!.start() // <- onCreateView 내에 좌측 코드 추가해서 자동시작, 2초 늦게 시작하는 문제 발생함
@@ -258,7 +264,7 @@ class StopwatchFragment : Fragment() {
             // if은 true 여부 판별, true일 경우 안의 내용 실행 (이 경우 true가 아닐경우 실행)
             // running 앞에 !는 반대로 이해 -> true면 false false면 true로 비교
             curTime =
-                SystemClock.elapsedRealtime() - pauseOffset
+                SystemClock.elapsedRealtime() - pauseOffset  //현재 시간 -  pauseOffset : 동작시간 - 시작시간
 
             // 스탑워치 진행 시간 계산식
             stopwatch!!.base =
@@ -360,12 +366,14 @@ class StopwatchFragment : Fragment() {
 
         Log.d("Subject","1")
         val subjectStudyTime = subject.studytime //총 공부시간
-        val plusStudyTime : Int = subjectStudyTime.plus(curTime.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간)
-//        Log.d("Subject", "${curTime}")
-//        Log.d("Subject", curTime.toString())
-//        Log.d("Subject", "${curTime.toInt()}")
-//        Log.d("Subject", "${subjectStudyTime}")
-//        Log.d("Subject", "${plusStudyTime}")
+//        hour = h
+//        minute = m
+//        second = s
+        val plusStudyTime : Int = subjectStudyTime.plus(minute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
+        Log.d("timetime",hour.toString())
+        Log.d("timetime",minute.toString())
+        Log.d("timetime",second.toString())
+//        m- ((a/360000)*360000)-((a/360000)*360000/60000)*60000)/1000
         val daytime = System.currentTimeMillis() //오늘 날짜,시간
         val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
         Log.d("Subject", plusStudyTime.toString())
@@ -397,7 +405,7 @@ class StopwatchFragment : Fragment() {
                     .getInstance()
                     .collection("subject")
                     .document(subjectId)
-                    .update("studytime",plusStudyTime.toInt())
+                    .update("studytime",plusStudyTime.toInt())//30 + 50 + 125
                 Log.d("Subject",plusStudyTime.toString() + " studytime")
             }
 
