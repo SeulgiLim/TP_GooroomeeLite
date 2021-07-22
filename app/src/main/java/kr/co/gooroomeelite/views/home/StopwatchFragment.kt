@@ -258,7 +258,9 @@ class StopwatchFragment : Fragment() {
             // if은 true 여부 판별, true일 경우 안의 내용 실행 (이 경우 true가 아닐경우 실행)
             // running 앞에 !는 반대로 이해 -> true면 false false면 true로 비교
             curTime =
-                SystemClock.elapsedRealtime() - pauseOffset                                             // 스탑워치 진행 시간 계산식
+                SystemClock.elapsedRealtime() - pauseOffset
+
+            // 스탑워치 진행 시간 계산식
             stopwatch!!.base =
                 curTime                                                                                  //  stopwatch!!.base에 curTime에 넣은 실시간 셋팅
             stopwatch!!.start()                                                                         // 스탑워치 시작 함수 실행
@@ -359,31 +361,44 @@ class StopwatchFragment : Fragment() {
         Log.d("Subject","1")
         val subjectStudyTime = subject.studytime //총 공부시간
         val plusStudyTime : Int = subjectStudyTime.plus(curTime.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간)
+//        Log.d("Subject", "${curTime}")
+//        Log.d("Subject", curTime.toString())
+//        Log.d("Subject", "${curTime.toInt()}")
+//        Log.d("Subject", "${subjectStudyTime}")
+//        Log.d("Subject", "${plusStudyTime}")
         val daytime = System.currentTimeMillis() //오늘 날짜,시간
         val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
         Log.d("Subject", plusStudyTime.toString())
         Log.d("Subject", subject.name.toString())
 
-        FirebaseFirestore.getInstance()
+        FirebaseFirestore
+            .getInstance()
             .collection("subject")
             .whereEqualTo("uid", LoginUtils.getUid())
-            .get()
-            .addOnSuccessListener {
+            .whereEqualTo("name", subject.name.toString())
+            .get().addOnSuccessListener {
                 Log.d("Subject", "2")
+                val subjectId = it.documents.get(0).id
+                val subject = it.toObjects(Subject::class.java)
+                Log.d("Subject",subject[0].name + " name")
+                Log.d("Subject",subject[0].color + " color")
+                Log.d("Subject","${subject}")
                 FirebaseFirestore
                     .getInstance()
                     .collection("subject")
-                    .whereEqualTo("uid", LoginUtils.getUid())
-                    .whereEqualTo("name",subject.name.toString())
-                    .whereEqualTo("color",subject.color.toString())
-                    .get().addOnSuccessListener {
-                        Log.d("Subject", "3")
-                        Log.d("Subject", it.documents.get(0).toString() + "4")
-                        Log.d("Subject", it.documents.get(1).toString() + "4")
-                        Log.d("Subject", it.size().toString() + "개 : 5")
-//                        .document(subject.name.toString())
-//                        .update("plusStudyTime",plusStudyTime)
-                    }
+                    .document(subjectId)
+                    .update("daytime",daytime)
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("subject")
+                    .document(subjectId)
+                    .update("plusStudyTime",plusStudyTime.toInt())
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("subject")
+                    .document(subjectId)
+                    .update("studytime",plusStudyTime.toInt())
+                Log.d("Subject",plusStudyTime.toString() + " studytime")
             }
 
     //                    hashMapOf("plusStudyTime" to plusStudytime) as Map<String, Any>
