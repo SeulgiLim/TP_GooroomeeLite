@@ -84,16 +84,16 @@ class StopwatchFragment : Fragment() {
         buttonFinish.performClick()
 
 
-        // 현재 타이머 값 표시 (stopwatch 포멧 문자 타입으로 변환)
-        stopwatch?.format = " 00 : %s"
-        stopwatch?.setOnChronometerTickListener { stopwatch ->
-            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
-            if (elapsedMillis > 3600000L) {
-                stopwatch.format = " 00: %s"
-            } else {
-                stopwatch.format = " 00: %s"
-            }
-        }
+//        // 현재 타이머 값 표시 (stopwatch 포멧 문자 타입으로 변환)
+//        stopwatch?.format = " 00 : %s"
+//        stopwatch?.setOnChronometerTickListener { stopwatch ->
+//            val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
+//            if (elapsedMillis > 3600000L) {
+//                stopwatch.format = " 00: %s"
+//            } else {
+//                stopwatch.format = " 00: %s"
+//            }
+//        }
 
 
 //        // 현재 타이머 값 표시 (시, 분, 초 사이 공백 넣기)
