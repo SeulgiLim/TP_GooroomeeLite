@@ -134,7 +134,7 @@ class  StudyActivity : AppCompatActivity() {
                 // BottomSheet 연결
                 bottomsheetFragment.show(supportFragmentManager, "BottomSheetDialog")
             }
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         }
     }
