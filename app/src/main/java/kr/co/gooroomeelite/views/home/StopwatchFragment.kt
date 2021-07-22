@@ -15,6 +15,7 @@ import android.widget.Chronometer
 import android.widget.Chronometer.OnChronometerTickListener
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stopwatch.*
@@ -354,24 +355,70 @@ class StopwatchFragment : Fragment() {
 
     private fun timestamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
+
         Log.d("Subject","1")
-//        firestore?.collection("subject")?.whereEqualTo("name",subject.name)?.get()?.addOnSuccessListener {
-//            val subjectStudyTime = subject.studytime //총 공부시간
-//            val allStudyTime = subjectStudyTime.plus(curTime.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간)
-//         firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("name", FieldValue.arrayUnion("allStudyTime"))
-//         firestore!!.collection("subject")?.document(LoginUtils.getUid()!!)?.update("allStudyTime",allStudyTime)
+        val subjectStudyTime = subject.studytime //총 공부시간
+        val plusStudyTime : Int = subjectStudyTime.plus(curTime.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간)
         val daytime = System.currentTimeMillis() //오늘 날짜,시간
-//        firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("daytime", FieldValue.arrayUnion("allStudyTime"))
-//        firestore!!.collection("subject")?.document(LoginUtils.getUid()!!)?.update("allStudyTime",allStudyTime)
+        val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
+        Log.d("Subject", plusStudyTime.toString())
+        Log.d("Subject", subject.name.toString())
+
+        FirebaseFirestore.getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", LoginUtils.getUid())
+            .get()
+            .addOnSuccessListener {
+                Log.d("Subject", "2")
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("subject")
+                    .whereEqualTo("uid", LoginUtils.getUid())
+                    .whereEqualTo("name",subject.name.toString())
+                    .whereEqualTo("color",subject.color.toString())
+                    .get().addOnSuccessListener {
+                        Log.d("Subject", "3")
+                        Log.d("Subject", it.documents.get(0).toString() + "4")
+                        Log.d("Subject", it.documents.get(1).toString() + "4")
+                        Log.d("Subject", it.size().toString() + "개 : 5")
+//                        .document(subject.name.toString())
+//                        .update("plusStudyTime",plusStudyTime)
+                    }
+            }
+
+    //                    hashMapOf("plusStudyTime" to plusStudytime) as Map<String, Any>
+//                )
+//            }
+//        firestore?.collection("subject")?.whereEqualTo("name",subject.name.toString())?.get()?.addOnSuccessListener {
+//            Log.d("Subject","2")
+//            firestore!!.collection("subject").document(LoginUtils.getUid()!!).update("plusStudyTime",plusStudyTime)
 //        }?.addOnFailureListener {
 //            Log.d("Subject","3")
 //        }
-        val subjectStudyTime = subject.studytime //총 공부시간
-        val plusStudyTime = subjectStudyTime.plus(curTime.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간)
-        val allStudyTime = hashMapOf("allstudytime" to plusStudyTime)
-        Log.d("Subject", plusStudyTime.toString())
+
+//        firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("name", FieldValue.arrayUnion("allStudyTime"))
+//        firestore!!.collection("subject")?.document(LoginUtils.getUid()!!)?.update("allStudyTime",allStudyTime)
+//        firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("daytime", FieldValue.arrayUnion("allStudyTime"))
+//        firestore!!.collection("subject")?.document(LoginUtils.getUid()!!)?.update("allStudyTime",allStudyTime)
+
+//        FirebaseFirestore
+//            .getInstance()
+//            .collection("subject")
+//            .document(LoginUtils.getUid()!!)
+//            .update("plusStudyTime",plusStudyTime)
+//        Log.d("Subject", "2")
+//
+//        FirebaseDatabase
+//            .getInstance()
+//            .getReference()
+//            .child("subject")
+//            .child(()
+//            .setValue(plusStudyTime)
+//        Log.d("Subject", "2")
+
+
 //            firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.set(allStudyTime)?.addOnSuccessListener { Log.d("Subject", "DocumentSnapshot successfully written!") }?.addOnFailureListener { e -> Log.w("Subject", "Error writing document", e) }
-            firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("plusStudyTime",plusStudyTime)
+//            firestore?.collection("subject")?.document(LoginUtils.getUid()!!)?.update("plusStudyTime",plusStudyTime)
     }
 
     override fun onDestroy() {

@@ -212,8 +212,8 @@ class HomeFragment : Fragment() {
                     studytimetodaylist.add(subject[i].studytime)
                 }
                 todayStudyTime.value = studytimetodaylist.sum()
-                FirebaseFirestore.
-                getInstance()
+                FirebaseFirestore
+                    .getInstance()
                     .collection("users")
                     .document(getUid()!!)
                     .update("todaystudytime",todayStudyTime.value)
