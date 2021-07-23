@@ -53,10 +53,13 @@ class StopwatchFragment : Fragment() {
     var hour : Int = 0
     var minute : Int = 0
     var second : Int = 0
+    var hourMinute : Int = 0
+    var sum : Int = 0
 
     var firestore : FirebaseFirestore? = null
     val intent = Intent()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("ClickableViewAccessibility")
     @Nullable
     override fun onCreateView(
@@ -100,6 +103,7 @@ class StopwatchFragment : Fragment() {
             val elapsedMillis = SystemClock.elapsedRealtime() - stopwatch!!.base
             val h = (elapsedMillis / 3600000).toInt()
             val m = (elapsedMillis - h * 3600000).toInt() / 60000
+            val hPlusm =  (elapsedMillis- (elapsedMillis/360000)*360000).toInt()/60000
             val s = (elapsedMillis - h * 3600000 - m * 60000).toInt() / 1000
             val hh = if (h < 10) "0$h" else h.toString() + ""
             val mm = if (m < 10) "0$m" else m.toString() + ""
@@ -108,6 +112,8 @@ class StopwatchFragment : Fragment() {
             hour = h
             minute = m
             second = s
+            hourMinute = (h*60)+m
+            sum = hPlusm
         }
         stopwatch!!.base = SystemClock.elapsedRealtime()
         //stopwatch!!.start() // <- onCreateView 내에 좌측 코드 추가해서 자동시작, 2초 늦게 시작하는 문제 발생함
@@ -365,8 +371,9 @@ class StopwatchFragment : Fragment() {
     private fun timestamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
         val subjectStudyTime = subject.studytime //총 공부시간
-        val studytimeCopy : Int = subjectStudyTime.plus(minute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
+        val studytimeCopy : Int = subjectStudyTime.plus(hourMinute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
         Log.d("timetime",hour.toString())
+        Log.d("timetime",hourMinute.toString())
         Log.d("timetime",minute.toString())
         Log.d("timetime",second.toString())
         val dayStartTime : LocalDateTime = LocalDateTime.now() //"시작하기" 시간
