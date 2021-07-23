@@ -77,14 +77,14 @@ class  StudyActivity : AppCompatActivity() {
                 //화면이동
                 startActivity(Intent(this, MainActivity::class.java))
                 mAlertDialog.dismiss()
-
+                finish()
 
             }
             cancelButton.setOnClickListener {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
 
-                finish()
+
             }
         }
         // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
