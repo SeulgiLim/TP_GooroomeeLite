@@ -108,9 +108,6 @@ class WeekFragment : Fragment() {
     }
 
     private fun divideDataFromFirebase() {
-        var countWeek : Int = 0
-        binding.calRightBtn.setOnClickListener{
-            countWeek++
             viewModel.list.observe(viewLifecycleOwner) {
                 var monday : Float = 0f
                 var tuesday  : Float = 0f
@@ -188,6 +185,7 @@ class WeekFragment : Fragment() {
                             thursdaySum = thursdaySum + thursday
                             break
                         }
+                        Log.d("thursday",thursdaySum.toString())
                     }
                     for (it in 0..it.size) {
                         if (friDayFormat == serverDateFormat) {
@@ -221,7 +219,6 @@ class WeekFragment : Fragment() {
                 binding.weeklyTotalTime.text = "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
                 setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum,totalSum)
             }
-        }
 
     }
 
