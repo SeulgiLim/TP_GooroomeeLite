@@ -127,6 +127,9 @@ class WeekFragment : Fragment() {
             var totalSum : Float = 0f
 
             it.forEachIndexed { index, subject ->
+                val countWeek : Int = 0
+
+
 
                 val dateNow: LocalDateTime = LocalDateTime.now() //오늘
                 val monDay: LocalDateTime = dateNow.with(DayOfWeek.MONDAY)//해당 주차의 월
@@ -216,6 +219,7 @@ class WeekFragment : Fragment() {
             totalSum = mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
             Log.d("totalSum", totalSum.toString() + " 총합") //25
             binding.weeklyTotalTime.text = "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+            setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum,totalSum)
         }
     }
 
@@ -238,17 +242,16 @@ class WeekFragment : Fragment() {
             }
             renderer = barChartRender
         }
-        setData()
     }
-    private fun setData() {
+    fun setData(monday: Float, tuseday: Float, wednesday: Float, thursday: Float, friday: Float, saturday: Float, sunday: Float,totalSum: Float) {
         val values = mutableListOf<BarEntry>()
-        values.add(BarEntry(0f, 17f))
-        values.add(BarEntry(1f, 19f))
-        values.add(BarEntry(2f, 19f))
-        values.add(BarEntry(3f, 17f))
-        values.add(BarEntry(4f, 18f))
-        values.add(BarEntry(5f, 18f))
-        values.add(BarEntry(6f, 19f))
+        values.add(BarEntry(0f,(monday/60)))
+        values.add(BarEntry(1f,(tuseday/60)))
+        values.add(BarEntry(2f,(wednesday/60)))
+        values.add(BarEntry(3f,(thursday/60)))
+        values.add(BarEntry(4f,(friday/60)))
+        values.add(BarEntry(5f,(saturday/60)))
+        values.add(BarEntry(6f,(sunday/60)))
 
         //막대 그래프 색상 추가
         val barDataSet = BarDataSet(values, "").apply {
@@ -268,7 +271,7 @@ class WeekFragment : Fragment() {
         }
 
         with(binding.weekBarChart) {
-            val ll = LimitLine(18.2f, "평균").apply {
+            val ll = LimitLine(((totalSum/60)/7), "평균").apply {
                 lineColor = Color.BLACK
                 lineWidth = 1f
                 textColor = Color.BLACK
