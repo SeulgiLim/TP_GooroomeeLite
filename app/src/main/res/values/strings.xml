@@ -51,9 +51,15 @@
 
 
     <string name="onboarding_btn">시작하기</string>
-    <string name="onboarding_content1">공부 기록\n구루미로 더 편리하게</string>
-    <string name="onboarding_content2">한눈에 보는\n내 공부 그래프</string>
-    <string name="onboarding_content3">오늘의 공부 시간\nSNS로 공유</string>
+    <string name="onboarding_title1">공부시간과 달성률을 한눈에</string>
+    <string name="onboarding_title2">시간 기록은 과목별로</string>
+    <string name="onboarding_title3">통계에서 자세하게</string>
+    <string name="onboarding_title4">SNS인증도 간편하게</string>
+
+    <string name="onboarding_content1">오늘 총 공부 시간과 목표 시간 달성률은\n홈 화면에서 확인해보세요.</string>
+    <string name="onboarding_content2">내 공부 과목마다 공부시간을 확인하고 \n효율적으로 시간을 관리해보세요.</string>
+    <string name="onboarding_content3">일,주,월간별로 어떻게 시간을 활용했는지\n인포그래픽으로 자세하게 확인해보세요.</string>
+    <string name="onboarding_content4">원하는 이미지 위에 제공되는 공부 기록 스탬프로\n간편하게 인증샷을 만들어 공유해보세요.</string>
 
 
     // mypage //

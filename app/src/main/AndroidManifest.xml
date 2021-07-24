@@ -15,7 +15,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gooroomeelite">
-        <activity android:name=".views.common.OnBoardingActivity" />
+        <activity android:name=".views.common.OnBoardingActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".views.home.TimersettingActivity"
             android:screenOrientation="portrait"
@@ -113,9 +114,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path"/>
+                android:resource="@xml/file_path" />
         </provider>
-
     </application>
 
 </manifest>

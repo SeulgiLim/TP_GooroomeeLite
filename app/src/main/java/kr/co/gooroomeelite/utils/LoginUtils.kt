@@ -21,12 +21,5 @@ class LoginUtils {
             editor.clear()
             editor.apply()
         }
-//        fun loginBuilder() = AuthUI.getInstance().createSignInIntentBuilder()
-//            .setTheme(R.style.Theme_Design_Light_NoActionBar)
-//            .setLogo(AuthUI.NO_LOGO)//아이콘 로고 등록하기
-//            .setAvailableProviders(listOf(AuthUI.IdpConfig.GoogleBuilder().build(), AuthUI.IdpConfig.EmailBuilder().build()))
-////                .setTosAndPrivacyPolicyUrls("https://naver.com", "https://google.com")
-//            .setIsSmartLockEnabled(false)// default = true
-//            .build()
     }
 }

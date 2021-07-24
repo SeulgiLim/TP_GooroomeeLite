@@ -28,7 +28,7 @@ data class MusicItem(val tvmusic: String,
 )
 
 data class OnBoardingItem(
-    val tvonboarding: String,
-    val ivonboarding : Int,
-    val ivindicator : Int
+    val ivonboarding: Int,
+    val tvonboardingbold : String,
+    val tvonboardingnormal : String
 )

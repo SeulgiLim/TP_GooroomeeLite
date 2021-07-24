@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,13 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_on_boarding.view.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ItemViewpagerOnboardingBinding
-import kr.co.gooroomeelite.utils.LoginUtils
 import kr.co.gooroomeelite.utils.RC_SIGN_IN
-import kr.co.gooroomeelite.views.common.MainActivity
 import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.mypage.OnBoardingItem
-import splitties.systemservices.activityManager
-import kotlin.coroutines.coroutineContext
 
 /**
  * @author Gnoss
@@ -33,9 +28,9 @@ class ViewPagerAdapter(private val owner : AppCompatActivity,
 
 
     inner class ViewPagerViewHolder(private val binding : ItemViewpagerOnboardingBinding) : RecyclerView.ViewHolder(binding.root){
-        val tvonboarding : TextView = itemView.findViewById(R.id.tv_onboarding)
         val ivonboarding : ImageView = itemView.findViewById(R.id.iv_onboarding)
-        val ivindicator : ImageView = itemView.findViewById(R.id.iv_indicator)
+        val tvonboardingbold : TextView = itemView.findViewById(R.id.tv_onboardingbold)
+        val tvonboardingnormal : TextView = itemView.findViewById(R.id.tv_onboardingbold)
         val btnonboarding : Button = itemView.findViewById(R.id.btn_onboarding)
 
     }
@@ -48,10 +43,11 @@ class ViewPagerAdapter(private val owner : AppCompatActivity,
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val onboardingdata = onBoardingList[position]
         with(holder) {
-            tvonboarding.text = onboardingdata.tvonboarding
+
             ivonboarding.setImageResource(onboardingdata.ivonboarding)
-            ivindicator.setImageResource(onboardingdata.ivindicator)
-            if (position == 2 ){
+            tvonboardingbold.text = onboardingdata.tvonboardingbold
+            tvonboardingnormal.text = onboardingdata.tvonboardingnormal
+            if (position == 3 ){
                 btnonboarding.visibility = View.VISIBLE
             }
             btnonboarding.setOnClickListener {

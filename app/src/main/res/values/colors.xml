@@ -75,6 +75,8 @@
 
     <color name="share_btn">#449EF6</color>
     <color name="stopwatch_pause">#323232</color>
+    <color name="onboardingtv">#232323</color>
+    <color name="onboardingtv2">#555555</color>
 
     <color name="week_bar_color">#339BFF</color>
     <color name="splashcolor">#0FA9FF</color>
