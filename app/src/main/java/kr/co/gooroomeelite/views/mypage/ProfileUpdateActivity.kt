@@ -368,26 +368,6 @@ class ProfileUpdateActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadimage(url: Uri){
-        val num: String = getUid()!!
-        val filename = "profile$num.jpg"
-        val storageRef = storage?.reference?.child("profile_img/$filename")?.child(filename)
-            storageRef!!.downloadUrl.addOnSuccessListener { uri ->
-                storageRef.delete()
-                val contentDTO = ContentDTO()
-                firestore?.collection("users")?.whereEqualTo("userId", email)?.get()
-                    ?.addOnSuccessListener {
-                        val data = hashMapOf<String, Any?>()
-                        data["profileImageUrl"] = contentDTO.profileImageUrl
-
-                        firestore?.collection("users")?.document(getUid()!!)?.update(data)
-                    }
-                isLoading.value = false
-                finish()
-            }
-            setResult(Activity.RESULT_OK)
-
-    }
     private fun getImageUri(context: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
