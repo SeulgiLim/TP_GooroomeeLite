@@ -28,7 +28,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
-import kr.co.gooroomeelite.adapter.MonthlySubjectAdapter
+import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentMonthBinding
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
@@ -38,7 +38,9 @@ import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoField
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,7 +50,7 @@ class MonthFragment : Fragment() {
     private val viewModel: SubjectViewModel by viewModels()
 
     private lateinit var chart: BarChart
-    private val monthlySubjectAdapter: MonthlySubjectAdapter by lazy { MonthlySubjectAdapter(emptyList()) }
+    private val monthlySubjectAdapter: DailySubjectAdapter by lazy { DailySubjectAdapter(emptyList()) }
 
 
 //     LocalDate 문자열로 포맷
@@ -67,16 +69,6 @@ class MonthFragment : Fragment() {
 
 //    private val customMarkerView by lazy {
 //        CustomMarketView(this.requireContext(), R.layout.item_marker_view)
-//    }
-
-//    private val listData by lazy {
-//        mutableListOf(
-//            ChartData("첫째주", 100.1f),
-//            ChartData("둘째주", 140.5f),
-//            ChartData("셋째주", 168.5F),
-//            ChartData("넷째주", 160.5f),
-//            ChartData("다섯째주", 90.5f),
-//        )
 //    }
 
 
@@ -114,43 +106,77 @@ class MonthFragment : Fragment() {
     }
 
     private fun divideDataFromFirebase() {
+
         viewModel.list.observe(viewLifecycleOwner) {
-            val dateNow: LocalDateTime = LocalDateTime.now() //오늘
-            val monDay: LocalDateTime = dateNow.with(DayOfWeek.MONDAY)//해당 주차의 월
-            val tuesDay: LocalDateTime = dateNow.with(DayOfWeek.TUESDAY)//해당 주차의 화
-            val wednesDay: LocalDateTime = dateNow.with(DayOfWeek.WEDNESDAY)//해당 주차의 수
-            val thursDay: LocalDateTime = dateNow.with(DayOfWeek.THURSDAY)//해당 주차의 목
-            val friDay: LocalDateTime = dateNow.with(DayOfWeek.FRIDAY)//해당 주차의 금
-            val saturDay: LocalDateTime = dateNow.with(DayOfWeek.SATURDAY)//해당 주차의 토
-            val sunDay: LocalDateTime = dateNow.with(DayOfWeek.SUNDAY)//해당 주차의 일
-
             val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+            val dateNow: String? = LocalDateTime.now().format(textformatter) //오늘
+            //해당 월의 마지막 날짜 찾기
+            val targetYearMonth: YearMonth = YearMonth.from(LocalDate.parse(dateNow.toString(), DateTimeFormatter.ofPattern("yyyy.MM.dd")))
+            val end = targetYearMonth.atEndOfMonth()
+            Log.d("asdf",end.toString())
+            val monDay5 = end.with(DayOfWeek.MONDAY) //월
+            val tuesDay5 = end.with(DayOfWeek.TUESDAY) //화
+            val wednesDay5 = end.with(DayOfWeek.WEDNESDAY) //수
+            val thursDay5 = end.with(DayOfWeek.THURSDAY) //목
+            val friDay5 = end.with(DayOfWeek.FRIDAY) //금
+            val saturDay5 = end.with(DayOfWeek.SATURDAY) //토
+            val sunDay5 = end.with(DayOfWeek.SUNDAY) //일
 
-            var monDayFormat: String = monDay.format(textformatter)
-            var tuseDayFormat: String = tuesDay.format(textformatter)
-            var wednesDayFormat: String = wednesDay.format(textformatter)
-            var thursDayFormat: String = thursDay.format(textformatter)
-            var friDayFormat: String = friDay.format(textformatter)
-            var saturDayFormat: String = saturDay.format(textformatter)
-            var sunDayFormat: String = sunDay.format(textformatter)
             //일주일 간 데이터
-            var mondays: Float = 0f
-            var tuesdays: Float = 0f
-            var wednesdays: Float = 0f
-            var thursdays: Float = 0f
-            var fridays: Float = 0f
-            var saturdays: Float = 0f
-            var sundays: Float = 0f
+            var mondays5Value : Float = 0f
+            var tuesdays5Value: Float = 0f
+            var wednesdays5Value: Float = 0f
+            var thursdays5Value: Float = 0f
+            var fridays5Value: Float = 0f
+            var saturdays5Value: Float = 0f
+            var sundays5Value: Float = 0f
 
-            var mondaySum: Float = 0f
-            var tuesdaySum: Float = 0f
-            var wednesdaySum: Float = 0f
-            var thursdaySum: Float = 0f
-            var fridaySum: Float = 0f
-            var saturdaySum: Float = 0f
-            var sundaySum: Float = 0f
+            var mondaySum5: Float = 0f
+            var tuesdaySum5: Float = 0f
+            var wednesdaySum5: Float = 0f
+            var thursdaySum5: Float = 0f
+            var fridaySum5: Float = 0f
+            var saturdaySum5: Float = 0f
+            var sundaySum5: Float = 0f
+            var totalSum5: Float = 0f
 
-            var totalSum: Float = 0f
+            val monDay4 = end.with(DayOfWeek.MONDAY) //월
+            val tuesDay4 = end.with(DayOfWeek.TUESDAY) //화
+            val wednesDay4 = end.with(DayOfWeek.WEDNESDAY) //수
+            val thursDay4 = end.with(DayOfWeek.THURSDAY) //목
+            val friDay4 = end.with(DayOfWeek.FRIDAY) //금
+            val saturDay4 = end.with(DayOfWeek.SATURDAY) //토
+            val sunDay4 = end.with(DayOfWeek.SUNDAY) //일
+
+            //일주일 간 데이터
+            var mondays4Value : Float = 0f
+            var tuesdays4Value: Float = 0f
+            var wednesdays4Value: Float = 0f
+            var thursdays4Value: Float = 0f
+            var fridays4Value: Float = 0f
+            var saturdays4Value: Float = 0f
+            var sundays4Value: Float = 0f
+
+            var mondaySum4: Float = 0f
+            var tuesdaySum4: Float = 0f
+            var wednesdaySum4: Float = 0f
+            var thursdaySum4: Float = 0f
+            var fridaySum4: Float = 0f
+            var saturdaySum4: Float = 0f
+            var sundaySum4: Float = 0f
+            var totalSum4: Float = 0f
+
+            val cal = Calendar.getInstance()
+            cal.get(Calendar.WEEK_OF_MONTH)
+            Log.d("asdfadsf",cal.get(Calendar.WEEK_OF_MONTH).toString())//캘린더를 이용한 마지막 날 주 구하기
+
+            val weekOfMonth: Int = end.get(ChronoField.ALIGNED_WEEK_OF_MONTH) //현재 날짜의 주일
+            Log.d("asdfadsf",weekOfMonth.toString()) //마지막날의 주 사이즈 구하기
+
+
+
+
+
 
             var its : Int = 0
 //            var subject: Subject? = null
@@ -158,87 +184,131 @@ class MonthFragment : Fragment() {
             it.forEachIndexed { index, subject ->
                 its = it.size
                 val calen : Calendar = Calendar.getInstance()
-//                val day = calen.get(Calendar.DATE).toString()
-//                val day1 = (calen.get(Calendar.DATE)+1).toString()
                 //서버에서 가져온 요일
                 val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
 
                 calen.add(Calendar.DATE,1)
                 val serverDateFormat: String = dateFormat.format(subject.timestamp)
                 val serverDateFormatPlus1: String = dateFormat.format(subject.timestamp?.day?.minus(1.toLong()))
-//                val serverDateFormatPlus2 = serverDateFormat.format(calen.time)
-//                    .format(calen.get(Calendar.DATE)+(1)).toString()
-
+//
                 Log.d("calendar_day1_ss",serverDateFormat.toString())
                 Log.d("calendar_day1_sssPlus",serverDateFormatPlus1.toString())
 
 
                 for (it in 0..its) {
-                    if (monDayFormat == serverDateFormat) {
-                        mondays = subject.studytimeCopy.toFloat()
-                        mondaySum = mondaySum + mondays
+                    if (monDay5.format(textformatter) == serverDateFormat) {
+                        mondays5Value = subject.studytimeCopy.toFloat()
+                        mondaySum5 = mondaySum5 + mondays5Value
+                        break
+                    }else if(monDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        mondays4Value = subject.studytimeCopy.toFloat()
+                        mondaySum4 = mondaySum4 + mondays4Value
                         break
                     }
                 }
                 for (it in 0..its) {
-                    if (tuseDayFormat == serverDateFormat) {
-                        tuesdays = subject.studytimeCopy.toFloat()
-                        tuesdaySum = tuesdaySum + tuesdays
+                    if (tuesDay5.format(textformatter) == serverDateFormat) {
+                        tuesdays5Value = subject.studytimeCopy.toFloat()
+                        tuesdaySum5 = tuesdaySum5 + tuesdays5Value
+                        break
+                    }else if(tuesDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        tuesdays4Value = subject.studytimeCopy.toFloat()
+                        tuesdaySum4 = tuesdaySum4 + tuesdays4Value
                         break
                     }
                 }
                 for (it in 0..its) {
-                    if (wednesDayFormat == serverDateFormat) {
-                        wednesdays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", wednesdays.toString() + " 수")//21
+                    if (wednesDay5.format(textformatter) == serverDateFormat) {
+                        wednesdays5Value = subject.studytimeCopy.toFloat()
+                        Log.d("요일", wednesdays5Value.toString() + " 수")//21
                         Log.d("요일", subject.name.toString() + " : name")
-                        wednesdaySum = wednesdaySum + wednesdays
+                        wednesdaySum5 = wednesdaySum5 + wednesdays5Value
+                        break
+                    }else if(wednesDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        wednesdays4Value = subject.studytimeCopy.toFloat()
+                        wednesdaySum4 = wednesdaySum4 + wednesdays4Value
+                    }
+                }
+                for (it in 0..its) {
+                    if (thursDay5.format(textformatter) == serverDateFormat) {
+                        thursdays5Value = subject.studytimeCopy.toFloat()
+                        Log.d("요일", thursdays5Value.toString() + " 목")//22
+                        thursdaySum5 = thursdaySum5 + thursdays5Value
+                        break
+                    }else if(thursDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        thursdays4Value = subject.studytimeCopy.toFloat()
+                        thursdaySum4 = thursdaySum4 + thursdays4Value
                         break
                     }
                 }
                 for (it in 0..its) {
-                    if (thursDayFormat == serverDateFormat) {
-                        thursdays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", thursdays.toString() + " 목")//22
-                        thursdaySum = thursdaySum + thursdays
+                    if (friDay5.format(textformatter) == serverDateFormat) {
+                        fridays5Value = subject.studytimeCopy.toFloat()
+                        Log.d("요일", fridays5Value.toString() + " 금")//23
+                        fridaySum5 = fridaySum5 + fridays5Value
+                        break
+                    }else if(friDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        fridays4Value = subject.studytimeCopy.toFloat()
+                        fridaySum4 = fridaySum4 + fridays4Value
                         break
                     }
                 }
                 for (it in 0..its) {
-                    if (friDayFormat == serverDateFormat) {
-                        fridays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", fridays.toString() + " 금")//23
-                        fridaySum = fridaySum + fridays
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (saturDayFormat == serverDateFormat) {
-                        saturdays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", saturdays.toString() + " 토")//24
+                    if (saturDay5.format(textformatter)  == serverDateFormat) {
+                        saturdays5Value = subject.studytimeCopy.toFloat()
+                        Log.d("요일", saturdays5Value.toString() + " 토")//24
                         Log.d("요일", subject.name.toString() + " : name")
-                        saturdaySum = saturdaySum + saturdays
+                        saturdaySum5 = saturdaySum5 + saturdays5Value
+                        break
+                    }else if(saturDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        saturdays4Value = subject.studytimeCopy.toFloat()
+                        saturdaySum4 = saturdaySum4 + saturdays4Value
                         break
                     }
                 }
                 for (it in 0..its) {
-                    if (sunDayFormat == serverDateFormat) {
-                        sundays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", sundays.toString() + " --일--")//25
+                    if (sunDay5.format(textformatter) == serverDateFormat) {
+                        sundays5Value = subject.studytimeCopy.toFloat()
+                        Log.d("요일", sundays5Value.toString() + " --일--")//25
                         Log.d("요일", subject.name.toString() + " : name")
-                        sundaySum = sundaySum + sundays
+                        sundaySum5 = sundaySum5 + sundays5Value
+                        break
+                    }else if(sunDay4.minusWeeks(1).format(textformatter) == serverDateFormat){
+                        sundays4Value = subject.studytimeCopy.toFloat()
+                        sundaySum4 = sundaySum4 + sundays4Value
                         break
                     }
                 }
             }
 
-            totalSum = mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
-            Log.d("totalSum", totalSum.toString() + " 총합") //25
+            totalSum5 = mondaySum5 + tuesdaySum5 + wednesdaySum5 + thursdaySum5 + fridaySum5 + saturdaySum5 + sundaySum5
+            totalSum4 = mondaySum4 + tuesdaySum4 + wednesdaySum4 + thursdaySum4 + fridaySum4 + saturdaySum4 + sundaySum4
+            Log.d("totalSum", (totalSum5/60).toString() + " 총합") //25
+            Log.d("totalSum", (totalSum4/60).toString() + " 총합") //25
 //            binding.weeklyTotalTime.text = "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+//            val listData = mutableListOf<ChartData>(
+//                ChartData(1,50f),
+//                ChartData(2,100f)
+//            )
 //            setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum, totalSum)
-            Log.d("confirmdata3", mondaySum.toString())
         }
     }
+
+    private val listData by lazy {
+        mutableListOf(
+            //REd, green, blue
+            //am 5 ~ 12
+            ChartData(1, 50F),
+            ChartData(2, 70F),
+            ChartData(3, 80F),
+            ChartData(4, 90F),
+//            if(CharData.data. == null){
+//                ChartData(5, 90F)
+//            }
+
+        )
+    }
+
 
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
@@ -258,19 +328,19 @@ class MonthFragment : Fragment() {
             }
             renderer = barChartRender
         }
-        setData()
+        setData(listData)
     }
 
-    private fun setData() {
+    private fun setData(barData: List<ChartData>) {
         val values = mutableListOf<BarEntry>()
-        values.add(BarEntry(0f, 100.1f))
-        values.add(BarEntry(1f, 100.1f))
-        values.add(BarEntry(2f, 100.1f))
-        values.add(BarEntry(3f, 100.1f))
-        values.add(BarEntry(4f, 100.1f))
-//        barData.forEachIndexed { index, chartData ->
-//            values.add(BarEntry(index.toFloat(), chartData.value))
-//        }
+//        values.add(BarEntry(0f, 100.1f))
+//        values.add(BarEntry(1f, 100.1f))
+//        values.add(BarEntry(2f, 100.1f))
+//        values.add(BarEntry(3f, 100.1f))
+//        values.add(BarEntry(4f, 100.1f))
+        barData.forEachIndexed { index, chartData ->
+            values.add(BarEntry(index.toFloat(), chartData.value))
+        }
 
 
         //막대 그래프 색상 추가

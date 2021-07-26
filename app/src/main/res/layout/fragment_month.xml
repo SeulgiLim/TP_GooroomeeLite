@@ -73,8 +73,8 @@
                         android:background="@color/white"
                         android:paddingTop="19dp"
                         android:paddingBottom="19dp"
-                        android:src="@drawable/ic_statistics_rignt_btn"
-                        app:tint="@drawable/statistics_calendar_button" />
+                        android:src="@drawable/ic_statistics_rignt_btn_disable"
+                        app:tint="@drawable/statistics_calendar_button_disable" />
                 </LinearLayout>
 
                 <View

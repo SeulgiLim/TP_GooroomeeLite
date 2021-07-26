@@ -592,8 +592,6 @@ class WeekFragment : Fragment() {
         }
     }
 
-
-
     private fun initChart() {
 //        customMarkerView.chartView = chart
         with(binding.weekBarChart) {
