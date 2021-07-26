@@ -141,6 +141,7 @@ class DayFragment : Fragment() {
 
         var count: Int = -1
         calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
+        Log.d("qwesdgfxdgfb",count.toString())
 
         dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
         calRightBtn.setOnClickListener {
