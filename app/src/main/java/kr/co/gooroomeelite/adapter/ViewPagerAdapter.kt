@@ -9,12 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_on_boarding.view.*
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ItemViewpagerOnboardingBinding
 import kr.co.gooroomeelite.utils.RC_SIGN_IN
 import kr.co.gooroomeelite.views.login.LoginActivity
 import kr.co.gooroomeelite.views.mypage.OnBoardingItem
+
 
 /**
  * @author Gnoss
@@ -27,12 +27,12 @@ class ViewPagerAdapter(private val owner : AppCompatActivity,
     RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
 
+
     inner class ViewPagerViewHolder(private val binding : ItemViewpagerOnboardingBinding) : RecyclerView.ViewHolder(binding.root){
         val ivonboarding : ImageView = itemView.findViewById(R.id.iv_onboarding)
         val tvonboardingbold : TextView = itemView.findViewById(R.id.tv_onboardingbold)
-        val tvonboardingnormal : TextView = itemView.findViewById(R.id.tv_onboardingbold)
+        val tvonboardingnormal : TextView = itemView.findViewById(R.id.tv_onboardingnormal)
         val btnonboarding : Button = itemView.findViewById(R.id.btn_onboarding)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
@@ -43,7 +43,6 @@ class ViewPagerAdapter(private val owner : AppCompatActivity,
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val onboardingdata = onBoardingList[position]
         with(holder) {
-
             ivonboarding.setImageResource(onboardingdata.ivonboarding)
             tvonboardingbold.text = onboardingdata.tvonboardingbold
             tvonboardingnormal.text = onboardingdata.tvonboardingnormal
@@ -54,12 +53,11 @@ class ViewPagerAdapter(private val owner : AppCompatActivity,
                 signIn()
             }
         }
-
     }
+
     override fun getItemCount() : Int {
         return onBoardingList.size
     }
-
 
     private fun signIn() {
         owner.startActivityForResult(Intent(owner,LoginActivity::class.java),

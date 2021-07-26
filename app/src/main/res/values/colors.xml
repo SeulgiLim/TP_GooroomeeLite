@@ -32,6 +32,7 @@
     <color name="title4">#666666</color>
     <color name="green">#44C851</color>
     <color name="title5">#DBF2FF</color>
+    <color name="editnormal">#F2F4F6</color>
 
     <color name="musictext">#444444</color>
     <color name="tabtextbefore">#ABABAB</color>

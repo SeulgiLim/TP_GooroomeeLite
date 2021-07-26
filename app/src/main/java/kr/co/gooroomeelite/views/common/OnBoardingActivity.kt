@@ -1,7 +1,9 @@
 package kr.co.gooroomeelite.views.common
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.android.synthetic.main.activity_on_boarding.*
@@ -10,7 +12,8 @@ import kr.co.gooroomeelite.adapter.ViewPagerAdapter
 import kr.co.gooroomeelite.databinding.ActivityOnBoardingBinding
 import kr.co.gooroomeelite.views.mypage.OnBoardingItem
 
-class OnBoardingActivity : AppCompatActivity() {
+
+class OnBoardingActivity : AppCompatActivity(){
     private lateinit var binding : ActivityOnBoardingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,16 +27,16 @@ class OnBoardingActivity : AppCompatActivity() {
             }
         }
         dotsIndicator.setViewPager2(binding.viewpager2)
-
     }
+
 
     private fun onBoardingData(): MutableList<OnBoardingItem> {
         val onBoardingList = mutableListOf<OnBoardingItem>()
         return onBoardingList.apply {
-            add(OnBoardingItem(R.drawable.ic_playmusic,getText(R.string.onboarding_title1).toString(),getText(R.string.onboarding_content1).toString()))
-            add(OnBoardingItem(R.drawable.ic_playmusic,getText(R.string.onboarding_title2).toString(),getText(R.string.onboarding_content2).toString()))
-            add(OnBoardingItem(R.drawable.ic_playmusic,getText(R.string.onboarding_title3).toString(),getText(R.string.onboarding_content3).toString()))
-            add(OnBoardingItem(R.drawable.ic_playmusic,getText(R.string.onboarding_title4).toString(),getText(R.string.onboarding_content4).toString()))
+            add(OnBoardingItem(R.drawable.img_onboarding1,getText(R.string.onboarding_title1).toString(),getText(R.string.onboarding_content1).toString()))
+            add(OnBoardingItem(R.drawable.img_onboarding2,getText(R.string.onboarding_title2).toString(),getText(R.string.onboarding_content2).toString()))
+            add(OnBoardingItem(R.drawable.img_onboarding3,getText(R.string.onboarding_title3).toString(),getText(R.string.onboarding_content3).toString()))
+            add(OnBoardingItem(R.drawable.img_onboarding4,getText(R.string.onboarding_title4).toString(),getText(R.string.onboarding_content4).toString()))
         }
     }
 }
