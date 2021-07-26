@@ -1,94 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.home.PomoFocustFragment">
+    tools:context=".views.home.StopwatchFragment">
 
-    <!-- 뽀모도로 집중 시간-->
-    <Chronometer
-        android:id="@+id/stopwatch"
-        android:layout_width="wrap_content"
+    <!-- 스탑워치 시간-->
+
+
+    <!-- 현재 집중 시간 문구-->
+
+    <!-- 스탑워치 시작 버튼-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:format="00:00"
-        android:textColor="@android:color/black"
-        android:textSize="60sp"  />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/background_gradation">
 
-    <!-- 뽀모도로 집중 시작 버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/ic_btn_start"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_end"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_below="@+id/stopwatch"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/btn_finish"
+            android:text="기록 종료"
+            android:textColor="@color/skyBlue"
+            android:layout_marginTop="92dp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_start"
+            app:layout_constraintStart_toEndOf="@+id/btn_restart"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime"
+            style="?android:attr/borderlessButtonStyle" />
 
-    <!-- 뽀모도로 집중 중지 버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_finish"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/ic_btn_finish"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@+id/stopwatch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="52dp"
+            android:background="@drawable/btn_start"
+            android:text="시작하기"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime"
+            style="?android:attr/borderlessButtonStyle" />
 
-    <!-- 뽀모도로 집중 완료, 다시시작 (계속) 버튼 같이 세트!!! -->
-    <!-- 뽀모도로 집중 완료 버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
+        <Chronometer
+            android:id="@+id/stopwatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/helvetica_stopwatch"
+            android:format="00 : 00 : 00"
+            android:textColor="#232323"
+            android:textSize="56sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        android:background="@drawable/ic_btn_end"/>
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/ic_focuscircle"
+            app:layout_constraintEnd_toStartOf="@+id/text_focustime"
+            app:layout_constraintTop_toTopOf="@+id/text_focustime" />
 
-    <!-- 뽀모도로 집중 다시시작 버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/btn_end"
-        android:background="@drawable/ic_btn_restart"/>
+        <TextView
+            android:id="@+id/text_focustime"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:layout_below="@+id/stopwatch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="0dp"
+            android:text="집중 시간"
+            android:textColor="@color/week_bar_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stopwatch" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_restart"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_below="@+id/stopwatch"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="92dp"
+            android:layout_toRightOf="@id/btn_end"
+            android:background="@drawable/btn_restart"
+            android:text="다시 시작"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btn_end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime"
+            style="?android:attr/borderlessButtonStyle" />
 
-    <!-- 화이트 노이즈 실행버튼-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_noise"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_toLeftOf="@id/btn_start"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:drawableBottom="@drawable/ic_btn_noise" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_finish"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_below="@+id/stopwatch"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginTop="92dp"
+            android:background="@drawable/btn_pause"
+            android:text="일시정지"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 타이머 설정 -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_timermode"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stopwatch"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_toRightOf="@id/btn_start"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:drawableBottom="@drawable/ic_btn_timermode"/>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

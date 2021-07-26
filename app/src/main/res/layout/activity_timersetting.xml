@@ -163,13 +163,22 @@
             android:id="@+id/text_focustime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="5분"
+            android:text="25"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_resettime2"
-            app:layout_constraintTop_toTopOf="@+id/text_focus" />
+            app:layout_constraintEnd_toStartOf="@id/textView18"
+            app:layout_constraintTop_toTopOf="@+id/text_focus"
+            tools:layout_editor_absoluteX="343dp" />
 
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_focustime2"
+            app:layout_constraintTop_toTopOf="@+id/text_focustime" />
 
         <View
             android:id="@+id/btn_focustime"
@@ -219,13 +228,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_marginEnd="16dp"
-            android:text="5분"
+            android:text="5"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_resettime2"
+            app:layout_constraintEnd_toStartOf="@id/textView19"
             app:layout_constraintTop_toTopOf="@+id/text_rest" />
 
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_focustime2"
+            app:layout_constraintTop_toTopOf="@+id/text_resttime" />
 
         <ImageView
             android:id="@+id/btn_resettime2"
@@ -274,13 +291,20 @@
             android:id="@+id/text_longresettime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="20분"
+            android:text="20"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_longresettime2"
+            app:layout_constraintEnd_toStartOf="@id/textView20"
             app:layout_constraintTop_toTopOf="@+id/text_longreset" />
 
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="분"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_focustime2"
+            app:layout_constraintTop_toTopOf="@+id/text_longresettime" />
         <ImageView
             android:id="@+id/btn_longresettime2"
             android:layout_width="8dp"
@@ -328,13 +352,20 @@
             android:id="@+id/text_settime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="3회"
+            android:text="3"
             android:textColor="#9E9E9E"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_settime2"
+            app:layout_constraintEnd_toStartOf="@id/textView21"
             app:layout_constraintTop_toTopOf="@+id/text_set" />
 
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_focustime2"
+            app:layout_constraintTop_toTopOf="@+id/text_settime" />
         <ImageView
             android:id="@+id/btn_settime2"
             android:layout_width="8dp"
