@@ -78,7 +78,8 @@ class WeekFragment : Fragment() {
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("E")
 
     private var subjectListValue: MutableList<Subject> = mutableListOf()
-    var weekPlus: Int = 0
+    var count: Int = -1
+    var weekPlus: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -100,6 +101,8 @@ class WeekFragment : Fragment() {
         pieChartRecyclerView()
 
         divideDataFromFirebase()
+
+        moveCalendarByWeek()
 
         return binding.root
     }
@@ -143,54 +146,30 @@ class WeekFragment : Fragment() {
 
             var totalSum: Float = 0f
 
-            var weekPlus: Int = 0
             var its : Int = 0
 //            var subject: Subject? = null
             Log.d("asdgsdfg",its.toString())
             it.forEachIndexed { index, subject ->
                 its = it.size
-                Log.d("asdgsdfg",its.toString())
-//                val dateNow: LocalDateTime = LocalDateTime.now() //오늘
-//                val monDay: LocalDateTime = dateNow.with(DayOfWeek.MONDAY)//해당 주차의 월
-//                val tuesDay: LocalDateTime = dateNow.with(DayOfWeek.TUESDAY)//해당 주차의 화
-//                val wednesDay: LocalDateTime = dateNow.with(DayOfWeek.WEDNESDAY)//해당 주차의 수
-//                val thursDay: LocalDateTime = dateNow.with(DayOfWeek.THURSDAY)//해당 주차의 목
-//                val friDay: LocalDateTime = dateNow.with(DayOfWeek.FRIDAY)//해당 주차의 금
-//                val saturDay: LocalDateTime = dateNow.with(DayOfWeek.SATURDAY)//해당 주차의 토
-//                val sunDay: LocalDateTime = dateNow.with(DayOfWeek.SUNDAY)//해당 주차의 일
-
-
-                val cal = Calendar.getInstance()
-                val mondayWeek: LocalDateTime =
-                    LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
-                val sundayWeek: LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
-
-                val firstDayOfWeek: LocalDate = LocalDate.now() //현재 날짜
-                val fieek: Int = firstDayOfWeek.get(ChronoField.ALIGNED_WEEK_OF_MONTH) //현재 날짜의 주일
-                val firstDay: LocalDate = firstDayOfWeek.withDayOfMonth(1) //매월 첫 날
-                val endDay: LocalDate =
-                    firstDayOfWeek.withDayOfMonth(firstDayOfWeek.lengthOfMonth())// 매월 마지막 날
-//                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-                val weektextformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월") //7월
-//        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH)//몇째주
-
-                var count: Int = -1
-
-                Log.d("ccceeee", count.toString())
-
+                val calen : Calendar = Calendar.getInstance()
+//                val day = calen.get(Calendar.DATE).toString()
+//                val day1 = (calen.get(Calendar.DATE)+1).toString()
                 //서버에서 가져온 요일
                 val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
-                val date = Date()
-                val serverDateFormat: String = dateFormat.format(subject.timestamp).toString()
 
-                binding.calendarMonday.text = mondayWeek.format(textformatter)
-                binding.calendarSunday.text = sundayWeek.format(textformatter)
+                calen.add(Calendar.DATE,1)
+                val serverDateFormat: String = dateFormat.format(subject.timestamp)
+                val serverDateFormatPlus1: String = dateFormat.format(subject.timestamp?.day?.minus(1.toLong()))
+//                val serverDateFormatPlus2 = serverDateFormat.format(calen.time)
+//                    .format(calen.get(Calendar.DATE)+(1)).toString()
+
+                Log.d("calendar_day1_ss",serverDateFormat.toString())
+                Log.d("calendar_day1_sssPlus",serverDateFormatPlus1.toString())
+
 
                 for (it in 0..its) {
                     if (monDayFormat == serverDateFormat) {
                         mondays = subject.studytimeCopy.toFloat()
-//                        monday = (subject.studytimeCopy.toFloat() / 60).roundToInt() //반올림 19
-                        Log.d("ccceeee", mondays.toString())
                         mondaySum = mondaySum + mondays
                         break
                     }
@@ -215,11 +194,9 @@ class WeekFragment : Fragment() {
                     if (thursDayFormat == serverDateFormat) {
                         thursdays = subject.studytimeCopy.toFloat()
                         Log.d("요일", thursdays.toString() + " 목")//22
-                        Log.d("요일", subject.name.toString() + " : name")
                         thursdaySum = thursdaySum + thursdays
                         break
                     }
-                    Log.d("thursday", thursdaySum.toString())
                 }
                 for (it in 0..its) {
                     if (friDayFormat == serverDateFormat) {
@@ -247,233 +224,374 @@ class WeekFragment : Fragment() {
                         break
                     }
                 }
-                Log.d("mondaySum",mondaySum.toString())
-                
-                binding.calRightBtn.setOnClickListener {
-                    count++
-                    weekPlus++
-                    monDay.plusDays(weekPlus.toLong())
-                    tuesDay.plusDays(weekPlus.toLong())
-                    wednesDay.plusDays(weekPlus.toLong())
-                    thursDay.plusDays(weekPlus.toLong())
-                    friDay.plusDays(weekPlus.toLong())
-                    saturDay.plusDays(weekPlus.toLong())
-                    sunDay.plusDays(weekPlus.toLong())
-
-                    if (count == 1) {
-                        binding.calRightBtn.isEnabled = false
-                    }
-                    else {
-                        //2021.07.19 ~ 2021.07.25 표시
-                        val mondayValue: LocalDateTime = mondayWeek.plusWeeks(count.toLong())
-                        binding.calendarMonday.text = mondayValue.format(textformatter).toString()
-                        val sundayValue: LocalDateTime = sundayWeek.plusWeeks(count.toLong())
-                        binding.calendarSunday.text = sundayValue.format(textformatter).toString()
-
-                        if (count == 0) {
-                            binding.titleWeek.text = "이번"
-                            binding.titleWeekNext.text = "주에"
-                        } else if (count == -1) {
-                            binding.calRightBtn.isEnabled = true
-                            binding.titleWeek.text = "지난"
-                            binding.titleWeekNext.text = "주에"
-                        } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
-                            binding.titleWeekNext.text =
-                                mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH)
-                                    .toString() + "째 주에"
-                            binding.titleWeek.text =
-                                mondayValue.format(weektextformatter).toString()
-                        }
-                    }
-
-                    monDayFormat = monDay.format(textformatter)
-                    tuseDayFormat = tuesDay.format(textformatter)
-                    wednesDayFormat = wednesDay.format(textformatter)
-                    thursDayFormat = thursDay.format(textformatter)
-                    friDayFormat = friDay.format(textformatter)
-                    saturDayFormat = saturDay.format(textformatter)
-                    sunDayFormat = sunDay.format(textformatter)
-                    for (it in 0..its) {
-                        if (monDayFormat == serverDateFormat) {
-                            mondays = subject.studytimeCopy.toFloat()
-//                        monday = (subject.studytimeCopy.toFloat() / 60).roundToInt() //반올림 19
-                            mondaySum = mondaySum + mondays
-                            break
-                        }
-                    }
-                    Log.d("mondaySum+ : 증가",weekPlus.toString())
-                    Log.d("mondaySum+ : 여번주 월요일",monDay.toString())
-                    Log.d("mondaySum+ 2021-07-25",monDayFormat.toString())
-                    Log.d("mondaySum+ 값",mondays.toString())
-                    Log.d("mondaySum+",mondaySum.toString())
-                    for (it in 0..its) {
-                        if (tuseDayFormat == serverDateFormat) {
-                            tuesdays = subject.studytimeCopy.toFloat()
-                            tuesdaySum = tuesdaySum + tuesdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (wednesDayFormat == serverDateFormat) {
-                            wednesdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", wednesdays.toString() + " 수")//21
-                            Log.d("요일", subject?.name.toString() + " : name")
-                            wednesdaySum = wednesdaySum + wednesdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (thursDayFormat == serverDateFormat) {
-                            thursdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", thursdays.toString() + " 목")//22
-                            Log.d("요일", subject?.name.toString() + " : name")
-                            thursdaySum = thursdaySum + thursdays
-                            break
-                        }
-                        Log.d("thursday", thursdaySum.toString())
-                    }
-                    for (it in 0..its) {
-                        if (friDayFormat == serverDateFormat) {
-                            fridays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", fridays.toString() + " 금")//23
-                            fridaySum = fridaySum + fridays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (saturDayFormat == serverDateFormat) {
-                            saturdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", saturdays.toString() + " 토")//24
-                            Log.d("요일", subject?.name.toString() + " : name")
-                            saturdaySum = saturdaySum + saturdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (sunDayFormat == serverDateFormat) {
-                            sundays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", sundays.toString() + " --일--")//25
-                            Log.d("요일", subject.name.toString() + " : name")
-                            sundaySum = sundaySum + sundays
-                            break
-                        }
-                    }
-                    Log.d("mondaySum+",monDay.toString())
-                    Log.d("mondaySum+",mondays.toString())
-                    Log.d("mondaySum+",mondaySum.toString())
-                }
-
-                binding.calLeftBtn.setOnClickListener {
-                    count--
-                    weekPlus--
-                    monDay.plusDays(weekPlus.toLong())
-                    tuesDay.plusDays(weekPlus.toLong())
-                    wednesDay.plusDays(weekPlus.toLong())
-                    thursDay.plusDays(weekPlus.toLong())
-                    friDay.plusDays(weekPlus.toLong())
-                    saturDay.plusDays(weekPlus.toLong())
-                    sunDay.plusDays(weekPlus.toLong())
-                    //2021.07.19 ~ 2021.07.25 표시
-                    val sundayValue: LocalDateTime = sundayWeek.plusWeeks(count.toLong())
-                    binding.calendarSunday.text = sundayValue.format(textformatter).toString()
-                    val mondayValue: LocalDateTime = mondayWeek.plusWeeks(count.toLong())
-                    binding.calendarMonday.text = mondayValue.format(textformatter).toString()
-
-                    if (count == 0) {
-                        binding.titleWeek.text = "이번"
-                        binding.titleWeekNext.text = "주에"
-                    } else if (count == -1) {
-                        binding.titleWeek.text = "지난"
-                        binding.titleWeekNext.text = "주에"
-                        binding.calRightBtn.isEnabled = true
-                    } else {
-                        binding.titleWeekNext.text =
-                            mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
-                        binding.titleWeek.text = mondayValue.format(weektextformatter).toString()
-                    }
-                    monDayFormat = monDay.format(textformatter)
-                    tuseDayFormat = tuesDay.format(textformatter)
-                    wednesDayFormat = wednesDay.format(textformatter)
-                    thursDayFormat = thursDay.format(textformatter)
-                    friDayFormat = friDay.format(textformatter)
-                    saturDayFormat = saturDay.format(textformatter)
-                    sunDayFormat = sunDay.format(textformatter)
-                    for (it in 0..its) {
-                        if (monDayFormat == serverDateFormat) {
-                            mondays = subject.studytimeCopy.toFloat()
-//                        monday = (subject.studytimeCopy.toFloat() / 60).roundToInt() //반올림 19
-                            mondaySum = mondaySum + mondays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (tuseDayFormat == serverDateFormat) {
-                            tuesdays = subject.studytimeCopy.toFloat()
-                            tuesdaySum = tuesdaySum + tuesdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (wednesDayFormat == serverDateFormat) {
-                            wednesdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", wednesdays.toString() + " 수")//21
-                            Log.d("요일", subject.name.toString() + " : name")
-                            wednesdaySum = wednesdaySum + wednesdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (thursDayFormat == serverDateFormat) {
-                            thursdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", thursdays.toString() + " 목")//22
-                            Log.d("요일", subject.name.toString() + " : name")
-                            thursdaySum = thursdaySum + thursdays
-                            break
-                        }
-                        Log.d("thursday", thursdaySum.toString())
-                    }
-                    for (it in 0..its) {
-                        if (friDayFormat == serverDateFormat) {
-                            fridays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", fridays.toString() + " 금")//23
-                            fridaySum = fridaySum + fridays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (saturDayFormat == serverDateFormat) {
-                            saturdays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", saturdays.toString() + " 토")//24
-                            Log.d("요일", subject.name.toString() + " : name")
-                            saturdaySum = saturdaySum + saturdays
-                            break
-                        }
-                    }
-                    for (it in 0..its) {
-                        if (sunDayFormat == serverDateFormat) {
-                            sundays = subject.studytimeCopy.toFloat()
-                            Log.d("요일", sundays.toString() + " --일--")//25
-                            Log.d("요일", subject.name.toString() + " : name")
-                            sundaySum = sundaySum + sundays
-                            break
-                        }
-                    }
-                    Log.d("mondaySum",monDay.toString())
-                    Log.d("mondaySum",mondays.toString())
-                    Log.d("mondaySum",mondaySum.toString())
-                }
             }
 
-            
-            totalSum =
-                mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
+            totalSum = mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
             Log.d("totalSum", totalSum.toString() + " 총합") //25
-            binding.weeklyTotalTime.text =
-                "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+            binding.weeklyTotalTime.text = "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
             setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum, totalSum)
             Log.d("confirmdata3", mondaySum.toString())
         }
     }
+
+    private fun moveCalendarByWeek(){
+        val mondayWeek: LocalDateTime =
+            LocalDateTime.now().with(DayOfWeek.MONDAY)//해당 주차의 월요일
+        val sundayWeek: LocalDateTime = LocalDateTime.now().with(DayOfWeek.SUNDAY)
+
+        val firstDayOfWeek: LocalDate = LocalDate.now() //현재 날짜
+        val fieek: Int = firstDayOfWeek.get(ChronoField.ALIGNED_WEEK_OF_MONTH) //현재 날짜의 주일
+        val firstDay: LocalDate = firstDayOfWeek.withDayOfMonth(1) //매월 첫 날
+        val endDay: LocalDate =
+            firstDayOfWeek.withDayOfMonth(firstDayOfWeek.lengthOfMonth())// 매월 마지막 날
+//                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val weektextformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M월") //7월
+//        val weekend: Int = LocalDate.now().get(ChronoField.ALIGNED_WEEK_OF_MONTH)//몇째주
+
+        val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        binding.calendarMonday.text = mondayWeek.format(textformatter)
+        binding.calendarSunday.text = sundayWeek.format(textformatter)
+        Log.d("weekPlus",count.toString())
+        Log.d("weekPlus++",weekPlus.toString())
+        count = 0
+        weekPlus = 0
+
+        binding.calRightBtn.setOnClickListener {
+            count++
+            Log.d("weekPlusCOUNT",count.toString())
+            if (count == 1) {
+                binding.calRightBtn.isEnabled = false
+            }
+            else {
+                //2021.07.19 ~ 2021.07.25 표시
+                val mondayValue: LocalDateTime = mondayWeek.plusWeeks(count.toLong())
+                binding.calendarMonday.text = mondayValue.format(textformatter).toString()
+                val sundayValue: LocalDateTime = sundayWeek.plusWeeks(count.toLong())
+                binding.calendarSunday.text = sundayValue.format(textformatter).toString()
+
+                if (count == 0) {
+                    binding.titleWeek.text = "이번"
+                    binding.titleWeekNext.text = "주에"
+                } else if (count == -1) {
+                    binding.calRightBtn.isEnabled = true
+                    binding.titleWeek.text = "지난"
+                    binding.titleWeekNext.text = "주에"
+                } else {  //ALIGNED_WEEK_OF_MONTH : 그 달의 n 번째 주
+                    binding.titleWeekNext.text =
+                        mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH)
+                            .toString() + "째 주에"
+                    binding.titleWeek.text =
+                        mondayValue.format(weektextformatter).toString()
+                }
+            }
+            weekPlus++
+            if(weekPlus <= 0) {
+                if(weekPlus == 1) {
+                    weekPlus = weekPlus - 1
+                }else{
+                    viewModel.list.observe(viewLifecycleOwner) {
+                        val dateNow: LocalDateTime = LocalDateTime.now() //오늘
+                        val monDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekPlus.toLong())//해당 주차의 월
+                        val tuesDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 화
+                        val wednesDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 수
+                        val thursDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekPlus.toLong())//해당 주차의 목
+                        val friDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekPlus.toLong())//해당 주차의 금
+                        val saturDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekPlus.toLong())//해당 주차의 토
+                        val sunDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekPlus.toLong())//해당 주차의 일
+                        Log.d("weekPlus++", weekPlus.toString())
+                        Log.d("weekPlusmonDay+++", monDay.toString())
+                        Log.d("weekPlusmonDay", sunDay.toString())
+
+                        val textformatter: DateTimeFormatter =
+                            DateTimeFormatter.ofPattern("yyyy.MM.dd")
+
+                        var monDayFormat: String = monDay.format(textformatter)
+                        var tuseDayFormat: String = tuesDay.format(textformatter)
+                        var wednesDayFormat: String = wednesDay.format(textformatter)
+                        var thursDayFormat: String = thursDay.format(textformatter)
+                        var friDayFormat: String = friDay.format(textformatter)
+                        var saturDayFormat: String = saturDay.format(textformatter)
+                        var sunDayFormat: String = sunDay.format(textformatter)
+                        //일주일 간 데이터
+                        var mondays: Float = 0f
+                        var tuesdays: Float = 0f
+                        var wednesdays: Float = 0f
+                        var thursdays: Float = 0f
+                        var fridays: Float = 0f
+                        var saturdays: Float = 0f
+                        var sundays: Float = 0f
+
+                        var mondaySum: Float = 0f
+                        var tuesdaySum: Float = 0f
+                        var wednesdaySum: Float = 0f
+                        var thursdaySum: Float = 0f
+                        var fridaySum: Float = 0f
+                        var saturdaySum: Float = 0f
+                        var sundaySum: Float = 0f
+
+                        var totalSum: Float = 0f
+
+                        var its: Int = 0
+//            var subject: Subject? = null
+                        Log.d("asdgsdfg", its.toString())
+                        it.forEachIndexed { index, subject ->
+                            its = it.size
+                            //서버에서 가져온 요일
+                            val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                            val serverDateFormat: String = dateFormat.format(subject.timestamp)
+
+                            for (it in 0..its) {
+                                if (monDayFormat == serverDateFormat) {
+                                    mondays = subject.studytimeCopy.toFloat()
+                                    mondaySum = mondaySum + mondays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (tuseDayFormat == serverDateFormat) {
+                                    tuesdays = subject.studytimeCopy.toFloat()
+                                    tuesdaySum = tuesdaySum + tuesdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (wednesDayFormat == serverDateFormat) {
+                                    wednesdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", wednesdays.toString() + " 수")//21
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    wednesdaySum = wednesdaySum + wednesdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (thursDayFormat == serverDateFormat) {
+                                    thursdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", thursdays.toString() + " 목")//22
+                                    thursdaySum = thursdaySum + thursdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (friDayFormat == serverDateFormat) {
+                                    fridays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", fridays.toString() + " 금")//23
+                                    fridaySum = fridaySum + fridays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (saturDayFormat == serverDateFormat) {
+                                    saturdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", saturdays.toString() + " 토")//24
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    saturdaySum = saturdaySum + saturdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (sunDayFormat == serverDateFormat) {
+                                    sundays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", sundays.toString() + " --일--")//25
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    sundaySum = sundaySum + sundays
+                                    break
+                                }
+                            }
+                        }
+                        totalSum =
+                            mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
+                        Log.d("totalSum", totalSum.toString() + " 총합") //25
+                        binding.weeklyTotalTime.text =
+                            "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+                        setData(
+                            mondaySum,
+                            tuesdaySum,
+                            wednesdaySum,
+                            thursdaySum,
+                            fridaySum,
+                            saturdaySum,
+                            sundaySum,
+                            totalSum
+                        )
+                        Log.d("confirmdata3", mondaySum.toString())
+                    }
+                }
+            }
+        }
+
+        binding.calLeftBtn.setOnClickListener {
+            count--
+            Log.d("weekPlusCOUNT",count.toString())
+            //2021.07.19 ~ 2021.07.25 표시
+            val sundayValue: LocalDateTime = sundayWeek.plusWeeks(count.toLong())
+            binding.calendarSunday.text = sundayValue.format(textformatter).toString()
+            val mondayValue: LocalDateTime = mondayWeek.plusWeeks(count.toLong())
+            binding.calendarMonday.text = mondayValue.format(textformatter).toString()
+
+            if (count == 0) {
+                binding.titleWeek.text = "이번"
+                binding.titleWeekNext.text = "주에"
+            } else if (count == -1) {
+                binding.titleWeek.text = "지난"
+                binding.titleWeekNext.text = "주에"
+                binding.calRightBtn.isEnabled = true
+            } else {
+                binding.titleWeekNext.text =
+                    mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
+                binding.titleWeek.text = mondayValue.format(weektextformatter).toString()
+            }
+            weekPlus--
+//            var weekMinus : Int = 1
+            if(weekPlus <= 0) {
+                if(weekPlus == 1) {
+                    weekPlus = weekPlus - 1
+                }else {
+                    viewModel.list.observe(viewLifecycleOwner) {
+                        val dateNow: LocalDateTime = LocalDateTime.now() //오늘
+                        val monDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekPlus.toLong())//해당 주차의 월
+                        val tuesDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 화
+                        val wednesDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 수
+                        val thursDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekPlus.toLong())//해당 주차의 목
+                        val friDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekPlus.toLong())//해당 주차의 금
+                        val saturDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekPlus.toLong())//해당 주차의 토
+                        val sunDay: LocalDateTime =
+                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekPlus.toLong())//해당 주차의 일
+                        Log.d("weekPlus", weekPlus.toString())
+                        Log.d("weekPlusmonDay", monDay.toString())
+                        Log.d("weekPlusmonDay", sunDay.toString())
+
+                        val textformatter: DateTimeFormatter =
+                            DateTimeFormatter.ofPattern("yyyy.MM.dd")
+
+                        var monDayFormat: String = monDay.format(textformatter)
+                        var tuseDayFormat: String = tuesDay.format(textformatter)
+                        var wednesDayFormat: String = wednesDay.format(textformatter)
+                        var thursDayFormat: String = thursDay.format(textformatter)
+                        var friDayFormat: String = friDay.format(textformatter)
+                        var saturDayFormat: String = saturDay.format(textformatter)
+                        var sunDayFormat: String = sunDay.format(textformatter)
+                        //일주일 간 데이터
+                        var mondays: Float = 0f
+                        var tuesdays: Float = 0f
+                        var wednesdays: Float = 0f
+                        var thursdays: Float = 0f
+                        var fridays: Float = 0f
+                        var saturdays: Float = 0f
+                        var sundays: Float = 0f
+
+                        var mondaySum: Float = 0f
+                        var tuesdaySum: Float = 0f
+                        var wednesdaySum: Float = 0f
+                        var thursdaySum: Float = 0f
+                        var fridaySum: Float = 0f
+                        var saturdaySum: Float = 0f
+                        var sundaySum: Float = 0f
+
+                        var totalSum: Float = 0f
+
+                        var its: Int = 0
+//            var subject: Subject? = null
+                        Log.d("asdgsdfg", its.toString())
+                        it.forEachIndexed { index, subject ->
+                            its = it.size
+                            //서버에서 가져온 요일
+                            val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                            val serverDateFormat: String = dateFormat.format(subject.timestamp)
+
+                            for (it in 0..its) {
+                                if (monDayFormat == serverDateFormat) {
+                                    mondays = subject.studytimeCopy.toFloat()
+                                    mondaySum = mondaySum + mondays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (tuseDayFormat == serverDateFormat) {
+                                    tuesdays = subject.studytimeCopy.toFloat()
+                                    tuesdaySum = tuesdaySum + tuesdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (wednesDayFormat == serverDateFormat) {
+                                    wednesdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", wednesdays.toString() + " 수")//21
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    wednesdaySum = wednesdaySum + wednesdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (thursDayFormat == serverDateFormat) {
+                                    thursdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", thursdays.toString() + " 목")//22
+                                    thursdaySum = thursdaySum + thursdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (friDayFormat == serverDateFormat) {
+                                    fridays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", fridays.toString() + " 금")//23
+                                    fridaySum = fridaySum + fridays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (saturDayFormat == serverDateFormat) {
+                                    saturdays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", saturdays.toString() + " 토")//24
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    saturdaySum = saturdaySum + saturdays
+                                    break
+                                }
+                            }
+                            for (it in 0..its) {
+                                if (sunDayFormat == serverDateFormat) {
+                                    sundays = subject.studytimeCopy.toFloat()
+                                    Log.d("요일", sundays.toString() + " --일--")//25
+                                    Log.d("요일", subject.name.toString() + " : name")
+                                    sundaySum = sundaySum + sundays
+                                    break
+                                }
+                            }
+                        }
+
+                        totalSum =
+                            mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
+                        Log.d("totalSum", totalSum.toString() + " 총합") //25
+                        binding.weeklyTotalTime.text =
+                            "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+                        setData(
+                            mondaySum,
+                            tuesdaySum,
+                            wednesdaySum,
+                            thursdaySum,
+                            fridaySum,
+                            saturdaySum,
+                            sundaySum,
+                            totalSum
+                        )
+                        Log.d("confirmdata3", mondaySum.toString())
+                    }
+                }
+            }
+        }
+    }
+
 
 
     private fun initChart() {
@@ -531,15 +649,16 @@ class WeekFragment : Fragment() {
             barWidth = 0.2F
         }
 
+//        binding.weekBarChart.animateY(0)
         with(binding.weekBarChart) {
-            val ll = LimitLine(((totalSum / 60) / 7), "평균").apply {
-                lineColor = Color.BLACK
-                lineWidth = 1f
-                textColor = Color.BLACK
-                textSize = 12f
-                labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
-                enableDashedLine(5f, 5f, 15f)
-            }
+//            val ll = LimitLine(((totalSum / 60) / 7), "평균").apply {
+//                lineColor = Color.BLACK
+//                lineWidth = 1f
+//                textColor = Color.BLACK
+//                textSize = 12f
+//                labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+//                enableDashedLine(5f, 5f, 15f)
+//            }
             animateY(1000)
             //x축을 나타냄
             xAxis.apply {
@@ -556,7 +675,7 @@ class WeekFragment : Fragment() {
 
             //차트 왼쪽 축, Y방향 ( 수치 최소값,최대값 )
             axisRight.apply {
-                addLimitLine(ll)
+//                addLimitLine(ll)
                 textColor = ContentColor
                 setDrawAxisLine(false) //격자
                 gridLineWidth = 1F
@@ -579,7 +698,7 @@ class WeekFragment : Fragment() {
 
             //차트 오른쪽 축, Y방향 false처리
             axisLeft.apply {
-                addLimitLine(ll)
+//                addLimitLine(ll)
                 isEnabled = false
                 setDrawAxisLine(false) //격자
                 gridLineWidth = 1F
