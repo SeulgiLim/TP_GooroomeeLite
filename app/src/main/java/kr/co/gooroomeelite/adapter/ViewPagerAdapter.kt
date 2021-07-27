@@ -1,6 +1,7 @@
 package kr.co.gooroomeelite.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +24,9 @@ import kr.co.gooroomeelite.views.mypage.OnBoardingItem
  * @desc
  */
 class ViewPagerAdapter(private val owner : AppCompatActivity,
-                       private val onBoardingList : MutableList<OnBoardingItem>) :
+                       private val onBoardingList : MutableList<OnBoardingItem>
+                       ) :
     RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
-
 
 
     inner class ViewPagerViewHolder(private val binding : ItemViewpagerOnboardingBinding) : RecyclerView.ViewHolder(binding.root){

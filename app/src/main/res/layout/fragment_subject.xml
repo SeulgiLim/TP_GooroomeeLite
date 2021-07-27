@@ -69,6 +69,7 @@
         android:textColorHighlight="@color/colorPrimary"
         android:textColorHint="#DCDCDC"
         android:textCursorDrawable="@drawable/color_cursor"
+        android:backgroundTint="@color/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold" />
 

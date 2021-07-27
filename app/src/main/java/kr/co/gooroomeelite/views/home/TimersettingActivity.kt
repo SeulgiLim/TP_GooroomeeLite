@@ -181,17 +181,11 @@ class TimersettingActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         val pref = getSharedPreferences("check",0)
         val editor = pref.edit()
         editor.putString("focustime",binding.textFocustime.text.toString()).commit()
         editor.putString("resttime",binding.textResttime.text.toString()).commit()
         editor.putString("longresttime",binding.textLongresettime.text.toString()).commit()
         editor.putString("settime",binding.textSettime.text.toString()).commit()
-
-        Log.d("studytime3","${pref.getString("focustime",null)}")
-        Log.d("studytime3","${pref.getString("resttime",null)}")
-        Log.d("studytime3","${pref.getString("longresttime",null)}")
-        Log.d("studytime3","${pref.getString("settime",null)}")
     }
 }

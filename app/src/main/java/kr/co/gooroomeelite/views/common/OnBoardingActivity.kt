@@ -2,8 +2,12 @@ package kr.co.gooroomeelite.views.common
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEachIndexed
+import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.android.synthetic.main.activity_on_boarding.*
@@ -14,6 +18,7 @@ import kr.co.gooroomeelite.views.mypage.OnBoardingItem
 
 
 class OnBoardingActivity : AppCompatActivity(){
+
     private lateinit var binding : ActivityOnBoardingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +33,6 @@ class OnBoardingActivity : AppCompatActivity(){
         }
         dotsIndicator.setViewPager2(binding.viewpager2)
     }
-
-
     private fun onBoardingData(): MutableList<OnBoardingItem> {
         val onBoardingList = mutableListOf<OnBoardingItem>()
         return onBoardingList.apply {

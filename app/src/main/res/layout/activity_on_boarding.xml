@@ -20,7 +20,7 @@
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="100dp"
         app:dotsColor="@color/bottomon"
         app:dotsStrokeColor="@color/divide2"
         app:progressMode="true"
