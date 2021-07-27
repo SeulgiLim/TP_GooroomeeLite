@@ -185,7 +185,7 @@
                             android:src="@drawable/ic_polygon2" />
 
                         <TextView
-                            android:id="@+id/compare_week_time"
+                            android:id="@+id/compare_week_time_text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"

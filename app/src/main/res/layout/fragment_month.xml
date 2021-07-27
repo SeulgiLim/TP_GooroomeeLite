@@ -142,6 +142,7 @@
                             android:textSize="14dp" />
 
                         <ImageView
+                            android:id="@+id/comapre_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -149,6 +150,7 @@
                             android:src="@drawable/ic_polygon" />
 
                         <TextView
+                            android:id="@+id/comapre_text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"

@@ -146,6 +146,44 @@ class WeekFragment : Fragment() {
 
             var totalSum: Float = 0f
 
+            //지난주 데이터
+            val dateNow2: LocalDateTime = LocalDateTime.now() //오늘
+            val monDay2: LocalDateTime = dateNow2.with(DayOfWeek.MONDAY).minusDays(1)//해당 주차의 월
+            val tuesDay2: LocalDateTime = dateNow2.with(DayOfWeek.TUESDAY).minusDays(1)//해당 주차의 화
+            val wednesDay2: LocalDateTime = dateNow2.with(DayOfWeek.WEDNESDAY).minusDays(1)//해당 주차의 수
+            val thursDay2: LocalDateTime = dateNow2.with(DayOfWeek.THURSDAY).minusDays(1)//해당 주차의 목
+            val friDay2: LocalDateTime = dateNow2.with(DayOfWeek.FRIDAY).minusDays(1)//해당 주차의 금
+            val saturDay2: LocalDateTime = dateNow2.with(DayOfWeek.SATURDAY).minusDays(1)//해당 주차의 토
+            val sunDay2: LocalDateTime = dateNow2.with(DayOfWeek.SUNDAY).minusDays(1)//해당 주차의 일
+
+            val textformatter2: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+
+            var monDayFormat2: String = monDay2.format(textformatter2)
+            var tuseDayFormat2: String = tuesDay2.format(textformatter2)
+            var wednesDayFormat2: String = wednesDay2.format(textformatter2)
+            var thursDayFormat2: String = thursDay2.format(textformatter2)
+            var friDayFormat2: String = friDay2.format(textformatter2)
+            var saturDayFormat2: String = saturDay2.format(textformatter2)
+            var sunDayFormat2: String = sunDay2.format(textformatter2)
+            //일주일 간 데이터
+            var mondays2: Float = 0f
+            var tuesdays2: Float = 0f
+            var wednesdays2: Float = 0f
+            var thursdays2: Float = 0f
+            var fridays2: Float = 0f
+            var saturdays2: Float = 0f
+            var sundays2: Float = 0f
+
+            var mondaySum2: Float = 0f
+            var tuesdaySum2: Float = 0f
+            var wednesdaySum2: Float = 0f
+            var thursdaySum2: Float = 0f
+            var fridaySum2: Float = 0f
+            var saturdaySum2: Float = 0f
+            var sundaySum2: Float = 0f
+
+            var totalSum2: Float = 0f
+
             var its : Int = 0
 //            var subject: Subject? = null
             Log.d("asdgsdfg",its.toString())
@@ -224,14 +262,80 @@ class WeekFragment : Fragment() {
                         break
                     }
                 }
+                //지난주 비교
+                for (it in 0..its) {
+                    if (monDayFormat2 == serverDateFormat) {
+                        mondays2 = subject.studytimeCopy.toFloat()
+                        mondaySum2 = mondaySum2 + mondays2
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (tuseDayFormat2 == serverDateFormat) {
+                        tuesdays2 = subject.studytimeCopy.toFloat()
+                        tuesdaySum2 = tuesdaySum2 + tuesdays2
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (wednesDayFormat2 == serverDateFormat) {
+                        wednesdays2 = subject.studytimeCopy.toFloat()
+                        Log.d("요일", wednesdays2.toString() + " 수")//21
+                        Log.d("요일", subject.name.toString() + " : name")
+                        wednesdaySum2 = wednesdaySum2 + wednesdays2
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (thursDayFormat2 == serverDateFormat) {
+                        thursdays2 = subject.studytimeCopy.toFloat()
+                        Log.d("요일", thursdays2.toString() + " 목")//22
+                        thursdaySum2 = thursdaySum2 + thursdays2
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (friDayFormat2 == serverDateFormat) {
+                        fridays2 = subject.studytimeCopy.toFloat()
+                        Log.d("요일", fridays2.toString() + " 금")//23
+                        fridaySum2 = fridaySum2 + fridays2
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (saturDayFormat == serverDateFormat) {
+                        saturdays2 = subject.studytimeCopy.toFloat()
+                        Log.d("요일", saturdays2.toString() + " 토")//24
+                        Log.d("요일", subject.name.toString() + " : name")
+                        saturdaySum = saturdaySum + saturdays
+                        break
+                    }
+                }
+                for (it in 0..its) {
+                    if (sunDayFormat2 == serverDateFormat) {
+                        sundays2 = subject.studytimeCopy.toFloat()
+                        Log.d("요일", sundays2.toString() + " --일--")//25
+                        Log.d("요일", subject.name.toString() + " : name")
+                        sundaySum2 = sundaySum2 + sundays2
+                        break
+                    }
+                }
             }
 
             totalSum = mondaySum + tuesdaySum + wednesdaySum + thursdaySum + fridaySum + saturdaySum + sundaySum
+            totalSum2 = mondaySum2 + tuesdaySum2 + wednesdaySum2 + thursdaySum2 + fridaySum2 + saturdaySum2 + sundaySum2
             Log.d("totalSum", totalSum.toString() + " 총합") //25
+            Log.d("totalSum2", totalSum2.toString() + " 총합") //25
+
             binding.weeklyTotalTime.text = "${(totalSum.toInt()) / 60}시간 ${(totalSum.toInt()) % 60}분"
+            //지난주와 비교값
+
             setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum, totalSum)
             Log.d("confirmdata3", mondaySum.toString())
         }
+    }
+
+    private fun compareTimeByWeek(){
     }
 
     private fun moveCalendarByWeek(){
