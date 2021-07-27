@@ -155,24 +155,18 @@ class WeekFragment : Fragment() {
             val friDay2: LocalDateTime = dateNow2.with(DayOfWeek.FRIDAY).minusDays(1)//해당 주차의 금
             val saturDay2: LocalDateTime = dateNow2.with(DayOfWeek.SATURDAY).minusDays(1)//해당 주차의 토
             val sunDay2: LocalDateTime = dateNow2.with(DayOfWeek.SUNDAY).minusDays(1)//해당 주차의 일
+            Log.d("totalSum222",monDay2.toString())
+            Log.d("totalSum222",tuesDay2.toString())
+            Log.d("totalSum222",wednesDay2.toString())
 
-            val textformatter2: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-
-            var monDayFormat2: String = monDay2.format(textformatter2)
-            var tuseDayFormat2: String = tuesDay2.format(textformatter2)
-            var wednesDayFormat2: String = wednesDay2.format(textformatter2)
-            var thursDayFormat2: String = thursDay2.format(textformatter2)
-            var friDayFormat2: String = friDay2.format(textformatter2)
-            var saturDayFormat2: String = saturDay2.format(textformatter2)
-            var sunDayFormat2: String = sunDay2.format(textformatter2)
             //일주일 간 데이터
-            var mondays2: Float = 0f
-            var tuesdays2: Float = 0f
-            var wednesdays2: Float = 0f
-            var thursdays2: Float = 0f
-            var fridays2: Float = 0f
-            var saturdays2: Float = 0f
-            var sundays2: Float = 0f
+            var mondaysValue2: Float = 0f
+            var tuesdaysValue2: Float = 0f
+            var wednesdaysValue2: Float = 0f
+            var thursdaysValue2: Float = 0f
+            var fridaysValue2: Float = 0f
+            var saturdaysValue2: Float = 0f
+            var sundaysValue2: Float = 0f
 
             var mondaySum2: Float = 0f
             var tuesdaySum2: Float = 0f
@@ -210,12 +204,20 @@ class WeekFragment : Fragment() {
                         mondays = subject.studytimeCopy.toFloat()
                         mondaySum = mondaySum + mondays
                         break
+                    }else if(monDay2.format(textformatter) == serverDateFormat){
+                        mondaysValue2 = subject.studytimeCopy.toFloat()
+                        mondaySum2 = mondaySum2 + mondaysValue2
+                        break
                     }
                 }
                 for (it in 0..its) {
                     if (tuseDayFormat == serverDateFormat) {
                         tuesdays = subject.studytimeCopy.toFloat()
                         tuesdaySum = tuesdaySum + tuesdays
+                        break
+                    }else if(tuesDay2.format(textformatter) == serverDateFormat){
+                        tuesdaysValue2 = subject.studytimeCopy.toFloat()
+                        tuesdaySum2 = tuesdaySum2 + tuesdaysValue2
                         break
                     }
                 }
@@ -226,6 +228,10 @@ class WeekFragment : Fragment() {
                         Log.d("요일", subject.name.toString() + " : name")
                         wednesdaySum = wednesdaySum + wednesdays
                         break
+                    }else if(wednesDay2.format(textformatter) == serverDateFormat){
+                        wednesdaysValue2 = subject.studytimeCopy.toFloat()
+                        wednesdaySum2 = wednesdaySum2 + wednesdaysValue2
+                        break
                     }
                 }
                 for (it in 0..its) {
@@ -234,6 +240,10 @@ class WeekFragment : Fragment() {
                         Log.d("요일", thursdays.toString() + " 목")//22
                         thursdaySum = thursdaySum + thursdays
                         break
+                    }else if(thursDay2.format(textformatter) == serverDateFormat){
+                        thursdaysValue2 = subject.studytimeCopy.toFloat()
+                        thursdaySum2 = thursdaySum2 + thursdaysValue2
+                        break
                     }
                 }
                 for (it in 0..its) {
@@ -241,6 +251,10 @@ class WeekFragment : Fragment() {
                         fridays = subject.studytimeCopy.toFloat()
                         Log.d("요일", fridays.toString() + " 금")//23
                         fridaySum = fridaySum + fridays
+                        break
+                    }else if(friDay2.format(textformatter) == serverDateFormat){
+                        fridaysValue2 = subject.studytimeCopy.toFloat()
+                        fridaySum2 = fridaySum2 + fridaysValue2
                         break
                     }
                 }
@@ -251,72 +265,22 @@ class WeekFragment : Fragment() {
                         Log.d("요일", subject.name.toString() + " : name")
                         saturdaySum = saturdaySum + saturdays
                         break
+                    }else if(saturDay2.format(textformatter) == serverDateFormat){
+                        saturdaysValue2 = subject.studytimeCopy.toFloat()
+                        saturdaySum2 = saturdaySum2 + saturdaysValue2
+                        break
                     }
                 }
                 for (it in 0..its) {
                     if (sunDayFormat == serverDateFormat) {
                         sundays = subject.studytimeCopy.toFloat()
-                        Log.d("요일", sundays.toString() + " --일--")//25
-                        Log.d("요일", subject.name.toString() + " : name")
+                        Log.d("요일2", sundays.toString() + " --일--")//25
+                        Log.d("요일2", subject.name.toString() + " : name")
                         sundaySum = sundaySum + sundays
                         break
-                    }
-                }
-                //지난주 비교
-                for (it in 0..its) {
-                    if (monDayFormat2 == serverDateFormat) {
-                        mondays2 = subject.studytimeCopy.toFloat()
-                        mondaySum2 = mondaySum2 + mondays2
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (tuseDayFormat2 == serverDateFormat) {
-                        tuesdays2 = subject.studytimeCopy.toFloat()
-                        tuesdaySum2 = tuesdaySum2 + tuesdays2
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (wednesDayFormat2 == serverDateFormat) {
-                        wednesdays2 = subject.studytimeCopy.toFloat()
-                        Log.d("요일", wednesdays2.toString() + " 수")//21
-                        Log.d("요일", subject.name.toString() + " : name")
-                        wednesdaySum2 = wednesdaySum2 + wednesdays2
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (thursDayFormat2 == serverDateFormat) {
-                        thursdays2 = subject.studytimeCopy.toFloat()
-                        Log.d("요일", thursdays2.toString() + " 목")//22
-                        thursdaySum2 = thursdaySum2 + thursdays2
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (friDayFormat2 == serverDateFormat) {
-                        fridays2 = subject.studytimeCopy.toFloat()
-                        Log.d("요일", fridays2.toString() + " 금")//23
-                        fridaySum2 = fridaySum2 + fridays2
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (saturDayFormat == serverDateFormat) {
-                        saturdays2 = subject.studytimeCopy.toFloat()
-                        Log.d("요일", saturdays2.toString() + " 토")//24
-                        Log.d("요일", subject.name.toString() + " : name")
-                        saturdaySum = saturdaySum + saturdays
-                        break
-                    }
-                }
-                for (it in 0..its) {
-                    if (sunDayFormat2 == serverDateFormat) {
-                        sundays2 = subject.studytimeCopy.toFloat()
-                        Log.d("요일", sundays2.toString() + " --일--")//25
-                        Log.d("요일", subject.name.toString() + " : name")
-                        sundaySum2 = sundaySum2 + sundays2
+                    }else if(sunDay2.format(textformatter) == serverDateFormat){
+                        sundaysValue2 = subject.studytimeCopy.toFloat()
+                        sundaySum2 = sundaySum2 + sundaysValue2
                         break
                     }
                 }
