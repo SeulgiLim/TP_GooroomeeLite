@@ -7,10 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".views.home.StopwatchFragment">
 
-    <!-- 스탑워치 시간-->
 
 
-    <!-- 현재 집중 시간 문구-->
+
+
 
     <!-- 스탑워치 시작 버튼-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,6 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/text_focustime"
             style="?android:attr/borderlessButtonStyle" />
 
+        <!-- 스탑워치 시간-->
         <Chronometer
             android:id="@+id/stopwatch"
             android:layout_width="wrap_content"
@@ -71,6 +72,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- 현재 집중 시간 문구-->
         <TextView
             android:id="@+id/text_focustime"
             android:layout_width="wrap_content"

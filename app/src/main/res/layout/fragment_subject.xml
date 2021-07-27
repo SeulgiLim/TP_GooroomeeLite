@@ -58,13 +58,13 @@
     <EditText
         android:id="@+id/subject_name"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="65dp"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="과목 이름을 입력해 주세요."
         android:inputType="textPersonName"
         android:maxLength="20"
-        android:paddingBottom="15dp"
+        android:paddingBottom="35dp"
         android:textColor="#333333"
         android:textColorHighlight="@color/colorPrimary"
         android:textColorHint="#DCDCDC"
@@ -78,10 +78,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0 / 10"
-        android:layout_marginBottom="30dp"
         android:textAlignment="viewEnd"
         android:textColor="#B6B6B6"
         android:textSize="13sp" />
+    <!-- android:layout_marginBottom="10dp"-->
 
     <TableLayout
         android:layout_width="match_parent"
@@ -387,15 +387,6 @@
 
     </TableLayout>
 
-    <!--    <Button-->
-    <!--        android:shadowRadius="0"-->
-    <!--        android:id="@+id/enroll_btn"-->
-    <!--        android:text="완료"-->
-    <!--        android:textSize="15sp"-->
-    <!--        android:layout_marginTop="40dp"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="56dp"-->
-    <!--        />-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="56dp"
