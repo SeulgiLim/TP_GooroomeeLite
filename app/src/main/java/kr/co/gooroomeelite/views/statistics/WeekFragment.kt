@@ -79,7 +79,7 @@ class WeekFragment : Fragment() {
 
     private var subjectListValue: MutableList<Subject> = mutableListOf()
     var count: Int = -1
-    var weekPlus: Int = -1
+    var weekCount: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -251,10 +251,10 @@ class WeekFragment : Fragment() {
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         binding.calendarMonday.text = mondayWeek.format(textformatter)
         binding.calendarSunday.text = sundayWeek.format(textformatter)
-        Log.d("weekPlus",count.toString())
-        Log.d("weekPlus++",weekPlus.toString())
+        Log.d("weekCount",count.toString())
+        Log.d("weekCount++",weekCount.toString())
         count = 0
-        weekPlus = 0
+        weekCount = 0
 
         binding.calRightBtn.setOnClickListener {
             count++
@@ -284,28 +284,28 @@ class WeekFragment : Fragment() {
                         mondayValue.format(weektextformatter).toString()
                 }
             }
-            weekPlus++
-            if(weekPlus <= 0) {
-                if(weekPlus == 1) {
-                    weekPlus = weekPlus - 1
-                }else{
+            weekCount++
+            if(weekCount <= 0) {
+//                if(weekCount == 1) {
+//                    weekCount = weekCount - 1
+//                }else{
                     viewModel.list.observe(viewLifecycleOwner) {
                         val dateNow: LocalDateTime = LocalDateTime.now() //오늘
                         val monDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekPlus.toLong())//해당 주차의 월
+                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekCount.toLong())//해당 주차의 월
                         val tuesDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 화
+                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekCount.toLong())//해당 주차의 화
                         val wednesDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 수
+                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekCount.toLong())//해당 주차의 수
                         val thursDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekPlus.toLong())//해당 주차의 목
+                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekCount.toLong())//해당 주차의 목
                         val friDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekPlus.toLong())//해당 주차의 금
+                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekCount.toLong())//해당 주차의 금
                         val saturDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekPlus.toLong())//해당 주차의 토
+                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekCount.toLong())//해당 주차의 토
                         val sunDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekPlus.toLong())//해당 주차의 일
-                        Log.d("weekPlus++", weekPlus.toString())
+                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekCount.toLong())//해당 주차의 일
+                        Log.d("weekCount++", weekCount.toString())
                         Log.d("weekPlusmonDay+++", monDay.toString())
                         Log.d("weekPlusmonDay", sunDay.toString())
 
@@ -422,7 +422,7 @@ class WeekFragment : Fragment() {
                         )
                         Log.d("confirmdata3", mondaySum.toString())
                     }
-                }
+//                }
             }
         }
 
@@ -447,29 +447,29 @@ class WeekFragment : Fragment() {
                     mondayValue.get(ChronoField.ALIGNED_WEEK_OF_MONTH).toString() + "째 주에"
                 binding.titleWeek.text = mondayValue.format(weektextformatter).toString()
             }
-            weekPlus--
+            weekCount--
 //            var weekMinus : Int = 1
-            if(weekPlus <= 0) {
-                if(weekPlus == 1) {
-                    weekPlus = weekPlus - 1
-                }else {
+            if(weekCount <= 0) {
+//                if(weekCount == 1) {
+//                    weekCount = weekCount - 1
+//                }else {
                     viewModel.list.observe(viewLifecycleOwner) {
                         val dateNow: LocalDateTime = LocalDateTime.now() //오늘
                         val monDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekPlus.toLong())//해당 주차의 월
+                            dateNow.with(DayOfWeek.MONDAY).plusWeeks(weekCount.toLong())//해당 주차의 월
                         val tuesDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 화
+                            dateNow.with(DayOfWeek.TUESDAY).plusWeeks(weekCount.toLong())//해당 주차의 화
                         val wednesDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekPlus.toLong())//해당 주차의 수
+                            dateNow.with(DayOfWeek.WEDNESDAY).plusWeeks(weekCount.toLong())//해당 주차의 수
                         val thursDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekPlus.toLong())//해당 주차의 목
+                            dateNow.with(DayOfWeek.THURSDAY).plusWeeks(weekCount.toLong())//해당 주차의 목
                         val friDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekPlus.toLong())//해당 주차의 금
+                            dateNow.with(DayOfWeek.FRIDAY).plusWeeks(weekCount.toLong())//해당 주차의 금
                         val saturDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekPlus.toLong())//해당 주차의 토
+                            dateNow.with(DayOfWeek.SATURDAY).plusWeeks(weekCount.toLong())//해당 주차의 토
                         val sunDay: LocalDateTime =
-                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekPlus.toLong())//해당 주차의 일
-                        Log.d("weekPlus", weekPlus.toString())
+                            dateNow.with(DayOfWeek.SUNDAY).plusWeeks(weekCount.toLong())//해당 주차의 일
+                        Log.d("weekCount", weekCount.toString())
                         Log.d("weekPlusmonDay", monDay.toString())
                         Log.d("weekPlusmonDay", sunDay.toString())
 
@@ -567,7 +567,7 @@ class WeekFragment : Fragment() {
                                     sundaySum = sundaySum + sundays
                                     break
                                 }
-                            }
+//                            }
                         }
 
                         totalSum =
