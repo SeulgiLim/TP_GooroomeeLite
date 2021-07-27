@@ -9,8 +9,7 @@
     <ImageView
         android:id="@+id/iv_onboarding"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:scaleType="fitXY"
+        android:layout_height="480dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,13 +18,13 @@
         android:id="@+id/tv_onboardingbold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
+        android:lineHeight="36dp"
         android:text="구루미로 더 편리하게공부 기록"
         android:textColor="@color/onboardingtv"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:lineHeight="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_onboarding" />
@@ -34,48 +33,30 @@
         android:id="@+id/tv_onboardingnormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="구루미로 더 편리하게공부 기록"
-        android:textColor="@color/onboardingtv2"
-        android:textSize="13sp"
-        android:lineHeight="22dp"
+        android:textColor="@color/title"
+        android:textSize="14sp"
+        android:lineHeight="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_onboardingbold" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/btn_onboarding"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/btn_login"
-        android:backgroundTint="@null"
-        android:clickable="false"
-        android:text="@string/onboarding_btn"
-        android:textColor="@color/white"
-        android:textSize="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:text="시작하기"
+        android:textColor="@color/studytime_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/settingposition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="25dp"
-        android:text=""
-        android:textColor="@color/white"
-        android:textSize="0.5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_onboarding" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEachIndexed
 import androidx.core.view.get
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 import kotlinx.android.synthetic.main.activity_on_boarding.*
@@ -20,17 +21,20 @@ import kr.co.gooroomeelite.views.mypage.OnBoardingItem
 class OnBoardingActivity : AppCompatActivity(){
 
     private lateinit var binding : ActivityOnBoardingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val dotsIndicator = findViewById<WormDotsIndicator>(R.id.indicator)
-        with(binding){
-            viewpager2.apply {
-                orientation = ViewPager2.ORIENTATION_HORIZONTAL
-                adapter = ViewPagerAdapter(this@OnBoardingActivity,onBoardingData())
+        binding.viewpager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.viewpager2.adapter = ViewPagerAdapter(this@OnBoardingActivity,onBoardingData())
+        binding.viewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                indicatorvisible(position)
             }
-        }
+        })
         dotsIndicator.setViewPager2(binding.viewpager2)
     }
     private fun onBoardingData(): MutableList<OnBoardingItem> {
@@ -40,6 +44,12 @@ class OnBoardingActivity : AppCompatActivity(){
             add(OnBoardingItem(R.drawable.img_onboarding2,getText(R.string.onboarding_title2).toString(),getText(R.string.onboarding_content2).toString()))
             add(OnBoardingItem(R.drawable.img_onboarding3,getText(R.string.onboarding_title3).toString(),getText(R.string.onboarding_content3).toString()))
             add(OnBoardingItem(R.drawable.img_onboarding4,getText(R.string.onboarding_title4).toString(),getText(R.string.onboarding_content4).toString()))
+        }
+    }
+    fun indicatorvisible (position: Int){
+        when(position){
+            0,1,2 -> binding.indicator.visibility = View.VISIBLE
+            3 -> binding.indicator.visibility = View.GONE
         }
     }
 }

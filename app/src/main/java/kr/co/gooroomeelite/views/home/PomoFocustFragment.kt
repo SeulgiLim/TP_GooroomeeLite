@@ -60,6 +60,10 @@ class PomoFocustFragment : Fragment() {
         val documentId = arguments?.getString("documentId")
         val firestore = FirebaseFirestore.getInstance()
 
+
+        val pref = activity?.getSharedPreferences("check",0)
+        val editor = pref?.edit()
+
         stopwatch = v.findViewById((R.id.stopwatch))
         stopwatch?.base = SystemClock.elapsedRealtime()
 

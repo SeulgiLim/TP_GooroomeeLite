@@ -22,6 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityLoginBinding
 import kr.co.gooroomeelite.views.common.MainActivity
+import kr.co.gooroomeelite.views.common.OnBoardingActivity
 import kr.co.gooroomeelite.views.mypage.PrivacyPolicyActivity
 import kr.co.gooroomeelite.views.mypage.TermsOfServiceActivity
 
@@ -57,6 +58,9 @@ class LoginActivity : AppCompatActivity() {
             //구글로 시작
             googleLogin()
             Log.e("TEST,","1")
+        }
+        binding.imageView3.setOnClickListener {
+            startActivity(Intent(this,OnBoardingActivity::class.java))
         }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))

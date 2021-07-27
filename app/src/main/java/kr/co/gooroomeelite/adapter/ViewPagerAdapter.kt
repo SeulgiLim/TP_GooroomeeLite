@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ItemViewpagerOnboardingBinding
 import kr.co.gooroomeelite.utils.RC_SIGN_IN
@@ -26,14 +27,14 @@ import kr.co.gooroomeelite.views.mypage.OnBoardingItem
 class ViewPagerAdapter(private val owner : AppCompatActivity,
                        private val onBoardingList : MutableList<OnBoardingItem>
                        ) :
-    RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
+    RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>()  {
 
 
     inner class ViewPagerViewHolder(private val binding : ItemViewpagerOnboardingBinding) : RecyclerView.ViewHolder(binding.root){
         val ivonboarding : ImageView = itemView.findViewById(R.id.iv_onboarding)
         val tvonboardingbold : TextView = itemView.findViewById(R.id.tv_onboardingbold)
         val tvonboardingnormal : TextView = itemView.findViewById(R.id.tv_onboardingnormal)
-        val btnonboarding : Button = itemView.findViewById(R.id.btn_onboarding)
+        val btnonboarding : TextView = itemView.findViewById(R.id.btn_onboarding)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {

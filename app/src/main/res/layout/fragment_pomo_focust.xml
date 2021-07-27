@@ -62,7 +62,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="120dp"
             android:fontFamily="@font/helvetica_stopwatch"
-            android:format="00 : 00 : 00"
+            android:format="00 : 00"
             android:textColor="#232323"
             android:textSize="56sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,8 @@
             android:id="@+id/imageView4"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="4dp"
             android:background="@drawable/ic_focuscircle"
             app:layout_constraintEnd_toStartOf="@+id/text_focustime"
             app:layout_constraintTop_toTopOf="@+id/text_focustime" />
@@ -81,7 +82,7 @@
         <TextView
             android:id="@+id/text_focustime"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/stopwatch"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="0dp"
