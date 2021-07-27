@@ -59,9 +59,6 @@ class LoginActivity : AppCompatActivity() {
             googleLogin()
             Log.e("TEST,","1")
         }
-        binding.imageView3.setOnClickListener {
-            startActivity(Intent(this,OnBoardingActivity::class.java))
-        }
         var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
