@@ -103,6 +103,7 @@ class  StudyActivity : AppCompatActivity() {
         val subject = intent.getSerializableExtra("subject") as Subject
         val documentId = intent.getSerializableExtra("documentId") as String
         val stopwatchFragment = StopwatchFragment()
+        val test = PomodoroFragment()
             val pomodorFragment = PomoFocustFragment()
             val bundle = Bundle()
             bundle.putSerializable("subject", subject)
@@ -113,7 +114,7 @@ class  StudyActivity : AppCompatActivity() {
                     .commit()
             }
             else{
-                supportFragmentManager.beginTransaction().replace(R.id.container,pomodorFragment)
+                supportFragmentManager.beginTransaction().replace(R.id.container,test)
                     .commit()
             }
         }
