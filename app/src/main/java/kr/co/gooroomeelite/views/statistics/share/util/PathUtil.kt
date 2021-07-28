@@ -10,12 +10,14 @@ import android.net.Uri
 import android.os.Build
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import kr.co.gooroomeelite.R
 import java.io.File
 import java.io.FileOutputStream
 
 object PathUtil {
 
+    //외장 스토리지 다큐먼트
     fun getPath(context: Context, uri: Uri): String? {
         if (DocumentsContract.isDocumentUri(context, uri)) {
             if (isExternalStorageDocument(uri)) {
@@ -31,6 +33,7 @@ object PathUtil {
                     Uri.parse("content://downloads/public_downloads"), id.toLong()
                 )
                 return getDataColumn(context, contentUri, null, null)
+//            } else if (isMediaDocument(uri)) {
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
@@ -45,7 +48,8 @@ object PathUtil {
                 }
                 val selection = "_id=?"
                 val selectionArgs = arrayOf(
-                    split[1]
+                    split[0]
+//                    split[1]
                 )
                 return getDataColumn(context, contentUri, selection, selectionArgs)
             }
@@ -64,7 +68,7 @@ object PathUtil {
         selection: String?,
         selectionArgs: Array<String>?
     ): String? {
-        var cursor: Cursor? = null
+        var cursor: Cursor? = null //카메라 이미지 방향
         val column = "_data"
         val projection = arrayOf(column)
         try {
@@ -105,9 +109,13 @@ object PathUtil {
         }
     }
 
+    //로컬에서 갤러리에 저장될 위치 지정
     fun getOutputDirectory(activity: Activity): File = with(activity) {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
-            File(it, getString(R.string.app_name)).apply { mkdirs() } }
+            File(it, getString(R.string.app_name_picture)).apply {
+                mkdirs()
+            }
+        }
         return if (mediaDir != null && mediaDir.exists())
             mediaDir else filesDir
     }

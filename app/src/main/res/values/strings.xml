@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">구루미 라이트</string>
+    //Picture Share//
+    <string name="app_name_picture">Pictures/구루미 라이트</string>
+    <string name="app_content_path">Android/media/kr.co.gooroomeelite/Pictures/구루미 라이트</string>
+<!--    <string name="app_content_path">Pictures/구루미 라이트</string>-->
     <string name="launcher_name">구루미 라이트</string>
 
     <string name="title">나를 위한 공부 시간 관리</string>
@@ -91,7 +95,6 @@
     <string name="email">silmxmail@naver.com</string>
     <string name="report">건의사항보내기</string>
     <string name="flash">플래시</string>
-    <string name="app_content_path">Android/media/kr.co.gooroomeelite/구루미 라이트</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_stopwatch">StopwatchActivity</string>
     <string name="dialog_stopwatch_content">스톱워치를 나가면\n공부 기록이 적용되지 않습니다.\n나가시겠습니까?</string>

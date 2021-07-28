@@ -175,7 +175,7 @@ class ShareActivity : AppCompatActivity() {
                 preview.setSurfaceProvider(viewFinder.surfaceProvider)
                 bindCaptureListener()
                 bindZoomListner()
-//                bindCameraUseCase()
+//                bindCameraUseCase()//외부에 저장 된 것을 알려야 한다.
 //                initFlashAndAddListener()
             }catch(e:Exception){
                 e.printStackTrace()
@@ -216,14 +216,15 @@ class ShareActivity : AppCompatActivity() {
     //사진 촬영 및 저장 콜백 구현
     private fun captureCamera(){
         if(::imageCapture.isInitialized.not()) return
-        val photoFile = File(
-            PathUtil.getOutputDirectory(this),
+        //파일 생성
+           val photoFile = File(
+            PathUtil.getOutputDirectory(this), //외부 저장소 위치 지정
             SimpleDateFormat(
                 FILENAME_FORMAT, Locale.KOREA
             ).format(System.currentTimeMillis()) + ".jpg"
         )
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-        imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
+          imageCapture.takePicture(outputOptions,cameraExcutor,object:ImageCapture.OnImageSavedCallback{
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val savedUri = outputFileResults.savedUri ?: Uri.fromFile(photoFile)
                 contentUri = savedUri //저장된 Uri를 넣어준다.
@@ -238,18 +239,22 @@ class ShareActivity : AppCompatActivity() {
         })
     }
 
-    //이미지 저장 후 다른 갤러리를 볼 수 있게 설정
+    //이미지 저장 후 다른 갤러리를 볼 수 있게 설정 다른 갤러리에 보여줄 수 있도록 설정
     private fun updateSavedImageContent() {
         contentUri?.let{
-            isCapturing = try{
-                val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException())
-                MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpeg"),null)
+            isCapturing = try{ //캡처가 완료한 상태
+                //파일 저장
+                val file = File(PathUtil.getPath(this,it) ?: throw FileNotFoundException())//현재 파일을 쓴 것을 가져온다.갤러리 어느 쪽에서 넣어서 쓸건지 
+                MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpg"),null)
+                Log.d("urirui",file.toString())
+                Log.d("urirui",MediaScannerConnection.scanFile(this,arrayOf(file.path),arrayOf("image/jpg"),null).toString())
+
                 val stickerIntent = Intent(this@ShareActivity,StickerActivity::class.java)
                 stickerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 stickerIntent.putExtra("picture",it.toString())
-                Log.d("aaaa",it.toString())
                 startActivity(stickerIntent)
                 finish()
+
                 false
 
             }catch (e: Exception){
@@ -260,7 +265,7 @@ class ShareActivity : AppCompatActivity() {
         }
     }
 
-    //외부 저장소에서 가장 최근의 사진을 가져오기 (수정 중)
+    //외부 저장소에서 가장 최근의 사진을 가져오기
     private fun setLatestImage() {
         var projection = arrayOf(
             MediaStore.Images.ImageColumns._ID,
