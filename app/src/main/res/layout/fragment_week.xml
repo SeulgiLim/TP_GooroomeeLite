@@ -182,7 +182,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_polygon2" />
+                            android:src="@drawable/ic_polygon_down" />
 
                         <TextView
                             android:id="@+id/compare_week_time_text"

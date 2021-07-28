@@ -142,15 +142,15 @@
                             android:textSize="14dp" />
 
                         <ImageView
-                            android:id="@+id/comapre_image"
+                            android:id="@+id/comapre_month_time_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="5dp"
-                            android:src="@drawable/ic_polygon" />
+                            android:src="@drawable/ic_polygon_up" />
 
                         <TextView
-                            android:id="@+id/comapre_text"
+                            android:id="@+id/comapre_month_time_text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
