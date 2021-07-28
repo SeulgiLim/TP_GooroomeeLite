@@ -106,21 +106,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/hour_studytime"
+                            android:id="@+id/daily_totalTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="4dp"
-                            android:text="00시간 "
-                            android:textColor="#FF0F8CFF"
-                            android:textSize="22dp"
-                            android:textStyle="bold" />
-                        <TextView
-                            android:id="@+id/minute_studytime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="00분"
+                            android:text="00시간 00분"
                             android:textColor="#FF0F8CFF"
                             android:textSize="22dp"
                             android:textStyle="bold" />
@@ -134,8 +125,6 @@
                             android:textColor="@color/black"
                             android:textSize="22dp"
                             android:textStyle="bold" />
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -150,6 +139,7 @@
                             android:textSize="14dp" />
 
                         <ImageView
+                            android:id="@+id/compare_day_time_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
@@ -157,6 +147,7 @@
                             android:src="@drawable/ic_polygon_up" />
 
                         <TextView
+                            android:id="@+id/compare_day_time_text"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="6dp"
