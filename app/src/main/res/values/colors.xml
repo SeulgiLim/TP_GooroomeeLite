@@ -88,6 +88,10 @@
     <color name="state_true">#ababab</color>
     <color name="state_false">#FF4D4D4D</color>
 
+    <color name="down">#0F8CFF</color>
+    <color name="up">#F95849</color>
+
+
 
 
 </resources>
