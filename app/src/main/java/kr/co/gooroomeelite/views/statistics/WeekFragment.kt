@@ -83,6 +83,7 @@ class WeekFragment : Fragment() {
     var count: Int = -1
     var weekCount: Int = -1
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -315,21 +316,23 @@ class WeekFragment : Fragment() {
                 binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                 binding.compareWeekTimeText.setTextColor(Color.parseColor("#0F8CFF"))
             } else {
-
+                binding.compareWeekTimeImage.setVisibility(false)
+                binding.compareWeekTimeText.text  = "0시간"
+                binding.compareWeekTimeText.setTextColor(Color.parseColor("#80000000"))
             }
-            Log.d("totalSum2Color", compareSum.toString() + " color") //25
+            //평균값 설정
+            binding.weekBarChart.axisRight.removeAllLimitLines() //// 라인이 겹치지 않도록 모든 제한 라인을 재설정한다.
+            var lineDefault = LimitLine(((totalSum / 60) / 7), "평균").apply {
+                lineColor = Color.BLACK
+                lineWidth = 1f
+                textColor = Color.BLACK
+                textSize = 12f
+                labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                enableDashedLine(5f, 5f, 15f)
+            }
+            binding.weekBarChart.axisRight.addLimitLine(lineDefault)
 
-
-            setData(
-                mondaySum,
-                tuesdaySum,
-                wednesdaySum,
-                thursdaySum,
-                fridaySum,
-                saturdaySum,
-                sundaySum,
-                totalSum
-            )
+            setData(mondaySum, tuesdaySum, wednesdaySum, thursdaySum, fridaySum, saturdaySum, sundaySum, totalSum)
             Log.d("confirmdata3", mondaySum.toString())
         }
     }
@@ -354,6 +357,10 @@ class WeekFragment : Fragment() {
         Log.d("weekCount++", weekCount.toString())
         count = 0
         weekCount = 0
+//        binding.compareWeekTimeImage.setVisibility(true)
+//        binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_up)
+//        binding.compareWeekTimeText.text = "${compareSum / 60}시간"
+//        binding.compareWeekTimeText.setTextColor(Color.parseColor("#F95849"))
 
         //오른쪽 버튼
         binding.calRightBtn.setOnClickListener {
@@ -570,6 +577,7 @@ class WeekFragment : Fragment() {
                     //저번 주
                     totalSum2 =
                         mondaySum2 + tuesdaySum2 + wednesdaySum2 + thursdaySum2 + fridaySum2 + saturdaySum2 + sundaySum2
+
                     Log.d("totalSum", totalSum.toString() + " 총합") //25
                     Log.d("totalSum2", totalSum2.toString() + " 총합") //25
 
@@ -595,6 +603,18 @@ class WeekFragment : Fragment() {
                         binding.compareWeekTimeText.text  = "0시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#80000000"))
                     }
+
+                    //평균값 설정
+                    binding.weekBarChart.axisRight.removeAllLimitLines() //// 라인이 겹치지 않도록 모든 제한 라인을 재설정한다.
+                    var lineRight = LimitLine(((totalSum / 60) / 7), "평균").apply {
+                        lineColor = Color.BLACK
+                        lineWidth = 1f
+                        textColor = Color.BLACK
+                        textSize = 12f
+                        labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                        enableDashedLine(5f, 5f, 15f)
+                    }
+                    binding.weekBarChart.axisRight.addLimitLine(lineRight)
 
                     setData(
                         mondaySum,
@@ -822,23 +842,17 @@ class WeekFragment : Fragment() {
                     totalSum2 =
                         mondaySum2 + tuesdaySum2 + wednesdaySum2 + thursdaySum2 + fridaySum2 + saturdaySum2 + sundaySum2
 
-                    Log.d("totalSum--", totalSum.toString() + " 총합") //25
-                    Log.d("totalSumWeekly", mondaySum.toString() ) //25
-                    Log.d("totalSumWeekly", tuesdaySum.toString() ) //25
-                    Log.d("totalSumWeekly", wednesdaySum.toString() ) //25
-                    Log.d("totalSumWeekly", thursdaySum.toString()) //25
-                    Log.d("totalSumWeekly", fridaySum.toString() ) //25
-                    Log.d("totalSumWeekly", saturdaySum.toString()) //25
-                    Log.d("totalSumWeekly", sundaySum.toString() ) //25
-                    Log.d("totalSum2Weekly--", totalSum2.toString() + " 총합") //25
-                    Log.d("totalSum2Weekly", mondaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", mondaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", tuesdaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", wednesdaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", thursdaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", fridaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", saturdaySum2.toString() ) //25
-                    Log.d("totalSum2Weekly", sundaySum2.toString() ) //25
+                    //평균값 설정
+                    binding.weekBarChart.axisRight.removeAllLimitLines() //// 라인이 겹치지 않도록 모든 제한 라인을 재설정한다.
+                    var lineLeft = LimitLine(((totalSum / 60) / 7), "평균").apply {
+                        lineColor = Color.BLACK
+                        lineWidth = 1f
+                        textColor = Color.BLACK
+                        textSize = 12f
+                        labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
+                        enableDashedLine(5f, 5f, 15f)
+                    }
+                    binding.weekBarChart.axisRight.addLimitLine(lineLeft)
 
 
                     binding.weeklyTotalTime.text =
@@ -936,17 +950,14 @@ class WeekFragment : Fragment() {
 //            setValueTextSize(30F)
             barWidth = 0.2F
         }
+//        with(binding.weekBarChart) {
+//            axisRight.addLimitLine(ll)
+////            axisRight.removeLimitLine(ll)
+//        }
+
 
 //        binding.weekBarChart.animateY(0)
         with(binding.weekBarChart) {
-//            val ll = LimitLine(((totalSum / 60) / 7), "평균").apply {
-//                lineColor = Color.BLACK
-//                lineWidth = 1f
-//                textColor = Color.BLACK
-//                textSize = 12f
-//                labelPosition = LimitLine.LimitLabelPosition.RIGHT_TOP
-//                enableDashedLine(5f, 5f, 15f)
-//            }
             animateY(1000)
             //x축을 나타냄
             xAxis.apply {
