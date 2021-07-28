@@ -183,9 +183,10 @@ class TimersettingActivity : AppCompatActivity() {
         super.onDestroy()
         val pref = getSharedPreferences("check",0)
         val editor = pref.edit()
-        editor.putString("focustime",binding.textFocustime.text.toString()).commit()
-        editor.putString("resttime",binding.textResttime.text.toString()).commit()
-        editor.putString("longresttime",binding.textLongresettime.text.toString()).commit()
-        editor.putString("settime",binding.textSettime.text.toString()).commit()
+        editor.putString("focustime",binding.textFocustime.text.toString())
+        editor.putString("resttime",binding.textResttime.text.toString())
+        editor.putString("longresttime",binding.textLongresettime.text.toString())
+        editor.putString("settime",binding.textSettime.text.toString())
+        editor.commit()
     }
 }

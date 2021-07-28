@@ -7,18 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".views.home.PomodoroFragment">
 
-    <!--
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="뽀모도로 타이머 화면입니다."
-        android:background="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +16,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_start_pause"
+            android:id="@+id/button_start"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
@@ -36,33 +25,117 @@
             android:layout_marginTop="92dp"
             android:layout_marginEnd="52dp"
             android:background="@drawable/btn_start"
-            android:text="시작하기"
+            android:text="집중 시간 시작"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_pomodoro"
-            style="?android:attr/borderlessButtonStyle" />
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
 
-        <Button
-            android:id="@+id/button_reset"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_pause"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="52dp"
+            android:background="@drawable/btn_pause"
+            android:text="일시 정지"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime"/>
+
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/ic_focuscircle"
+            app:layout_constraintEnd_toStartOf="@+id/text_focustime"
+            app:layout_constraintTop_toTopOf="@+id/text_focustime" />
+
+        <TextView
+            android:id="@+id/text_focustime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button_start_pause"
             android:layout_centerHorizontal="true"
-            android:text="reset"
-            android:visibility="invisible"
-            tools:visibility="visible" />
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="0dp"
+            android:text="집중 시간"
+            android:textColor="@color/week_bar_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_pomodoro" />
+
+        <Button
+            android:id="@+id/button1_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/text_view_pomodoro"
+            android:layout_centerHorizontal="true"
+            android:text="세팅"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/text_view_pomodoro"
+            android:layout_centerHorizontal="true"
+            android:text="초기화"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_reset"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="92dp"
+            android:background="@drawable/btn_restart"
+            android:text="다시 시작"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/btn_end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_end"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="52dp"
+            android:background="@drawable/btn_finish"
+            android:text="기록 종료"
+            android:textColor="@color/skyBlue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/button_reset"
+            app:layout_constraintTop_toBottomOf="@+id/text_focustime" />
 
         <TextView
             android:id="@+id/text_view_pomodoro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_marginTop="120dp"
             android:text="00:00"
-            android:textColor="@android:color/black"
-            android:textSize="60sp"
+            android:fontFamily="@font/helvetica_stopwatch"
+            android:textColor="#232323"
+            android:textSize="56sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

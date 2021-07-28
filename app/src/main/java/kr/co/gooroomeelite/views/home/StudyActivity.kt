@@ -97,26 +97,22 @@ class  StudyActivity : AppCompatActivity() {
         val pref = getSharedPreferences("check",0)
         check = pref.getBoolean("check",false)
 
-        Log.d("studytest","${check}")
-        Log.d("studytest","${pref}")
         // StudyActivity 내 Fragment 영역에 StopwatchFragment 같이 보여주기
         val subject = intent.getSerializableExtra("subject") as Subject
         val documentId = intent.getSerializableExtra("documentId") as String
         val stopwatchFragment = StopwatchFragment()
-        val test = PomodoroFragment()
-            val pomodorFragment = PomoFocustFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("subject", subject)
-            bundle.putString("documentId", documentId)
-            stopwatchFragment.arguments = bundle
-            if (check == false) {
-                supportFragmentManager.beginTransaction().replace(R.id.container, stopwatchFragment)
-                    .commit()
-            }
-            else{
-                supportFragmentManager.beginTransaction().replace(R.id.container,test)
-                    .commit()
-            }
+        val pomodoroFragment = PomodoroFragment()
+        val bundle = Bundle()
+        bundle.putSerializable("subject", subject)
+        bundle.putString("documentId", documentId)
+        stopwatchFragment.arguments = bundle
+        if (check == false) {
+            supportFragmentManager.beginTransaction().replace(R.id.container, stopwatchFragment)
+                .commit()
         }
-    
+        else{
+            supportFragmentManager.beginTransaction().replace(R.id.container,pomodoroFragment)
+                .commit()
+        }
+    }
 }
