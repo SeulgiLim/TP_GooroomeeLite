@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.dhaval2404.colorpicker.util.setVisibility
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
@@ -34,7 +35,9 @@ import kr.co.gooroomeelite.databinding.FragmentDayBinding
 import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -99,14 +102,9 @@ class DayFragment : Fragment() {
         }
 
         binding.dayBarChart.setNoDataText("")
-        //일간 차트
-        moveCalendarByDay(
-            binding.calendar,
-            binding.calRightBtn,
-            binding.calLeftBtn,
-            binding.titleDay
-        )
+
         getTotalStudy()
+        moveCalendarByDay()
 
         initChart(binding.dayBarChart)
         dailySubjectPieChart()
@@ -120,81 +118,227 @@ class DayFragment : Fragment() {
         }
         return binding.root
     }
-    //adapter에 데이터 추가
-    @RequiresApi(Build.VERSION_CODES.Q)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.subjectList.observe(viewLifecycleOwner) {
-            dailySubjectAdapter.setData(it)
+
+    //오늘 총 공부한 시간
+    fun getTotalStudy(){
+        viewModel.list.observe(viewLifecycleOwner) {
+            //오늘
+            val dateNow: LocalDateTime = LocalDateTime.now()
+            val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+            var todayFormat: String = dateNow.format(textformatter)
+            var todaySum: Float = 0f
+
+            //어제
+            var yesterday: LocalDateTime = dateNow.minusDays(1)
+            var yesterdayFormat: String = yesterday.format(textformatter)
+            var yesterdaySum: Float = 0f
+
+            var its: Int = 0
+            it.forEachIndexed { index, subject ->
+                its = it.size
+                //서버에서 가져온 요일
+                val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                val serverDateFormat: String = dateFormat.format(subject.timestamp)
+
+                for (it in 0..its) {
+                    if (todayFormat == serverDateFormat) {
+                        todaySum = subject.studytimeCopy.toFloat()
+                        break
+                    } else if (yesterdayFormat == serverDateFormat) {
+                        yesterdaySum = subject.studytimeCopy.toFloat()
+                        break
+                    }
+                }
+            }
+
+            binding.dailyTotalTime.text = "${(todaySum.toInt()) / 60}시간 ${(todaySum.toInt()) % 60}분"
+
+            Log.d("todaytoady", todaySum.toString()) //300
+            Log.d("todaytoady", yesterdaySum.toString()) //400
+
+            //지난주와 비교값
+            var compareSum: Int = 0
+            if (todaySum > yesterdaySum) {
+                compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
+                binding.compareDayTimeImage.setVisibility(true)
+                binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
+                binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
+
+            } else if (todaySum < yesterdaySum) {
+                compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
+                binding.compareDayTimeImage.setVisibility(true)
+                binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
+                binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
+            } else {
+                binding.compareDayTimeImage.setVisibility(false)
+                binding.compareDayTimeText.text = "0시간"
+                binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
+            }
         }
     }
-    private fun moveCalendarByDay(
-        calendarDay: TextView,
-        calRightBtn: ImageButton,
-        calLeftBtn: ImageButton,
-        title: TextView
-    ) {
-        // 현재 날짜/시간 가져오기
+
+    private fun moveCalendarByDay(){
         val dateNow: LocalDateTime = LocalDateTime.now()
         val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
-        val titleformatter: DateTimeFormatter =
-            DateTimeFormatter.ofPattern("M" + "월 " + "dd" + "일에")
+
+        val titleformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("M" + "월 " + "dd" + "일에")
 
         var count: Int = -1
-        calendarDay.text = dateNow.format(textformatter) //하루 2021.07.08
-        Log.d("qwesdgfxdgfb",count.toString())
+        var dayCount : Int = 0
+        binding.calendar.text = dateNow.format(textformatter) //하루 2021.07.08
 
         dateNow.plusDays(count.toLong()) //일간탭으로 돌아왔을 때 오늘 날짜로 다시 변경
-        calRightBtn.setOnClickListener {
+        binding.calRightBtn.setOnClickListener {
             count++
             if(count == 1) {
-                calRightBtn.isEnabled = false
+                binding.calRightBtn.isEnabled = false
             }else {
                 Log.d("countcountRight", count.toString())
                 val dayPlus: LocalDateTime = dateNow.plusDays(count.toLong())
-                calendarDay.text = dayPlus.format(textformatter).toString()
+                binding.calendar.text = dayPlus.format(textformatter).toString()
                 if (count == 0) {
-                    title.text = "오늘"
+                    binding.titleDay.text = "오늘"
                 } else if (count == -1) {
-                    calRightBtn.isEnabled = true
-                    title.text = "어제"
+                    binding.calRightBtn.isEnabled = true
+                    binding.titleDay.text = "어제"
                 } else {
-                    title.text = dayPlus.format(titleformatter).toString()
+                    binding.titleDay.text = dayPlus.format(titleformatter).toString()
+                }
+            }
+            dayCount++
+            viewModel.list.observe(viewLifecycleOwner) {
+                //오늘
+                val dateNow: LocalDateTime = LocalDateTime.now().plusDays(dayCount.toLong())
+                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                var todayFormat: String = dateNow.format(textformatter)
+                var todaySum: Float = 0f
+
+                //어제
+                var yesterday: LocalDateTime = dateNow.minusDays(1)
+                var yesterdayFormat: String = yesterday.format(textformatter)
+                var yesterdaySum: Float = 0f
+
+                var its: Int = 0
+                it.forEachIndexed { index, subject ->
+                    its = it.size
+                    //서버에서 가져온 요일
+                    val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                    val serverDateFormat: String = dateFormat.format(subject.timestamp)
+
+                    for (it in 0..its) {
+                        if (todayFormat == serverDateFormat) {
+                            todaySum = subject.studytimeCopy.toFloat()
+                            break
+                        } else if (yesterdayFormat == serverDateFormat) {
+                            yesterdaySum = subject.studytimeCopy.toFloat()
+                            break
+                        }
+                    }
+                }
+
+                binding.dailyTotalTime.text = "${(todaySum.toInt()) / 60}시간 ${(todaySum.toInt()) % 60}분"
+
+                Log.d("todaytoady", todaySum.toString()) //300
+                Log.d("todaytoady", yesterdaySum.toString()) //400
+
+                //지난주와 비교값
+                var compareSum: Int = 0
+                if (todaySum > yesterdaySum) {
+                    compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
+                    binding.compareDayTimeImage.setVisibility(true)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
+                    binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
+
+                } else if (todaySum < yesterdaySum) {
+                    compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
+                    binding.compareDayTimeImage.setVisibility(true)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
+                    binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
+                } else {
+                    binding.compareDayTimeImage.setVisibility(false)
+                    binding.compareDayTimeText.text = "0시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
                 }
             }
         }
 
-        calLeftBtn.setOnClickListener {
+        binding.calLeftBtn.setOnClickListener {
             count--
             Log.d("countcountLeft",count.toString())
             val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
-            calendarDay.text = minusDay.format(textformatter).toString()
+            binding.calendar.text = minusDay.format(textformatter).toString()
             if (count == 0) {
-                title.text = "오늘"
+                binding.titleDay.text = "오늘"
             } else if (count == -1) {
-                title.text = "어제"
-                calRightBtn.isEnabled = true
-            } else {
-                    title.text = minusDay.format(titleformatter).toString()
+                binding.titleDay.text = "어제"
+                binding.calRightBtn.isEnabled = true
+            }else {
+                binding.titleDay.text = minusDay.format(titleformatter).toString()
+            }
+            dayCount--
+            viewModel.list.observe(viewLifecycleOwner) {
+                //오늘
+                val dateNow: LocalDateTime = LocalDateTime.now().plusDays(dayCount.toLong())
+                val textformatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+                var todayFormat: String = dateNow.format(textformatter)
+                var todaySum: Float = 0f
+
+                //어제
+                var yesterday: LocalDateTime = dateNow.minusDays(1)
+                var yesterdayFormat: String = yesterday.format(textformatter)
+                var yesterdaySum: Float = 0f
+
+                var its: Int = 0
+                it.forEachIndexed { index, subject ->
+                    its = it.size
+                    //서버에서 가져온 요일
+                    val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
+                    val serverDateFormat: String = dateFormat.format(subject.timestamp)
+
+                    for (it in 0..its) {
+                        if (todayFormat == serverDateFormat) {
+                            todaySum = subject.studytimeCopy.toFloat()
+                            break
+                        } else if (yesterdayFormat == serverDateFormat) {
+                            yesterdaySum = subject.studytimeCopy.toFloat()
+                            break
+                        }
+                    }
+                }
+
+                binding.dailyTotalTime.text = "${(todaySum.toInt()) / 60}시간 ${(todaySum.toInt()) % 60}분"
+
+                Log.d("todaytoady", todaySum.toString()) //300
+                Log.d("todaytoady", yesterdaySum.toString()) //400
+
+                //지난주와 비교값
+                var compareSum: Int = 0
+                if (todaySum > yesterdaySum) {
+                    compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
+                    binding.compareDayTimeImage.setVisibility(true)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
+                    binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
+
+                } else if (todaySum < yesterdaySum) {
+                    compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
+                    binding.compareDayTimeImage.setVisibility(true)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
+                    binding.compareDayTimeText.text = "${compareSum / 60}시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
+                } else {
+                    binding.compareDayTimeImage.setVisibility(false)
+                    binding.compareDayTimeText.text = "0시간"
+                    binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
                 }
             }
         }
-    fun getTotalStudy() {
-        FirebaseFirestore.getInstance()
-            .collection("subject")
-            .whereEqualTo("uid", getUid())
-            .get()
-            .addOnSuccessListener {
-                val subject = it.toObjects(kr.co.gooroomeelite.entity.Subject::class.java)
-                var studytimetodaylist = mutableListOf<Int>()
-                for (i in 0..subject.size - 1) {
-                    studytimetodaylist.add(subject[i].studytime)
-                }
-                val todayStudySum: Int = studytimetodaylist.sum()
-                Log.d("sum", todayStudySum.toString())
-                binding.hourStudytime.text = (todayStudySum / 60).toString() + "시간 "
-                binding.minuteStudytime.text = (todayStudySum % 60).toString() + "분"
-            }
     }
+
     private fun initChart(chart: BarChart) {
 //        customMarkerView.chartView = chart
         with(chart) {
@@ -334,7 +478,13 @@ class DayFragment : Fragment() {
         }
 
     }
-
+    //adapter에 데이터 추가
+    @RequiresApi(Build.VERSION_CODES.Q)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.subjectList.observe(viewLifecycleOwner) {
+            dailySubjectAdapter.setData(it)
+        }
+    }
     //사진 권한 허용
     private fun requestPermission(): Boolean {
         var permissions = false
@@ -358,41 +508,5 @@ class DayFragment : Fragment() {
             .check()
         return permissions
     }
+    private fun divideDataFromFirebase() {}
 }
-
-//        var value : Int = 0
-//        value = count
-//        calLeftBtn.setOnClickListener {
-//            count--
-//            Log.d("countcount--",count.toString())
-//            val minusDay: LocalDateTime = dateNow.plusDays(count.toLong())
-//            calendarDay.text = minusDay.format(textformatter).toString()
-//            title.text = minusDay.format(titleformatter).toString()
-//            if (count == 0) {
-//                title.text = "오늘"
-//            }else if (count == -1) {
-//                title.text = "어제"
-//            }else if(count < 0){
-//                calRightBtn.setOnClickListener {
-//                    count++ // -1
-//                    Log.d("countcount++",count.toString())
-//                    if(count == 0 || count < 0){
-//                        var dayPlus: LocalDateTime = dateNow.plusDays(count.toLong()) //0 count =0
-//                        Log.d("countcountdayPlus",dayPlus.toString())
-//                        calendarDay.text = dayPlus.format(textformatter).toString()
-//                        title.text = dayPlus.format(titleformatter).toString()
-//                        if(count == 0){
-//                            title.text = "오늘"
-//                        }else if(count == -1){
-//                            title.text = "어제"
-//                        }else{
-//                            if(count >= 0) {
-//                                val minusDay: LocalDateTime = dateNow.minusDays(count.toLong())
-//                                calendarDay.text = minusDay.format(textformatter).toString()
-//                                title.text = minusDay.format(titleformatter).toString()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }

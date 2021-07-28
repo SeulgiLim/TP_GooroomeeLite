@@ -915,16 +915,7 @@ class WeekFragment : Fragment() {
         }
     }
 
-    fun setData(
-        monday: Float,
-        tuseday: Float,
-        wednesday: Float,
-        thursday: Float,
-        friday: Float,
-        saturday: Float,
-        sunday: Float,
-        totalSum: Float
-    ) {
+    fun setData(monday: Float, tuseday: Float, wednesday: Float, thursday: Float, friday: Float, saturday: Float, sunday: Float, totalSum: Float) {
         val values = mutableListOf<BarEntry>()
         values.add(BarEntry(0f, (monday / 60)))
         values.add(BarEntry(1f, (tuseday / 60)))
