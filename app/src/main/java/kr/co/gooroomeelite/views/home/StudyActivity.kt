@@ -90,7 +90,7 @@ class  StudyActivity : AppCompatActivity() {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
-    
+
     override fun onResume() {
         super.onResume()
         Log.d("studytest","1")
@@ -117,5 +117,5 @@ class  StudyActivity : AppCompatActivity() {
                     .commit()
             }
         }
-    
+
 }
