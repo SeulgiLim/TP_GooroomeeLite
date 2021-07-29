@@ -1,5 +1,12 @@
 package kr.co.gooroomeelite.views.mypage
 
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-15
+ * @desc
+ */
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

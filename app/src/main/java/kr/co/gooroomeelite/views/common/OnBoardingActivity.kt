@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.common
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-14
+ * @desc
+ */
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log

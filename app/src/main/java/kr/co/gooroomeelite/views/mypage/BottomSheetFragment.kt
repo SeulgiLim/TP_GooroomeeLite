@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.mypage
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-15
+ * @desc
+ */
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

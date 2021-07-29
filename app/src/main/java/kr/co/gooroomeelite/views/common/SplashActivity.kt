@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.views.common
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-06-30
+ * @desc
+ */
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName

@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
                 Log.d("aaa1",subject.toString())
                 startActivity(intent)                       // 새로운 Activity를 화면에 띄울 때
             })
-
     }
     private val mainActivityContext by lazy {
         requireContext()
@@ -116,8 +115,8 @@ class HomeFragment : Fragment() {
         }
 
         //Seekbar, 오늘 공부시간 설정
-        getTotalStudy()
-        seekbar()
+        getTotalStudyCallback()
+//        seekbar()
 
 
         return binding.root
@@ -126,6 +125,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.subjectList.observe(viewLifecycleOwner) {
             subjectAdapter.setData(it)
+            getTotalStudyCallback()
             binding.subjectExample.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
         myStudyGoal.observe(viewLifecycleOwner) {
@@ -145,7 +145,6 @@ class HomeFragment : Fragment() {
             binding.minute.text =
                 "%02d".format(todayStudyTime.value?.rem(60))
         }
-
     }
 
     fun setStudyTimeCallback(studyTime: Int) {
@@ -200,7 +199,7 @@ class HomeFragment : Fragment() {
             }
     }
 
-    fun getTotalStudy() {
+    fun getTotalStudyCallback() {
         FirebaseFirestore.getInstance()
             .collection("subject")
             .whereEqualTo("uid", getUid())
@@ -212,14 +211,14 @@ class HomeFragment : Fragment() {
                     studytimetodaylist.add(subject[i].studytime)
                 }
                 todayStudyTime.value = studytimetodaylist.sum()
-
                 FirebaseFirestore
                     .getInstance()
                     .collection("users")
                     .document(getUid()!!)
                     .update("todaystudytime",todayStudyTime.value)
             }
-        Log.e("TEST,","111")
+        Log.e("FBFB,","111")
+        seekbar()
     }
 
     fun seekbar() : Int {
@@ -235,6 +234,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        return Log.e("TEST,","222")
+        return Log.e("FBFB,","222")
     }
 }

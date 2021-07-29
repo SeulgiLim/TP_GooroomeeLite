@@ -1,5 +1,10 @@
 package kr.co.gooroomeelite.utils
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-22
+ * @desc
+ */
 import android.app.Service
 import android.app.job.JobParameters
 import android.app.job.JobService

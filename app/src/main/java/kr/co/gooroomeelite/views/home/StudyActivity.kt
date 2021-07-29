@@ -1,18 +1,26 @@
 package kr.co.gooroomeelite.views.home
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-21
+ * @desc
+ */
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.databinding.ActivityStudyBinding
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.views.common.MainActivity
 import kr.co.gooroomeelite.views.mypage.MusicActivity
+import kr.co.gooroomeelite.views.mypage.MusicFragment
 
 
 class  StudyActivity : AppCompatActivity() {
@@ -22,6 +30,7 @@ class  StudyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudyBinding
     var check : Boolean? = null
     var test : String?  = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,14 +46,17 @@ class  StudyActivity : AppCompatActivity() {
         val bottomsheetFragment =StudystatusBottomsheetFragment()
         // 공부현황 Btn
         // StudyActivity 내 Fragment 영역에 StopwatchFragment 같이 보여주기
-            val stopwatchFragment = StopwatchFragment()
-            val bundle = Bundle()
-            bundle.putSerializable("subject", subject)
-            bundle.putString("documentId", documentId)
-            stopwatchFragment.arguments = bundle
-            supportFragmentManager.beginTransaction().add(R.id.container, stopwatchFragment)
-                .commit()
 
+
+        val stopwatchFragment = StopwatchFragment()
+        val bundle = Bundle()
+        bundle.putSerializable("subject", subject)
+        bundle.putString("documentId", documentId)
+        stopwatchFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().add(R.id.container, stopwatchFragment).commit()
+
+
+        val musicFragment = MusicFragment(this)
         // 뒤로가기 (StudyActivity -> HomeFragment로 이동)
         // 일반 - 10. Study Actitity에서 뒤로가기 두번 클릭해야 HomeFragmet로 이동함
         Log.d("aaa1", "btnBack111")
@@ -67,16 +79,17 @@ class  StudyActivity : AppCompatActivity() {
             cancelButton.setOnClickListener {
                 Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show()
                 mAlertDialog.dismiss()
-
-
             }
         }
         // 가져온 데이터 (과목명 제대로 가져왔는지 보여주기 Test)
         binding.modeName.append("${subject.name}\n")
         // ASMR 실행 버튼
+
         binding.btnNoise.setOnClickListener {
-            val intent = Intent(this, MusicActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, MusicActivity::class.java)
+//            startActivity(intent)
+            supportFragmentManager.beginTransaction().add(R.id.container2,musicFragment).commit()
+
         }
         // 스톱워치 모드 변경 버튼
         binding.btnTimermode.setOnClickListener {
@@ -101,16 +114,22 @@ class  StudyActivity : AppCompatActivity() {
         val subject = intent.getSerializableExtra("subject") as Subject
         val documentId = intent.getSerializableExtra("documentId") as String
         val stopwatchFragment = StopwatchFragment()
-        val pomodoroFragment = PomodoroFragment()
+        val pomodoroFragment = PomodoroFragment(this)
         val bundle = Bundle()
         bundle.putSerializable("subject", subject)
         bundle.putString("documentId", documentId)
         stopwatchFragment.arguments = bundle
         if (check == false) {
+            var toast = Toast.makeText(this,"일반모드",Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.TOP or Gravity.START, 200, 200)
+            toast.show()
             supportFragmentManager.beginTransaction().replace(R.id.container, stopwatchFragment)
                 .commit()
         }
         else{
+            var toast = Toast.makeText(this,"뽀모도로모드",Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.TOP or Gravity.START, 200, 200)
+            toast.show()
             supportFragmentManager.beginTransaction().replace(R.id.container,pomodoroFragment)
                 .commit()
         }

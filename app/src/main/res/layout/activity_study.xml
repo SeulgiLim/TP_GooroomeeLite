@@ -131,6 +131,17 @@
         app:layout_constraintEnd_toEndOf="@+id/btn_studynow"
         app:layout_constraintStart_toStartOf="@+id/btn_studynow"
         app:layout_constraintTop_toBottomOf="@+id/btn_studynow" />
+
+    <FrameLayout
+        android:id="@+id/container2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

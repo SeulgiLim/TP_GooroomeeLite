@@ -1,8 +1,15 @@
 package kr.co.gooroomeelite.views.home
-
+/**
+ * @author Gnoss
+ * @email silmxmail@naver.com
+ * @created 2021-07-27
+ * @desc
+ */
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +18,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_study_timer.*
 import kotlinx.android.synthetic.main.fragment_pomodoro.*
 import kr.co.gooroomeelite.R
+import kr.co.gooroomeelite.utils.LoginUtils
+import kr.co.gooroomeelite.views.login.LoginActivity
 import java.util.*
 
 // 뽀모도로 타이머
-class PomodoroFragment : Fragment() {
+class PomodoroFragment(val owner : AppCompatActivity) : Fragment() {
     private var textViewPomodoro: TextView? = null      // 남은 반복 횟수
     private lateinit var buttonSet: Button
     private lateinit var buttonStart: Button
@@ -36,6 +47,7 @@ class PomodoroFragment : Fragment() {
     private var startCycles: Long = 0
     private var cyclesLeft = startCycles
     private var otherCycleInMillis: Long = 0
+    private var test : String = ""
     var mBackWait : Long = 0
 
     @Nullable
@@ -50,6 +62,9 @@ class PomodoroFragment : Fragment() {
         val longresttime = pref.getString("longresttime","")!!
         val setime = pref.getString("settime","")!!
 
+
+        val check = pref.getBoolean("check",false)
+
         val v = inflater.inflate(R.layout.fragment_pomodoro, container, false)
         textViewPomodoro = v.findViewById(R.id.text_view_pomodoro)
         buttonStart = v.findViewById(R.id.button_start)
@@ -60,6 +75,9 @@ class PomodoroFragment : Fragment() {
         buttonBack = v.findViewById(R.id.button_back)
 
 
+        test = textViewPomodoro?.text.toString()
+        Log.d("TESTESTEST","$focusttime")
+        Log.d("TESTESTEST","$test")
         buttonStart.visibility = View.VISIBLE // 시작
         buttonSet.visibility = View.VISIBLE // 세팅
         buttonPause.visibility = View.GONE // 일시 정지
@@ -186,6 +204,7 @@ class PomodoroFragment : Fragment() {
             String.format(Locale.getDefault(), "%02d:%02d", mins, secs)
         }
         textViewPomodoro!!.text = timeLeftFormatted
+        test = timeLeftFormatted
     }
     override fun onStop() {
         super.onStop()
@@ -228,6 +247,7 @@ class PomodoroFragment : Fragment() {
         private const val TIMER_RUNNING = "timerRunning"
         private const val END_TIME = "endTime"
     }
+
     private fun btnsetting(button: Button){
         if (button == buttonStart){
             buttonStart.visibility = View.GONE
