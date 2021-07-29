@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -305,18 +306,27 @@ class WeekFragment : Fragment() {
             //지난주와 비교값
             var compareSum: Int = 0
             if (totalSum > totalSum2) {
+                val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.compareWeekTimeImage.setLayoutParams(lp)
                 compareSum = totalSum.toInt() - totalSum2.toInt() //text
                 binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_up)
                 binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                 binding.compareWeekTimeText.setTextColor(Color.parseColor("#F95849"))
 
             } else if (totalSum < totalSum2) {
+                val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.compareWeekTimeImage.setLayoutParams(lp)
                 compareSum = totalSum2.toInt() - totalSum.toInt() //text
                 binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_down)
                 binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                 binding.compareWeekTimeText.setTextColor(Color.parseColor("#0F8CFF"))
             } else {
-                binding.compareWeekTimeImage.setVisibility(false)
+                binding.compareWeekTimeImage.setImageResource(R.drawable.ic_linezero)
+                val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                lp.setMargins(20, 25, 0, 0)
+                binding.compareWeekTimeImage.setLayoutParams(lp)
                 binding.compareWeekTimeText.text  = "0시간"
                 binding.compareWeekTimeText.setTextColor(Color.parseColor("#80000000"))
             }
@@ -588,6 +598,10 @@ class WeekFragment : Fragment() {
                     if (totalSum > totalSum2) {
                         compareSum = totalSum.toInt() - totalSum2.toInt() //text
                         binding.compareWeekTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
+                        binding.compareWeekTimeImage.setVisibility(true)
                         binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_up)
                         binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#F95849"))
@@ -595,11 +609,18 @@ class WeekFragment : Fragment() {
                     } else if (totalSum < totalSum2) {
                         compareSum = totalSum2.toInt() - totalSum.toInt() //text
                         binding.compareWeekTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
+                        binding.compareWeekTimeImage.setVisibility(true)
                         binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_down)
                         binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                     } else {
-                        binding.compareWeekTimeImage.setVisibility(false)
+                        binding.compareWeekTimeImage.setImageResource(R.drawable.ic_linezero)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 25, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
                         binding.compareWeekTimeText.text  = "0시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#80000000"))
                     }
@@ -862,6 +883,9 @@ class WeekFragment : Fragment() {
                     if (totalSum > totalSum2) {
                         compareSum = totalSum.toInt() - totalSum2.toInt() //text
                         binding.compareWeekTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
                         binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_up)
                         binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#F95849"))
@@ -869,11 +893,17 @@ class WeekFragment : Fragment() {
                     } else if (totalSum < totalSum2) {
                         compareSum = totalSum2.toInt() - totalSum.toInt() //text
                         binding.compareWeekTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
                         binding.compareWeekTimeImage.setImageResource(R.drawable.ic_polygon_down)
                         binding.compareWeekTimeText.text = "${compareSum / 60}시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                     } else {
-                        binding.compareWeekTimeImage.setVisibility(false)
+                        binding.compareWeekTimeImage.setImageResource(R.drawable.ic_linezero)
+                        val lp = LinearLayout.LayoutParams(binding.compareWeekTimeImage.getLayoutParams())
+                        lp.setMargins(20, 25, 0, 0)
+                        binding.compareWeekTimeImage.setLayoutParams(lp)
                         binding.compareWeekTimeText.text  = "0시간"
                         binding.compareWeekTimeText.setTextColor(Color.parseColor("#80000000"))
                     }

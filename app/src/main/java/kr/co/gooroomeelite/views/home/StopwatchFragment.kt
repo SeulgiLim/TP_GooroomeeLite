@@ -26,7 +26,10 @@ import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.entity.Subject
 import kr.co.gooroomeelite.model.ContentDTO
 import kr.co.gooroomeelite.utils.LoginUtils
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.truncate
 
@@ -118,6 +121,7 @@ class StopwatchFragment : Fragment() {
         stopwatch!!.base = SystemClock.elapsedRealtime()
         buttonStartPause.setOnTouchListener(View.OnTouchListener { v, event ->
             // pauseStopwatch()
+            dayStartTimeStamp()
             buttonFinish.visibility = View.VISIBLE
             v.visibility = View.GONE
 
@@ -265,18 +269,15 @@ class StopwatchFragment : Fragment() {
 //                firestore!!.collection("subject").document(LoginUtils.getUid()!!).update("addStudyTime",addStudyTime)
             }
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun timestamp(){
+    private fun dayStartTimeStamp(){
         val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
         val subjectStudyTime = subject.studytime //총 공부시간
         val studytimeCopy : Int = subjectStudyTime.plus(hourMinute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
-        Log.d("timetime",hour.toString())
-        Log.d("timetime",hourMinute.toString())
-        Log.d("timetime",minute.toString())
-        Log.d("timetime",second.toString())
-        val dayStartTime : LocalDateTime = LocalDateTime.now() //"시작하기" 시간
-        val dayEndtime : LocalDateTime = LocalDateTime.now() // "기록 종료" 시간
+        val textformatters: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm부 ss초")
+        val dayStartTime : LocalDateTime = LocalDateTime.now()
+        val dayStartTimeValue : String = dayStartTime.format(textformatters) //"시작하기" 시간
+        Log.d("dayStartTime",dayStartTimeValue.toString())
 
         FirebaseFirestore
             .getInstance()
@@ -290,7 +291,43 @@ class StopwatchFragment : Fragment() {
                     .getInstance()
                     .collection("subject")
                     .document(subjectId)
-                    .update("dayEndtime",dayEndtime)
+                    .update("dayStartTime",dayStartTimeValue)
+
+            }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun timestamp(){
+        val subject = arguments?.getSerializable("subject") as kr.co.gooroomeelite.entity.Subject
+        val subjectStudyTime = subject.studytime //총 공부시간
+        val studytimeCopy : Int = subjectStudyTime.plus(hourMinute.toInt()) //과목별 공부시간 + 스톱워치 기록 (총시간) 1초가 30
+        Log.d("timetime",hour.toString())
+        Log.d("timetime",hourMinute.toString())
+        Log.d("timetime",minute.toString())
+        Log.d("timetime",second.toString())
+        val textformatters: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm부 ss초")
+        val dayStartTime : LocalDateTime = LocalDateTime.now()
+        val dayEndtime : LocalDateTime = LocalDateTime.now()
+
+        val dayStartTimeValue : String = dayStartTime.format(textformatters) //"시작하기" 시간
+        val dayEndtimeValue : String = dayEndtime.format(textformatters) // "기록 종료" 시간
+
+        Log.d("dayStartTimeEnd",dayEndtimeValue.toString())
+        Log.d("dayStartTime",dayStartTimeValue.toString())
+
+        FirebaseFirestore
+            .getInstance()
+            .collection("subject")
+            .whereEqualTo("uid", LoginUtils.getUid())
+            .whereEqualTo("name", subject.name.toString())
+            .get().addOnSuccessListener {
+                val subjectId = it.documents.get(0).id
+                val subject = it.toObjects(Subject::class.java)
+                FirebaseFirestore
+                    .getInstance()
+                    .collection("subject")
+                    .document(subjectId)
+                    .update("dayEndtime",dayEndtimeValue)
                 FirebaseFirestore
                     .getInstance()
                     .collection("subject")

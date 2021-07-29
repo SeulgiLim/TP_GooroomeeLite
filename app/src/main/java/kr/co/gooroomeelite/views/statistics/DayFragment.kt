@@ -6,15 +6,15 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.dhaval2404.colorpicker.util.setVisibility
@@ -26,13 +26,11 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.firebase.firestore.FirebaseFirestore
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kr.co.gooroomeelite.R
 import kr.co.gooroomeelite.adapter.DailySubjectAdapter
 import kr.co.gooroomeelite.databinding.FragmentDayBinding
-import kr.co.gooroomeelite.utils.LoginUtils.Companion.getUid
 import kr.co.gooroomeelite.viewmodel.SubjectViewModel
 import kr.co.gooroomeelite.views.statistics.share.ShareActivity
 import java.text.DateFormat
@@ -42,6 +40,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 //@RequiresApi(Build.VERSION_CODES.O)
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -62,7 +61,7 @@ class DayFragment : Fragment() {
             //REd, green, blue
             //am 5 ~ 12
             ChartDatas("05:00", arrayListOf(40F)),
-            ChartDatas("", arrayListOf(0F, 60F, 40f)),
+            ChartDatas("", arrayListOf(10F, 60F, 40f)),
             ChartDatas("", arrayListOf(0f, 60F, 0f)),
             ChartDatas("", arrayListOf(0f, 0f, 30F)),
             ChartDatas("", arrayListOf(0F, 0f, 10f)),
@@ -128,6 +127,11 @@ class DayFragment : Fragment() {
             var todayFormat: String = dateNow.format(textformatter)
             var todaySum: Float = 0f
 
+            //테스트
+            val textformatters: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd.HH.mm.ss")
+            var todayFormats: String = dateNow.format(textformatters)
+            Log.d("serverDateFormat현재시간",todayFormats.toString())
+
             //어제
             var yesterday: LocalDateTime = dateNow.minusDays(1)
             var yesterdayFormat: String = yesterday.format(textformatter)
@@ -139,6 +143,13 @@ class DayFragment : Fragment() {
                 //서버에서 가져온 요일
                 val dateFormat: DateFormat = SimpleDateFormat("yyyy.MM.dd")
                 val serverDateFormat: String = dateFormat.format(subject.timestamp)
+                //테스트 중
+                Log.d("serverDateFormat",subject.timestamp.toString())
+                Log.d("serverDateFormat",serverDateFormat.toString())
+                val dateFormats: DateFormat = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss")
+                val serverDateFormats: String = dateFormats.format(subject.timestamp)
+                Log.d("serverDateFormat시간",subject.timestamp.toString())
+                Log.d("serverDateFormat시간",serverDateFormats.toString())
 
                 for (it in 0..its) {
                     if (todayFormat == serverDateFormat) {
@@ -158,21 +169,30 @@ class DayFragment : Fragment() {
 
             //지난주와 비교값
             var compareSum: Int = 0
-            if (todaySum > yesterdaySum) {
+            if ((todaySum/60) > (yesterdaySum/60)) {
                 compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
                 binding.compareDayTimeImage.setVisibility(true)
+                val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.compareDayTimeImage.setLayoutParams(lp)
                 binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
                 binding.compareDayTimeText.text = "${compareSum / 60}시간"
                 binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
 
-            } else if (todaySum < yesterdaySum) {
+            } else if ((todaySum/60) < (yesterdaySum/60)) {
                 compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
                 binding.compareDayTimeImage.setVisibility(true)
+                val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.compareDayTimeImage.setLayoutParams(lp)
                 binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
                 binding.compareDayTimeText.text = "${compareSum / 60}시간"
                 binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
             } else {
-                binding.compareDayTimeImage.setVisibility(false)
+                binding.compareDayTimeImage.setImageResource(R.drawable.ic_linezero)
+                val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                lp.setMargins(20, 25, 0, 0)
+                binding.compareDayTimeImage.setLayoutParams(lp)
                 binding.compareDayTimeText.text = "0시간"
                 binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
             }
@@ -245,26 +265,36 @@ class DayFragment : Fragment() {
 
                 //지난주와 비교값
                 var compareSum: Int = 0
-                if (todaySum > yesterdaySum) {
+                if ((todaySum/60) > (yesterdaySum/60)) {
                     compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
                     binding.compareDayTimeImage.setVisibility(true)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 15, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
                     binding.compareDayTimeText.text = "${compareSum / 60}시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
 
-                } else if (todaySum < yesterdaySum) {
+                } else if ((todaySum/60) < (yesterdaySum/60)) {
                     compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
                     binding.compareDayTimeImage.setVisibility(true)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 15, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
                     binding.compareDayTimeText.text = "${compareSum / 60}시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                 } else {
-                    binding.compareDayTimeImage.setVisibility(false)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_linezero)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 25, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeText.text = "0시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
                 }
             }
         }
+
 
         binding.calLeftBtn.setOnClickListener {
             count--
@@ -317,21 +347,30 @@ class DayFragment : Fragment() {
 
                 //지난주와 비교값
                 var compareSum: Int = 0
-                if (todaySum > yesterdaySum) {
+                if ((todaySum/60) > (yesterdaySum/60)) {
                     compareSum = todaySum.toInt() - yesterdaySum.toInt() //text
                     binding.compareDayTimeImage.setVisibility(true)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 15, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_up)
                     binding.compareDayTimeText.text = "${compareSum / 60}시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#F95849"))
 
-                } else if (todaySum < yesterdaySum) {
+                } else if ((todaySum/60) < (yesterdaySum/60)) {
                     compareSum = yesterdaySum.toInt() - todaySum.toInt() //text
                     binding.compareDayTimeImage.setVisibility(true)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 15, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeImage.setImageResource(R.drawable.ic_polygon_down)
                     binding.compareDayTimeText.text = "${compareSum / 60}시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                 } else {
-                    binding.compareDayTimeImage.setVisibility(false)
+                    binding.compareDayTimeImage.setImageResource(R.drawable.ic_linezero)
+                    val lp = LinearLayout.LayoutParams(binding.compareDayTimeImage.getLayoutParams())
+                    lp.setMargins(20, 25, 0, 0)
+                    binding.compareDayTimeImage.setLayoutParams(lp)
                     binding.compareDayTimeText.text = "0시간"
                     binding.compareDayTimeText.setTextColor(Color.parseColor("#80000000"))
                 }

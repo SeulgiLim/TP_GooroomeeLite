@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -768,17 +769,26 @@ class MonthFragment : Fragment() {
             if (totalTime > totalTimeLastMonth) {
                 compareSum = totalTime.toInt() - totalTimeLastMonth.toInt() //text
                 binding.comapreMonthTimeImage.setVisibility(true)
+                val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.comapreMonthTimeImage.setLayoutParams(lp)
                 binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_up)
                 binding.comapreMonthTimeText.text  = "${compareSum / 60}시간"
                 binding.comapreMonthTimeText.setTextColor(Color.parseColor("#F95849"))
             } else if (totalTime < totalTimeLastMonth) {
                 compareSum = totalTimeLastMonth.toInt() - totalTime.toInt()
                  binding.comapreMonthTimeImage.setVisibility(true)
+                val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                lp.setMargins(20, 15, 0, 0)
+                binding.comapreMonthTimeImage.setLayoutParams(lp)
                 binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_down)
                 binding.comapreMonthTimeText.text  = "${compareSum / 60}시간"
                 binding.comapreMonthTimeText.setTextColor(Color.parseColor("#0F8CFF"))
             } else {
-                binding.comapreMonthTimeImage.setVisibility(false)
+                binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_linezero)
+                val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                lp.setMargins(20, 25, 0, 0)
+                binding.comapreMonthTimeImage.setLayoutParams(lp)
                 binding.comapreMonthTimeText.text  = "0시간"
                 binding.comapreMonthTimeText.setTextColor(Color.parseColor("#80000000"))
             }
@@ -1639,17 +1649,26 @@ class MonthFragment : Fragment() {
                     if (totalTime > totalTimeLastMonth) {
                         compareSum = totalTime.toInt() - totalTimeLastMonth.toInt() //text
                         binding.comapreMonthTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_up)
                         binding.comapreMonthTimeText.text = "${compareSum / 60}시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#F95849"))
                     } else if (totalTime < totalTimeLastMonth) {
                         compareSum = totalTimeLastMonth.toInt() - totalTime.toInt() //text
                         binding.comapreMonthTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_down)
                         binding.comapreMonthTimeText.text = "${compareSum / 60}시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                     } else {
-                        binding.comapreMonthTimeImage.setVisibility(false)
+                        binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_linezero)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 25, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeText.text = "0시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#80000000"))
                     }
@@ -2505,17 +2524,26 @@ class MonthFragment : Fragment() {
                     if (totalTime > totalTimeLastMonth) {
                         compareSum = totalTime.toInt() - totalTimeLastMonth.toInt() //text
                         binding.comapreMonthTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_up)
                         binding.comapreMonthTimeText.text = "${compareSum / 60}시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#F95849"))
                     } else if (totalTime < totalTimeLastMonth) {
                         compareSum = totalTimeLastMonth.toInt() - totalTime.toInt() //text
                         binding.comapreMonthTimeImage.setVisibility(true)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 15, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_polygon_down)
                         binding.comapreMonthTimeText.text = "${compareSum / 60}시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#0F8CFF"))
                     } else {
-                        binding.comapreMonthTimeImage.setVisibility(false)
+                        binding.comapreMonthTimeImage.setImageResource(R.drawable.ic_linezero)
+                        val lp = LinearLayout.LayoutParams(binding.comapreMonthTimeImage.getLayoutParams())
+                        lp.setMargins(20, 25, 0, 0)
+                        binding.comapreMonthTimeImage.setLayoutParams(lp)
                         binding.comapreMonthTimeText.text = "0시간"
                         binding.comapreMonthTimeText.setTextColor(Color.parseColor("#80000000"))
                     }
