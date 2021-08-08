@@ -19,11 +19,10 @@
 
 ## **[ Preview ]**
 
-GooroomeeLite PDF 예정
+![image](https://user-images.githubusercontent.com/71672106/128629808-a0ebcad1-c8ef-4428-b5e5-d2702f025956.png)
 
 ---
 
-대략적인 PDF 이미지 프리뷰
 
 ## **[ Develop Environment ]**
 
