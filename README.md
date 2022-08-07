@@ -36,14 +36,14 @@
 1. Server
 - Firebasedatabase
 - Firebasestorage
-1. Layout
+2. Layout
 - [Glide](https://github.com/bumptech/glide)
 - [ScaleRatingBar](https://github.com/williamyyu/SimpleRatingBar)
 - [gridlayout](https://mvnrepository.com/artifact/androidx.gridlayout/gridlayout/1.0.0-rc01)
 - ConstraintLayout
 - RelativeLayout
 - [ViewPager2](https://developer.android.com/jetpack/androidx/releases/viewpager2?hl=ko)
-1. Function
+3. Function
 - [TedPermission](https://github.com/ParkSangGwon/TedPermission)
 - [ColorPicker](https://github.com/Dhaval2404/ColorPicker)
 - [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
